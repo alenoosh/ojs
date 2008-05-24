@@ -48,7 +48,7 @@
 {/if}
 <tr valign="top">	
 	<td width="20%" class="label">{fieldLabel name="username" required="true" key="user.username"}</td>
-	<td width="80%" class="value"><input type="text" name="username" value="{$username|escape}" id="username" size="20" maxlength="32" class="textField" /></td>
+	<td width="80%" class="value"><input type="text" name="username" value="{$username|escape}" id="username" size="30" maxlength="90" class="textField" /></td>
 </tr>
 {if !$existingUser}
 <tr valign="top">
@@ -122,11 +122,12 @@
 	<td class="label">{fieldLabel name="signature" key="user.signature"}</td>
 	<td class="value"><textarea name="signature[{$formLocale|escape}]" id="signature" rows="5" cols="40" class="textArea">{$signature[$formLocale]|escape|nl2br}</textarea></td>
 </tr>
-	
+{* OPATAN: 
 <tr valign="top">
 	<td class="label">{fieldLabel name="email" required="true" key="user.email"}</td>
 	<td class="value"><input type="text" id="email" name="email" value="{$email|escape}" size="30" maxlength="90" class="textField" /> {if $privacyStatement}<a class="action" href="#privacyStatement">{translate key="user.register.privacyStatement"}</a>{/if}</td>
 </tr>
+*}
 	
 <tr valign="top">
 	<td class="label">{fieldLabel name="userUrl" key="user.url"}</td>

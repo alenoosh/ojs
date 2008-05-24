@@ -165,8 +165,13 @@ function doSubmit() {
 <table width="100%" class="data">
 	<tr valign="top">	
 		<td width="20%" class="label">{fieldLabel name="adminUsername" key="user.username"}</td>
-		<td width="80%" class="value"><input type="text" name="adminUsername" id="adminUsername" value="{$adminUsername|escape}" size="20" maxlength="32" class="textField" /></td>
+		<td width="80%" class="value"><input type="text" name="adminUsername" id="adminUsername" value="{$adminUsername|escape}" size="30" maxlength="90" class="textField" /></td>
 	</tr>
+    {* OPATAN: username restriction is added for admin username *}
+    <tr valign="top">
+	    <td></td>
+    	<td class="instruct">{translate key="user.register.usernameRestriction"}</td>
+    </tr>   
 	<tr valign="top">
 		<td class="label">{fieldLabel name="adminPassword" key="user.password"}</td>
 		<td class="value"><input type="password" name="adminPassword" id="adminPassword" value="{$adminPassword|escape}" size="20" maxlength="32" class="textField" /></td>
@@ -175,10 +180,12 @@ function doSubmit() {
 		<td class="label">{fieldLabel name="adminPassword2" key="user.register.repeatPassword"}</td>
 		<td class="value"><input type="password" name="adminPassword2" id="adminPassword2" value="{$adminPassword2|escape}" size="20" maxlength="32" class="textField" /></td>
 	</tr>
+    {* OPATAN: 
 	<tr valign="top">	
 		<td width="20%" class="label">{fieldLabel name="adminEmail" key="user.email"}</td>
 		<td width="80%" class="value"><input type="text" name="adminEmail" id="adminEmail" value="{$adminEmail|escape}" size="30" maxlength="90" class="textField" /></td>
 	</tr>
+    *}
 </table>
 
 

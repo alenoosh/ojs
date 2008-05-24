@@ -35,7 +35,9 @@ class UserManagementForm extends Form {
 		if ($userId == null) {
 			$this->addCheck(new FormValidator($this, 'username', 'required', 'user.profile.form.usernameRequired'));
 			$this->addCheck(new FormValidatorCustom($this, 'username', 'required', 'user.register.form.usernameExists', array(DAORegistry::getDAO('UserDAO'), 'userExistsByUsername'), array($this->userId, true), true));
-			$this->addCheck(new FormValidatorAlphaNum($this, 'username', 'required', 'user.register.form.usernameAlphaNumeric'));
+			//OPATAN: $this->addCheck(new FormValidatorAlphaNum($this, 'username', 'required', 'user.register.form.usernameAlphaNumeric'));
+  		    //OPATAN: email validator for username is added
+		    $this->addCheck(new FormValidatorEmail($this, 'username', 'required', 'user.profile.form.userEmailRequired'));   
 			$this->addCheck(new FormValidator($this, 'password', 'required', 'user.profile.form.passwordRequired'));
 			$this->addCheck(new FormValidatorLength($this, 'password', 'required', 'user.register.form.passwordLengthTooShort', '>=', $site->getMinPasswordLength()));
 			$this->addCheck(new FormValidatorCustom($this, 'password', 'required', 'user.register.form.passwordsDoNotMatch', create_function('$password,$form', 'return $password == $form->getData(\'password2\');'), array(&$this)));
@@ -46,8 +48,8 @@ class UserManagementForm extends Form {
 		$this->addCheck(new FormValidator($this, 'firstName', 'required', 'user.profile.form.firstNameRequired'));
 		$this->addCheck(new FormValidator($this, 'lastName', 'required', 'user.profile.form.lastNameRequired'));
 		$this->addCheck(new FormValidatorUrl($this, 'userUrl', 'optional', 'user.profile.form.urlInvalid'));
-		$this->addCheck(new FormValidatorEmail($this, 'email', 'required', 'user.profile.form.emailRequired'));
-		$this->addCheck(new FormValidatorCustom($this, 'email', 'required', 'user.register.form.emailExists', array(DAORegistry::getDAO('UserDAO'), 'userExistsByEmail'), array($this->userId, true), true));
+		//OPATAN: $this->addCheck(new FormValidatorEmail($this, 'email', 'required', 'user.profile.form.emailRequired'));
+		//OPATAN: $this->addCheck(new FormValidatorCustom($this, 'email', 'required', 'user.register.form.emailExists', array(DAORegistry::getDAO('UserDAO'), 'userExistsByEmail'), array($this->userId, true), true));
 		$this->addCheck(new FormValidatorPost($this));
 	}
 
@@ -135,7 +137,7 @@ class UserManagementForm extends Form {
 					'initials' => $user->getInitials(),
 					'gender' => $user->getGender(),
 					'affiliation' => $user->getAffiliation(),
-					'email' => $user->getEmail(),
+					//OPATAN: 'email' => $user->getEmail(),
 					'userUrl' => $user->getUrl(),
 					'phone' => $user->getPhone(),
 					'fax' => $user->getFax(),
@@ -180,7 +182,7 @@ class UserManagementForm extends Form {
 			'initials',
 			'signature',
 			'affiliation',
-			'email',
+			'username', //OPATAN: 'email' changed to 'username'
 			'userUrl',
 			'phone',
 			'fax',
@@ -236,7 +238,7 @@ class UserManagementForm extends Form {
 		$user->setDiscipline($this->getData('discipline'));
 		$user->setAffiliation($this->getData('affiliation'));
 		$user->setSignature($this->getData('signature'), null); // Localized
-		$user->setEmail($this->getData('email'));
+		$user->setEmail($this->getData('username')); //OPATAN: 'email' changed to 'username'
 		$user->setUrl($this->getData('userUrl'));
 		$user->setPhone($this->getData('phone'));
 		$user->setFax($this->getData('fax'));

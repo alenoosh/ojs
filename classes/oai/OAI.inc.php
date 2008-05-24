@@ -294,7 +294,7 @@ class OAI {
 			"\t\t<repositoryName>" . $this->prepOutput($info->repositoryName) . "</repositoryName>\n" .
 			"\t\t<baseURL>" . $this->config->baseUrl . "</baseURL>\n" .
 			"\t\t<protocolVersion>" . $this->protocolVersion . "</protocolVersion>\n" .
-			"\t\t<adminEmail>" . $info->adminEmail . "</adminEmail>\n" .
+			"\t\t<adminEmail>" . $info->adminEmail . "</adminEmail>\n" . //OPATAN: ???
 			"\t\t<earliestDatestamp>" . $this->UTCDate($info->earliestDatestamp) . "</earliestDatestamp>\n" .
 			"\t\t<deletedRecord>no</deletedRecord>\n" . // FIXME Support deleted records?
 			"\t\t<granularity>" . $this->config->granularity . "</granularity>\n";

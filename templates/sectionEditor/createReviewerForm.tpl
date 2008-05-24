@@ -78,7 +78,7 @@
 	<tr valign="top">
 		<td class="label">{fieldLabel name="username" required="true" key="user.username"}</td>
 		<td class="value">
-			<input type="text" name="username" id="username" value="{$username|escape}" size="20" maxlength="32" class="textField" />&nbsp;&nbsp;<input type="button" class="button" value="{translate key="common.suggest"}" onclick="generateUsername()" />
+			<input type="text" name="username" id="username" value="{$username|escape}" size="30" maxlength="90" class="textField" />&nbsp;&nbsp;<input type="button" class="button" value="{translate key="common.suggest"}" onclick="generateUsername()" />
 			<br />
 			<span class="instruct">{translate key="user.register.usernameRestriction"}</span>
 		</td>
@@ -91,10 +91,12 @@
 		<td class="label">{fieldLabel name="affiliation" key="user.affiliation"}</td>
 		<td class="value"><input type="text" name="affiliation" id="affiliation" value="{$affiliation|escape}" size="30" maxlength="255" class="textField" /></td>
 	</tr>
+    {* OPATAN:
 	<tr valign="top">
 		<td class="label">{fieldLabel name="email" required="true" key="user.email"}</td>
 		<td class="value"><input type="text" name="email" id="email" value="{$email|escape}" size="30" maxlength="90" class="textField" /></td>
 	</tr>
+    *}
 	<tr valign="top">
 		<td class="label">{fieldLabel name="userUrl" key="user.url"}</td>
 		<td class="value"><input type="text" name="userUrl" id="userUrl" value="{$userUrl|escape}" size="30" maxlength="255" class="textField" /></td>

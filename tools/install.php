@@ -131,7 +131,7 @@ class installTool extends CommandLineTool {
 			printf("\n");
 		} while ($this->params['adminPassword'] != $this->params['adminPassword2']);
 		@`/bin/stty echo`;
-		$this->readParam('adminEmail', 'user.email');
+		//OPATAN: $this->readParam('adminEmail', 'user.email');
 
 		// Database Settings
 		$this->printTitle('installer.databaseSettings');

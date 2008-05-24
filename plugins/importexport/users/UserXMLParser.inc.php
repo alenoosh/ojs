@@ -109,7 +109,7 @@ class UserXMLParser {
 								$newUser->setAffiliation($attrib->getValue());
 								break;
 							case 'email':
-								$newUser->setEmail($attrib->getValue());
+								$newUser->setEmail($attrib->getValue()); //OPATAN: ???
 								break;
 							case 'url':
 								$newUser->setUrl($attrib->getValue());

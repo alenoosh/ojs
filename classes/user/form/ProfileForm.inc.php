@@ -31,8 +31,8 @@ class ProfileForm extends Form {
 		$this->addCheck(new FormValidator($this, 'firstName', 'required', 'user.profile.form.firstNameRequired'));
 		$this->addCheck(new FormValidator($this, 'lastName', 'required', 'user.profile.form.lastNameRequired'));
 		$this->addCheck(new FormValidatorUrl($this, 'userUrl', 'optional', 'user.profile.form.urlInvalid'));
-		$this->addCheck(new FormValidatorEmail($this, 'email', 'required', 'user.profile.form.emailRequired'));
-		$this->addCheck(new FormValidatorCustom($this, 'email', 'required', 'user.register.form.emailExists', array(DAORegistry::getDAO('UserDAO'), 'userExistsByEmail'), array($user->getUserId(), true), true));
+		//OPATAN: $this->addCheck(new FormValidatorEmail($this, 'email', 'required', 'user.profile.form.emailRequired'));
+		//OPATAN: $this->addCheck(new FormValidatorCustom($this, 'email', 'required', 'user.register.form.emailExists', array(DAORegistry::getDAO('UserDAO'), 'userExistsByEmail'), array($user->getUserId(), true), true));
 		$this->addCheck(new FormValidatorPost($this));
 	}
 
@@ -116,7 +116,7 @@ class ProfileForm extends Form {
 			'discipline' => $user->getDiscipline(),
 			'affiliation' => $user->getAffiliation(),
 			'signature' => $user->getSignature(null), // Localized
-			'email' => $user->getEmail(),
+			'username' => $user->getUsername(), //OPATAN: 'email' => $user->getEmail(),
 			'userUrl' => $user->getUrl(),
 			'phone' => $user->getPhone(),
 			'fax' => $user->getFax(),
@@ -145,7 +145,7 @@ class ProfileForm extends Form {
 			'initials',
 			'affiliation',
 			'signature',
-			'email',
+			'username', //OPATAN: 'email',
 			'userUrl',
 			'phone',
 			'fax',
@@ -179,7 +179,7 @@ class ProfileForm extends Form {
 		$user->setInitials($this->getData('initials'));
 		$user->setAffiliation($this->getData('affiliation'));
 		$user->setSignature($this->getData('signature'), null); // Localized
-		$user->setEmail($this->getData('email'));
+		$user->setEmail($this->getData('username')); //OPATAN: 'email' changed to 'username'
 		$user->setUrl($this->getData('userUrl'));
 		$user->setPhone($this->getData('phone'));
 		$user->setFax($this->getData('fax'));

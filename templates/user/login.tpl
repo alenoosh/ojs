@@ -29,7 +29,7 @@
 <table class="data">
 <tr>
 	<td class="label"><label for="loginUsername">{translate key="user.username"}</label></td>
-	<td class="value"><input type="text" id="loginUsername" name="username" value="{$username|escape}" size="20" maxlength="32" class="textField" /></td>
+	<td class="value"><input type="text" id="loginUsername" name="username" value="{$username|escape}" size="30" maxlength="90" class="textField" /></td>
 </tr>
 <tr>
 	<td class="label"><label for="loginPassword">{translate key="user.password"}</label></td>

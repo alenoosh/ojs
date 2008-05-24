@@ -89,10 +89,12 @@ class InstallForm extends Form {
 		$this->addCheck(new FormValidator($this, 'filesDir', 'required', 'installer.form.filesDirRequired'));
 		$this->addCheck(new FormValidatorInSet($this, 'encryption', 'required', 'installer.form.encryptionRequired', array_keys($this->supportedEncryptionAlgorithms)));
 		$this->addCheck(new FormValidator($this, 'adminUsername', 'required', 'installer.form.usernameRequired'));
-		$this->addCheck(new FormValidatorAlphaNum($this, 'adminUsername', 'required', 'installer.form.usernameAlphaNumeric'));
-		$this->addCheck(new FormValidator($this, 'adminPassword', 'required', 'installer.form.passwordRequired'));
+		//OPATAN: $this->addCheck(new FormValidatorAlphaNum($this, 'adminUsername', 'required', 'installer.form.usernameAlphaNumeric'));	   
+        //OPATAN: Email Validator for admin username is added
+        $this->addCheck(new FormValidatorEmail($this, 'adminUsername', 'required', 'installer.form.adminEmailRequired'));
+        $this->addCheck(new FormValidator($this, 'adminPassword', 'required', 'installer.form.passwordRequired'));
 		$this->addCheck(new FormValidatorCustom($this, 'adminPassword', 'required', 'installer.form.passwordsDoNotMatch', create_function('$password,$form', 'return $password == $form->getData(\'adminPassword2\');'), array(&$this)));
-		$this->addCheck(new FormValidatorEmail($this, 'adminEmail', 'required', 'installer.form.emailRequired'));
+		//OPATAN: $this->addCheck(new FormValidatorEmail($this, 'adminEmail', 'required', 'installer.form.emailRequired'));
 		$this->addCheck(new FormValidatorInSet($this, 'databaseDriver', 'required', 'installer.form.databaseDriverRequired', array_keys($this->supportedDatabaseDrivers)));
 		$this->addCheck(new FormValidator($this, 'databaseName', 'required', 'installer.form.databaseNameRequired'));
 		$this->addCheck(new FormValidatorPost($this));
@@ -163,7 +165,7 @@ class InstallForm extends Form {
 			'adminUsername',
 			'adminPassword',
 			'adminPassword2',
-			'adminEmail',
+			//OPATAN: 'adminEmail',
 			'databaseDriver',
 			'databaseHost',
 			'databaseUsername',
