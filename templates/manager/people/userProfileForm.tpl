@@ -124,7 +124,10 @@
 	<tr valign="top">
 		<td class="label">{fieldLabel name="username" required="true" key="user.username"}</td>
 		<td class="value">
-			<input type="text" name="username" id="username" value="{$username|escape}" size="30" maxlength="90" class="textField" />&nbsp;&nbsp;<input type="button" class="button" value="{translate key="common.suggest"}" onclick="generateUsername()" />
+			<input type="text" name="username" id="username" value="{$username|escape}" size="30" maxlength="90" class="textField" />&nbsp;&nbsp;
+            {* OPATAN:
+            <input type="button" class="button" value="{translate key="common.suggest"}" onclick="generateUsername()" />
+            *}
 			<br />
 			<span class="instruct">{translate key="user.register.usernameRestriction"}</span>
 		</td>
