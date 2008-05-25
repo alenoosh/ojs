@@ -41,7 +41,7 @@
 		<td width="10%">{translate key="user.middleName"}</td>
 		<td width="15%">{translate key="user.lastName"}</td>
 		<td width="15%">{translate key="user.username"}</td>
-		<td width="20%">{translate key="user.email"}</td>
+		{* OPATAN: <td width="20%">{translate key="user.email"}</td> *}
 		<td width="25%">{translate key="user.roles"}</td>
 	</tr>	
 	<tr>

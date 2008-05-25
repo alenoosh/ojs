@@ -116,7 +116,7 @@ class ProfileForm extends Form {
 			'discipline' => $user->getDiscipline(),
 			'affiliation' => $user->getAffiliation(),
 			'signature' => $user->getSignature(null), // Localized
-			'username' => $user->getUsername(), //OPATAN: 'email' => $user->getEmail(),
+			//OPATAN: 'email' => $user->getEmail(),
 			'userUrl' => $user->getUrl(),
 			'phone' => $user->getPhone(),
 			'fax' => $user->getFax(),
@@ -145,7 +145,7 @@ class ProfileForm extends Form {
 			'initials',
 			'affiliation',
 			'signature',
-			'username', //OPATAN: 'email',
+			//OPATAN: 'email' removed
 			'userUrl',
 			'phone',
 			'fax',
@@ -179,7 +179,7 @@ class ProfileForm extends Form {
 		$user->setInitials($this->getData('initials'));
 		$user->setAffiliation($this->getData('affiliation'));
 		$user->setSignature($this->getData('signature'), null); // Localized
-		$user->setEmail($this->getData('username')); //OPATAN: 'email' changed to 'username'
+		$user->setEmail($user->getUsername()); //OPATAN: $this->getData('email') changed to $user->getUsername()
 		$user->setUrl($this->getData('userUrl'));
 		$user->setPhone($this->getData('phone'));
 		$user->setFax($this->getData('fax'));

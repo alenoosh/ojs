@@ -37,7 +37,7 @@ class UserManagementForm extends Form {
 			$this->addCheck(new FormValidatorCustom($this, 'username', 'required', 'user.register.form.usernameExists', array(DAORegistry::getDAO('UserDAO'), 'userExistsByUsername'), array($this->userId, true), true));
 			//OPATAN: $this->addCheck(new FormValidatorAlphaNum($this, 'username', 'required', 'user.register.form.usernameAlphaNumeric'));
   		    //OPATAN: email validator for username is added
-		    $this->addCheck(new FormValidatorEmail($this, 'username', 'required', 'user.profile.form.userEmailRequired'));   
+		    $this->addCheck(new FormValidatorEmail($this, 'username', 'required', 'user.profile.form.userEmailRequired'));  
 			$this->addCheck(new FormValidator($this, 'password', 'required', 'user.profile.form.passwordRequired'));
 			$this->addCheck(new FormValidatorLength($this, 'password', 'required', 'user.register.form.passwordLengthTooShort', '>=', $site->getMinPasswordLength()));
 			$this->addCheck(new FormValidatorCustom($this, 'password', 'required', 'user.register.form.passwordsDoNotMatch', create_function('$password,$form', 'return $password == $form->getData(\'password2\');'), array(&$this)));
@@ -182,7 +182,7 @@ class UserManagementForm extends Form {
 			'initials',
 			'signature',
 			'affiliation',
-			'username', //OPATAN: 'email' changed to 'username'
+			//OPATAN: 'email'
 			'userUrl',
 			'phone',
 			'fax',
@@ -238,7 +238,7 @@ class UserManagementForm extends Form {
 		$user->setDiscipline($this->getData('discipline'));
 		$user->setAffiliation($this->getData('affiliation'));
 		$user->setSignature($this->getData('signature'), null); // Localized
-		$user->setEmail($this->getData('username')); //OPATAN: 'email' changed to 'username'
+		$user->setEmail($user->getUsername()); //OPATAN: $this->getData('email') changed to $user->getUsername()
 		$user->setUrl($this->getData('userUrl'));
 		$user->setPhone($this->getData('phone'));
 		$user->setFax($this->getData('fax'));

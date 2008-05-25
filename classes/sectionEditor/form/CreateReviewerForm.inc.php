@@ -90,7 +90,7 @@ class CreateReviewerForm extends Form {
 			'discipline',
 			'initials',
 			'affiliation',
-            'username', //OPATAN: 'email' changed to 'username'
+            //OPATAN: 'email' 
 			'userUrl',
 			'phone',
 			'fax',
@@ -129,7 +129,7 @@ class CreateReviewerForm extends Form {
 		$user->setDiscipline($this->getData('discipline'));
 		$user->setInitials($this->getData('initials'));
 		$user->setAffiliation($this->getData('affiliation'));
-		$user->setEmail($this->getData('username')); //OPATAN: 'email' changed to 'username'
+		$user->setEmail($user->getUsername()); //OPATAN: $this->getData('email') changed to $user->getUsername()
 		$user->setUrl($this->getData('userUrl'));
 		$user->setPhone($this->getData('phone'));
 		$user->setFax($this->getData('fax'));
