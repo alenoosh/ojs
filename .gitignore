@@ -3,3 +3,5 @@ config.inc.php
 cache/*
 
 cache/t_compile/*
+
+files/
