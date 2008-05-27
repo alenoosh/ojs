@@ -1953,7 +1953,8 @@ Active is how many reviews are currently being considered or underway.]]></messa
 	<message key="author.submit.verifyChecklist">You must make sure all items in the submission checklist are satisfied before continuing.</message>
 	<message key="author.submit.copyrightNoticeAgree">The authors agree to the terms of this Copyright Notice, which will apply to this submission if and when it is published by this journal (comments to the editor can be added below).</message>
 	<message key="author.submit.copyrightNoticeAgreeRequired">You must agree to the terms of the Copyright Notice before continuing.</message>
-	<message key="author.submit.commentsForEditor">Comments for the Editor</message>
+	<message key="author.submit.commentsForEditor">Covering Letter</message>
+    <!-- OPATAN: "Comments for the Editor" changed to "Covering Letter" -->
 	<message key="author.submit.comments">Enter text (optional)</message>
 	<message key="author.submit.form.sectionRequired">Please select an appropriate journal section for this submission.</message>
 	
