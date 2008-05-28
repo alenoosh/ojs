@@ -72,6 +72,33 @@ function moveAuthor(dir, authorIndex) {
 {/if}
 
 <table width="100%" class="data">
+{if $author.firstName}
+<tr valign="top">
+    <td>{$author.firstName|escape}&nbsp;{$author.lastName|escape}&nbsp;{$author.email|escape}</td>  
+    <td>
+        <input type="hidden" name="authors[{$authorIndex|escape}][firstName]"
+               value="{$author.firstName|escape}" />
+        <input type="hidden" name="authors[{$authorIndex|escape}][middleName]"
+               value="{$author.middleName|escape}" />
+        <input type="hidden" name="authors[{$authorIndex|escape}][lastName]"
+               value="{$author.lastName|escape}" />
+        <input type="hidden" name="authors[{$authorIndex|escape}][affiliation]"
+               value="{$author.affiliation|escape}" />
+        <input type="hidden" name="authors[{$authorIndex|escape}][email]"
+               value="{$author.email|escape}" />
+        <input type="hidden" name="authors[{$authorIndex|escape}][country]"
+               value="{$author.country|escape}" />
+        <input type="hidden" name="authors[{$authorIndex|escape}][url]"
+               value="{$author.url|escape}" />
+        {if $currentJournal->getSetting('requireAuthorCompetingInterests')}
+            <input type="hidden" name="authors[{$authorIndex|escape}][competingInterests][{$formLocale|escape}]"
+                   value="{$author.competingInterests[$formLocale]|escape}" />
+        {/if}
+        <input type="hidden" name="authors[{$authorIndex|escape}][biography][{$formLocale|escape}]"
+               value="{$author.biography[$formLocale]|escape}" />
+    </td>
+</tr>
+{else}
 <tr valign="top">
 	<td width="20%" class="label">{fieldLabel name="authors-$authorIndex-firstName" required="true" key="user.firstName"}</td>
 	<td width="80%" class="value"><input type="text" class="textField" name="authors[{$authorIndex|escape}][firstName]" id="authors-{$authorIndex|escape}-firstName" value="{$author.firstName|escape}" size="20" maxlength="40" /></td>
@@ -115,6 +142,7 @@ function moveAuthor(dir, authorIndex) {
 	<td width="20%" class="label">{fieldLabel name="authors-$authorIndex-biography" key="user.biography"}<br />{translate key="user.biography.description"}</td>
 	<td width="80%" class="value"><textarea name="authors[{$authorIndex|escape}][biography][{$formLocale|escape}]" class="textArea" id="authors-{$authorIndex|escape}-biography" rows="5" cols="40">{$author.biography[$formLocale]|escape}</textarea></td>
 </tr>
+{/if}
 {if $smarty.foreach.authors.total > 1}
 <tr valign="top">
 	<td colspan="2">
