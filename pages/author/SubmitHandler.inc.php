@@ -30,7 +30,12 @@ class SubmitHandler extends AuthorHandler {
 
 		list($journal, $article) = SubmitHandler::validate($articleId, $step);
 
-		$formClass = "AuthorSubmitStep{$step}Form";
+		if ($step == 2) {
+            $formClass = "AuthorSubmitStep2MergedForm";
+        } else {
+            $formClass = "AuthorSubmitStep{$step}Form";
+        }
+
 		import("author.form.submit.$formClass");
 
 		$submitForm = &new $formClass($article);
@@ -55,7 +60,12 @@ class SubmitHandler extends AuthorHandler {
 
 		list($journal, $article) = SubmitHandler::validate($articleId, $step);
 
-		$formClass = "AuthorSubmitStep{$step}Form";
+		if ($step == 2) {
+            $formClass = "AuthorSubmitStep2MergedForm";
+        } else {
+            $formClass = "AuthorSubmitStep{$step}Form";
+        }
+
 		import("author.form.submit.$formClass");
 
 		$submitForm = &new $formClass($article);
@@ -119,7 +129,11 @@ class SubmitHandler extends AuthorHandler {
 						}
 					}
 					$submitForm->setData('authors', $authors);
-				}
+				} else if (Request::getUserVar('uploadSubmissionFile')) {
+                    $editData = true;
+                    $submitForm->uploadSubmissionFile('submissionFile');
+                }
+
 				break;
 
 			case 3:
@@ -153,7 +167,9 @@ class SubmitHandler extends AuthorHandler {
 				$templateMgr->assign('helpTopicId','submission.index');
 				$templateMgr->display('author/submit/complete.tpl');
 
-			} else {
+			} else if ($step == 2) {
+                Request::redirect(null, null, 'submit', $step+3, array('articleId' => $articleId));
+            } else {
 				Request::redirect(null, null, 'submit', $step+1, array('articleId' => $articleId));
 			}
 

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * @file AuthorSubmitStep2Form.inc.php
+ * @file AuthorSubmitStep2MergedForm.inc.php
  *
  * Copyright (c) 2003-2007 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @package author.form.submit
- * @class AuthorSubmitStep2Form
+ * @class AuthorSubmitStep2MergedForm
  *
  * Form for Step 2 of author article submission.
  *
@@ -16,11 +16,11 @@
 
 import("author.form.submit.AuthorSubmitForm");
 
-class AuthorSubmitStep2Form extends AuthorSubmitForm {
+class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 	/**
 	 * Constructor.
 	 */
-	function AuthorSubmitStep2Form($article) {
+	function AuthorSubmitStep2MergedForm($article) {
 		parent::AuthorSubmitForm($article, 2);
 
 		$journal = &Request::getJournal();
@@ -36,7 +36,6 @@ class AuthorSubmitStep2Form extends AuthorSubmitForm {
 	 */
 	function initData() {
 		$sectionDao = &DAORegistry::getDAO('SectionDAO');
-
 		if (isset($this->article)) {
 			$article = &$this->article;
 			$this->_data = array(
@@ -131,7 +130,17 @@ class AuthorSubmitStep2Form extends AuthorSubmitForm {
 		$countries =& $countryDao->getCountries();
 		$templateMgr->assign_by_ref('countries', $countries);
 
-		parent::display();
+		// Get submission files for this article
+		$articleFileDao = &DAORegistry::getDAO('ArticleFileDAO');
+		if ($this->article->getSubmissionFileId() != null) {
+            $templateMgr->assign_by_ref('submissionFile', $articleFileDao->getArticleFile($this->article->getSubmissionFileId()));
+		}
+
+		// Get supplementary files for this article
+		$suppFileDao = &DAORegistry::getDAO('SuppFileDAO');
+		$templateMgr->assign_by_ref('suppFiles', $suppFileDao->getSuppFilesByArticle($this->articleId));
+
+ 		parent::display();
 	}
 
 	/**
@@ -139,7 +148,6 @@ class AuthorSubmitStep2Form extends AuthorSubmitForm {
 	 * @return int the article ID
 	 */
 	function execute() {
-        echo "hi";
 		$articleDao = &DAORegistry::getDAO('ArticleDAO');
 		$authorDao = &DAORegistry::getDAO('AuthorDAO');
 
@@ -158,7 +166,7 @@ class AuthorSubmitStep2Form extends AuthorSubmitForm {
 		$article->setSponsor($this->getData('sponsor'), null); // Localized
 		if ($article->getSubmissionProgress() <= $this->step) {
 			$article->stampStatusModified();
-			$article->setSubmissionProgress($this->step + 1);
+			$article->setSubmissionProgress($this->step + 3);  // OPATAN: ($this->step + 1) changed to ($this->step + 3)
 		}
 
 		// Update authors
@@ -207,6 +215,31 @@ class AuthorSubmitStep2Form extends AuthorSubmitForm {
 
 		return $this->articleId;
 	}
+
+ 	/**
+	 * Upload the submission file.
+	 * @param $fileName string
+	 * @return boolean
+	 */
+	function uploadSubmissionFile($fileName) {
+		import("file.ArticleFileManager");
+
+		$articleFileManager = &new ArticleFileManager($this->articleId);
+		$articleDao = &DAORegistry::getDAO('ArticleDAO');
+
+		if ($articleFileManager->uploadedFileExists($fileName)) {
+			// upload new submission file, overwriting previous if necessary
+			$submissionFileId = $articleFileManager->uploadSubmissionFile($fileName, $this->article->getSubmissionFileId(), true);
+		}
+
+		if (isset($submissionFileId)) {
+			$this->article->setSubmissionFileId($submissionFileId);
+			return $articleDao->updateArticle($this->article);
+
+		} else {
+			return false;
+		}
+	}   
 }
 
 ?>
