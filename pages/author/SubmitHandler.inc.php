@@ -129,9 +129,17 @@ class SubmitHandler extends AuthorHandler {
 						}
 					}
 					$submitForm->setData('authors', $authors);
+
 				} else if (Request::getUserVar('uploadSubmissionFile')) {
                     $editData = true;
                     $submitForm->uploadSubmissionFile('submissionFile');
+
+                } else if (Request::getUserVar('submitUploadSuppFile')) {
+                    $editData = true;
+               		list($journal, $article) = SubmitHandler::validate($articleId, 2);
+                 	//$submitForm->setData('supp_title', Locale::translate('common.untitled'));
+            		$submitForm->uploadSuppFile();                   
+                    //SubmitHandler::submitUploadSuppFile();
                 }
 
 				break;
@@ -191,7 +199,7 @@ class SubmitHandler extends AuthorHandler {
 
 		import("author.form.submit.AuthorSubmitSuppFileForm");
 		$submitForm = &new AuthorSubmitSuppFileForm($article);
-		$submitForm->setData('title', Locale::translate('common.untitled'));
+    	$submitForm->setData('supp_title', Locale::translate('common.untitled'));
 		$suppFileId = $submitForm->execute();
 
 		Request::redirect(null, null, 'submitSuppFile', $suppFileId, array('articleId' => $articleId));

@@ -17,18 +17,43 @@
 import("author.form.submit.AuthorSubmitForm");
 
 class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
+	/** @var int the ID of the article */
+	var $articleId;
+
+	/** @var int the ID of the supplementary file */
+	var $suppFileId;
+
+	/** @var Article current article */
+	var $article;
+
+	/** @var SuppFile current file */
+	var $suppFile;
+
 	/**
 	 * Constructor.
 	 */
-	function AuthorSubmitStep2MergedForm($article) {
+	function AuthorSubmitStep2MergedForm($article, $suppFileId = null) {
 		parent::AuthorSubmitForm($article, 2);
 
 		$journal = &Request::getJournal();
+
+		$this->articleId = $article->getArticleId();
+
+		if (isset($suppFileId) && !empty($suppFileId)) {
+			$suppFileDao = &DAORegistry::getDAO('SuppFileDAO');
+			$this->suppFile = &$suppFileDao->getSuppFile($suppFileId, $article->getArticleId());
+			if (isset($this->suppFile)) {
+				$this->suppFileId = $suppFileId;
+			}
+		}
 
 		// Validation checks for this form
 		$this->addCheck(new FormValidatorCustom($this, 'authors', 'required', 'author.submit.form.authorRequired', create_function('$authors', 'return count($authors) > 0;')));
 		$this->addCheck(new FormValidatorArray($this, 'authors', 'required', 'author.submit.form.authorRequiredFields', array('firstName', 'lastName', 'email')));
 		$this->addCheck(new FormValidatorLocale($this, 'title', 'required', 'author.submit.form.titleRequired'));
+		// Validation checks for this form
+		//$this->addCheck(new FormValidatorLocale($this, 'supp_title', 'required', 'author.submit.suppFile.form.titleRequired'));
+		$this->addCheck(new FormValidatorPost($this));        
 	}
 
 	/**
@@ -97,7 +122,8 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 				'coverageSample',
 				'type',
 				'language',
-				'sponsor'
+				'sponsor',
+                'supp_title'
 			)
 		);
 
@@ -239,6 +265,71 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		} else {
 			return false;
 		}
+	}   
+
+ 	/**
+	 * Save changes to the supplementary file.
+	 * @return int the supplementary file ID
+	 */
+	function uploadSuppFile() {
+		import("file.ArticleFileManager");
+		$articleFileManager = &new ArticleFileManager($this->articleId);
+		$suppFileDao = &DAORegistry::getDAO('SuppFileDAO');
+
+		$fileName = 'uploadSuppFile';
+
+		// edit an existing supp file, otherwise create new supp file entry	
+		if (isset($this->suppFile)) {
+			$suppFile = &$this->suppFile;
+
+			// Remove old file and upload new, if file is selected.
+			if ($articleFileManager->uploadedFileExists($fileName)) {
+				$articleFileDao = &DAORegistry::getDAO('ArticleFileDAO');
+				$suppFileId = $articleFileManager->uploadSuppFile($fileName, $suppFile->getFileId(), true);
+				$suppFile->setFileId($suppFileId);
+			}
+
+			// Update existing supplementary file
+			$this->setSuppFileData($suppFile);
+			$suppFileDao->updateSuppFile($suppFile);
+
+		} else {
+			// Upload file, if file selected.
+			if ($articleFileManager->uploadedFileExists($fileName)) {
+				$fileId = $articleFileManager->uploadSuppFile($fileName);
+			} else {
+				$fileId = 0;
+			}
+
+			// Insert new supplementary file		
+			$suppFile = &new SuppFile();
+			$suppFile->setArticleId($this->articleId);
+			$suppFile->setFileId($fileId);
+			$this->setSuppFileData($suppFile);
+			$suppFileDao->insertSuppFile($suppFile);
+			$this->suppFileId = $suppFile->getSuppFileId();
+		}
+
+		return $this->suppFileId;
+	}   
+
+ 	/**
+	 * Assign form data to a SuppFile.
+	 * @param $suppFile SuppFile
+	 */
+	function setSuppFileData(&$suppFile) {
+		$suppFile->setTitle($this->getData('supp_title'), null); // Null
+		//$suppFile->setCreator($this->getData('creator'), null); // Null
+		//$suppFile->setSubject($this->getData('subject'), null); // Null
+		//$suppFile->setType($this->getData('type'));
+		//$suppFile->setTypeOther($this->getData('typeOther'), null); // Null
+		//$suppFile->setDescription($this->getData('description'), null); // Null
+		//$suppFile->setPublisher($this->getData('publisher'), null); // Null
+		//$suppFile->setSponsor($this->getData('sponsor'), null); // Null
+		$suppFile->setDateCreated($this->getData('dateCreated') == '' ? Core::getCurrentDate() : $this->getData('dateCreated'));
+		//$suppFile->setSource($this->getData('source'), null); // Null
+		//$suppFile->setLanguage($this->getData('language'));
+		//$suppFile->setShowReviewers($this->getData('showReviewers'));
 	}   
 }
 

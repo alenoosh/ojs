@@ -1924,11 +1924,13 @@ Active is how many reviews are currently being considered or underway.]]></messa
 	<message key="author.submit.step4">Step 4. Uploading Supplementary Files</message>
 	<message key="author.submit.step4a">Step 4a. Add a Supplementary File</message>
 	<message key="author.submit.step5">Step 5. Confirming the Submission</message>
+	<message key="author.submit.step234">Step 2. Entering the Submission's Metadata, Uploading the Submission and Supplementary Files</message>
 	<message key="author.submit.start">1. Start</message>
+    <message key="author.submit.submitOps">2. Enter Metadata , Upload Submission and Supplementary Files</message>
 	<message key="author.submit.metadata">2. Enter Metadata</message>
 	<message key="author.submit.upload">3. Upload Submission</message>
 	<message key="author.submit.supplementaryFiles">4. Upload Supplementary Files</message>
-	<message key="author.submit.confirmation">5. Confirmation</message>
+	<message key="author.submit.confirmation">3. Confirmation</message>
 	<message key="author.submit.cancelSubmission">You can complete this submission at a later date by selecting Active Submissions from the Author home.</message>
 	<message key="author.submit.notAccepting">This journal is not accepting submissions at this time.</message>
 	<message key="author.submit.requestWaiver">Request Waiver</message>
@@ -1987,6 +1989,7 @@ Active is how many reviews are currently being considered or underway.]]></messa
 <li>Once the submission is uploaded, click Save and Continue at the bottom of this page.</li>
 </ol>]]></message>
 	<message key="author.submit.submissionFile">Submission File</message>
+    <message key="author.submit.suppFile">Supplementary Files</message>
 	<message key="author.submit.uploadSubmissionFile">Upload submission file</message>
 	<message key="author.submit.replaceSubmissionFile">Replace submission file</message>
 	<message key="author.submit.noSubmissionFile">No submission file uploaded.</message>

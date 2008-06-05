@@ -85,7 +85,7 @@ class SuppFile extends ArticleFile {
 	 * @return string
 	 */
 	function getSuppFileTitle() {
-		return $this->getLocalizedData('title');
+		return $this->getLocalizedData('supp_title');
 	}
 
 	/**
@@ -94,7 +94,7 @@ class SuppFile extends ArticleFile {
 	 * @return string
 	 */
 	function getTitle() {
-		return $this->getData('title');
+		return $this->getData('supp_title');
 	}
 
 	/**
@@ -103,7 +103,7 @@ class SuppFile extends ArticleFile {
 	 * @param $locale string
 	 */
 	function setTitle($title, $locale) {
-		return $this->setData('title', $title, $locale);
+		return $this->setData('supp_title', $title, $locale);
 	}
 
 	/**
