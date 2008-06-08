@@ -40,7 +40,7 @@ class SubmitHandler extends AuthorHandler {
 
 		$submitForm = &new $formClass($article);
 		if ($submitForm->isLocaleResubmit()) {
-			$submitForm->readInputData();
+   			$submitForm->readInputData();
 		} else {
 			$submitForm->initData();
 		}
@@ -137,9 +137,8 @@ class SubmitHandler extends AuthorHandler {
                 } else if (Request::getUserVar('submitUploadSuppFile')) {
                     $editData = true;
                		list($journal, $article) = SubmitHandler::validate($articleId, 2);
-                 	//$submitForm->setData('supp_title', Locale::translate('common.untitled'));
-            		$submitForm->uploadSuppFile();                   
-                    //SubmitHandler::submitUploadSuppFile();
+                	$submitForm->uploadSuppFile();
+                    $submitForm->execute();
                 }
 
 				break;
@@ -248,7 +247,7 @@ class SubmitHandler extends AuthorHandler {
 
 		if ($submitForm->validate()) {
 			$submitForm->execute();
-			Request::redirect(null, null, 'submit', '4', array('articleId' => $articleId));
+			Request::redirect(null, null, 'submit', '2', array('articleId' => $articleId));
 		} else {
 			$submitForm->display();
 		}
@@ -267,7 +266,7 @@ class SubmitHandler extends AuthorHandler {
 		$articleId = Request::getUserVar('articleId');
 		$suppFileId = isset($args[0]) ? (int) $args[0] : 0;
 
-		list($journal, $article) = SubmitHandler::validate($articleId, 4);
+		list($journal, $article) = SubmitHandler::validate($articleId, 2);
 
 		$suppFileDao = &DAORegistry::getDAO('SuppFileDAO');
 		$suppFile = $suppFileDao->getSuppFile($suppFileId, $articleId);
@@ -276,9 +275,9 @@ class SubmitHandler extends AuthorHandler {
 		if ($suppFile->getFileId()) {
 			$articleFileManager = &new ArticleFileManager($articleId);
 			$articleFileManager->deleteFile($suppFile->getFileId());
-		}
+		}       
 
-		Request::redirect(null, null, 'submit', '4', array('articleId' => $articleId));
+		Request::redirect(null, null, 'submit', '2', array('articleId' => $articleId));
 	}
 
 	function expediteSubmission() {
