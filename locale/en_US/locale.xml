@@ -1923,7 +1923,8 @@ Active is how many reviews are currently being considered or underway.]]></messa
 	<message key="author.submit.step3">Step 3. Uploading the Submission</message>
 	<message key="author.submit.step4">Step 4. Uploading Supplementary Files</message>
 	<message key="author.submit.step4a">Step 4a. Add a Supplementary File</message>
-	<message key="author.submit.step5">Step 5. Confirming the Submission</message>
+    <message key="author.submit.editSupp">Edit a Supplementary File</message>
+	<message key="author.submit.step5">Step 3. Confirming the Submission</message>
 	<message key="author.submit.step234">Step 2. Entering the Submission's Metadata, Uploading the Submission and Supplementary Files</message>
 	<message key="author.submit.start">1. Start</message>
     <message key="author.submit.submitOps">2. Enter Metadata , Upload Submission and Supplementary Files</message>
@@ -1966,7 +1967,8 @@ Active is how many reviews are currently being considered or underway.]]></messa
 	<message key="author.submit.selectPrincipalContact">Principal contact for editorial correspondence.</message>
 	<message key="author.submit.addAuthor">Add Author</message>
 	<message key="author.submit.deleteAuthor">Delete Author</message>
-	<message key="author.submit.submissionIndexingDescription">Provide terms for indexing the submission; separate terms with a semi-colon (term1; term2; term3).</message>
+	<message key="author.submit.editAuthor">Edit Author</message>
+    <message key="author.submit.submissionIndexingDescription">Provide terms for indexing the submission; separate terms with a semi-colon (term1; term2; term3).</message>
 	<message key="author.submit.submissionSupportingAgencies">Supporting Agencies</message>
 	<message key="author.submit.submissionSupportingAgenciesDescription">Identify agencies that provided funding or support for the work presented in this submission.</message>
 	<message key="author.submit.agencies">Agencies</message>

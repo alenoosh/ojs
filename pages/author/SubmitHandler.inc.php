@@ -81,7 +81,15 @@ class SubmitHandler extends AuthorHandler {
 					array_push($authors, array());
 					$submitForm->setData('authors', $authors);
 
-				} else if (($delAuthor = Request::getUserVar('delAuthor')) && count($delAuthor) == 1) {
+				} else if (($editAuthor = Request::getUserVar('editAuthor')) && count($editAuthor) == 1) {
+                    $editData = true;
+  					list($editAuthor) = array_keys($editAuthor);
+					$editAuthor = (int) $editAuthor;
+                    $authors = $submitForm->getData('authors');
+                    $submitForm->setData('editAuthorId', $authors[$editAuthor]['authorId']);
+                    $submitForm->setData('authors', $authors);
+                    
+                } else if (($delAuthor = Request::getUserVar('delAuthor')) && count($delAuthor) == 1) {
 					// Delete an author
 					$editData = true;
 					list($delAuthor) = array_keys($delAuthor);
@@ -319,6 +327,6 @@ class SubmitHandler extends AuthorHandler {
 			}
 		}
 		return array(&$journal, &$article);
-	}
+	}    
 }
 ?>

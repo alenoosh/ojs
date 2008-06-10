@@ -86,9 +86,9 @@ function confirmForgottenUpload() {
 {/if}
 
 <table width="100%" class="data">
-{if $author.firstName}
+{if $author.firstName and $author.authorId neq $editAuthorId}
 <tr valign="top">
-    <td>{$author.firstName|escape}&nbsp;{$author.lastName|escape}&nbsp;{$author.email|escape}</td>  
+    <td>{$author.firstName|escape}&nbsp;{$author.lastName|escape}&nbsp;{$author.email|escape}&nbsp;&nbsp;<input type="submit" name="editAuthor[{$authorIndex|escape}]" value="{translate key="author.submit.editAuthor"}" class="button" /></td>
     <td>
         <input type="hidden" name="authors[{$authorIndex|escape}][firstName]"
                value="{$author.firstName|escape}" />

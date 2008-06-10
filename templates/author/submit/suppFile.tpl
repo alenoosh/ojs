@@ -8,10 +8,10 @@
  *
  * $Id$
  *}
-{assign var="pageTitle" value="author.submit.step4a"}
-{include file="author/submit/submitHeader.tpl"}
-
-<p><a href="{url op="submit" path=4 articleId=$articleId}">&lt;&lt; {translate key="author.submit.backToSupplementaryFiles"}</a></p>
+{assign var="pageTitle" value="author.submit.editSupp"}
+{* include file="author/submit/submitHeader.tpl" *}
+{assign var="pageCrumbTitle" value="author.submit"}
+{include file="common/header.tpl"}
 
 <form name="submit" method="post" action="{url op="saveSubmitSuppFile" path=$suppFileId}" enctype="multipart/form-data">
 <input type="hidden" name="articleId" value="{$articleId|escape}" />
