@@ -86,6 +86,7 @@ class SubmitHandler extends AuthorHandler {
   					list($editAuthor) = array_keys($editAuthor);
 					$editAuthor = (int) $editAuthor;
                     $authors = $submitForm->getData('authors');
+                    $authors[$editAuthor]['edited'] = 1;
                     $submitForm->setData('editAuthorId', $authors[$editAuthor]['authorId']);
                     $submitForm->setData('authors', $authors);
                     

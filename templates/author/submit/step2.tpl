@@ -80,15 +80,20 @@ function confirmForgottenUpload() {
 
 {foreach name=authors from=$authors key=authorIndex item=author}
 <input type="hidden" name="authors[{$authorIndex|escape}][authorId]" value="{$author.authorId|escape}" />
+<input type="hidden" name="authors[{$authorIndex|escape}][edited]" value="0" />
 <input type="hidden" name="authors[{$authorIndex|escape}][seq]" value="{$authorIndex+1}" />
 {if $smarty.foreach.authors.total <= 1}
 <input type="hidden" name="primaryContact" value="{$authorIndex|escape}" />
 {/if}
 
 <table width="100%" class="data">
-{if $author.firstName and $author.authorId neq $editAuthorId}
+{if $author.firstName and $author.edited eq 0}
 <tr valign="top">
-    <td>{$author.firstName|escape}&nbsp;{$author.lastName|escape}&nbsp;{$author.email|escape}&nbsp;&nbsp;<input type="submit" name="editAuthor[{$authorIndex|escape}]" value="{translate key="author.submit.editAuthor"}" class="button" /></td>
+    <td>
+        {$author.firstName|escape}&nbsp;{$author.lastName|escape}&nbsp;{$author.email|escape}&nbsp;&nbsp;
+        <input type="submit" name="editAuthor[{$authorIndex|escape}]" value="{translate key="author.submit.editAuthor"}"
+               class="button" />
+    </td>
     <td>
         <input type="hidden" name="authors[{$authorIndex|escape}][firstName]"
                value="{$author.firstName|escape}" />
