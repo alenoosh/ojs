@@ -1,0 +1,34 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE locale SYSTEM "../../../../../locale/locale.dtd">
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2003-2006 John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the en_US (U.S. English) locale.
+  *
+  -->
+  
+<locale name="fa_IR" full_name="Farsi">
+  <message key="plugins.generic.cmsrss.displayName" >پلاگین سر ام اس آر اس اس</message>
+  <message key="plugins.generic.cmsrss.description" >با این پلاگین میتوان آر اس اس را با صفحات سی ام اس یکی کرد</message>
+  
+  <message key="plugins.generic.cmsrss.requirement.cms" ><![CDATA[<strong>برای استفاده از این پلاگین باید پلاگین سی ام اس را راه اندازی و فعال کرد</strong>]]></message>
+  
+  <message key="manager.plugins.cmsrss.edit" >ویرایش / افزودن خروجی آر اس اس</message>
+  <message key="plugins.generic.cmsrss.pagename" >نام صفحه</message>
+  <message key="plugins.generic.cmsrss.url" >یو آر ال ورودی</message>
+  <message key="plugins.generic.cmsrss.months" >قدیمی ترین آیتم (بر حسب ماه). برای بکار گیری تمام آیتم های موجود صفر وارد کنید.</message>
+  <message key="plugins.generic.cmsrss.aggregate" >بازخوراندهای هر صفحه را ترکیب و سپس بر حسب تاریخ مرتب کنید</message>
+  <message key="plugins.generic.cmsrss.form.introduction" ><![CDATA[<p>با این پلاگین سی ام اس آر اس اس مدیر مجله میتواند باز خوراند آر اس اس را به صفحات بیافزاید (که در فهرست مطالب خواهد آمد). نامهای هدر را باید بکمک ":" از هم حدا کرد. مثلا هدر۱: هدر۲.</p><p>یو آر ال بازخوراند ها چک نخواهند شد. لذا دقت کنید که یو آر ال بکار رفته مر بوط به یو آر ال آر اس اس صحیحی است.</p>]]></message>
+  <message key="plugins.generic.cmsrss.requiredFields" >هر ردیف احتیاج به نام صفحه و یو آر ال باز خوراند دارد</message>
+  <message key="plugins.generic.cmsrss.sorting" >ردیف ها بر حسب نام صفحه مرتب شده اند</message>
+  
+  <message key="plugins.generic.cmsrss.addUrl" >افزودن بازخوراندی دیگر</message>
+  <message key="plugins.generic.cmsrss.deleteUrl" >حذف بازخوراند</message>
+
+  <!--تمپلیت آر اس اس-->
+  <message key="plugins.generic.cmsrss.postedon" >پست شد در تاریخ</message>
+  <message key="plugins.generic.cmsrss.permalink" >پرمالینک</message>
+</locale>

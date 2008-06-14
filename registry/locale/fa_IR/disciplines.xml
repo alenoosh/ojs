@@ -1,0 +1,70 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE disciplines>
+<!--
+  * disciplines.xml
+  *
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localized list of disciplines.
+  *
+  -->
+
+
+<disciplines>
+<!--علوم طبیعی-->  <discipline code="A1" name="نجوم" />
+  <discipline code="A2" name="علوم رفتاری" />
+  <discipline code="A3" name="بیولوژی" />
+  <discipline code="A4" name="شیمی" />
+  <discipline code="A5" name="فیزیک" />
+  <discipline code="A6" name="زمین شناسی" />
+<!--ریاضیات و علوم کامپیوتر-->  <discipline code="B1" name="ریاضیات" />
+  <discipline code="B2" name="علوم کامپیوتر" />
+<!--علوم اجتماعی-->  <discipline code="C1" name="انسان شناسی" />
+  <discipline code="C2" name="باستان شناسی" />
+  <discipline code="C3" name="معماری" />
+  <discipline code="C4" name="ارتباطات" />
+  <discipline code="C5" name="اقتصاد" />
+  <discipline code="C6" name="مطالعات قومی" />
+  <discipline code="C7" name="قوم شناسی" />
+  <discipline code="C8" name="جغرافی" />
+  <discipline code="C9" name="علوم سیاسی" />
+  <discipline code="C10" name="روانشناسی" />
+  <discipline code="C11" name="جامعه شناسی" />
+  <discipline code="C12" name="تعلیم و تربیت" />
+<!--علوم انسانی و هنر-->  <discipline code="D1" name="هنر" />
+  <discipline code="D2" name="مطالعات فرهنگی" />
+  <discipline code="D3" name="کلاسیک" />
+  <discipline code="D4" name="نویسندگی خلاق" />
+  <discipline code="D5" name="رقص" />
+  <discipline code="D6" name="انگلیسی" />
+  <discipline code="D7" name="مطالعه و انتقاد فیلم" />
+  <discipline code="D8" name="فولکلور" />
+  <discipline code="D9" name="تاریخ" />
+  <discipline code="D10" name="زبان شناسی" />
+  <discipline code="D11" name="ادبیات" />
+  <discipline code="D12" name="زسانه ها" />
+  <discipline code="D13" name="موزیک" />
+  <discipline code="D14" name="موزه شناسی" />
+  <discipline code="D15" name="اسطوره شناسی" />
+  <discipline code="D16" name="فلسفه زبان" />
+  <discipline code="D17" name="فلسفه" />
+  <discipline code="D18" name="مطالعات مذهبی" />
+  <discipline code="D19" name="سمبول شناسی" />
+  <discipline code="D20" name="تئاتر" />
+  <discipline code="D21" name="زنان و مطالعات جنس" />
+<!--علوم کاربردی-->  <discipline code="E1" name="کشاورزی" />
+  <discipline code="E2" name="تجارت" />
+  <discipline code="E3" name="طراحی" />
+  <discipline code="E4" name="مهندسی" />
+  <discipline code="E5" name="ارگونومیک" />
+  <discipline code="E6" name="خانواده و مصرف کننده" />
+  <discipline code="E7" name="جنگل داری" />
+  <discipline code="E8" name="بهداشت" />
+  <discipline code="E9" name="ژورنالیسم و ارتباطات گسترده" />
+  <discipline code="E10" name="حقوق" />
+  <discipline code="E11" name="اطلاعات و کتاب داری" />
+  <discipline code="E12" name="طب" />
+  <discipline code="E13" name="علوم نظامی" />
+  <discipline code="E14" name="کار اجتماعی" />
+  <discipline code="F1" name="غیره" />
+</disciplines>

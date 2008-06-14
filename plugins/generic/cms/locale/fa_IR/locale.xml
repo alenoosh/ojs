@@ -1,0 +1,29 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE locale SYSTEM "../../../../../locale/locale.dtd">
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2003-2007 John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the en_US (U.S. English) locale.
+  *
+  -->
+  
+<locale name="fa_IR" full_name="Farsi">
+  <message key="plugins.generic.cms.displayName" >پلاگین سیستم اداره محتوی (سی ام اس)</message>
+  <message key="plugins.generic.cms.description" >با این پلاگین میتوان محتوی استاتیک صفحه ایجاد کرد</message>
+  
+  <message key="plugins.generic.cms.toc" >فهرست مطالب</message>
+  
+  <message key="plugins.generic.cms.requirement.layoutmanager" ><![CDATA[<strong>برای استفاده از این پلاگین باید پلاگین اداره صفحه آرائی را فعال کرد.</strong>]]></message>
+  <message key="plugins.generic.cms.requirement.tinymce" ><![CDATA[<strong>برای افزودن یا ویرایش محتوی باید پلاگین تینی ام سی ای را راه اندازی و فعال کرد</strong>]]></message>
+  
+  <message key="manager.plugins.content" >ویرایش / افزودن محتوی</message>
+  
+  <message key="plugins.generic.cms.form.introduction" >مدیر مجله بکمک پلاگین سی ام اس میتواند محتوای استاتیک برای مجله ایجاد کند. بکمک هدرهای ۱ و ۲و ۳ میتوان محتوی را صفحه بندی کرد. هز هدر برای خود یک آیتم منو را در فهرست مطالب تشکیل خواهد داد که در نوار حاشیه ای دیده خواهد شد. برای ویرایش یک صفحه آنرا از فهرست مطالب انتخاب و پس از ویرایش بر روی دکمه ذخیره کلیک کنید. برای افزودن صفحه ای جدید کافی است یک هدر حدید و در زیر آن مطالب مورد نظر آن صفحه را بیافزائید. محتوای جدید در زیر صفحه جاری ظاهر میشود.</message>
+  
+  <message key="plugins.generic.cms.error.muststartwithheader" >هر صفحه با یک هدر شروع میشود (<![CDATA[&lt;h1&gt;, &lt;h2&gt;, &lt;h3&gt;]]>(</message>
+  <message key="plugins.generic.cms.error.musthavecontent" >بدنبال هر هدر میبایست مقداری محتوی بیاید. لطفا دقت کنید که دو هدر بلافاصله به دنبال هم نیایند.</message>
+  <message key="plugins.generic.cms.error.headingcannotbeempty" >هر هدر میبایست حداقل دارای یک حرف غیر از فاصله باشد.</message>
+</locale>

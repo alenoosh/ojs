@@ -1,0 +1,35 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE locale SYSTEM "../../../../../locale/locale.dtd">
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2003-2007 John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for the en_US (U.S. English) locale.
+  *
+  * $Id: locale.xml,v 1.4 2007/04/10 20:57:40 asmecher Exp $
+  -->
+  
+<locale name="fa_IR" full_name="Farsi">
+  <message key="plugins.gateways.googleScholar.displayName" >پلاگین گذرگاه گوگل اسکولار</message>
+  <message key="plugins.gateways.googleScholar.description" >این پلاگین اطلاعات زنده یک مجله را به منظور اندکس شدن در دسترس سرویس جستجو و اندکس گوگل اسکولار قرار میدهد.</message>
+  <message key="plugins.gateways.googleScholar.settings" >تنظیمات</message>
+  <message key="plugins.gateways.googleScholar.settings.description" ><![CDATA[<p>پلاگین گذرگاه گوگل اسکولار داده های مجلات را در دسترس جستجوگر گوگل اسکولار قرار میدهد. این گزینه به ازای هر مجله قابل اعمال است. هنگامی که این گزینه فقال شود دایرکتوری مربوطه (منظور اطلاعات ناشر) در آدرس زیر یافت خواهد شد.</p>
+<p>گوگل اسکولار به اطلاعات خاصی برای عملکرد صحیح احتیاج دارد. این اطلاعات ممکن است در سیستم OJS بصورت اختیاری باشد. لذا ابتدا چک کنید که اطلاعات مورد نظر وارد شده باشد</p>]]></message>
+  <message key="plugins.gateways.googleScholar.checkData" >داده ها را چک کنید</message>
+  <message key="plugins.gateways.googleScholar.errors" >پیامهای خظا</message>
+  <message key="plugins.gateways.googleScholar.errors.noErrors" >خظائی روی نداد</message>
+
+  <message key="plugins.gateways.googleScholar.settings.publisherName" >نام ناشر</message>
+  <message key="plugins.gateways.googleScholar.settings.publisherLocation" >محل ناشر</message>
+  <message key="plugins.gateways.googleScholar.settings.publisherResultName" >نام ناشر بدست امده</message>
+  <message key="plugins.gateways.googleScholar.settings.contact" >ایمیل تماس</message>
+  <message key="plugins.gateways.googleScholar.settings.addContact" >اقزودن ایمیل تماس</message>
+  
+  <!--پیام خطا-->  
+  <message key="plugins.gateways.googleScholar.errors.noPublisherName" >وارد کردن نام ناشر لازم است</message>
+  <message key="plugins.gateways.googleScholar.errors.noContacts" >ایمیل تماس وارد نشده یا اشتباه است. حداقل یک مورد لازم است  و همگی باید معتبر باشد.</message>
+  <message key="plugins.gateways.googleScholar.errors.noIssn" >ای اس اس ان مجله وارد نشده است. به مرحله دوم تنظیمات مجله مراجعه کنید.</message>
+  <message key="plugins.gateways.googleScholar.errors.errorMessage" >استخراج داده های گوگل اسکولار ناممکن است. تنظیم صحیح پلاگین استخراج داده گوگل اسکولار لازم است. لطفا از تابع چک داده های مدیر مجله استفاده کنید.</message>
+</locale>

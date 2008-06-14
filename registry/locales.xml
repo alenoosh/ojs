@@ -29,4 +29,5 @@
 	<locale key="tr_TR" name="Türkiye Türkçesi"/>
 	<locale key="vi_VN" name="Tiếng Việt"/>
 	<locale key="zh_TW" name="繁體中文"/>
+    <locale key="fa_IR" name="فارسی"/>
 </locales>

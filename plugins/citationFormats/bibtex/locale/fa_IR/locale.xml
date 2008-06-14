@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE locale SYSTEM "../../../../../locale/locale.dtd">
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2003-2007 John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for this citation plugin in en_US.
+  *
+  * $Id: locale.xml,v 1.1 2007/06/21 00:39:53 asmecher Exp $
+  -->
+  
+<locale name="fa_IR" full_name="Farsi">
+  <message key="plugins.citationFormats.bibtex.displayName" >پلاگین الگوی مرجع نویسی بیبتکس</message>
+  <message key="plugins.citationFormats.bibtex.citationFormatName" >بیبتکس</message>
+  <message key="plugins.citationFormats.bibtex.description" >این پلاگین الگوی مرجع نویسی بیبتکس را اعمال میکند.</message>
+</locale>

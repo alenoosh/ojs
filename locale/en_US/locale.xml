@@ -255,7 +255,7 @@
 	<message key="common.queue.long.completed">Archive</message>
 	<message key="common.queue.short.completed">Archive</message>
 	
-	<!--
+    <!--
 	 *
 	 * ENTITIES - This section contains terms pertaining to the system's
 	 *            major entities, e.g. Article, Journal, Section
@@ -301,7 +301,7 @@
 	<message key="article.details">Details</message>
 	<message key="article.coverPage.altText">Cover Image</message>
 
-	<!-- Submission Tracking - Common -->
+    <!-- Submission Tracking - Common -->
 	<message key="submission.summary">Summary</message>
 	<message key="submission.review">Review</message>
 	<message key="submission.editing">Editing</message>
@@ -344,7 +344,6 @@
 	<message key="submission.notifyAuthor">Notify Author</message>
 	<message key="submission.notifyEditor">Notify Editor</message>
 	<message key="submission.editorAuthorRecord">Editor/Author Correspondence</message>
-    <!-- OPATAN: Editor/Author Email Record changed to Editor/Author Correspondence-->
 	<message key="submission.reviewersVersion">Reviewer's annotated version of file</message>
 	<message key="submission.postReviewVersion">Post-review version of file</message>
 	<message key="submission.editorVersion">Editor Version</message>
@@ -367,7 +366,7 @@
 	<message key="submission.restrictions">Restrictions</message>
 	<message key="submission.supportingAgencies">Supporting Agencies</message>
 	<message key="submission.saveMetadata">Save Metadata</message>
-	
+
 	<message key="submissions.sec">Sec</message>
 	<message key="submissions.step1">Step 1</message>
 	<message key="submissions.step3">Step 3</message>
@@ -537,14 +536,14 @@
 	<message key="submission.event.author.authorRevision">Author revision submitted</message>
 
 	<message key="submission.event.general.authorRevision">Author revision file updated</message>
-	
+
 	<message key="submission.event.editor.editorAssigned">Editor assigned to submission</message>
 	<message key="submission.event.editor.editorUnassigned">Editor unassigned from submission</message>
 	<message key="submission.event.editor.editorDecision">Editor decision submitted</message>
 	<message key="submission.event.editor.editorFile">Editor file updated</message>
 	<message key="submission.event.editor.submissionArchived">Submission sent to archive</message>
 	<message key="submission.event.editor.submissionRestored">Submission restored from archive</message>
-	
+
 	<message key="submission.event.reviewer.reviewerAssigned">Reviewer assigned to submission</message>
 	<message key="submission.event.reviewer.reviewerUnassigned">Reviewer unassigned from submission</message>
 	<message key="submission.event.reviewer.reviewInitiated">Review assignment initiated</message>
@@ -559,7 +558,7 @@
 	<message key="submission.event.reviewer.reviewDueDate">Review due date modified</message>
 	<message key="submission.event.reviewer.reviewResubmitted">Review resubmitted</message>
 	<message key="submission.event.reviewer.reviewFile">Review file updated</message>
-	
+
 	<message key="submission.event.copyedit.copyeditorAssigned">Copyeditor assigned to submission</message>
 	<message key="submission.event.copyedit.copyeditorUnassigned">Copyeditor unassigned from submission</message>
 	<message key="submission.event.copyedit.copyeditInitiated">Copyedit assignment initiated</message>
@@ -567,26 +566,26 @@
 	<message key="submission.event.copyedit.copyeditInitialCompleted">Initial copyedit completed</message>
 	<message key="submission.event.copyedit.copyeditFinalCompleted">Final copyedit completed</message>
 	<message key="submission.event.copyedit.copyeditSetFile">Copyedit file updated</message>
-	
+
 	<message key="submission.event.proofread.proofreaderAssigned">Proofreader assigned to submission</message>
 	<message key="submission.event.proofread.proofreaderUnassigned">Proofreader unassigned from submission</message>
 	<message key="submission.event.proofread.proofreadInitiated">Proofread assignment initiated</message>
 	<message key="submission.event.proofread.proofreadRevision">Proofreader revisions file updated</message>
 	<message key="submission.event.proofread.proofreadCompleted">Proofread assignment completed</message>
-	
+
 	<message key="submission.event.layout.layoutEditorAssigned">Layout editor assigned to submission</message>
 	<message key="submission.event.layout.layoutEditorUnassigned">Layout editor unassigned from submission</message>
 	<message key="submission.event.layout.layoutInitiated">Layout assignment initiated</message>
 	<message key="submission.event.layout.layoutGalleyCreated">Layout galley updated</message>
 	<message key="submission.event.layout.layoutComplete">Layout assignment completed</message>
-	<!--
+    <!--
 	 *
 	 * INTERFACE - Contains phrases organized by the section of the
 	 *             user interface they appear in.
 	 *
 	-->
 
-	<!-- Reader article view -->
+    <!-- Reader article view -->
 	<message key="reader.fullText">Full Text:</message>
 	<message key="reader.subscribersOnly">Subscribers Only</message>
 	<message key="reader.subscriptionRequiredLoginText">Subscription required to access item. To verify subscription, log in to journal.</message>  
@@ -594,7 +593,7 @@
 	<message key="reader.subscriptionAccess">Subscription Access</message>
 	<message key="reader.subscriptionOrFeeAccess">Subscription or Fee Access</message>
 
-	<!-- Reader Comments -->
+    <!-- Reader Comments -->
 	<message key="comments.commentsOnArticle">Comments on this article</message>
 	<message key="comments.viewAllComments">View all comments</message>
 	<message key="comments.noComments">No reader comments have been posted.</message>
@@ -618,12 +617,12 @@
 	<message key="comments.readMore">Read more</message>
 	<message key="comments.confirmDeleteChildren">Deleting this comment will also delete any replies to it. Are you sure you wish to do this?</message>
 
-	<!-- Site Administration -->
+    <!-- Site Administration -->
 	<message key="admin.siteAdmin">Site Administration</message>
 	<message key="admin.siteSettings">Site Settings</message>
 	<message key="admin.hostedJournals">Hosted Journals</message>
 	<message key="admin.authSources">Authentication Sources</message>
-	
+
 	<message key="admin.settings.siteTitle">Site title</message>
 	<message key="admin.settings.introduction">Introduction</message>
 	<message key="admin.settings.aboutDescription">About the Site description</message>
@@ -650,7 +649,7 @@
 <br /><br />
 Note that the OAI interface can be disabled for this site by editing the OJS system configuration. Future versions of OJS will allow the OAI interface to be enabled or disabled for individual journals within the site.]]></message>
 
-	
+
 	<message key="admin.siteManagement">Site Management</message>
 	<message key="admin.adminFunctions">Administrative Functions</message>
 	<message key="admin.expireSessions">Expire User Sessions</message>
@@ -698,8 +697,8 @@ Note that the OAI interface can be disabled for this site by editing the OJS sys
 <ul>
 	<li>If a user attempts to register a new account with this site with a username that exists on the authentication source (but not in the OJS database), the registration attempt is only allowed if the supplied password is valid for that user account.</li>
 </ul>]]></message>
-	
-	<!-- System Information -->
+
+    <!-- System Information -->
 	<message key="admin.systemVersion">OJS Version</message>
 	<message key="admin.systemConfiguration">OJS Configuration</message>
 	<message key="admin.serverInformation">Server Information</message>
@@ -737,7 +736,7 @@ Note that the OAI interface can be disabled for this site by editing the OJS sys
 	<message key="admin.version.downloadPackage">Download</message>
 	<message key="admin.version.downloadPatch">Download Patch</message>
 	<message key="admin.version.moreInfo">More Information</message>
-	
+
 	<message key="admin.journals.journalSettings">Journal Settings</message>
 	<message key="admin.journals.noneCreated">No journals have been created.</message>
 	<message key="admin.journals.confirmDelete">Are you sure you want to permanently delete this journal and all of its contents?</message>
@@ -900,7 +899,7 @@ Note that the OAI interface can be disabled for this site by editing the OJS sys
 	<message key="manager.payment.paymentMethods">Fee Payment Methods</message>
 	<message key="manager.payment.paymentMethod">Payment Method</message>
 	<message key="manager.payment.paymentMethod.description">You may configure any of the following Payment Method Plugins from this screen.</message>
-		
+
 	<message key="manager.payment.paymentType">Payment Type</message>
 	<message key="manager.payment.timestamp">Timestamp</message>
 	<message key="manager.payment.editSubscription">Edit Subscription</message>
@@ -1016,18 +1015,18 @@ Note that the OAI interface can be disabled for this site by editing the OJS sys
 	<message key="manager.setup.reviewOptions">Review Options</message>
 	<message key="manager.setup.reviewOptions.reviewTime">Review Time</message>
 	<message key="manager.setup.reviewOptions.numWeeksPerReview">The typical period of time allowed for reviews</message>
-        <message key="manager.setup.reviewOptions.noteOnModification">Can be modified during the editorial process.</message>
+    <message key="manager.setup.reviewOptions.noteOnModification">Can be modified during the editorial process.</message>
 	<message key="manager.setup.reviewOptions.reviewerReminders">Reviewer Reminders</message>
-        <message key="manager.setup.reviewOptions.automatedReminders">Automated email reminders (available in OJS's default Emails) can be sent to reviewers at two points (while the editor can always email the reviewer directly as well)</message>
-        <message key="manager.setup.reviewOptions.remindForInvite1">If reviewer has not responded to a review request within</message>
-        <message key="manager.setup.reviewOptions.remindForInvite2">days.</message>
-        <message key="manager.setup.reviewOptions.remindForSubmit1">If reviewer has not submitted a recommendation within</message>
-        <message key="manager.setup.reviewOptions.remindForSubmit2">days after review's due date.</message>
+    <message key="manager.setup.reviewOptions.automatedReminders">Automated email reminders (available in OJS's default Emails) can be sent to reviewers at two points (while the editor can always email the reviewer directly as well)</message>
+    <message key="manager.setup.reviewOptions.remindForInvite1">If reviewer has not responded to a review request within</message>
+    <message key="manager.setup.reviewOptions.remindForInvite2">days.</message>
+    <message key="manager.setup.reviewOptions.remindForSubmit1">If reviewer has not submitted a recommendation within</message>
+    <message key="manager.setup.reviewOptions.remindForSubmit2">days after review's due date.</message>
 	<message key="manager.setup.reviewOptions.automatedRemindersDisabled"><![CDATA[<strong>Note:</strong> To activate these options, the site administrator must enable the <tt>scheduled_tasks</tt> option in the OJS configuration file. Additional server configuration may be required to support this functionality (which may not be possible on all servers), as indicated in the OJS documentation.]]></message>
 	<message key="manager.setup.reviewOptions.reviewerRatings">Reviewer Ratings</message>
-        <message key="manager.setup.reviewOptions.onQuality">Editors will rate reviewers on a five-point quality scale after each review.</message>
+    <message key="manager.setup.reviewOptions.onQuality">Editors will rate reviewers on a five-point quality scale after each review.</message>
 	<message key="manager.setup.reviewOptions.reviewerAccess">Reviewer Access</message>
-        <message key="manager.setup.reviewOptions.restrictReviewerFileAccess">Reviewers will have access to the submission file only after agreeing to review it.</message>
+    <message key="manager.setup.reviewOptions.restrictReviewerFileAccess">Reviewers will have access to the submission file only after agreeing to review it.</message>
 	<message key="manager.setup.reviewOptions.reviewerAccessKeysEnabled">Enable one-click reviewer access.</message>
 	<message key="manager.setup.reviewOptions.reviewerAccessKeysEnabled.description"><![CDATA[<strong>Note:</strong> The email invitation to reviewers will contain a special URL that takes invited reviewers directly to the Review page for the submission (with access to any other pages requiring them to log in). For security reasons with this option, editors are not able to modify email addresses or add CCs or BCCs prior to sending invitations to reviewers.]]></message>
 
@@ -1873,30 +1872,30 @@ Active is how many reviews are currently being considered or underway.]]></messa
 	<message key="reviewer.article.uploadedFile">Uploaded files</message>	
 	<message key="reviewer.article.reviewersAnnotatedVersion">Version uploaded by reviewer</message>
 	<message key="reviewer.article.reviewersAnnotatedVersionDescription">(If you want to annotate the file, for the editor, save on your hard drive and use Browse/Upload.)</message>
-        <message key="reviewer.article.schedule.request">Editor's Request</message>
-        <message key="reviewer.article.schedule.response">Your Response</message>
-        <message key="reviewer.article.schedule.submitted">Review Submitted</message>
-        <message key="reviewer.article.schedule.due">Review Due</message>
+    <message key="reviewer.article.schedule.request">Editor's Request</message>
+    <message key="reviewer.article.schedule.response">Your Response</message>
+    <message key="reviewer.article.schedule.submitted">Review Submitted</message>
+    <message key="reviewer.article.schedule.due">Review Due</message>
 	<message key="reviewer.article.decision.accept">Accept Submission</message>
 	<message key="reviewer.article.decision.pendingRevisions">Revisions Required</message>
 	<message key="reviewer.article.decision.resubmitHere">Resubmit for Review</message>
-        <message key="reviewer.article.decision.resubmitElsewhere">Resubmit Elsewhere</message>
+    <message key="reviewer.article.decision.resubmitElsewhere">Resubmit Elsewhere</message>
 	<message key="reviewer.article.decision.decline">Decline Submission</message>
 	<message key="reviewer.article.decision.seeComments">See Comments</message>
 	<message key="reviewer.article.schedule">Schedule</message>
-        <message key="reviewer.article.submissionToBeReviewed">Submission To Be Reviewed</message>
-        <message key="reviewer.article.reviewSchedule">Review Schedule</message>
-        <message key="reviewer.article.reviewSteps">Review Steps</message>
-        <message key="reviewer.article.reviewerGuidelines">Reviewer Guidelines</message>
-        <message key="reviewer.article.notifyEditorA">Notify the submission's editor</message>
-        <message key="reviewer.article.notifyEditorB">as to whether you will undertake the review.</message>
-        <message key="reviewer.article.consultGuidelines">If you are going to do the review, consult Reviewer Guidelines below.</message>
-        <message key="reviewer.article.downloadSubmission">Click on file names to download and review (on screen or by printing) the files associated with this submission.</message>
-        <message key="reviewer.article.enterCompetingInterests"><![CDATA[Declare whether or not you have competing interests with regard to this research (see <a target="_new" class="action" href="{$competingInterestGuidelinesUrl}">CI&nbsp;Policy</a>).]]></message>
+    <message key="reviewer.article.submissionToBeReviewed">Submission To Be Reviewed</message>
+    <message key="reviewer.article.reviewSchedule">Review Schedule</message>
+    <message key="reviewer.article.reviewSteps">Review Steps</message>
+    <message key="reviewer.article.reviewerGuidelines">Reviewer Guidelines</message>
+    <message key="reviewer.article.notifyEditorA">Notify the submission's editor</message>
+    <message key="reviewer.article.notifyEditorB">as to whether you will undertake the review.</message>
+    <message key="reviewer.article.consultGuidelines">If you are going to do the review, consult Reviewer Guidelines below.</message>
+    <message key="reviewer.article.downloadSubmission">Click on file names to download and review (on screen or by printing) the files associated with this submission.</message>
+    <message key="reviewer.article.enterCompetingInterests"><![CDATA[Declare whether or not you have competing interests with regard to this research (see <a target="_new" class="action" href="{$competingInterestGuidelinesUrl}">CI&nbsp;Policy</a>).]]></message>
 	<message key="reviewer.competingInterests">Competing Interests</message>
-        <message key="reviewer.article.enterReviewA">Click on icon to enter (or paste) your review of this submission.</message>
-        <message key="reviewer.article.uploadFile">In addition, you can upload files for the editor and/or author to consult.</message>
-        <message key="reviewer.article.selectRecommendation">Select a recommendation and submit the review to complete the process. You must enter a review or upload a file before selecting a recommendation.</message>
+    <message key="reviewer.article.enterReviewA">Click on icon to enter (or paste) your review of this submission.</message>
+    <message key="reviewer.article.uploadFile">In addition, you can upload files for the editor and/or author to consult.</message>
+    <message key="reviewer.article.selectRecommendation">Select a recommendation and submit the review to complete the process. You must enter a review or upload a file before selecting a recommendation.</message>
 	<message key="reviewer.article.mustSelectDecision">No recommendation was selected. You must choose a recommendation to submit.</message>
 	<message key="reviewer.article.confirmDecision">Once you have recorded a decision you will no longer be able to make changes to this review. Are you sure you wish to continue?</message>
 	<message key="reviewer.article.ensuringBlindReview">Ensuring a Blind Review</message>
@@ -1910,7 +1909,7 @@ Active is how many reviews are currently being considered or underway.]]></messa
 	<!-- Proofreader -->
 	<message key="proofreader.noProofreadingAssignments">No Proofreading Assignments</message>
 
-	<!-- Author -->
+    <!-- Author -->
 	<message key="author.submit">New Submission</message>
 	<message key="author.track">Active Submissions</message>
 	<message key="author.competingInterests"><![CDATA[Competing&nbsp;interests <a target="_new" class="action" href="{$competingInterestGuidelinesUrl}">CI&nbsp;Policy</a>]]></message>
@@ -1957,7 +1956,6 @@ Active is how many reviews are currently being considered or underway.]]></messa
 	<message key="author.submit.copyrightNoticeAgree">The authors agree to the terms of this Copyright Notice, which will apply to this submission if and when it is published by this journal (comments to the editor can be added below).</message>
 	<message key="author.submit.copyrightNoticeAgreeRequired">You must agree to the terms of the Copyright Notice before continuing.</message>
 	<message key="author.submit.commentsForEditor">Covering Letter</message>
-    <!-- OPATAN: "Comments for the Editor" changed to "Covering Letter" -->
 	<message key="author.submit.comments">Enter text (optional)</message>
 	<message key="author.submit.form.sectionRequired">Please select an appropriate journal section for this submission.</message>
 	
@@ -2214,7 +2212,6 @@ current password.<br /><br />Enter your email address below to reset your passwo
 	<message key="user.register.loginToRegister">Enter your existing username and password to register with this journal.</message>
 	<message key="user.register.registrationDisabled">This journal is currently not accepting user registrations.</message>
 	<message key="user.register.usernameRestriction">Enter your email as your username.</message>
-    <!-- OPATAN: The username must contain only lowercase letters, numbers, and hyphens/underscores. -->
 	<message key="user.register.passwordLengthRestriction">The password must be at least {$length} characters.</message>
 	<message key="user.register.form.passwordLengthTooShort">The password you entered is not long enough.</message>
 	<message key="user.register.readerDescription">Notified by email on publication of an issue of the journal.</message>
@@ -2371,7 +2368,7 @@ current password.<br /><br />Enter your email address below to reset your passwo
 	<message key="help.search">Search Help</message>
 	<message key="help.searchFor">Search help topics for</message>
 
-	<!-- Donations -->
+    <!-- Donations -->
 	<message key="donations.thankYou">Thank You</message>
 	<message key="donations.thankYouMessage">Thank you for making a contribution.  Your contribution is much appreciated.</message>
 	

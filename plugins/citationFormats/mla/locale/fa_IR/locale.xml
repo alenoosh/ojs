@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE locale SYSTEM "../../../../../locale/locale.dtd">
+<!--
+  * locale.xml
+  *
+  * Copyright (c) 2003-2007 John Willinsky
+  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Localization strings for this citation plugin in en_US.
+  *
+  * $Id: locale.xml,v 1.1 2007/06/21 07:03:53 asmecher Exp $
+  -->
+  
+<locale name="fa_IR" full_name="Farsi">
+  <message key="plugins.citationFormats.mla.displayName" >پلاگین الگوی مرجع نویسی ام ال آ</message>
+  <message key="plugins.citationFormats.mla.citationFormatName" >ام ال آ</message>
+  <message key="plugins.citationFormats.mla.description" >این پلاگین الگوی مرجع نویسی ام ال آ را اعمال میکند.</message>
+</locale>
