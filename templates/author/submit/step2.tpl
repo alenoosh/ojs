@@ -241,6 +241,11 @@ function confirmForgottenUpload() {
 	<td width="80%" class="value"><input type="text" class="textField" name="title[{$formLocale|escape}]" id="title" value="{$title[$formLocale]|escape}" size="60" maxlength="255" /></td>
 </tr>
 
+<tr valign="top">
+	<td width="20%" class="label">{fieldLabel name="runningTitle" key="article.runningTitle"}</td>
+	<td width="80%" class="value"><input type="text" class="textField" name="runningTitle[{$formLocale|escape}]" id="runningTitle" value="{$runningTitle[$formLocale]|escape}" size="60" maxlength="255" /></td>
+</tr>
+
 {if $section->getAbstractsDisabled()==0}
 <tr valign="top">
 	<td width="20%" class="label">{fieldLabel name="abstract" required="true" key="article.abstract"}</td>

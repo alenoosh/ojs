@@ -276,7 +276,8 @@
 	<message key="article.articles">Articles</message>
 	<message key="article.submissionId">Submission ID</message>
 	<message key="article.title">Title</message>
-	<message key="article.authors">Authors</message>
+	<message key="article.runningTitle">Running Title</message>
+    <message key="article.authors">Authors</message>
 	<message key="article.indexingInformation">Indexing Information</message>
 	<message key="article.metadata">Metadata</message>
 	<message key="article.journalSection">Journal Section</message>

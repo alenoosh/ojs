@@ -276,6 +276,7 @@
     <message key="article.articles" >مقالات</message>
     <message key="article.submissionId" >سابمیشنID</message>
     <message key="article.title" >عنوان</message>
+    <message key="article.runningTitle">عنوان مکرری</message>
     <message key="article.authors" >نویسندگان</message>
     <message key="article.indexingInformation" >اطلاعات نمایه ای</message>
     <message key="article.metadata" >فرا داده</message>
@@ -2237,7 +2238,7 @@ http://journals.mui.ac.ir/index.php/index/index
     <message key="user.register.notAlreadyRegisteredOtherJournal" ><![CDATA[چنانچه قبلا برای این مجله و یا مجله ای دیگر در این سایت ثبت نام <b>نکرده اید</b> <a href="{$registerUrl}">اینجا</a> را کلیک کنید]]></message>
     <message key="user.register.loginToRegister" >نام کاربری و رمز عبور جاری  خود را وارد کنید تا برای این مجله ثبت نام کنید</message>
     <message key="user.register.registrationDisabled" >این مجله در حال حاضر ثبت نام کاربر نمی پذیرد</message>
-    <message key="user.register.usernameRestriction" >نام کاربری فقط میتواند دارای حروف کوچک ، اعداد ، خط فاصله و خط فاصله زیرین باشد.</message>
+    <message key="user.register.usernameRestriction">آدرس ايميل خود را بعنوان نام کاربری وارد کنيد.</message>
     <message key="user.register.passwordLengthRestriction" >رمز عبور باید حداقل دارای  {$length} حرف باشد.</message>
     <message key="user.register.form.passwordLengthTooShort" >طول رمز عبور انتخاب شده کافی نیست</message>
     <message key="user.register.readerDescription" >اطلاع از انتشار شماره جدید مجله</message>

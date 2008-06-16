@@ -33,8 +33,7 @@ class ArticleDAO extends DAO {
 	 * @return array
 	 */
 	function getLocaleFieldNames() {
-		return array('title', 'abstract', 'coverPageAltText', 'showCoverPage', 'originalFileName', 'fileName', 'width', 'height',
-								'discipline', 'subjectClass', 'subject', 'coverageGeo', 'coverageChron', 'coverageSample', 'type', 'sponsor');
+		return array('title', 'runningTitle', 'abstract', 'coverPageAltText', 'showCoverPage', 'originalFileName', 'fileName', 'width', 'height', 'discipline', 'subjectClass', 'subject', 'coverageGeo', 'coverageChron', 'coverageSample', 'type', 'sponsor');
 	}
 
 	/**

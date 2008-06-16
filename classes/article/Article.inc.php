@@ -95,6 +95,14 @@ class Article extends DataObject {
 		return $this->getLocalizedData('title');
 	}
 
+ 	/**
+	 * Get "localized" article running title (if applicable).
+	 * @return string
+	 */
+	function getArticleRunningTitle() {
+		return $this->getLocalizedData('runningTitle');
+	}
+
 	/**
 	 * Get "localized" article abstract (if applicable).
 	 * @return string
@@ -298,6 +306,24 @@ class Article extends DataObject {
 	 */
 	function setTitle($title, $locale) {
 		return $this->setData('title', $title, $locale);
+	}
+
+ 	/**
+	 * Get running title.
+	 * @param $locale
+	 * @return string
+	 */
+	function getRunningTitle($locale) {
+		return $this->getData('runningTitle', $locale);
+	}
+
+	/**
+	 * Set running title.
+	 * @param $runningTitle string
+	 * @param $locale
+	 */
+	function setRunningTitle($runningTitle, $locale) {
+		return $this->setData('runningTitle', $runningTitle, $locale);
 	}
 
 	/**
