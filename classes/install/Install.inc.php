@@ -243,13 +243,13 @@ class Install extends Installer {
 			// Add initial site administrator user
 			$userDao = &DAORegistry::getDAO('UserDAO', $this->dbconn);
 			$user = &new User();
-            //OPATAN: strtolower is added to lowercase the username
+            		//OPATAN: strtolower is added to lowercase the username
 			$user->setUsername(strtolower($this->getParam('adminUsername')));
 			$user->setPassword(Validation::encryptCredentials(strtolower($this->getParam('adminUsername')), $this->getParam('adminPassword'), $this->getParam('encryption')));
-            //OPATAN: we set the username part of email address as first name
+            		//OPATAN: we set the username part of email address as first name
 			$user->setFirstName(substr($user->getUsername(), 0, strpos($user->getUsername(), '@'))); 
-			$user->setLastName('');
-            //OPATAN: 'adminEmail' changed to 'adminUsername'           
+			$user->setLastName(substr($user->getUsername(), 0, strpos($user->getUsername(), '@')));
+            		//OPATAN: 'adminEmail' changed to 'adminUsername'           
 			$user->setEmail(strtolower($this->getParam('adminUsername')));
 			if (!$userDao->insertUser($user)) {
 				$this->setError(INSTALLER_ERROR_DB, $this->dbconn->errorMsg());
