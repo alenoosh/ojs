@@ -238,7 +238,7 @@ class UserManagementForm extends Form {
 		$user->setDiscipline($this->getData('discipline'));
 		$user->setAffiliation($this->getData('affiliation'));
 		$user->setSignature($this->getData('signature'), null); // Localized
-		$user->setEmail($user->getUsername()); //OPATAN: $this->getData('email') changed to $user->getUsername()
+		$user->setEmail($this->getData('username')); //OPATAN: $this->getData('email') changed to $user->getUsername()
 		$user->setUrl($this->getData('userUrl'));
 		$user->setPhone($this->getData('phone'));
 		$user->setFax($this->getData('fax'));
