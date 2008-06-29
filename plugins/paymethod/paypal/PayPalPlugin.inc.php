@@ -126,7 +126,8 @@ class PayPalPlugin extends PaymethodPlugin {
 			'notify_url' => Request::url(null, 'payment', 'plugin', array($this->getName(), 'ipn')),  
 			'return' => $queuedPayment->getRequestUrl(),
 			'cancel_return' => Request::url(null, 'payment', 'plugin', array($this->getName(), 'cancel')),
-			'first_name' => ($user)?$user->getFirstName():'',  
+			// Opatan Inc. : get localized firstName ?
+			'first_name' => ($user)?$user->getFirstName(null):'',  
 			'last_name' => ($user)?$user->getLastname():'',
 			'item_number' => $queuedPayment->getAssocId(),
 			'cmd' => '_xclick'

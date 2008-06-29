@@ -592,7 +592,7 @@ class ImportOJS1 {
 				$user = &new User();
 				$user->setUsername($username);
 				$user->setPassword(Validation::encryptCredentials($username, Core::cleanVar($row['chPassword'])));
-				$user->setFirstName(Core::cleanVar($row['chFirstName']));
+				$user->setFirstName(Core::cleanVar($row['chFirstName']), Locale::getLocale()); // Opatan Inc. : Localized
 				$user->setMiddleName(Core::cleanVar($row['chMiddleInitial']));
 				$user->setInitials(Core::cleanVar($initials));
 				$user->setLastName(Core::cleanVar($row['chSurname']));

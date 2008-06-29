@@ -18,6 +18,7 @@ import('submission.proofAssignment.ProofAssignment');
 
 class ProofAssignmentDAO extends DAO {
 	var $userDao;
+	var $userSettingsDao; // Opatan Inc.
 
 	/**
 	 * Constructor.
@@ -25,6 +26,7 @@ class ProofAssignmentDAO extends DAO {
 	function ProofAssignmentDAO() {
 		parent::DAO();
 		$this->userDao = &DAORegistry::getDAO('UserDAO');
+		$this->userSettingsDao = &DAORegistry::getDAO('UserSettingsDAO'); // Opatan Inc.
 	}
 
 	/**
@@ -33,8 +35,9 @@ class ProofAssignmentDAO extends DAO {
 	 * @return ProofAssignment
 	 */
 	function &getProofAssignment($proofId) {
+		// Opatan Inc. : u.first_name is removed and u.user_id is added to the selected columns
 		$result = &$this->retrieve(
-			'SELECT p.*, u.first_name, u.last_name, u.email FROM proof_assignments p LEFT JOIN users u ON (p.proofreader_id = u.user_id) WHERE p.proof_id = ?',
+			'SELECT p.*, u.user_id, u.last_name, u.email FROM proof_assignments p LEFT JOIN users u ON (p.proofreader_id = u.user_id) WHERE p.proof_id = ?',
 			$proofId
 			);
 
@@ -55,8 +58,9 @@ class ProofAssignmentDAO extends DAO {
 	 * @return ProofAssignment
 	 */
 	function &getProofAssignmentByArticleId($articleId) {
+		// Opatan Inc. : u.first_name is removed and u.user_id is added to the selected columns
 		$result = &$this->retrieve(
-			'SELECT p.*, u.first_name, u.last_name, u.email FROM proof_assignments p LEFT JOIN users u ON (p.proofreader_id = u.user_id) WHERE p.article_id = ?',
+			'SELECT p.*, u.user_id, u.last_name, u.email FROM proof_assignments p LEFT JOIN users u ON (p.proofreader_id = u.user_id) WHERE p.article_id = ?',
 			$articleId
 			);
 
@@ -97,7 +101,8 @@ class ProofAssignmentDAO extends DAO {
 		$proofAssignment->setDateLayoutEditorCompleted($this->datetimeFromDB($row['date_layouteditor_completed']));
 		$proofAssignment->setDateLayoutEditorAcknowledged($this->datetimeFromDB($row['date_layouteditor_acknowledged']));
 
-		$proofAssignment->setProofreaderFirstName($row['first_name']);
+		// Opatan Inc. : firstName is set to value of firstName in user_settings
+		$proofAssignment->setProofreaderFirstName($this->userSettingsDao->getSetting($row['user_id'], 'firstName'));
 		$proofAssignment->setProofreaderLastName($row['last_name']);		
 		$proofAssignment->setProofreaderEmail($row['email']);
 

@@ -18,6 +18,7 @@ import('submission.reviewAssignment.ReviewAssignment');
 
 class ReviewAssignmentDAO extends DAO {
 	var $userDao;
+	var $userSettingsDao; // Opatan Inc.
 	var $articleFileDao;
 	var $suppFileDao;
 	var $articleCommentsDao;
@@ -28,6 +29,7 @@ class ReviewAssignmentDAO extends DAO {
 	function ReviewAssignmentDAO() {
 		parent::DAO();
 		$this->userDao = &DAORegistry::getDAO('UserDAO');
+		$this->userSettingsDao = &DAORegistry::getDAO('UserSettingsDAO'); // Opatan Inc.
 		$this->articleFileDao = &DAORegistry::getDAO('ArticleFileDAO');
 		$this->suppFileDao = &DAORegistry::getDAO('SuppFileDAO');
 		$this->articleCommentDao = &DAORegistry::getDAO('ArticleCommentDAO');
@@ -40,8 +42,9 @@ class ReviewAssignmentDAO extends DAO {
 	 * @return ReviewAssignment
 	 */
 	function &getReviewAssignment($articleId, $reviewerId, $round) {
+		// Opatan Inc. : u.first_name is removed and u.user_id is added to the selected columns
 		$result = &$this->retrieve(
-			'SELECT r.*, r2.review_revision, a.review_file_id, u.first_name, u.last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) WHERE r.article_id = ? AND r.reviewer_id = ? AND r.cancelled <> 1 AND r.round = ?',
+			'SELECT r.*, r2.review_revision, a.review_file_id, u.user_id, u.last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) WHERE r.article_id = ? AND r.reviewer_id = ? AND r.cancelled <> 1 AND r.round = ?',
 			array((int) $articleId, (int) $reviewerId, (int) $round)
 			);
 
@@ -62,8 +65,9 @@ class ReviewAssignmentDAO extends DAO {
 	 * @return ReviewAssignment
 	 */
 	function &getReviewAssignmentById($reviewId) {
+		// Opatan Inc. : u.first_name is removed and u.user_id is added to the selected columns
 		$result = &$this->retrieve(
-			'SELECT r.*, r2.review_revision, a.review_file_id, u.first_name, u.last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) WHERE r.review_id = ?',
+			'SELECT r.*, r2.review_revision, a.review_file_id, u.user_id, u.last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) WHERE r.review_id = ?',
 			(int) $reviewId
 			);
 
@@ -113,8 +117,9 @@ class ReviewAssignmentDAO extends DAO {
 	function &getIncompleteReviewAssignments() {
 		$reviewAssignments = array();
 
+		// Opatan Inc. : u.first_name is removed and u.user_id is added to the selected columns
 		$result = &$this->retrieve(
-			'SELECT r.*, r2.review_revision, a.review_file_id, u.first_name, u.last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) WHERE (r.cancelled IS NULL OR r.cancelled = 0) AND r.date_notified IS NOT NULL AND r.date_completed IS NULL AND r.declined <> 1 ORDER BY r.article_id'
+			'SELECT r.*, r2.review_revision, a.review_file_id, u.user_id, u.last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) WHERE (r.cancelled IS NULL OR r.cancelled = 0) AND r.date_notified IS NOT NULL AND r.date_completed IS NULL AND r.declined <> 1 ORDER BY r.article_id'
 		);
 
 		while (!$result->EOF) {
@@ -137,13 +142,15 @@ class ReviewAssignmentDAO extends DAO {
 		$reviewAssignments = array();
 
 		if ($round == null) {
+			// Opatan Inc. : u.first_name is removed and u.user_id is added to the selected columns
 			$result = &$this->retrieve(
-				'SELECT r.*, r2.review_revision, a.review_file_id, u.first_name, u.last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) WHERE r.article_id = ? ORDER BY round, review_id',
+				'SELECT r.*, r2.review_revision, a.review_file_id, u.user_id, u.last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) WHERE r.article_id = ? ORDER BY round, review_id',
 				(int) $articleId
 			);
 		} else {
+			// Opatan Inc. : u.first_name is removed and u.user_id is added to the selected columns
 			$result = &$this->retrieve(
-				'SELECT r.*, r2.review_revision, a.review_file_id, u.first_name, u.last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) WHERE r.article_id = ? AND r.round = ? ORDER BY review_id',
+				'SELECT r.*, r2.review_revision, a.review_file_id, u.user_id, u.last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) WHERE r.article_id = ? AND r.round = ? ORDER BY review_id',
 				array((int) $articleId, (int) $round)
 			);
 		}
@@ -167,8 +174,9 @@ class ReviewAssignmentDAO extends DAO {
 	function &getReviewAssignmentsByUserId($userId) {
 		$reviewAssignments = array();
 
+		// Opatan Inc. : u.first_name is removed and u.user_id is added to the selected columns
 		$result = &$this->retrieve(
-			'SELECT r.*, r2.review_revision, a.review_file_id, u.first_name, u.last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) WHERE r.reviewer_id = ? ORDER BY round, review_id',
+			'SELECT r.*, r2.review_revision, a.review_file_id, u.user_id, u.last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) WHERE r.reviewer_id = ? ORDER BY round, review_id',
 			(int) $userId
 		);
 
@@ -307,8 +315,9 @@ class ReviewAssignmentDAO extends DAO {
 	function &getCancelsAndRegrets($articleId) {
 		$reviewAssignments = array();
 
+		// Opatan Inc. : u.first_name is removed and u.user_id is added to the selected columns
 		$result = &$this->retrieve(
-			'SELECT r.*, r2.review_revision, a.review_file_id, u.first_name, u.last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) WHERE r.article_id = ? AND (r.cancelled = 1 OR r.declined = 1) ORDER BY round, review_id',
+			'SELECT r.*, r2.review_revision, a.review_file_id, u.user_id, u.last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) WHERE r.article_id = ? AND (r.cancelled = 1 OR r.declined = 1) ORDER BY round, review_id',
 			(int) $articleId
 		);
 
@@ -333,7 +342,8 @@ class ReviewAssignmentDAO extends DAO {
 		$reviewAssignment->setReviewId($row['review_id']);
 		$reviewAssignment->setArticleId($row['article_id']);
 		$reviewAssignment->setReviewerId($row['reviewer_id']);
-		$reviewAssignment->setReviewerFullName($row['first_name'].' '.$row['last_name']);
+		// Opatan Inc. : firstName is set to value of firstName in user_settings
+		$reviewAssignment->setReviewerFullName($this->userSettingsDao->getSetting($row['user_id'], 'firstName').' '.$row['last_name']);
 		$reviewAssignment->setCompetingInterests($row['competing_interests']);
 		$reviewAssignment->setRecommendation($row['recommendation']);
 		$reviewAssignment->setDateAssigned($this->datetimeFromDB($row['date_assigned']));

@@ -28,7 +28,8 @@ class ProfileForm extends Form {
 		$site = &Request::getSite();
 
 		// Validation checks for this form
-		$this->addCheck(new FormValidator($this, 'firstName', 'required', 'user.profile.form.firstNameRequired'));
+		// Opatan Inc. : FormValidator for firstName is repalced with FormValidatorLocale
+		$this->addCheck(new FormValidatorLocale($this, 'firstName', 'required', 'user.profile.form.firstNameRequired'));
 		$this->addCheck(new FormValidator($this, 'lastName', 'required', 'user.profile.form.lastNameRequired'));
 		$this->addCheck(new FormValidatorUrl($this, 'userUrl', 'optional', 'user.profile.form.urlInvalid'));
 		// Opatan Inc. : FormValidatorEmail and FormValidatorCustom for email are removed
@@ -107,7 +108,7 @@ class ProfileForm extends Form {
 
 		$this->_data = array(
 			'salutation' => $user->getSalutation(),
-			'firstName' => $user->getFirstName(),
+			'firstName' => $user->getFirstName(null), // Opatan Inc. : Localized
 			'middleName' => $user->getMiddleName(),
 			'initials' => $user->getInitials(),
 			'lastName' => $user->getLastName(),
@@ -170,7 +171,7 @@ class ProfileForm extends Form {
 		$user = &Request::getUser();
 
 		$user->setSalutation($this->getData('salutation'));
-		$user->setFirstName($this->getData('firstName'));
+		$user->setFirstName($this->getData('firstName'), null); // Opatan Inc. : Localized
 		$user->setMiddleName($this->getData('middleName'));
 		$user->setLastName($this->getData('lastName'));
 		$user->setGender($this->getData('gender'));

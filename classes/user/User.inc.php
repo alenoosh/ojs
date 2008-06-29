@@ -98,21 +98,31 @@ class User extends DataObject {
 		return $this->setData('password', $password);
 	}
 
-	/**
-	 * Get first name.
-	 * @return string
+ 	/**
+	 * Opatan Inc. : 
+	 * Get localized user firstName.
 	 */
-	function getFirstName() {
-		return $this->getData('firstName');
+	function getUserFirstName() {
+		return $this->getLocalizedData('firstName');
 	}
 
 	/**
+   	 * Opatan Inc. : @param $locale string added
+	 * Get first name.
+	 * @return string
+	 */
+	function getFirstName($locale) {
+		return $this->getData('firstName', $locale);
+	}
+
+	/**
+	 * Opatan Inc. : @param $locale string added
 	 * Set first name.
 	 * @param $firstName string
 	 */
-	function setFirstName($firstName)
+	function setFirstName($firstName, $locale)
 	{
-		return $this->setData('firstName', $firstName);
+		return $this->setData('firstName', $firstName, $locale);
 	}
 
 	/**
@@ -575,11 +585,12 @@ class User extends DataObject {
 	 * @return string
 	 */
 	function getFullName($lastFirst = false) {
+		$userSettingsDao = &DAORegistry::getDAO('UserSettingsDAO');
 		if ($lastFirst) {
-			return $this->getData('lastName') . ', ' . $this->getData('firstName') . ($this->getData('middleName') != '' ? ' ' . $this->getData('middleName') : '');
+			return $this->getData('lastName') . ', ' . $userSettingsDao->getSetting($this->getUserId(), 'firstName') . ($this->getData('middleName') != '' ? ' ' . $this->getData('middleName') : ''); // Opatan Inc. : gets localized firstName
 
-		} else {
-			return $this->getData('firstName') . ' ' . ($this->getData('middleName') != '' ? $this->getData('middleName') . ' ' : '') . $this->getData('lastName');
+		} else {			
+			return $userSettingsDao->getSetting($this->getUserId(), 'firstName') . ' ' . ($this->getData('middleName') != '' ? $this->getData('middleName') . ' ' : '') . $this->getData('lastName'); // Opatan Inc. : gets localized firstName
 		}
 	}
 

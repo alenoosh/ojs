@@ -21,6 +21,7 @@ class ReviewerSubmissionDAO extends DAO {
 	var $articleDao;
 	var $authorDao;
 	var $userDao;
+	var $userSettingsDao;
 	var $reviewAssignmentDao;
 	var $editAssignmentDao;
 	var $articleFileDao;
@@ -35,6 +36,7 @@ class ReviewerSubmissionDAO extends DAO {
 		$this->articleDao = &DAORegistry::getDAO('ArticleDAO');
 		$this->authorDao = &DAORegistry::getDAO('AuthorDAO');
 		$this->userDao = &DAORegistry::getDAO('UserDAO');
+		$this->userSettingsDao = &DAORegistry::getDAO('UserSettingsDAO');	
 		$this->reviewAssignmentDao = &DAORegistry::getDAO('ReviewAssignmentDAO');
 		$this->editAssignmentDao = &DAORegistry::getDAO('EditAssignmentDAO');
 		$this->articleFileDao = &DAORegistry::getDAO('ArticleFileDAO');
@@ -51,11 +53,12 @@ class ReviewerSubmissionDAO extends DAO {
 	function &getReviewerSubmission($reviewId) {
 		$primaryLocale = Locale::getPrimaryLocale();
 		$locale = Locale::getLocale();
+		// Opatan Inc. : u.first_name is removed and u.user_id is added	
 		$result = &$this->retrieve(
 			'SELECT	a.*,
 				r.*,
 				r2.review_revision,
-				u.first_name, u.last_name,
+				u.user_id, u.last_name,
 				COALESCE(stl.setting_value, stpl.setting_value) AS section_title,
 				COALESCE(sal.setting_value, sapl.setting_value) AS section_abbrev
 			FROM	articles a
@@ -123,7 +126,8 @@ class ReviewerSubmissionDAO extends DAO {
 		// Review Assignment 
 		$reviewerSubmission->setReviewId($row['review_id']);
 		$reviewerSubmission->setReviewerId($row['reviewer_id']);
-		$reviewerSubmission->setReviewerFullName($row['first_name'].' '.$row['last_name']);
+		// Opatan Inc. : firstName setting value is set
+		$reviewerSubmission->setReviewerFullName($userSettingsDao->getSetting($row['user_id'], 'firstName').' '.$row['last_name']);
 		$reviewerSubmission->setCompetingInterests($row['competing_interests']);
 		$reviewerSubmission->setRecommendation($row['recommendation']);
 		$reviewerSubmission->setDateAssigned($this->datetimeFromDB($row['date_assigned']));
@@ -200,10 +204,11 @@ class ReviewerSubmissionDAO extends DAO {
 	function &getReviewerSubmissionsByReviewerId($reviewerId, $journalId, $active = true, $rangeInfo = null) {
 		$primaryLocale = Locale::getPrimaryLocale();
 		$locale = Locale::getLocale();
+		// Opatan Inc. : u.first_name is removed and u.user_id is added
 		$sql = 'SELECT	a.*,
 				r.*,
 				r2.review_revision,
-				u.first_name, u.last_name,
+				u.user_id, u.last_name,
 				COALESCE(stl.setting_value, stpl.setting_value) AS section_title,
 				COALESCE(sal.setting_value, sapl.setting_value) AS section_abbrev
 			FROM	articles a

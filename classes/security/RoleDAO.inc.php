@@ -141,7 +141,24 @@ class RoleDAO extends DAO {
 	function &getUsersByRoleId($roleId = null, $journalId = null, $searchType = null, $search = null, $searchMatch = null, $dbResultRange = null) {
 		$users = array();
 
-		$paramArray = array('interests');
+		// Opatan Inc. : if searchType equals firstName , firstName is added to ParamArray as the settingName
+		$paramArray = array();
+		$settingName = null;
+
+		if ($searchType != null) {
+			switch ($searchType) {
+				case USER_FIELD_FIRSTNAME:
+					$settingName = 'firstName';
+					break;
+				case USER_FIELD_INTERESTS:
+					$settingName = 'interests';
+					break;
+			}
+			$paramArray[] = $settingName;
+		} else {
+			$paramArray[] = 'interests';
+		}
+		
 		if (isset($roleId)) $paramArray[] = (int) $roleId;
 		if (isset($journalId)) $paramArray[] = (int) $journalId;
 
@@ -157,7 +174,8 @@ class RoleDAO extends DAO {
 				$paramArray[] = $search;
 				break;
 			case USER_FIELD_FIRSTNAME:
-				$searchSql = 'AND LOWER(u.first_name) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
+				// Opatan Inc. : u.first_name is replaced with s.setting_value
+				$searchSql = 'AND LOWER(s.setting_value) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
 				$paramArray[] = ($searchMatch=='is'?$search:'%' . $search . '%');
 				break;
 			case USER_FIELD_LASTNAME:
@@ -182,7 +200,7 @@ class RoleDAO extends DAO {
 				break;
 		}
 
-		$searchSql .= ' ORDER BY u.last_name, u.first_name'; // FIXME Add "sort field" parameter?
+		// Opatan Inc. : $searchSql .= ' ORDER BY u.last_name, u.first_name'; // FIXME Add "sort field" parameter?
 
 		$result = &$this->retrieveRange(
 			'SELECT DISTINCT u.* FROM users AS u LEFT JOIN user_settings s ON (u.user_id = s.user_id AND s.setting_name = ?), roles AS r WHERE u.user_id = r.user_id ' . (isset($roleId)?'AND r.role_id = ?':'') . (isset($journalId) ? ' AND r.journal_id = ?' : '') . ' ' . $searchSql,
@@ -206,7 +224,25 @@ class RoleDAO extends DAO {
 	function &getUsersByJournalId($journalId, $searchType = null, $search = null, $searchMatch = null, $dbResultRange = null) {
 		$users = array();
 
-		$paramArray = array('interests', (int) $journalId);
+		// Opatan Inc. : if searchType equals firstName , firstName is added to ParamArray as the settingName
+		$paramArray = array();
+		$settingName = null;
+
+		if ($searchType != null) {
+			switch ($searchType) {
+				case USER_FIELD_FIRSTNAME:
+					$settingName = 'firstName';
+					break;					
+				case USER_FIELD_INTERESTS:
+					$settingName = 'interests';
+					break;
+			}
+			$paramArray[] = $settingName; 
+		} else {
+			$paramArray[] = 'interests';
+		}
+		
+		$paramArray[] = (int) $journalId;
 		$searchSql = '';
 
 		if (isset($search)) switch ($searchType) {
@@ -215,7 +251,8 @@ class RoleDAO extends DAO {
 				$paramArray[] = $search;
 				break;
 			case USER_FIELD_FIRSTNAME:
-				$searchSql = 'AND LOWER(u.first_name) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
+				// Opatan Inc. : u.first_name is replaced with s.setting_value
+				$searchSql = 'AND LOWER(s.setting_value) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
 				$paramArray[] = ($searchMatch=='is'?$search:'%' . $search . '%');
 				break;
 			case USER_FIELD_LASTNAME:
@@ -240,7 +277,7 @@ class RoleDAO extends DAO {
 				break;
 		}
 
-		$searchSql .= ' ORDER BY u.last_name, u.first_name'; // FIXME Add "sort field" parameter?
+		// Opatan Inc. : $searchSql .= ' ORDER BY u.last_name, u.first_name'; // FIXME Add "sort field" parameter?
 
 		$result = &$this->retrieveRange(
 

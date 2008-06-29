@@ -68,7 +68,7 @@ class SectionEditorsDAO extends DAO {
 		$userDao = &DAORegistry::getDAO('UserDAO');
 
 		$result = &$this->retrieve(
-			'SELECT u.*, e.can_review AS can_review, e.can_edit AS can_edit FROM users AS u, section_editors AS e WHERE u.user_id = e.user_id AND e.journal_id = ? AND e.section_id = ? ORDER BY last_name, first_name',
+			'SELECT u.*, e.can_review AS can_review, e.can_edit AS can_edit FROM users AS u, section_editors AS e WHERE u.user_id = e.user_id AND e.journal_id = ? AND e.section_id = ?', // Opatan Inc. : ORDER BY last_name, first_name',
 			array($journalId, $sectionId)
 		);
 
@@ -106,8 +106,8 @@ class SectionEditorsDAO extends DAO {
 				LEFT JOIN section_editors e ON (e.user_id = u.user_id AND e.journal_id = r.journal_id AND e.section_id = ?)
 			WHERE	r.journal_id = ? AND
 				r.role_id = ? AND
-				e.section_id IS NULL
-			ORDER BY last_name, first_name',
+				e.section_id IS NULL',
+			// Opatan Inc. : ORDER BY last_name, first_name',
 			array($sectionId, $journalId, ROLE_ID_SECTION_EDITOR)
 		);
 

@@ -18,6 +18,7 @@ import('submission.layoutAssignment.LayoutAssignment');
 
 class LayoutAssignmentDAO extends DAO {
 	var $articleFileDao;
+	var $userSettingsDao; // Opatan Inc.
 
 	/**
 	 * Constructor.
@@ -25,6 +26,7 @@ class LayoutAssignmentDAO extends DAO {
 	function LayoutAssignmentDAO() {
 		parent::DAO();
 		$this->articleFileDao = &DAORegistry::getDAO('ArticleFileDAO');
+		$this->userSettingsDao = &DAORegistry::getDAO('UserSettingsDAO'); // Opatan Inc.
 	}
 
 	/**
@@ -33,8 +35,9 @@ class LayoutAssignmentDAO extends DAO {
 	 * @return LayoutAssignment
 	 */
 	function &getLayoutAssignmentById($layoutId) {
+		// Opatan Inc. : u.first_name is removed and u.user_id is added to selected columns
 		$result = &$this->retrieve(
-			'SELECT l.*, u.first_name, u.last_name, u.email
+			'SELECT l.*, u.user_id, u.last_name, u.email
 				FROM layouted_assignments l
 				LEFT JOIN users u ON (l.editor_id = u.user_id)
 				WHERE layouted_id = ?',
@@ -77,8 +80,9 @@ class LayoutAssignmentDAO extends DAO {
 	 * @return LayoutAssignment
 	 */
 	function &getLayoutAssignmentByArticleId($articleId) {
+		// Opatan Inc. : u.first_name is removed and u.user_id is added to selected columns
 		$result = &$this->retrieve(
-			'SELECT l.*, u.first_name, u.last_name, u.email
+			'SELECT l.*, u.user_id, u.last_name, u.email
 				FROM layouted_assignments l
 				LEFT JOIN users u ON (l.editor_id = u.user_id)
 				WHERE article_id = ?',
@@ -106,7 +110,9 @@ class LayoutAssignmentDAO extends DAO {
 		$layoutAssignment->setLayoutId($row['layouted_id']);
 		$layoutAssignment->setArticleId($row['article_id']);
 		$layoutAssignment->setEditorId($row['editor_id']);
-		$layoutAssignment->setEditorFullName($row['first_name'].' '.$row['last_name']);
+		// Opatan Inc. : firstName is set to value of firstName in user_settings			
+		$layoutAssignment->setEditorFullName($this->userSettingsDao->getSetting($row['user_id'], 'firstName').
+						     ' '.$row['last_name']);
 		$layoutAssignment->setEditorEmail($row['email']);
 		$layoutAssignment->setDateNotified($this->datetimeFromDB($row['date_notified']));
 		$layoutAssignment->setDateUnderway($this->datetimeFromDB($row['date_underway']));

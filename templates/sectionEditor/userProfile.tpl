@@ -24,7 +24,8 @@
 </tr>
 <tr valign="top">
 	<td class="label">{translate key="user.firstName"}:</td>
-	<td class="value">{$user->getFirstName()|escape}</td>
+	{* Opatan Inc. : getFirstName() is replaced with getUserFirstName() *}
+	<td class="value">{$user->getUserFirstName()|escape}</td>
 </tr>
 <tr valign="top">
 	<td class="label">{translate key="user.middleName"}:</td>

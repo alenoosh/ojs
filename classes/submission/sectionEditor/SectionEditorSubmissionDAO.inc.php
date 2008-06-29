@@ -448,6 +448,8 @@ class SectionEditorSubmissionDAO extends DAO {
 			'abbrev',
 			$locale,
 			'title', // Article title
+			'firstName', // Opatan Inc.
+			$locale, // Opatan Inc.
 			$journalId,
 			$sectionEditorId
 		);
@@ -484,12 +486,15 @@ class SectionEditorSubmissionDAO extends DAO {
 				$last_comma_first = $this->_dataSource->Concat('ed.last_name', '\', \'', 'ed.first_name');
 				$last_comma_first_middle = $this->_dataSource->Concat('ed.last_name', '\', \'', 'ed.first_name', '\' \'', 'ed.middle_name');
 				if ($searchMatch === 'is') {
-					$searchSql = " AND (LOWER(ed.last_name) = LOWER(?) OR LOWER($first_last) = LOWER(?) OR LOWER($first_middle_last) = LOWER(?) OR LOWER($last_comma_first) = LOWER(?) OR LOWER($last_comma_first_middle) = LOWER(?))";
+					// Opatan Inc. : $searchSql = " AND (LOWER(ed.last_name) = LOWER(?) OR LOWER($first_last) = LOWER(?) OR LOWER($first_middle_last) = LOWER(?) OR LOWER($last_comma_first) = LOWER(?) OR LOWER($last_comma_first_middle) = LOWER(?))";
+					$searchSql = " AND (LOWER(edus.setting_value) = LOWER(?))";
 				} else {
-					$searchSql = " AND (LOWER(ed.last_name) LIKE LOWER(?) OR LOWER($first_last) LIKE LOWER(?) OR LOWER($first_middle_last) LIKE LOWER(?) OR LOWER($last_comma_first) LIKE LOWER(?) OR LOWER($last_comma_first_middle) LIKE LOWER(?))";
+					// Opatan Inc. : $searchSql = " AND (LOWER(ed.last_name) LIKE LOWER(?) OR LOWER($first_last) LIKE LOWER(?) OR LOWER($first_middle_last) LIKE LOWER(?) OR LOWER($last_comma_first) LIKE LOWER(?) OR LOWER($last_comma_first_middle) LIKE LOWER(?))";
+					$searchSql = " AND (LOWER(edus.setting_value) LIKE LOWER(?))";
 					$search = '%' . $search . '%';
 				}
-				$params[] = $params[] = $params[] = $params[] = $params[] = $search;
+				// Opatan Inc. : $params[] = $params[] = $params[] = $params[] = $params[] = $search;
+				$params[] = $search;
 				break;
 		}
 
@@ -570,6 +575,8 @@ class SectionEditorSubmissionDAO extends DAO {
 				LEFT JOIN section_settings sapl ON (s.section_id = sapl.section_id AND sapl.setting_name = ? AND sapl.locale = ?)
 				LEFT JOIN section_settings sal ON (s.section_id = sal.section_id AND sal.setting_name = ? AND sal.locale = ?)
 				LEFT JOIN article_settings atl ON (a.article_id = atl.article_id AND atl.setting_name = ?)
+				LEFT JOIN user_settings edus ON (ed.user_id = edus.user_id AND edus.setting_name = ? AND edus.locale = ?)
+			
 			WHERE	a.journal_id = ?
 				AND e.editor_id = ?
 				AND a.submission_progress = 0' . (!empty($additionalWhereSql)?" AND ($additionalWhereSql)":"");
@@ -908,7 +915,8 @@ class SectionEditorSubmissionDAO extends DAO {
 				$paramArray[] = $search;
 				break;
 			case USER_FIELD_FIRSTNAME:
-				$searchSql = 'AND LOWER(first_name) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
+				// Opatan Inc. : first_name is replaced with s.setting_value
+				$searchSql = 'AND LOWER(s.setting_value) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
 				$paramArray[] = ($searchMatch=='is'?$search:'%' . $search . '%');
 				break;
 			case USER_FIELD_LASTNAME:
@@ -944,8 +952,8 @@ class SectionEditorSubmissionDAO extends DAO {
 				LEFT JOIN review_assignments a ON (a.reviewer_id = u.user_id AND a.cancelled = 0 AND a.article_id = ? AND a.round = ?)
 			WHERE	u.user_id = r.user_id AND
 				r.journal_id = ? AND
-				r.role_id = ? ' . $searchSql . '
-			ORDER BY last_name, first_name',
+				r.role_id = ? ' . $searchSql, //. '
+			// Opatan Inc. : ORDER BY last_name, first_name',
 			$paramArray, $rangeInfo
 		);
 
@@ -978,8 +986,8 @@ class SectionEditorSubmissionDAO extends DAO {
 				LEFT JOIN review_assignments a ON (a.reviewer_id = u.user_id AND a.article_id = ?)
 			WHERE	r.journal_id = ? AND
 				r.role_id = ? AND
-				a.article_id IS NULL
-			ORDER BY last_name, first_name',
+				a.article_id IS NULL',
+			// Opatan Inc. : ORDER BY last_name, first_name',
 			array($articleId, $journalId, RoleDAO::getRoleIdFromPath('reviewer'))
 		);
 
@@ -1025,7 +1033,8 @@ class SectionEditorSubmissionDAO extends DAO {
 				$paramArray[] = $search;
 				break;
 			case USER_FIELD_FIRSTNAME:
-				$searchSql = 'AND LOWER(first_name) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
+				// Opatan Inc. : first_name is replaced with setting_value
+				$searchSql = 'AND LOWER(setting_value) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
 				$paramArray[] = ($searchMatch=='is'?$search:'%' . $search . '%');
 				break;
 			case USER_FIELD_LASTNAME:
@@ -1060,8 +1069,8 @@ class SectionEditorSubmissionDAO extends DAO {
 			WHERE	r.journal_id = ? AND
 				r.role_id = ? AND
 				a.article_id IS NULL
-				' . $searchSql . '
-			ORDER BY last_name, first_name',
+				' . $searchSql, // . '
+			// Opatan Inc. : ORDER BY last_name, first_name',
 			$paramArray
 		);
 

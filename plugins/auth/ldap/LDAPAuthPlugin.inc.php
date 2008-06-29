@@ -286,7 +286,7 @@ class LDAPAuthPlugin extends AuthPlugin {
 	 */
 	function userFromAttr(&$user, &$uattr) {
 		$attr = array_change_key_case($uattr, CASE_LOWER); // Note:  array_change_key_case requires PHP >= 4.2.0
-		$firstName = @$attr['givenname'][0];
+		$firstName = @$attr['givenname'][0]; // Opatan Inc. : ?
 		$middleName = null;
 		$initials = null;
 		$lastName = @$attr['sn'][0];
@@ -310,7 +310,8 @@ class LDAPAuthPlugin extends AuthPlugin {
 
 		// Only update fields that exist
 		if (isset($firstName))
-			$user->setFirstName($firstName);
+			// Opatan Inc. : Localized firstName
+			$user->setFirstName($firstName, Locale::getLocale());
 		if (isset($middleName))
 			$user->setMiddleName($middleName);
 		if (isset($initials))
@@ -343,8 +344,9 @@ class LDAPAuthPlugin extends AuthPlugin {
 		// FIXME empty strings for unset fields?
 		if ($user->getFullName())
 			$attr['cn'] = $user->getFullName();
-		if ($user->getFirstName())
-			$attr['givenName'] = $user->getFirstName();
+		if ($user->getFirstName(Locale::getLocale()))
+			// Opatan Inc. : gets localized firstName ??
+			$attr['givenName'] = $user->getFirstName(Locale::getLocale());
 		if ($user->getLastName())
 			$attr['sn'] = $user->getLastName();
 		if ($user->getAffiliation())

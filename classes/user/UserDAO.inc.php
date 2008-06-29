@@ -131,7 +131,7 @@ class UserDAO extends DAO {
 		$user->setUsername($row['username']);
 		$user->setPassword($row['password']);
 		$user->setSalutation($row['salutation']);
-		$user->setFirstName($row['first_name']);
+		// Opatan Inc. : $user->setFirstName($row['first_name']) is removed
 		$user->setMiddleName($row['middle_name']);
 		$user->setInitials($row['initials']);
 		$user->setLastName($row['last_name']);
@@ -172,16 +172,16 @@ class UserDAO extends DAO {
 			$user->setDateLastLogin(Core::getCurrentDate());
 		}
 		$this->update(
+			// Opatan Inc. : first_name is removed
 			sprintf('INSERT INTO users
-				(username, password, salutation, first_name, middle_name, initials, last_name, gender, discipline, affiliation, email, url, phone, fax, mailing_address, country, locales, date_last_email, date_registered, date_validated, date_last_login, date_end_membership, must_change_password, disabled, disabled_reason, auth_id)
+				(username, password, salutation, middle_name, initials, last_name, gender, discipline, affiliation, email, url, phone, fax, mailing_address, country, locales, date_last_email, date_registered, date_validated, date_last_login, date_end_membership, must_change_password, disabled, disabled_reason, auth_id)
 				VALUES
-				(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, %s, %s, %s, %s, %s, ?, ?, ?, ?)',
+				(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, %s, %s, %s, %s, %s, ?, ?, ?, ?)',
 				$this->datetimeToDB($user->getDateLastEmail()), $this->datetimeToDB($user->getDateRegistered()), $this->datetimeToDB($user->getDateValidated()), $this->datetimeToDB($user->getDateLastLogin()), $this->datetimeToDB($user->getDateEndMembership())),
 			array(
 				$user->getUsername(),
 				$user->getPassword(),
 				$user->getSalutation(),
-				$user->getFirstName(),
 				$user->getMiddleName(),
 				$user->getInitials(),
 				$user->getLastName(),
@@ -208,7 +208,7 @@ class UserDAO extends DAO {
 	}
 
 	function getLocaleFieldNames() {
-		return array('biography', 'signature', 'interests');
+		return array('firstName', 'biography', 'signature', 'interests');
 	}
 
 	function updateLocaleFields(&$user) {
@@ -227,14 +227,13 @@ class UserDAO extends DAO {
 		}
 
 		$this->updateLocaleFields($user);
-
+		// Opatan Inc. : first_name is removed
 		return $this->update(
 			sprintf('UPDATE users
 				SET
 					username = ?,
 					password = ?,
 					salutation = ?,
-					first_name = ?,
 					middle_name = ?,
 					initials = ?,
 					last_name = ?,
@@ -262,7 +261,6 @@ class UserDAO extends DAO {
 				$user->getUsername(),
 				$user->getPassword(),
 				$user->getSalutation(),
-				$user->getFirstName(),
 				$user->getMiddleName(),
 				$user->getInitials(),
 				$user->getLastName(),
@@ -325,19 +323,28 @@ class UserDAO extends DAO {
 	 * @return string
 	 */
 	function getUserFullName($userId, $allowDisabled = true) {
+		// Opatan Inc. : first_name , last_name and middle_name is removed from column lists
 		$result = &$this->retrieve(
-			'SELECT first_name, middle_name, last_name FROM users WHERE user_id = ?' . ($allowDisabled?'':' AND disabled = 0'),
+			'SELECT * FROM users WHERE user_id = ?' . ($allowDisabled?'':' AND disabled = 0'), 
 			$userId
 		);
 
-		if($result->RecordCount() == 0) {
-			$returner = false;
-		} else {
-			$returner = $result->fields[0] . ' ' . (empty($result->fields[1]) ? '' : $result->fields[1] . ' ') . $result->fields[2];
-		}
+		// Opatan Inc. : firstName is gotten from user_settings
+		$user = null;
+		if ($result->RecordCount() != 0) {
+			$user = &$this->_returnUserFromRowWithData($result->GetRowAssoc(false));
+		}        
 
-		$result->Close();
-		unset($result);
+        	if ($result->recordCount() == 0) {
+	            $returner = false;
+	        } else {            
+	            $locale = Locale::getLocale();
+	            $returner = $user->_data['firstName'][$locale] . ' ' . 
+        	    (empty($user->_data['middleName']) ? '' : $user->_data['middleName'] . ' ') . $user->_data['lastName'];
+	        }        
+ 
+ 		$result->Close();
+ 		unset($result);
 
 		return $returner;
 	}
@@ -377,46 +384,52 @@ class UserDAO extends DAO {
 	 */
 
 	function &getUsersByField($field = USER_FIELD_NONE, $match = null, $value = null, $allowDisabled = true, $dbResultRange = null) {
+		$var = false;
 		$sql = 'SELECT * FROM users u';
-		switch ($field) {
-			case USER_FIELD_USERID:
-				$sql .= ' WHERE u.user_id = ?';
-				$var = $value;
-				break;
-			case USER_FIELD_USERNAME:
-				$sql .= ' WHERE LOWER(u.username) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
-				$var = $match == 'is' ? $value : "%$value%";
-				break;
-			case USER_FIELD_INITIAL:
-				$sql .= ' WHERE LOWER(u.last_name) LIKE LOWER(?)';
-				$var = "$value%";
-				break;
-			case USER_FIELD_INTERESTS:
-				$sql .= ', user_settings us WHERE us.user_id = u.user_id AND u.setting_name = \'interests\' AND LOWER(us.setting_value) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
-				$var = $match == 'is' ? $value : "%$value%";
-				break;
-			case USER_FIELD_EMAIL:
-				$sql .= ' WHERE LOWER(u.email) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
-				$var = $match == 'is' ? $value : "%$value%";
-				break;
-			case USER_FIELD_URL:
-				$sql .= ' WHERE LOWER(u.url) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
-				$var = $match == 'is' ? $value : "%$value%";
-				break;
-			case USER_FIELD_FIRSTNAME:
-				$sql .= ' WHERE LOWER(u.first_name) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
-				$var = $match == 'is' ? $value : "%$value%";
-				break;
-			case USER_FIELD_LASTNAME:
-				$sql .= ' WHERE LOWER(u.last_name) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
-				$var = $match == 'is' ? $value : "%$value%";
-				break;
+
+		if ($value != null) {
+			switch ($field) {
+				case USER_FIELD_USERID:
+					$sql .= ' WHERE u.user_id = ?';
+					$var = $value;
+					break;
+				case USER_FIELD_USERNAME:
+					$sql .= ' WHERE LOWER(u.username) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
+					$var = $match == 'is' ? $value : "%$value%";
+					break;
+				case USER_FIELD_INITIAL:
+					$sql .= ' WHERE LOWER(u.last_name) LIKE LOWER(?)';
+					$var = "$value%";
+					break;
+				case USER_FIELD_INTERESTS:
+					$sql .= ', user_settings us WHERE us.user_id = u.user_id AND us.setting_name = \'interests\' AND LOWER(us.setting_value) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
+					$var = $match == 'is' ? $value : "%$value%";
+					break;
+				case USER_FIELD_EMAIL:
+					$sql .= ' WHERE LOWER(u.email) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
+					$var = $match == 'is' ? $value : "%$value%";
+					break;
+				case USER_FIELD_URL:
+					$sql .= ' WHERE LOWER(u.url) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
+					$var = $match == 'is' ? $value : "%$value%";
+					break;
+				case USER_FIELD_FIRSTNAME:
+					// Opatan Inc. : firstName is gotten from user_settings
+					$sql .= ', user_settings us WHERE us.user_id = u.user_id AND us.setting_name = \'firstName\' AND LOWER(us.setting_value) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
+					$var = $match == 'is' ? $value : "%$value%";
+					break;
+				case USER_FIELD_LASTNAME:
+					$sql .= ' WHERE LOWER(u.last_name) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
+					$var = $match == 'is' ? $value : "%$value%";
+					break;
+			}
 		}
 
-		$orderSql = ' ORDER BY u.last_name, u.first_name'; // FIXME Add "sort field" parameter?
+		// Opatan Inc. : $orderSql = ' ORDER BY u.last_name, u.first_name'; // FIXME Add "sort field" parameter?
 
-		if ($field != USER_FIELD_NONE) $result = &$this->retrieveRange($sql . ($allowDisabled?'':' AND u.disabled = 0') . $orderSql, $var, $dbResultRange);
-		else $result = &$this->retrieveRange($sql . ($allowDisabled?'':' WHERE u.disabled = 0') . $orderSql, false, $dbResultRange);
+		// Opatan Inc. : $orderSql is removed
+		if ($field != USER_FIELD_NONE) $result = &$this->retrieveRange($sql . ($allowDisabled?'':' AND u.disabled = 0'), $var, $dbResultRange);
+		else $result = &$this->retrieveRange($sql . ($allowDisabled?'':' WHERE u.disabled = 0'), false, $dbResultRange);
 
 		$returner = &new DAOResultFactory($result, $this, '_returnUserFromRowWithData');
 		return $returner;

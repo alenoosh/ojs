@@ -45,7 +45,8 @@ class UserManagementForm extends Form {
 			$this->addCheck(new FormValidatorLength($this, 'password', 'optional', 'user.register.form.passwordLengthTooShort', '>=', $site->getMinPasswordLength()));
 			$this->addCheck(new FormValidatorCustom($this, 'password', 'optional', 'user.register.form.passwordsDoNotMatch', create_function('$password,$form', 'return $password == $form->getData(\'password2\');'), array(&$this)));
 		}
-		$this->addCheck(new FormValidator($this, 'firstName', 'required', 'user.profile.form.firstNameRequired'));
+		// Opatan Inc. : FormValidator for firstName is replaced with FormValidatorLocale
+		$this->addCheck(new FormValidatorLocale($this, 'firstName', 'required', 'user.profile.form.firstNameRequired'));
 		$this->addCheck(new FormValidator($this, 'lastName', 'required', 'user.profile.form.lastNameRequired'));
 		$this->addCheck(new FormValidatorUrl($this, 'userUrl', 'optional', 'user.profile.form.urlInvalid'));
 		// Opatan Inc. : FormValidatorEmail and FormValidatorCustom for email is removed
@@ -129,7 +130,7 @@ class UserManagementForm extends Form {
 					'authId' => $user->getAuthId(),
 					'username' => $user->getUsername(),
 					'salutation' => $user->getSalutation(),
-					'firstName' => $user->getFirstName(),
+					'firstName' => $user->getFirstName(null), // Opatan Inc. : Localized
 					'middleName' => $user->getMiddleName(),
 					'lastName' => $user->getLastName(),
 					'signature' => $user->getSignature(null), // Localized
@@ -229,7 +230,7 @@ class UserManagementForm extends Form {
 		}
 
 		$user->setSalutation($this->getData('salutation'));
-		$user->setFirstName($this->getData('firstName'));
+		$user->setFirstName($this->getData('firstName'), null); // Opatan Inc. : Localized
 		$user->setMiddleName($this->getData('middleName'));
 		$user->setLastName($this->getData('lastName'));
 		$user->setInitials($this->getData('initials'));
@@ -237,8 +238,12 @@ class UserManagementForm extends Form {
 		$user->setDiscipline($this->getData('discipline'));
 		$user->setAffiliation($this->getData('affiliation'));
 		$user->setSignature($this->getData('signature'), null); // Localized
-		// Opatan Inc. : $this->getData('email') changed to $this->getData('username')
-		$user->setEmail($this->getData('username')); 
+		// Opatan Inc. : if the form is edited , the email is set to $user->getUsername() else to $this->getData('username')
+		if ($user->getUsername()) {
+			$user->setEmail($user->getUsername()); 
+		} else {
+			$user->setEmail($this->getData('username')); 
+		}
 		$user->setUrl($this->getData('userUrl'));
 		$user->setPhone($this->getData('phone'));
 		$user->setFax($this->getData('fax'));

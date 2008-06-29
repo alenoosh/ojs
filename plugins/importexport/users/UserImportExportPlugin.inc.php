@@ -113,7 +113,8 @@ class UserImportExportPlugin extends ImportExportPlugin {
 				$users = array();
 				foreach ($userKeys as $i) {
 					$newUser = &new ImportedUser();
-					$newUser->setFirstName(Request::getUserVar($i.'_firstName'));
+					// Opatan Inc. : set localized firstName
+					$newUser->setFirstName(Request::getUserVar($i.'_firstName'), null);
 					$newUser->setMiddleName(Request::getUserVar($i.'_middleName'));
 					$newUser->setLastName(Request::getUserVar($i.'_lastName'));
 					$newUser->setUsername(Request::getUserVar($i.'_username'));

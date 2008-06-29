@@ -36,7 +36,8 @@ class CreateReviewerForm extends Form {
 		// Opatan Inc. : FormValidatorAlphaNum for username is removed
 		// Opatan Inc. : email validator for username is added
 	        $this->addCheck(new FormValidatorEmail($this, 'username', 'required', 'user.profile.form.userEmailRequired'));       
-		$this->addCheck(new FormValidator($this, 'firstName', 'required', 'user.profile.form.firstNameRequired'));
+		// Opatan Inc. : FormValidator for firstName is replaced with FormValidatorLocale
+		$this->addCheck(new FormValidatorLocale($this, 'firstName', 'required', 'user.profile.form.firstNameRequired'));
 		$this->addCheck(new FormValidator($this, 'lastName', 'required', 'user.profile.form.lastNameRequired'));
 		$this->addCheck(new FormValidatorUrl($this, 'userUrl', 'optional', 'user.profile.form.urlInvalid'));
 		// Opatan Inc. : FormValidatorEmail and FormValidatorCustom for email are removed
@@ -121,7 +122,7 @@ class CreateReviewerForm extends Form {
 		$user = &new User();
 
 		$user->setSalutation($this->getData('salutation'));
-		$user->setFirstName($this->getData('firstName'));
+		$user->setFirstName($this->getData('firstName'), null); // Opatan Inc. : Localized
 		$user->setMiddleName($this->getData('middleName'));
 		$user->setLastName($this->getData('lastName'));
 		$user->setGender($this->getData('gender'));

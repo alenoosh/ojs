@@ -19,6 +19,7 @@ import('submission.copyAssignment.CopyAssignment');
 
 class CopyAssignmentDAO extends DAO {
 	var $articleFileDao;
+	var $userSettingsDao;
 
 	/**
 	 * Constructor.
@@ -26,6 +27,7 @@ class CopyAssignmentDAO extends DAO {
 	function CopyAssignmentDAO() {
 		parent::DAO();
 		$this->articleFileDao = &DAORegistry::getDAO('ArticleFileDAO');
+		$this->userSettingsDao = &DAORegistry::getDAO('UserSettingsDAO');
 	}
 
 	/**
@@ -34,8 +36,9 @@ class CopyAssignmentDAO extends DAO {
 	 * @return copyAssignment
 	 */
 	function &getCopyAssignmentById($copyedId) {
+		// Opatan Inc. : u.first_name is removed and u.user_id is added
 		$result = &$this->retrieve(
-			'SELECT c.*, u.first_name, u.last_name FROM copyed_assignments c LEFT JOIN users u ON (c.copyeditor_id = u.user_id) WHERE c.copyed_id = ?',
+			'SELECT c.*, u.user_id, u.last_name FROM copyed_assignments c LEFT JOIN users u ON (c.copyeditor_id = u.user_id) WHERE c.copyed_id = ?',
 			$copyedId
 		);
 
@@ -56,8 +59,9 @@ class CopyAssignmentDAO extends DAO {
 	 * @return CopyAssignment
 	 */
 	function &getCopyAssignmentByArticleId($articleId) {
+		// Opatan Inc. : u.first_name is removed and u.user_id is added
 		$result = &$this->retrieve(
-			'SELECT c.*, a.copyedit_file_id, u.first_name, u.last_name FROM copyed_assignments c LEFT JOIN articles a ON (c.article_id = a.article_id) LEFT JOIN users u ON (c.copyeditor_id = u.user_id) WHERE c.article_id = ?',
+			'SELECT c.*, a.copyedit_file_id, u.user_id, u.last_name FROM copyed_assignments c LEFT JOIN articles a ON (c.article_id = a.article_id) LEFT JOIN users u ON (c.copyeditor_id = u.user_id) WHERE c.article_id = ?',
 			$articleId
 		);
 
@@ -84,7 +88,8 @@ class CopyAssignmentDAO extends DAO {
 		$copyAssignment->setCopyedId($row['copyed_id']);
 		$copyAssignment->setArticleId($row['article_id']);
 		$copyAssignment->setCopyeditorId($row['copyeditor_id']);
-		$copyAssignment->setCopyeditorFullName($row['first_name'].' '.$row['last_name']);
+		// Opatan Inc. : setting_value of firstName is set as first name
+		$copyAssignment->setCopyeditorFullName($userSettingsDao->getSetting($row['user_id'], 'firstName').' '.$row['last_name']);
 		$copyAssignment->setDateNotified($this->datetimeFromDB($row['date_notified']));
 		$copyAssignment->setDateUnderway($this->datetimeFromDB($row['date_underway']));
 		$copyAssignment->setDateCompleted($this->datetimeFromDB($row['date_completed']));

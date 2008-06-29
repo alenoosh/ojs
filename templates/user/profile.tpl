@@ -35,7 +35,7 @@
 </tr>
 <tr valign="top">
 	<td class="label">{fieldLabel name="firstName" required="true" key="user.firstName"}</td>
-	<td class="value"><input type="text" name="firstName" id="firstName" value="{$firstName|escape}" size="20" maxlength="40" class="textField" /></td>
+	<td class="value"><input type="text" name="firstName[{$formLocale|escape}]" id="firstName" value="{$firstName[$formLocale]|escape}" size="20" maxlength="40" class="textField" /></td>
 </tr>
 <tr valign="top">
 	<td class="label">{fieldLabel name="middleName" key="user.middleName"}</td>
