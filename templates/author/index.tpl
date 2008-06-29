@@ -10,10 +10,11 @@
  *}
 {assign var="pageTitle" value="common.queue.long.$pageToDisplay"}
 {include file="common/header.tpl"}
-
 <ul class="menu">
 	<li{if ($pageToDisplay == "active")} class="current"{/if}><a href="{url op="index" path="active"}">{translate key="common.queue.short.active"}</a></li>
 	<li{if ($pageToDisplay == "completed")} class="current"{/if}><a href="{url op="index" path="completed"}">{translate key="common.queue.short.completed"}</a></li>
+	<li{if ($pageToDisplay == "addSuppFile")} class="current"{/if}><a href="#" onclick="callSelectedUrl('{url op="addSuppFile" path="article_id"}')">{translate key="common.queue.short.completed"}</a></li>
+
 </ul>
 
 <br />

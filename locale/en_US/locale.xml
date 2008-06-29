@@ -1157,6 +1157,11 @@ Title of classification system]]></message>
 Note that if your site administrator has already registered this site with the PKP Harvester, your journal will be indexed automatically and you do not need to register your journal.
 <br /><br />
 <a href="http://pkp.sfu.ca/harvester/add.php" target="_blank">Click here</a> and enter <span class="highlight">{$siteUrl}</span> under <b>Site URL</b>, and <span class="highlight">{$oaiUrl}</span> under <b>Base URL for OAI Archive</b>.]]></message>
+	<!-- OPatan Inc. -->
+	<message key="manager.setup.abstract">Abstract Length</message>
+	<message key="manager.setup.notifications.abstractMinimumLength">Minimum Length of Abstract</message>
+	<message key="manager.setup.notifications.abstractMaximumLength">Maximum Length of Abstract</message>
+
 	<message key="manager.setup.notifications">Notification of Author Submission</message>
 	<message key="manager.setup.notifications.description">On completing the submission process, authors are automatically sent an acknowledgement email (which can be viewed and edited in Prepared Emails). In addition, a copy of the acknowledgement email can be sent as follows:</message>
 	<message key="manager.setup.notifications.copyPrimaryContact">Send a copy to the journal's primary contact, identified in Setup Step 1.</message>
@@ -1986,6 +1991,9 @@ Active is how many reviews are currently being considered or underway.]]></messa
 	<message key="author.submit.form.authorRequiredFields">The first name, last name, and email address of each author is required.</message>
 	<message key="author.submit.form.titleRequired">Please enter the title of your article.</message>
 	<message key="author.submit.form.abstractRequired">Please enter the abstract of your article.</message>
+	<!--Opatan Inc. -> Abstract Length -->
+	<message key="author.submit.form.abstractLength">The length of entered abstract is not in the valid range</message>
+	<message key="author.submit.form.abstractLengthNote">between ({$abstractMinLength}-{$abstractMaxLength}) words</message>
 	
 	<!-- Article Submission Step 3 -->
 	<message key="author.submit.uploadInstructions"><![CDATA[

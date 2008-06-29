@@ -5,3 +5,5 @@ cache/*
 cache/t_compile/*
 
 files/
+
+uploads/

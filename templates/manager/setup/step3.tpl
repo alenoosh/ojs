@@ -301,6 +301,20 @@
 	{/if}
 </table>
 
+{*Opatan Inc. : Abstract Length*}
+
+<div class="separator"></div>
+
+<h3>3.7 {translate key="manager.setup.abstract"}</h3>
+<table width="100%" class="data">
+	<tr valign="top">
+		<td>{fieldLabel key="manager.setup.notifications.abstractMinimumLength"}&nbsp;&nbsp;<input type="text"  class="textField"  id="abstractMinimumLength" name="abstractMinimumLength" value="{$abstractMinimumLength}" /></td>
+			<td>{fieldLabel key="manager.setup.notifications.abstractMaximumLength"}&nbsp;&nbsp;<input type="text"  class="textField"  id="abstractMaximumLength" name="abstractMaximumLength" value="{$abstractMaximumLength}" /></td>
+	</tr>
+</table>
+ 
+{*// Opatan Inc.*}
+
 <div class="separator"></div>
 
 <p><input type="submit" value="{translate key="common.saveAndContinue"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url op="setup" escape=false}'" /></p>

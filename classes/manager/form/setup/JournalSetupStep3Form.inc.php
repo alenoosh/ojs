@@ -47,7 +47,11 @@ class JournalSetupStep3Form extends JournalSetupForm {
 				'metaTypeExamples' => 'string',
 				'copySubmissionAckPrimaryContact' => 'bool',
 				'copySubmissionAckSpecified' => 'bool',
-				'copySubmissionAckAddress' => 'string'
+				'copySubmissionAckAddress' => 'string',
+				// Opatan Inc. : Add abstract Minimum and maximum Lengtgh
+				'abstractMinimumLength' => 'int',
+				'abstractMaximumLength' => 'int'
+
 			)
 		);
 

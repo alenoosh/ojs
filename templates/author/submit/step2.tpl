@@ -254,7 +254,10 @@ function confirmForgottenUpload() {
 
 {if $section->getAbstractsDisabled()==0}
 <tr valign="top">
-	<td width="20%" class="label">{fieldLabel name="abstract" required="true" key="article.abstract"}</td>
+{*Opatan Inc. -> Abstract Length Note*}
+	<td width="20%" class="label">{fieldLabel name="abstract" required="true" key="article.abstract"} 
+	<br />{translate key="author.submit.form.abstractLengthNote" abstractMinLength=$abstractMinimumLength abstractMaxLength=$abstractMaximumLength}</td>
+
 	<td width="80%" class="value"><textarea name="abstract[{$formLocale|escape}]" id="abstract" class="textArea" rows="15" cols="60">{$abstract[$formLocale]|escape}</textarea></td>
 </tr>
 {/if}{* Abstracts enabled *}

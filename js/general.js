@@ -138,4 +138,21 @@ function changeFormAction(formName, action) {
 	document.forms[formName].action = action;
 	document.forms[formName].submit();
 }
-
+// Opatan Inc. Task 6 :redirect link from article value
+function getSelectedArticleId() {
+	for (var i = 0; i < document.formName.length; i++) {
+		if (document.formName[i].radioButtonName.checked) {
+			return document.formName[i].radioButtonName.value;
+		}
+	}
+	return -1;
+}
+function callSelectedUrl(url) {
+	article_id = getSelectedArticleId();
+	if (article_id == -1) {
+		alert("Please Select an Article");
+		return;
+	}
+	url = url.replace("article_id", article_id);
+	 window.location.href = url;
+}

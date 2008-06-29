@@ -331,6 +331,10 @@ class DAO {
 
 		} else if ($type == 'bool') {
 			$value = $value ? 1 : 0;
+		
+		//Opatan Inc. : return int value
+		} else if ($type== 'int') {
+			$value = (int)$value;   
 		}
 
 		return $value;

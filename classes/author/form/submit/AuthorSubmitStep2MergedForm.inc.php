@@ -136,10 +136,38 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		// determine whether or not to display indexing options.
 		$sectionDao = &DAORegistry::getDAO('SectionDAO');
 		$this->_data['section'] = &$sectionDao->getSection($this->article->getSectionId());
+		// Opatan Inc. : check Maximum and Minmum Abstract Length
+		$journal = &Request::getJournal();
+		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+		$abstractMinimumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMinimumLength');
+		$abstractMaximumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMaximumLength');
+		$abstractLength = 0;
+		$abstractStr    = 0;
+		$abstract       = $this->getData('abstract');
+		$formLocale     = $this->getFormLocale();
+		foreach (str_word_count($abstract[$formLocale],1) as $key => $value) {
+			
+			$abstractStr .= $value." ";
+		}
+		$str = eregi_replace(" +", " ", $abstractStr);
+		$array = explode(" ", $str);
+		
+		for($i=0; $i < count($array); $i++)
+		{
+			if (eregi("[0-9A-Za-zÀ-ÖØ-öø-ÿ]", $array[$i]))
+				$abstractLength++;
+		}
+		
 
 		if ($this->_data['section']->getAbstractsDisabled() == 0) {
 			$this->addCheck(new FormValidatorLocale($this, 'abstract', 'required', 'author.submit.form.abstractRequired'));
 		}
+		//Opatan Inc. : Check Abstract Length
+		if (($abstractLength < $abstractMinimumLength) || ($abstractLength > $abstractMaximumLength)) {
+			$this->addCheck(new FormValidatorLocale($this, 'abstractLength', 'required', 'author.submit.form.abstractLength'));
+				
+		}
+
 
 	}
 
@@ -157,15 +185,24 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 	 */
 	function display() {
 		$templateMgr =& TemplateManager::getManager();
+		//Opatan Inc. : Assign Abstract Minimum and Maximum Length
+		$journal               = &Request::getJournal();
+		$journalSettingsDao    = &DAORegistry::getDAO('JournalSettingsDAO');
+		$abstractMinimumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMinimumLength');
+		$abstractMaximumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMaximumLength');
+	
+		$templateMgr->assign('abstractMinimumLength',$abstractMinimumLength);
+		$templateMgr->assign('abstractMaximumLength',$abstractMaximumLength);
 
 		$countryDao =& DAORegistry::getDAO('CountryDAO');
-		$countries =& $countryDao->getCountries();
+		$countries  =& $countryDao->getCountries();
+	
 		$templateMgr->assign_by_ref('countries', $countries);
 
 		// Get submission files for this article
 		$articleFileDao = &DAORegistry::getDAO('ArticleFileDAO');
 		if ($this->article->getSubmissionFileId() != null) {
-            $templateMgr->assign_by_ref('submissionFile', $articleFileDao->getArticleFile($this->article->getSubmissionFileId()));
+           		 $templateMgr->assign_by_ref('submissionFile', $articleFileDao->getArticleFile($this->article->getSubmissionFileId()));
 		}
 
 		// Get supplementary files for this article
