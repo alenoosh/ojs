@@ -248,8 +248,8 @@ class Install extends Installer {
 			$user->setUsername(strtolower($this->getParam('adminUsername')));
 			$user->setPassword(Validation::encryptCredentials(strtolower($this->getParam('adminUsername')), $this->getParam('adminPassword'), $this->getParam('encryption')));
             		// Opatan Inc. : we set the username part of email address as first name and as last name
-			$user->setFirstName(substr($user->getUsername(), 0, strpos($user->getUsername(), '@')), null); 
-			$user->setLastName(substr($user->getUsername(), 0, strpos($user->getUsername(), '@')));
+			$user->setFirstName(substr(strtolower($this->getParam('adminUsername')), 0, strpos(strtolower($this->getParam('adminUsername')), '@')), $locale); 
+			$user->setLastName(substr(strtolower($this->getParam('adminUsername')), 0, strpos(strtolower($this->getParam('adminUsername')), '@')));
             		// Opatan Inc. : 'adminEmail' changed to 'adminUsername'           
 			$user->setEmail(strtolower($this->getParam('adminUsername')));
 			if (!$userDao->insertUser($user)) {

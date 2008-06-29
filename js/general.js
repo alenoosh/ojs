@@ -140,7 +140,7 @@ function changeFormAction(formName, action) {
 }
 // Opatan Inc. Task 6 :redirect link from article value
 function getSelectedArticleId() {
-	for (var i = 0; i < document.formName.length; i++) {
+	for (var i = 0; i <= document.formName.length; i++) {
 		if (document.formName[i].radioButtonName.checked) {
 			return document.formName[i].radioButtonName.value;
 		}
