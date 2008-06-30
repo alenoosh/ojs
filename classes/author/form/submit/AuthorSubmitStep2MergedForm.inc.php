@@ -128,7 +128,7 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 				'type',
 				'language',
 				'sponsor',
-                'supp_title'
+                		'supp_title'
 			)
 		);
 
@@ -188,8 +188,14 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		//Opatan Inc. : Assign Abstract Minimum and Maximum Length
 		$journal               = &Request::getJournal();
 		$journalSettingsDao    = &DAORegistry::getDAO('JournalSettingsDAO');
-		$abstractMinimumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMinimumLength');
-		$abstractMaximumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMaximumLength');
+		if ($journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMinimumLength')) {
+		
+			$abstractMinimumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMinimumLength');
+		} else { $abstractMinimumLength = 4; }
+		
+		if ($journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMaximumLength')) {
+			$abstractMaximumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMaximumLength');
+		} else {$abstractMaximumLength = 10;}
 	
 		$templateMgr->assign('abstractMinimumLength',$abstractMinimumLength);
 		$templateMgr->assign('abstractMaximumLength',$abstractMaximumLength);
