@@ -139,8 +139,14 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		// Opatan Inc. : check Maximum and Minmum Abstract Length
 		$journal = &Request::getJournal();
 		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
-		$abstractMinimumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMinimumLength');
-		$abstractMaximumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMaximumLength');
+		if ($journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMinimumLength')) {
+		
+			$abstractMinimumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMinimumLength');
+		} else { $abstractMinimumLength = 4; }
+		
+		if ($journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMaximumLength')) {
+			$abstractMaximumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMaximumLength');
+		} else {$abstractMaximumLength = 10;}
 		$abstractLength = 0;
 		$abstractStr    = 0;
 		$abstract       = $this->getData('abstract');
