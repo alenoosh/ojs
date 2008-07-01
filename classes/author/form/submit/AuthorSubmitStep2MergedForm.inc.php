@@ -139,14 +139,8 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		// Opatan Inc. : check Maximum and Minmum Abstract Length
 		$journal = &Request::getJournal();
 		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
-		if ($journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMinimumLength')) {
-		
-			$abstractMinimumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMinimumLength');
-		} else { $abstractMinimumLength = 4; }
-		
-		if ($journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMaximumLength')) {
-			$abstractMaximumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMaximumLength');
-		} else {$abstractMaximumLength = 10;}
+		$abstractMinimumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMinimumLength');
+		$abstractMaximumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMaximumLength');
 		$abstractLength = 0;
 		$abstractStr    = 0;
 		$abstract       = $this->getData('abstract');
@@ -194,14 +188,8 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		//Opatan Inc. : Assign Abstract Minimum and Maximum Length
 		$journal               = &Request::getJournal();
 		$journalSettingsDao    = &DAORegistry::getDAO('JournalSettingsDAO');
-		if ($journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMinimumLength')) {
-		
-			$abstractMinimumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMinimumLength');
-		} else { $abstractMinimumLength = 4; }
-		
-		if ($journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMaximumLength')) {
-			$abstractMaximumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMaximumLength');
-		} else {$abstractMaximumLength = 10;}
+		$abstractMinimumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMinimumLength');
+		$abstractMaximumLength = &$journalSettingsDao->getSetting($journal->getJournalId(), 'abstractMaximumLength');
 	
 		$templateMgr->assign('abstractMinimumLength',$abstractMinimumLength);
 		$templateMgr->assign('abstractMaximumLength',$abstractMaximumLength);
