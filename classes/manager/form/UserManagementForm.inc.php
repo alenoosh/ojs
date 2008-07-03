@@ -45,9 +45,9 @@ class UserManagementForm extends Form {
 			$this->addCheck(new FormValidatorLength($this, 'password', 'optional', 'user.register.form.passwordLengthTooShort', '>=', $site->getMinPasswordLength()));
 			$this->addCheck(new FormValidatorCustom($this, 'password', 'optional', 'user.register.form.passwordsDoNotMatch', create_function('$password,$form', 'return $password == $form->getData(\'password2\');'), array(&$this)));
 		}
-		// Opatan Inc. : FormValidator for firstName is replaced with FormValidatorLocale
+		// Opatan Inc. : FormValidator for firstName and lastName is replaced with FormValidatorLocale
 		$this->addCheck(new FormValidatorLocale($this, 'firstName', 'required', 'user.profile.form.firstNameRequired'));
-		$this->addCheck(new FormValidator($this, 'lastName', 'required', 'user.profile.form.lastNameRequired'));
+		$this->addCheck(new FormValidatorLocale($this, 'lastName', 'required', 'user.profile.form.lastNameRequired'));
 		$this->addCheck(new FormValidatorUrl($this, 'userUrl', 'optional', 'user.profile.form.urlInvalid'));
 		// Opatan Inc. : FormValidatorEmail and FormValidatorCustom for email is removed
 		$this->addCheck(new FormValidatorPost($this));
@@ -132,7 +132,7 @@ class UserManagementForm extends Form {
 					'salutation' => $user->getSalutation(),
 					'firstName' => $user->getFirstName(null), // Opatan Inc. : Localized
 					'middleName' => $user->getMiddleName(),
-					'lastName' => $user->getLastName(),
+					'lastName' => $user->getLastName(null), // Opatan Inc. : Localized
 					'signature' => $user->getSignature(null), // Localized
 					'initials' => $user->getInitials(),
 					'gender' => $user->getGender(),
@@ -232,7 +232,7 @@ class UserManagementForm extends Form {
 		$user->setSalutation($this->getData('salutation'));
 		$user->setFirstName($this->getData('firstName'), null); // Opatan Inc. : Localized
 		$user->setMiddleName($this->getData('middleName'));
-		$user->setLastName($this->getData('lastName'));
+		$user->setLastName($this->getData('lastName'), null); // Opatan Inc. : Localized
 		$user->setInitials($this->getData('initials'));
 		$user->setGender($this->getData('gender'));
 		$user->setDiscipline($this->getData('discipline'));

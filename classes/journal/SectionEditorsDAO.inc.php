@@ -66,10 +66,12 @@ class SectionEditorsDAO extends DAO {
 		$users = array();
 
 		$userDao = &DAORegistry::getDAO('UserDAO');
+		$locale = Locale::getLocale();
 
+		// Opatan Inc. : tables are joined with user_settings to provide setting_value of firstName
 		$result = &$this->retrieve(
-			'SELECT u.*, e.can_review AS can_review, e.can_edit AS can_edit FROM users AS u, section_editors AS e WHERE u.user_id = e.user_id AND e.journal_id = ? AND e.section_id = ?', // Opatan Inc. : ORDER BY last_name, first_name',
-			array($journalId, $sectionId)
+			'SELECT u.*, sf.setting_value AS first_name, e.can_review AS can_review, e.can_edit AS can_edit FROM users AS u, user_settings AS sf, section_editors AS e WHERE u.user_id = e.user_id AND e.journal_id = ? AND e.section_id = ? AND u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ? ORDER BY first_name', // Opatan Inc. : I should add last_name before first_name later
+			array($journalId, $sectionId, 'firstName', $locale)
 		);
 
 		while (!$result->EOF) {
@@ -98,17 +100,20 @@ class SectionEditorsDAO extends DAO {
 		$users = array();
 
 		$userDao = &DAORegistry::getDAO('UserDAO');
+		$locale = Locale::getLocale();
 
+		// Opatan Inc. : joined with user_settings to provide setting_value of firstName
 		$result = &$this->retrieve(
-			'SELECT	u.*
+			'SELECT	u.*, sf.setting_value AS first_name
 			FROM	users u
 				LEFT JOIN roles r ON (r.user_id = u.user_id)
 				LEFT JOIN section_editors e ON (e.user_id = u.user_id AND e.journal_id = r.journal_id AND e.section_id = ?)
+				LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?)
 			WHERE	r.journal_id = ? AND
 				r.role_id = ? AND
-				e.section_id IS NULL',
-			// Opatan Inc. : ORDER BY last_name, first_name',
-			array($sectionId, $journalId, ROLE_ID_SECTION_EDITOR)
+				e.section_id IS NULL
+			ORDER BY first_name', // Opatan Inc. : I should add last_name before first_name later
+			array($sectionId, 'firstName', $locale, $journalId, ROLE_ID_SECTION_EDITOR)
 		);
 
 		while (!$result->EOF) {

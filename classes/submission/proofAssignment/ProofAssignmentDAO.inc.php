@@ -35,9 +35,15 @@ class ProofAssignmentDAO extends DAO {
 	 * @return ProofAssignment
 	 */
 	function &getProofAssignment($proofId) {
-		// Opatan Inc. : u.first_name is removed and u.user_id is added to the selected columns
+		// Opatan Inc. : u.first_name and u.last_name are removed and setting_value 
+		// of firstName and lastName are added to the selected columns
+		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
-			'SELECT p.*, u.user_id, u.last_name, u.email FROM proof_assignments p LEFT JOIN users u ON (p.proofreader_id = u.user_id) WHERE p.proof_id = ?',
+			'SELECT p.*, sf.setting_value AS first_name, sl.setting_value AS last_name, u.email FROM proof_assignments p LEFT JOIN users u ON (p.proofreader_id = u.user_id) LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE p.proof_id = ?',
+			'firstName',
+			$locale,
+			'lastName',
+			$locale,
 			$proofId
 			);
 
@@ -58,10 +64,12 @@ class ProofAssignmentDAO extends DAO {
 	 * @return ProofAssignment
 	 */
 	function &getProofAssignmentByArticleId($articleId) {
-		// Opatan Inc. : u.first_name is removed and u.user_id is added to the selected columns
+		// Opatan Inc. : u.first_name and u.last_name are removed and setting_value 
+		// of firstName and lastName are added to the selected columns
+		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
-			'SELECT p.*, u.user_id, u.last_name, u.email FROM proof_assignments p LEFT JOIN users u ON (p.proofreader_id = u.user_id) WHERE p.article_id = ?',
-			$articleId
+			'SELECT p.*, sf.setting_value AS first_name, sl.setting_value AS last_name, u.email FROM proof_assignments p LEFT JOIN users u ON (p.proofreader_id = u.user_id) LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE p.article_id = ?',
+			array('firstName', $locale, 'lastName', $locale, $articleId)
 			);
 
 		$returner = null;
@@ -102,7 +110,7 @@ class ProofAssignmentDAO extends DAO {
 		$proofAssignment->setDateLayoutEditorAcknowledged($this->datetimeFromDB($row['date_layouteditor_acknowledged']));
 
 		// Opatan Inc. : firstName is set to value of firstName in user_settings
-		$proofAssignment->setProofreaderFirstName($this->userSettingsDao->getSetting($row['user_id'], 'firstName'));
+		$proofAssignment->setProofreaderFirstName($row['first_name']);
 		$proofAssignment->setProofreaderLastName($row['last_name']);		
 		$proofAssignment->setProofreaderEmail($row['email']);
 

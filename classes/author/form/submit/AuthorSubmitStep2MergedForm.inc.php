@@ -136,6 +136,11 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		// determine whether or not to display indexing options.
 		$sectionDao = &DAORegistry::getDAO('SectionDAO');
 		$this->_data['section'] = &$sectionDao->getSection($this->article->getSectionId());
+
+		if ($this->_data['section']->getAbstractsDisabled() == 0) {
+			$this->addCheck(new FormValidatorLocale($this, 'abstract', 'required', 'author.submit.form.abstractRequired'));
+		}
+	
 		// Opatan Inc. : check Maximum and Minmum Abstract Length
 		$journal = &Request::getJournal();
 		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
@@ -145,29 +150,26 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		$abstractStr    = 0;
 		$abstract       = $this->getData('abstract');
 		$formLocale     = $this->getFormLocale();
-		foreach (str_word_count($abstract[$formLocale],1) as $key => $value) {
-			
-			$abstractStr .= $value." ";
-		}
-		$str = eregi_replace(" +", " ", $abstractStr);
-		$array = explode(" ", $str);
 		
-		for($i=0; $i < count($array); $i++)
-		{
-			if (eregi("[0-9A-Za-zÀ-ÖØ-öø-ÿ]", $array[$i]))
-				$abstractLength++;
-		}
+		if (isset($abstract[$formLocale])) {
+			foreach (str_word_count($abstract[$formLocale],1) as $key => $value) {
+				$abstractStr .= $value." ";
+			}
+			$str = eregi_replace(" +", " ", $abstractStr);
+			$array = explode(" ", $str);
 		
-
-		if ($this->_data['section']->getAbstractsDisabled() == 0) {
-			$this->addCheck(new FormValidatorLocale($this, 'abstract', 'required', 'author.submit.form.abstractRequired'));
+			for($i=0; $i < count($array); $i++)
+			{
+				if (eregi("[0-9A-Za-zÀ-ÖØ-öø-ÿ]", $array[$i]))
+					$abstractLength++;
+			}
+	
+			//Opatan Inc. : Check Abstract Length
+			if (($abstractLength < $abstractMinimumLength) || ($abstractLength > $abstractMaximumLength)) {
+				$this->addCheck(new FormValidatorLocale($this, 'abstractLength', 'required', 
+						'author.submit.form.abstractLength'));
+			}
 		}
-		//Opatan Inc. : Check Abstract Length
-		if (($abstractLength < $abstractMinimumLength) || ($abstractLength > $abstractMaximumLength)) {
-			$this->addCheck(new FormValidatorLocale($this, 'abstractLength', 'required', 'author.submit.form.abstractLength'));
-				
-		}
-
 
 	}
 

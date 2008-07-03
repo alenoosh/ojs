@@ -58,9 +58,9 @@ class RegistrationForm extends Form {
 	                $this->addCheck(new FormValidatorEmail($this, 'username', 'required', 'user.profile.form.userEmailRequired'));   
 			$this->addCheck(new FormValidatorLength($this, 'password', 'required', 'user.register.form.passwordLengthTooShort', '>=', $site->getMinPasswordLength()));
 			$this->addCheck(new FormValidatorCustom($this, 'password', 'required', 'user.register.form.passwordsDoNotMatch', create_function('$password,$form', 'return $password == $form->getData(\'password2\');'), array(&$this)));
-			// Opatan Inc. : FormValidator for firstName is replaced with FormValidatorLocale
+			// Opatan Inc. : FormValidator for firstName and lastName is replaced with FormValidatorLocale
 			$this->addCheck(new FormValidatorLocale($this, 'firstName', 'required', 'user.profile.form.firstNameRequired'));
-			$this->addCheck(new FormValidator($this, 'lastName', 'required', 'user.profile.form.lastNameRequired'));
+			$this->addCheck(new FormValidatorLocale($this, 'lastName', 'required', 'user.profile.form.lastNameRequired'));
 			$this->addCheck(new FormValidatorUrl($this, 'userUrl', 'optional', 'user.profile.form.urlInvalid'));
 			// Opatan Inc. : FormValidatorEmail and FormValidatorCustom for email is removed
 			if ($this->captchaEnabled) {
@@ -188,7 +188,7 @@ class RegistrationForm extends Form {
 			$user->setFirstName($this->getData('firstName'), null); // Opatan Inc. : Localized
 			$user->setMiddleName($this->getData('middleName'));
 			$user->setInitials($this->getData('initials'));
-			$user->setLastName($this->getData('lastName'));
+			$user->setLastName($this->getData('lastName'), null); // Opatan Inc. : Localized
 			$user->setGender($this->getData('gender'));
 			$user->setAffiliation($this->getData('affiliation'));
 			$user->setSignature($this->getData('signature'), null); // Localized

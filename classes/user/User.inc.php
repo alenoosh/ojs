@@ -157,20 +157,30 @@ class User extends DataObject {
 		return $this->setData('initials', $initials);
 	}
 
-	/**
-	 * Get last name.
-	 * @return string
+ 	/**
+	 * Opatan Inc. : 
+	 * Get localized user lastName.
 	 */
-	function getLastName() {
-		return $this->getData('lastName');
+	function getUserLastName() {
+		return $this->getLocalizedData('lastName');
 	}
 
 	/**
+	 * Opatan Inc. : @param $locale string added
+	 * Get last name.
+	 * @return string
+	 */
+	function getLastName($locale) {
+		return $this->getData('lastName', $locale);
+	}
+
+	/**
+	 * Opatan Inc. : @param $locale string added
 	 * Set last name.
 	 * @param $lastName string
 	 */
-	function setLastName($lastName) {
-		return $this->setData('lastName', $lastName);
+	function setLastName($lastName, $locale) {
+		return $this->setData('lastName', $lastName, $locale);
 	}
 
 	/**
@@ -587,10 +597,10 @@ class User extends DataObject {
 	function getFullName($lastFirst = false) {
 		$userSettingsDao = &DAORegistry::getDAO('UserSettingsDAO');
 		if ($lastFirst) {
-			return $this->getData('lastName') . ', ' . $userSettingsDao->getSetting($this->getUserId(), 'firstName') . ($this->getData('middleName') != '' ? ' ' . $this->getData('middleName') : ''); // Opatan Inc. : gets localized firstName
+			return $userSettingsDao->getSetting($this->getUserId(), 'lastName') . ', ' . $userSettingsDao->getSetting($this->getUserId(), 'firstName') . ($this->getData('middleName') != '' ? ' ' . $this->getData('middleName') : ''); // Opatan Inc. : gets localized firstName and lastName
 
 		} else {			
-			return $userSettingsDao->getSetting($this->getUserId(), 'firstName') . ' ' . ($this->getData('middleName') != '' ? $this->getData('middleName') . ' ' : '') . $this->getData('lastName'); // Opatan Inc. : gets localized firstName
+			return $userSettingsDao->getSetting($this->getUserId(), 'firstName') . ' ' . ($this->getData('middleName') != '' ? $this->getData('middleName') . ' ' : '') . $userSettingsDao->getSetting($this->getUserId(), 'lastName'); // Opatan Inc. : gets localized firstName and lastName
 		}
 	}
 

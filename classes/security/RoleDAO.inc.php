@@ -140,25 +140,11 @@ class RoleDAO extends DAO {
 	 */
 	function &getUsersByRoleId($roleId = null, $journalId = null, $searchType = null, $search = null, $searchMatch = null, $dbResultRange = null) {
 		$users = array();
-
-		// Opatan Inc. : if searchType equals firstName , firstName is added to ParamArray as the settingName
-		$paramArray = array();
-		$settingName = null;
-
-		if ($searchType != null) {
-			switch ($searchType) {
-				case USER_FIELD_FIRSTNAME:
-					$settingName = 'firstName';
-					break;
-				case USER_FIELD_INTERESTS:
-					$settingName = 'interests';
-					break;
-			}
-			$paramArray[] = $settingName;
-		} else {
-			$paramArray[] = 'interests';
-		}
 		
+		//Opatan Inc. : firstName and lastName added to paramArray
+		$locale = Locale::getLocale();
+		$paramArray = array('firstName', $locale, 'lastName', $locale, 'interests', $locale);
+
 		if (isset($roleId)) $paramArray[] = (int) $roleId;
 		if (isset($journalId)) $paramArray[] = (int) $journalId;
 
@@ -174,12 +160,13 @@ class RoleDAO extends DAO {
 				$paramArray[] = $search;
 				break;
 			case USER_FIELD_FIRSTNAME:
-				// Opatan Inc. : u.first_name is replaced with s.setting_value
-				$searchSql = 'AND LOWER(s.setting_value) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
+				// Opatan Inc. : u.first_name is replaced with sf.setting_value
+				$searchSql = 'AND LOWER(sf.setting_value) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
 				$paramArray[] = ($searchMatch=='is'?$search:'%' . $search . '%');
 				break;
 			case USER_FIELD_LASTNAME:
-				$searchSql = 'AND LOWER(u.last_name) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
+				// Opatan Inc. : u.last_name is replaced with sl.setting_value			
+				$searchSql = 'AND LOWER(sl.setting_value) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
 				$paramArray[] = ($searchMatch=='is'?$search:'%' . $search . '%');
 				break;
 			case USER_FIELD_USERNAME:
@@ -191,19 +178,23 @@ class RoleDAO extends DAO {
 				$paramArray[] = ($searchMatch=='is'?$search:'%' . $search . '%');
 				break;
 			case USER_FIELD_INTERESTS:
-				$searchSql = 'AND LOWER(s.setting_value) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
+				// Opatan Inc. : s.setting_value is replaced with si.setting_value
+				$searchSql = 'AND LOWER(si.setting_value) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
 				$paramArray[] = ($searchMatch=='is'?$search:'%' . $search . '%');
 				break;
 			case USER_FIELD_INITIAL:
-				$searchSql = 'AND LOWER(u.last_name) LIKE LOWER(?)';
+				// Opatan Inc. : u.last_name is replaced with sl.setting_value			
+				$searchSql = 'AND LOWER(sl.setting_value) LIKE LOWER(?)';
 				$paramArray[] = $search . '%';
 				break;
 		}
 
-		// Opatan Inc. : $searchSql .= ' ORDER BY u.last_name, u.first_name'; // FIXME Add "sort field" parameter?
-
+		$searchSql .= ' ORDER BY sl.setting_value, sf.setting_value'; // FIXME Add "sort field" parameter?
+		
+		// Opatan Inc. : tables are joined with user_settings two times to provide 
+		// setting_value of first_name, lastName and interests
 		$result = &$this->retrieveRange(
-			'SELECT DISTINCT u.* FROM users AS u LEFT JOIN user_settings s ON (u.user_id = s.user_id AND s.setting_name = ?), roles AS r WHERE u.user_id = r.user_id ' . (isset($roleId)?'AND r.role_id = ?':'') . (isset($journalId) ? ' AND r.journal_id = ?' : '') . ' ' . $searchSql,
+			'SELECT DISTINCT u.* FROM users AS u LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) LEFT JOIN user_settings si ON (u.user_id = si.user_id AND si.setting_name = ? AND si.locale = ?), roles AS r WHERE u.user_id = r.user_id ' . (isset($roleId)?'AND r.role_id = ?':'') . (isset($journalId) ? ' AND r.journal_id = ?' : '') . ' ' . $searchSql,
 			$paramArray,
 			$dbResultRange
 		);
@@ -223,26 +214,10 @@ class RoleDAO extends DAO {
 	 */
 	function &getUsersByJournalId($journalId, $searchType = null, $search = null, $searchMatch = null, $dbResultRange = null) {
 		$users = array();
-
-		// Opatan Inc. : if searchType equals firstName , firstName is added to ParamArray as the settingName
-		$paramArray = array();
-		$settingName = null;
-
-		if ($searchType != null) {
-			switch ($searchType) {
-				case USER_FIELD_FIRSTNAME:
-					$settingName = 'firstName';
-					break;					
-				case USER_FIELD_INTERESTS:
-					$settingName = 'interests';
-					break;
-			}
-			$paramArray[] = $settingName; 
-		} else {
-			$paramArray[] = 'interests';
-		}
 		
-		$paramArray[] = (int) $journalId;
+		// Opatan Inc. : firstName and lastName are added to paramArray
+		$locale = Locale::getLocale();
+		$paramArray = array('firstName', $locale, 'lastName', $locale, 'interests', $locale, (int) $journalId);
 		$searchSql = '';
 
 		if (isset($search)) switch ($searchType) {
@@ -251,12 +226,13 @@ class RoleDAO extends DAO {
 				$paramArray[] = $search;
 				break;
 			case USER_FIELD_FIRSTNAME:
-				// Opatan Inc. : u.first_name is replaced with s.setting_value
-				$searchSql = 'AND LOWER(s.setting_value) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
+				// Opatan Inc. : u.first_name is replaced with sf.setting_value
+				$searchSql = 'AND LOWER(sf.setting_value) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
 				$paramArray[] = ($searchMatch=='is'?$search:'%' . $search . '%');
 				break;
 			case USER_FIELD_LASTNAME:
-				$searchSql = 'AND LOWER(u.last_name) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
+				// Opatan Inc. : u.last_name is replaced with sl.setting_value
+				$searchSql = 'AND LOWER(sl.setting_value) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
 				$paramArray[] = ($searchMatch=='is'?$search:'%' . $search . '%');
 				break;
 			case USER_FIELD_USERNAME:
@@ -268,20 +244,22 @@ class RoleDAO extends DAO {
 				$paramArray[] = ($searchMatch=='is'?$search:'%' . $search . '%');
 				break;
 			case USER_FIELD_INTERESTS:
-				$searchSql = 'AND LOWER(s.setting_value) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
+				// Opatan Inc. : s.setting_value is replaced with si.setting_value
+				$searchSql = 'AND LOWER(si.setting_value) ' . ($searchMatch=='is'?'=':'LIKE') . ' LOWER(?)';
 				$paramArray[] = ($searchMatch=='is'?$search:'%' . $search . '%');
 				break;
 			case USER_FIELD_INITIAL:
-				$searchSql = 'AND LOWER(u.last_name) LIKE LOWER(?)';
+				// Opatan Inc. : u.last_name is replaced with sl.setting_value
+				$searchSql = 'AND LOWER(sl.setting_value) LIKE LOWER(?)';
 				$paramArray[] = $search . '%';
 				break;
 		}
 
-		// Opatan Inc. : $searchSql .= ' ORDER BY u.last_name, u.first_name'; // FIXME Add "sort field" parameter?
+		$searchSql .= ' ORDER BY sl.setting_value, sf.setting_value'; // FIXME Add "sort field" parameter?
 
 		$result = &$this->retrieveRange(
 
-			'SELECT DISTINCT u.* FROM users AS u LEFT JOIN user_settings s ON (u.user_id = s.user_id AND s.setting_name = ?), roles AS r WHERE u.user_id = r.user_id AND r.journal_id = ? ' . $searchSql,
+			'SELECT DISTINCT u.* FROM users AS u LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) LEFT JOIN user_settings si ON (u.user_id = si.user_id AND si.setting_name = ? AND si.locale = ?), roles AS r WHERE u.user_id = r.user_id AND r.journal_id = ? ' . $searchSql,
 			$paramArray,
 			$dbResultRange
 		);

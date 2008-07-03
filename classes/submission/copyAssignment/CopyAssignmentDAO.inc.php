@@ -19,7 +19,6 @@ import('submission.copyAssignment.CopyAssignment');
 
 class CopyAssignmentDAO extends DAO {
 	var $articleFileDao;
-	var $userSettingsDao;
 
 	/**
 	 * Constructor.
@@ -27,7 +26,6 @@ class CopyAssignmentDAO extends DAO {
 	function CopyAssignmentDAO() {
 		parent::DAO();
 		$this->articleFileDao = &DAORegistry::getDAO('ArticleFileDAO');
-		$this->userSettingsDao = &DAORegistry::getDAO('UserSettingsDAO');
 	}
 
 	/**
@@ -36,9 +34,12 @@ class CopyAssignmentDAO extends DAO {
 	 * @return copyAssignment
 	 */
 	function &getCopyAssignmentById($copyedId) {
-		// Opatan Inc. : u.first_name is removed and u.user_id is added
+		// Opatan Inc. : u.first_name is removed and setting_value of firstName is added
+		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
-			'SELECT c.*, u.user_id, u.last_name FROM copyed_assignments c LEFT JOIN users u ON (c.copyeditor_id = u.user_id) WHERE c.copyed_id = ?',
+			'SELECT c.*, us.setting_value AS first_name, u.last_name FROM copyed_assignments c LEFT JOIN users u ON (c.copyeditor_id = u.user_id) LEFT JOIN user_settings us ON (u.user_id = us.user_id AND us.setting_name = ? AND us.locale = ?) WHERE c.copyed_id = ?',
+			'firstName',
+			$lcoale,
 			$copyedId
 		);
 
@@ -59,9 +60,12 @@ class CopyAssignmentDAO extends DAO {
 	 * @return CopyAssignment
 	 */
 	function &getCopyAssignmentByArticleId($articleId) {
-		// Opatan Inc. : u.first_name is removed and u.user_id is added
+		// Opatan Inc. : u.first_name is removed and setting_value of firstName is added
+		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
-			'SELECT c.*, a.copyedit_file_id, u.user_id, u.last_name FROM copyed_assignments c LEFT JOIN articles a ON (c.article_id = a.article_id) LEFT JOIN users u ON (c.copyeditor_id = u.user_id) WHERE c.article_id = ?',
+			'SELECT c.*, a.copyedit_file_id, us.setting_value AS first_name, u.last_name FROM copyed_assignments c LEFT JOIN articles a ON (c.article_id = a.article_id) LEFT JOIN users u ON (c.copyeditor_id = u.user_id) LEFT JOIN user_settings us ON (u.user_id = us.user_id AND us.setting_name = ? AND us.locale = ?) WHERE c.article_id = ?',
+			'firstName',
+			$locale,
 			$articleId
 		);
 
@@ -88,8 +92,7 @@ class CopyAssignmentDAO extends DAO {
 		$copyAssignment->setCopyedId($row['copyed_id']);
 		$copyAssignment->setArticleId($row['article_id']);
 		$copyAssignment->setCopyeditorId($row['copyeditor_id']);
-		// Opatan Inc. : setting_value of firstName is set as first name
-		$copyAssignment->setCopyeditorFullName($userSettingsDao->getSetting($row['user_id'], 'firstName').' '.$row['last_name']);
+		$copyAssignment->setCopyeditorFullName($row['first_name'].' '.$row['last_name']);
 		$copyAssignment->setDateNotified($this->datetimeFromDB($row['date_notified']));
 		$copyAssignment->setDateUnderway($this->datetimeFromDB($row['date_underway']));
 		$copyAssignment->setDateCompleted($this->datetimeFromDB($row['date_completed']));

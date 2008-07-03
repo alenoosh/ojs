@@ -35,12 +35,16 @@ class LayoutAssignmentDAO extends DAO {
 	 * @return LayoutAssignment
 	 */
 	function &getLayoutAssignmentById($layoutId) {
-		// Opatan Inc. : u.first_name is removed and u.user_id is added to selected columns
+		// Opatan Inc. : u.first_name is removed and setting_value of firstName is added to selected columns
+		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
-			'SELECT l.*, u.user_id, u.last_name, u.email
+			'SELECT l.*, us.setting_value AS first_name, u.last_name, u.email
 				FROM layouted_assignments l
 				LEFT JOIN users u ON (l.editor_id = u.user_id)
+				LEFT JOIN user_settings us ON (u.user_id = us.user_id AND us.setting_name = ? AND us.locale = ?)
 				WHERE layouted_id = ?',
+			'firstName',
+			$locale,
 			$layoutId
 		);
 
@@ -80,13 +84,15 @@ class LayoutAssignmentDAO extends DAO {
 	 * @return LayoutAssignment
 	 */
 	function &getLayoutAssignmentByArticleId($articleId) {
-		// Opatan Inc. : u.first_name is removed and u.user_id is added to selected columns
+		// Opatan Inc. : u.first_name is removed and setting_value of firstName is added to selected columns
+		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
-			'SELECT l.*, u.user_id, u.last_name, u.email
+			'SELECT l.*, us.setting_value AS first_name, u.last_name, u.email
 				FROM layouted_assignments l
 				LEFT JOIN users u ON (l.editor_id = u.user_id)
+				LEFT JOIN user_settings us ON (u.user_id = us.user_id AND us.setting_name = ? AND us.locale = ?)
 				WHERE article_id = ?',
-			$articleId
+			array('firstName', $locale, $articleId)
 		);
 
 		$returner = null;
@@ -110,9 +116,7 @@ class LayoutAssignmentDAO extends DAO {
 		$layoutAssignment->setLayoutId($row['layouted_id']);
 		$layoutAssignment->setArticleId($row['article_id']);
 		$layoutAssignment->setEditorId($row['editor_id']);
-		// Opatan Inc. : firstName is set to value of firstName in user_settings			
-		$layoutAssignment->setEditorFullName($this->userSettingsDao->getSetting($row['user_id'], 'firstName').
-						     ' '.$row['last_name']);
+		$layoutAssignment->setEditorFullName($row['first_name'].' '.$row['last_name']);
 		$layoutAssignment->setEditorEmail($row['email']);
 		$layoutAssignment->setDateNotified($this->datetimeFromDB($row['date_notified']));
 		$layoutAssignment->setDateUnderway($this->datetimeFromDB($row['date_underway']));

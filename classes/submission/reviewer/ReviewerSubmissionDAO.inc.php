@@ -53,12 +53,12 @@ class ReviewerSubmissionDAO extends DAO {
 	function &getReviewerSubmission($reviewId) {
 		$primaryLocale = Locale::getPrimaryLocale();
 		$locale = Locale::getLocale();
-		// Opatan Inc. : u.first_name is removed and u.user_id is added	
+		// Opatan Inc. : u.first_name is removed and us.setting_value of firstName is added	
 		$result = &$this->retrieve(
 			'SELECT	a.*,
 				r.*,
 				r2.review_revision,
-				u.user_id, u.last_name,
+				us.setting_value AS first_name, u.last_name,
 				COALESCE(stl.setting_value, stpl.setting_value) AS section_title,
 				COALESCE(sal.setting_value, sapl.setting_value) AS section_abbrev
 			FROM	articles a
@@ -70,6 +70,7 @@ class ReviewerSubmissionDAO extends DAO {
 				LEFT JOIN section_settings stl ON (s.section_id = stl.section_id AND stl.setting_name = ? AND stl.locale = ?)
 				LEFT JOIN section_settings sapl ON (s.section_id = sapl.section_id AND sapl.setting_name = ? AND sapl.locale = ?)
 				LEFT JOIN section_settings sal ON (s.section_id = sal.section_id AND sal.setting_name = ? AND sal.locale = ?)
+				LEFT JOIN user_settings us ON (u.user_id = us.user_id AND us.setting_name = ? AND us.locale = ?)
 			WHERE	r.review_id = ?',
 			array(
 				'title',
@@ -79,6 +80,8 @@ class ReviewerSubmissionDAO extends DAO {
 				'abbrev',
 				$primaryLocale,
 				'abbrev',
+				$locale,
+				'firstName',
 				$locale,
 				$reviewId
 			)
@@ -125,9 +128,8 @@ class ReviewerSubmissionDAO extends DAO {
 
 		// Review Assignment 
 		$reviewerSubmission->setReviewId($row['review_id']);
-		$reviewerSubmission->setReviewerId($row['reviewer_id']);
-		// Opatan Inc. : firstName setting value is set
-		$reviewerSubmission->setReviewerFullName($userSettingsDao->getSetting($row['user_id'], 'firstName').' '.$row['last_name']);
+		$reviewerSubmission->setReviewerId($row['reviewer_id']);		
+		$reviewerSubmission->setReviewerFullName($row['first_name'].' '.$row['last_name']);
 		$reviewerSubmission->setCompetingInterests($row['competing_interests']);
 		$reviewerSubmission->setRecommendation($row['recommendation']);
 		$reviewerSubmission->setDateAssigned($this->datetimeFromDB($row['date_assigned']));
@@ -204,11 +206,11 @@ class ReviewerSubmissionDAO extends DAO {
 	function &getReviewerSubmissionsByReviewerId($reviewerId, $journalId, $active = true, $rangeInfo = null) {
 		$primaryLocale = Locale::getPrimaryLocale();
 		$locale = Locale::getLocale();
-		// Opatan Inc. : u.first_name is removed and u.user_id is added
+		// Opatan Inc. : u.first_name is removed and us.setting_value of firstName is added
 		$sql = 'SELECT	a.*,
 				r.*,
 				r2.review_revision,
-				u.user_id, u.last_name,
+				us.setting_value AS first_name, u.last_name, 
 				COALESCE(stl.setting_value, stpl.setting_value) AS section_title,
 				COALESCE(sal.setting_value, sapl.setting_value) AS section_abbrev
 			FROM	articles a
@@ -220,6 +222,8 @@ class ReviewerSubmissionDAO extends DAO {
 				LEFT JOIN section_settings stl ON (s.section_id = stl.section_id AND stl.setting_name = ? AND stl.locale = ?)
 				LEFT JOIN section_settings sapl ON (s.section_id = sapl.section_id AND sapl.setting_name = ? AND sapl.locale = ?)
 				LEFT JOIN section_settings sal ON (s.section_id = sal.section_id AND sal.setting_name = ? AND sal.locale = ?)
+				LEFT JOIN user_settings us ON (u.user_id = us.user_id AND us.setting_name = ? AND us.locale = ?)
+
 			WHERE	a.journal_id = ?
 				AND r.reviewer_id = ?
 				AND r.date_notified IS NOT NULL';
@@ -240,6 +244,8 @@ class ReviewerSubmissionDAO extends DAO {
 				'abbrev',
 				$primaryLocale,
 				'abbrev',
+				$locale,
+				'firstName',
 				$locale,
 				$journalId,
 				$reviewerId

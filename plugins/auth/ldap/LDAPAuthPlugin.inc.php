@@ -289,7 +289,7 @@ class LDAPAuthPlugin extends AuthPlugin {
 		$firstName = @$attr['givenname'][0]; // Opatan Inc. : ?
 		$middleName = null;
 		$initials = null;
-		$lastName = @$attr['sn'][0];
+		$lastName = @$attr['sn'][0]; // Opatan Inc. : ?
 		if (!isset($lastName))
 			$lastName = @$attr['surname'][0];
 		$affiliation = @$attr['o'][0];
@@ -317,7 +317,8 @@ class LDAPAuthPlugin extends AuthPlugin {
 		if (isset($initials))
 			$user->setInitials($initials);
 		if (isset($lastName))
-			$user->setLastName($lastName);
+			// Opatan Inc. : Localized lastName
+			$user->setLastName($lastName, Locale::getLocale());
 		if (isset($affiliation))
 			$user->setAffiliation($affiliation);
 		if (isset($email))
@@ -347,8 +348,8 @@ class LDAPAuthPlugin extends AuthPlugin {
 		if ($user->getFirstName(Locale::getLocale()))
 			// Opatan Inc. : gets localized firstName ??
 			$attr['givenName'] = $user->getFirstName(Locale::getLocale());
-		if ($user->getLastName())
-			$attr['sn'] = $user->getLastName();
+		if ($user->getLastName(Locale::getLocale()))
+			$attr['sn'] = $user->getLastName(Locale::getLocale()); // Opatan Inc. : ??
 		if ($user->getAffiliation())
 			$attr['organizationName'] = $user->getAffiliation();
 		if ($user->getEmail())

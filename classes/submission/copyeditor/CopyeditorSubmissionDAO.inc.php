@@ -249,8 +249,8 @@ class CopyeditorSubmissionDAO extends DAO {
 			'abbrev',
 			$locale,
 			'title', // Article title
-			'firstName',
-			$locale
+			'firstName', // Opatan Inc.
+			$locale //Opatan Inc.
 		);
 
 		if (isset($journalId)) $params[] = $journalId;

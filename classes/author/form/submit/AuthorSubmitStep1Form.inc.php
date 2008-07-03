@@ -125,7 +125,7 @@ class AuthorSubmitStep1Form extends AuthorSubmitForm {
 			$author = &new Author();
 			$author->setFirstName($user->getUserFirstName()); // Opatan Inc. : sets localized first name
 			$author->setMiddleName($user->getMiddleName());
-			$author->setLastName($user->getLastName());
+			$author->setLastName($user->getUserLastName()); // Opatan Inc. : sets localized last name
 			$author->setAffiliation($user->getAffiliation());
 			$author->setCountry($user->getCountry());
 			$author->setEmail($user->getEmail());

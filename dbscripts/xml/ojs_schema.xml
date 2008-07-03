@@ -152,9 +152,13 @@
 		</field>
 		-->
 		<field name="middle_name" type="C2" size="40"/>
+		<!-- Opatan Inc. : last_name is removed and
+		     it's stored in user_settings table instead -->
+		<!--		     
 		<field name="last_name" type="C2" size="90">
 			<NOTNULL/>
 		</field>
+		-->
 		<field name="gender" type="C" size="1"/>
 		<field name="discipline" type="C2" size="255"/>
 		<field name="initials" type="C2" size="5"/>
