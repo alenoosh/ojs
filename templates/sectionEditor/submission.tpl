@@ -37,5 +37,6 @@
 <div class="separator"></div>
 
 {include file="sectionEditor/submission/metadata.tpl"}
+<div class="separator"></div>
 
 {include file="common/footer.tpl"}

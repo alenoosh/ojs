@@ -58,7 +58,8 @@ class JournalSetupStep5Form extends JournalSetupForm {
 				'navItems' => 'object',
 				'itemsPerPage' => 'int',
 				'numPageLinks' => 'int',
-				'journalTheme' => 'string'
+				'journalTheme' => 'string',
+				'browsePublicFolder'=> 'string' //Opatan Inc. :browse public folder
 			)
 		);
 	}
@@ -84,7 +85,15 @@ class JournalSetupStep5Form extends JournalSetupForm {
 	 */
 	function display() {
 		$journal = &Request::getJournal();
-
+		//Opatan Inc. : get files_dir value
+		$files_dir  = Config::getVar('files', 'files_dir');
+		if (Core::isWindows()) {
+			// Replace backslashes with slashes for the default files directory.
+			$cwd = str_replace('\\', '/', $files_dir);
+		}
+		$files_dir = explode('/', $files_dir);
+		$files_dir = $files_dir[count($files_dir)-1];
+		$files_dir = ucfirst($files_dir);
 		$allThemes =& PluginRegistry::loadCategory('themes', true);
 		$journalThemes = array();
 		foreach ($allThemes as $key => $junk) {
@@ -107,6 +116,7 @@ class JournalSetupStep5Form extends JournalSetupForm {
 			'librarianInformation' => $journal->getSetting('librarianInformation'),
 			'journalThemes' => $journalThemes
 		));
+		$templateMgr->assign('files_dir', $files_dir);
 
 		// Make lists of the sidebar blocks available.
 		$templateMgr->initialize();

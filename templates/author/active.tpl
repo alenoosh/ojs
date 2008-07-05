@@ -22,14 +22,14 @@
 		<td width="25%" align="right">{translate key="common.status"}</td>
 	</tr>
 	<tr><td colspan="7" class="headseparator">&nbsp;</td></tr>
+<form name="formName" action="#">
 {iterate from=submissions item=submission}
 	{assign var="articleId" value=$submission->getArticleId()}
 	{assign var="progress" value=$submission->getSubmissionProgress()}
 
 	<tr valign="top">
 		<td>
-		    <form name="formName" action="#"><input type="radio" name="radioButtonName" value="{$articleId}" ></form>
-		</td>
+		    <input type="radio" name="radioButtonName" value="{$articleId}" >		</td>
 		<td>{$articleId|escape}</td>
 		<td>{if $submission->getDateSubmitted()}{$submission->getDateSubmitted()|date_format:$dateFormatTrunc}{else}&mdash;{/if}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
@@ -81,6 +81,8 @@
 		<td colspan="7" class="{if $submissions->eof()}end{/if}separator">&nbsp;</td>
 	</tr>
 {/iterate}
+</form>
+
 {if $submissions->wasEmpty()}
 	<tr>
 		<td colspan="7" class="nodata">{translate key="submissions.noSubmissions"}</td>

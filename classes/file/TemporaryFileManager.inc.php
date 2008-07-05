@@ -26,7 +26,15 @@ class TemporaryFileManager extends FileManager {
 	 * Create a manager for handling temporary file uploads.
 	 */
 	function TemporaryFileManager() {
-		$this->filesDir = Config::getVar('files', 'files_dir') . '/temp/';
+		
+		if (Config::getVar('files', 'files_browse') != null){
+			$this->filesDir = Config::getVar('files', 'files_browse') . '/temp/';
+
+
+		}else {
+			$this->filesDir = Config::getVar('files', 'files_dir') . '/temp/';
+		
+		}
 
 		$this->_performPeriodicCleanup();
 	}

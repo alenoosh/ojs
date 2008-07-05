@@ -420,6 +420,7 @@ function prepBlockFields() {
 			<input class="button defaultButton" style="width: 30px;" type="button" value="&rarr;" onclick="jumpList(this.form.elements['blockSelectLeftWidget'],this.form.elements['blockUnselectedWidget']);" />
 
 		</td>
+	<message key="manager.setup.browsePublicFolder">Browse Public Folder</message>
 		<td valign="top">
 			{translate key="manager.setup.layout.unselected"}<br/>
 			<select name="blockUnselectedWidget" multiple="multiple" size="10" class="selectMenu" style="width: 120px; height:180px;" >
@@ -489,11 +490,21 @@ function prepBlockFields() {
 </table>
 
 <div class="separator"></div>
+{* Opatan Inc. *}
+<h3>5.9 {translate key="manager.setup.browsePublicFolder"}</h3>
+
+<select name="browsePublicFolder" class="selectMenu" id="browsePublicFolder">
+	<option value="" selected="selected">{translate key="common.chooseOne"}</option>
+	<option value="public">{translate key="manager.setup.public"}</option>
+	<option value="{$files_dir}">{translate key="manager.setup.filesDir" files_dir=$files_dir}</option>
+</select>
+
+
+<div class="separator"></div>
 
 <p><input type="submit" onclick="prepBlockFields()" value="{translate key="common.saveAndContinue"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url op="setup" escape=false}'" /></p>
 
 <p><span class="formRequired">{translate key="common.requiredField"}</span></p>
 
 </form>
-
 {include file="common/footer.tpl"}

@@ -254,6 +254,8 @@
 	<message key="common.queue.short.active">Active</message>
 	<message key="common.queue.long.completed">Archive</message>
 	<message key="common.queue.short.completed">Archive</message>
+	<message key="common.queue.short.uploadSuppFile">Upload Supplementary files</message>
+	<message key="common.queue.short.viewDetails">View Article Details</message>
 	
     <!--
 	 *
@@ -1301,7 +1303,12 @@ Select a model for handling these aspects of the editorial process. (To designat
 	<message key="manager.setup.information.forReaders">For Readers</message>
 	<message key="manager.setup.information.forAuthors">For Authors</message>
 	<message key="manager.setup.information.forLibrarians">For Librarians</message>
+	<!--Opatan Inc. -->
+	<message key="manager.setup.browsePublicFolder">Browse Public Folder</message>
+	<message key="manager.setup.filesDir">{$files_dir}</message>
+	<message key="manager.setup.public">Public</message>
 
+	
 	<!-- Languages -->
 	<message key="manager.languages.languageInstructions"><![CDATA[OJS can be made available to users in any of several supported languages. As well, OJS can operate as a multilingual system, providing users with an ability to toggle between languages on each page, and allowing certain data to be entered in several additional languages.<br /><br/>If a language supported by OJS is not listed below, ask your site administrator to install the language from the site administration interface. For instructions on adding support for new languages, please consult the OJS documentation.]]></message>
 	<message key="manager.languages.primaryLocaleInstructions">This will be the default language for the journal site.</message>

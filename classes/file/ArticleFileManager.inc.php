@@ -60,8 +60,13 @@ class ArticleFileManager extends FileManager {
 		$articleDao = &DAORegistry::getDAO('ArticleDAO');
 		$this->article = &$articleDao->getArticle($articleId);
 		$journalId = $this->article->getJournalId();
-		$this->filesDir = Config::getVar('files', 'files_dir') . '/journals/' . $journalId .
-		'/articles/' . $articleId . '/';
+		if (Config::getVar('files', 'files_browse')) != null{
+			$this->filesDir = Config::getVar('files', 'files_browse') . '/journals/' . $journalId .'/articles/' . $articleId . '/';
+
+		}else {
+			$this->filesDir = Config::getVar('files', 'files_dir') . '/journals/' . $journalId .'/articles/' . $articleId . '/';
+			
+		}
 	}
 
 	/**
@@ -150,7 +155,7 @@ class ArticleFileManager extends FileManager {
 
 	/**
 	 * Write a public file.
-	 * @param $fileName string The original filename
+	 * @param $fileName string The original filename ./e
 	 * @param $contents string The contents to be written to the file
 	 * @param $mimeType string The mime type of the original file
 	 * @param $fileId int

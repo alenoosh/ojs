@@ -140,19 +140,27 @@ function changeFormAction(formName, action) {
 }
 // Opatan Inc. Task 6 :redirect link from article value
 function getSelectedArticleId() {
+<<<<<<< Updated upstream:js/general.js
 	for (var i = 0; i <= document.formName.length; i++) {
 		if (document.formName[i].radioButtonName.checked) {
 			return document.formName[i].radioButtonName.value;
+=======
+	for (var i = 0; i <= document.formName.radioButtonName.length; i++) {
+		if (document.formName.radioButtonName[i].checked) {
+			return document.formName.radioButtonName[i].value;
+>>>>>>> Stashed changes:js/general.js
 		}
 	}
 	return -1;
 }
-function callSelectedUrl(url) {
+function callSelectedUrl(url,op) {
 	article_id = getSelectedArticleId();
 	if (article_id == -1) {
 		alert("Please Select an Article");
 		return;
 	}
 	url = url.replace("article_id", article_id);
+	url = url.replace("function", op);
+	
 	 window.location.href = url;
 }

@@ -293,6 +293,30 @@ class SetupHandler extends ManagerHandler {
 							$setupForm->setData('navItems', $navItems);
 						}
 					}
+					// OPatan Inc. : Edit into Config.inc.php-> files[files_dir]
+					if (Request::getUserVar('browsePublicFolder') != null) {
+						
+						$journal = &Request::getJournal();
+						$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+						
+						if($browsePublicFolder = &$journalSettingsDao->getSetting($journal->getJournalId(), 'browsePublicFolder')){
+							import('config.ConfigParser');
+							$configParser = &new ConfigParser();
+							$cwd = getcwd();
+							if (Core::isWindows()) {
+								// Replace backslashes with slashes for the default files directory.
+								$cwd = str_replace('\\', '/', $cwd);
+							}
+							$browsePublicFolder = strtolower($browsePublicFolder);
+							$browsePublicFolder = $cwd . '/' . $browsePublicFolder;
+							$browsePublicFolder = trim($browsePublicFolder);
+							$configFiles = array('files' => array('files_browse' => $browsePublicFolder));
+							$configParser->updateConfig(Config::getConfigFileName(), $configFiles);
+							$configParser->writeConfig(Config::getConfigFileName());
+
+						}
+					}
+				 	
 					break;
 			}
 
