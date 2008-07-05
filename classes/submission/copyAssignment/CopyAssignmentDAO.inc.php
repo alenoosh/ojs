@@ -34,12 +34,15 @@ class CopyAssignmentDAO extends DAO {
 	 * @return copyAssignment
 	 */
 	function &getCopyAssignmentById($copyedId) {
-		// Opatan Inc. : u.first_name is removed and setting_value of firstName is added
+		// Opatan Inc. : u.first_name and u.last_name are removed and setting_value
+		// of firstName and lastName are added
 		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
-			'SELECT c.*, us.setting_value AS first_name, u.last_name FROM copyed_assignments c LEFT JOIN users u ON (c.copyeditor_id = u.user_id) LEFT JOIN user_settings us ON (u.user_id = us.user_id AND us.setting_name = ? AND us.locale = ?) WHERE c.copyed_id = ?',
+			'SELECT c.*, sf.setting_value AS first_name, sl.setting_value AS last_name FROM copyed_assignments c LEFT JOIN users u ON (c.copyeditor_id = u.user_id) LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE c.copyed_id = ?',
 			'firstName',
 			$lcoale,
+			'lastName',
+			$locale,
 			$copyedId
 		);
 
@@ -60,13 +63,12 @@ class CopyAssignmentDAO extends DAO {
 	 * @return CopyAssignment
 	 */
 	function &getCopyAssignmentByArticleId($articleId) {
-		// Opatan Inc. : u.first_name is removed and setting_value of firstName is added
+		// Opatan Inc. : u.first_name and u.last_name are removed and setting_value
+		// of firstName and lastName are added
 		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
-			'SELECT c.*, a.copyedit_file_id, us.setting_value AS first_name, u.last_name FROM copyed_assignments c LEFT JOIN articles a ON (c.article_id = a.article_id) LEFT JOIN users u ON (c.copyeditor_id = u.user_id) LEFT JOIN user_settings us ON (u.user_id = us.user_id AND us.setting_name = ? AND us.locale = ?) WHERE c.article_id = ?',
-			'firstName',
-			$locale,
-			$articleId
+			'SELECT c.*, a.copyedit_file_id, sf.setting_value AS first_name, sl.setting_value AS last_name FROM copyed_assignments c LEFT JOIN articles a ON (c.article_id = a.article_id) LEFT JOIN users u ON (c.copyeditor_id = u.user_id) LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE c.article_id = ?',
+			array('firstName', $locale, 'lastName', $locale, $articleId)
 		);
 
 		$returner = null;

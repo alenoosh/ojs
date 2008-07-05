@@ -153,8 +153,10 @@ class LayoutEditorSubmissionDAO extends DAO {
 			'abbrev',
 			$locale,
 			'title',
-			'firstName',
-			$locale,
+			'firstName', // Opatan Inc.
+			$locale, // Opatan Inc.
+			'lastName', // Opatan Inc.
+			$locale, // Opatan Inc.
 			$editorId
 		);
 		if (isset($journalId)) $params[] = $journalId;
@@ -186,20 +188,17 @@ class LayoutEditorSubmissionDAO extends DAO {
 				$params[] = $params[] = $params[] = $params[] = $params[] = $search;
 				break;
 			case SUBMISSION_FIELD_EDITOR:
-				$first_last = $this->_dataSource->Concat('ed.first_name', '\' \'', 'ed.last_name');
-				$first_middle_last = $this->_dataSource->Concat('ed.first_name', '\' \'', 'ed.middle_name', '\' \'', 'ed.last_name');
-				$last_comma_first = $this->_dataSource->Concat('ed.last_name', '\', \'', 'ed.first_name');
-				$last_comma_first_middle = $this->_dataSource->Concat('ed.last_name', '\', \'', 'ed.first_name', '\' \'', 'ed.middle_name');
+				$first_last = $this->_dataSource->Concat('edsf.setting_value', '\' \'', 'edsl.setting_value');
+				$first_middle_last = $this->_dataSource->Concat('edsf.setting_value', '\' \'', 'ed.middle_name', '\' \'', 'edsl.setting_value');
+				$last_comma_first = $this->_dataSource->Concat('edsl.setting_value', '\', \'', 'edsf.setting_value');
+				$last_comma_first_middle = $this->_dataSource->Concat('edsl.setting_value', '\', \'', 'edsf.setting_value', '\' \'', 'ed.middle_name');
 				if ($searchMatch === 'is') {
-					// Opatan Inc. : $searchSql = " AND (LOWER(ed.last_name) = LOWER(?) OR LOWER($first_last) = LOWER(?) OR LOWER($first_middle_last) = LOWER(?) OR LOWER($last_comma_first) = LOWER(?) OR LOWER($last_comma_first_middle) = LOWER(?))";
-					$searchSql = " AND (LOWER(edus.setting_value) = LOWER(?))";				
+					$searchSql = " AND (LOWER(edsl.setting_value) = LOWER(?) OR LOWER($first_last) = LOWER(?) OR LOWER($first_middle_last) = LOWER(?) OR LOWER($last_comma_first) = LOWER(?) OR LOWER($last_comma_first_middle) = LOWER(?))";
 				} else {
-					// Opatan Inc. : $searchSql = " AND (LOWER(ed.last_name) LIKE LOWER(?) OR LOWER($first_last) LIKE LOWER(?) OR LOWER($first_middle_last) LIKE LOWER(?) OR LOWER($last_comma_first) LIKE LOWER(?) OR LOWER($last_comma_first_middle) LIKE LOWER(?))";
-					$searchSql = " AND (LOWER(edus.setting_value) LIKE LOWER(?))";				
+					$searchSql = " AND (LOWER(edsl.setting_value) LIKE LOWER(?) OR LOWER($first_last) LIKE LOWER(?) OR LOWER($first_middle_last) LIKE LOWER(?) OR LOWER($last_comma_first) LIKE LOWER(?) OR LOWER($last_comma_first_middle) LIKE LOWER(?))";
 					$search = '%' . $search . '%';
 				}
-				// Opatan Inc. : $params[] = $params[] = $params[] = $params[] = $params[] = $search;
-				$params[] = $search;
+				$params[] = $params[] = $params[] = $params[] = $params[] = $search;
 				break;
 		}
 
@@ -257,15 +256,16 @@ class LayoutEditorSubmissionDAO extends DAO {
 				LEFT JOIN section_settings sapl ON (s.section_id = sapl.section_id AND sapl.setting_name = ? AND sapl.locale = ?)
 				LEFT JOIN section_settings sal ON (s.section_id = sal.section_id AND sal.setting_name = ? AND sal.locale = ?)
 				LEFT JOIN article_settings atl ON (a.article_id = atl.article_id AND atl.setting_name = ?)
-				LEFT JOIN user_settings edus ON (ed.user_id = edus.user_id AND edus.setting_name = ? AND edus.locale = ?)
-			
+				LEFT JOIN user_settings edsf ON (ed.user_id = edsf.user_id AND edsf.setting_name = ? AND edsf.locale = ?)
+				LEFT JOIN user_settings edsl ON (ed.user_id = edsl.user_id AND edsl.setting_name = ? AND edsl.locale = ?)
+		
 			WHERE
 				l.editor_id = ? AND
 				' . (isset($journalId)?'a.journal_id = ? AND':'') . '
 				l.date_notified IS NOT NULL';
 
 		if ($active) {
-			$sql .= ' AND (l.date_completed IS NULL OR p.date_layouteditor_completed IS NULL)'; 
+			$sql .= ' AND (l.date_completed IS NULL OR p.date_layouteditor_completed IS NULL)';
 		} else {
 			$sql .= ' AND (l.date_completed IS NOT NULL AND p.date_layouteditor_completed IS NOT NULL)';
 		}

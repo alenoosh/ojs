@@ -68,10 +68,10 @@ class SectionEditorsDAO extends DAO {
 		$userDao = &DAORegistry::getDAO('UserDAO');
 		$locale = Locale::getLocale();
 
-		// Opatan Inc. : tables are joined with user_settings to provide setting_value of firstName
+		// Opatan Inc. : tables are joined with user_settings to provide setting_value of firstName and lastName
 		$result = &$this->retrieve(
-			'SELECT u.*, sf.setting_value AS first_name, e.can_review AS can_review, e.can_edit AS can_edit FROM users AS u, user_settings AS sf, section_editors AS e WHERE u.user_id = e.user_id AND e.journal_id = ? AND e.section_id = ? AND u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ? ORDER BY first_name', // Opatan Inc. : I should add last_name before first_name later
-			array($journalId, $sectionId, 'firstName', $locale)
+			'SELECT u.*, sf.setting_value AS first_name, sl.setting_value AS last_name, e.can_review AS can_review, e.can_edit AS can_edit FROM users AS u LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?), section_editors AS e WHERE u.user_id = e.user_id AND e.journal_id = ? AND e.section_id = ? ORDER BY last_name, first_name', 
+			array('firstName', $locale, 'lastName', $locale, $journalId, $sectionId)
 		);
 
 		while (!$result->EOF) {
@@ -104,16 +104,17 @@ class SectionEditorsDAO extends DAO {
 
 		// Opatan Inc. : joined with user_settings to provide setting_value of firstName
 		$result = &$this->retrieve(
-			'SELECT	u.*, sf.setting_value AS first_name
+			'SELECT	u.*, sf.setting_value AS first_name, sl.setting_value AS last_name
 			FROM	users u
 				LEFT JOIN roles r ON (r.user_id = u.user_id)
 				LEFT JOIN section_editors e ON (e.user_id = u.user_id AND e.journal_id = r.journal_id AND e.section_id = ?)
 				LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?)
+				LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?)
 			WHERE	r.journal_id = ? AND
 				r.role_id = ? AND
 				e.section_id IS NULL
-			ORDER BY first_name', // Opatan Inc. : I should add last_name before first_name later
-			array($sectionId, 'firstName', $locale, $journalId, ROLE_ID_SECTION_EDITOR)
+			ORDER BY last_name, first_name',
+			array($sectionId, 'firstName', $locale, 'lastName', $locale, $journalId, ROLE_ID_SECTION_EDITOR)
 		);
 
 		while (!$result->EOF) {

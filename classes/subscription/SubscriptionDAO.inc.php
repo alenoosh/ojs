@@ -334,8 +334,10 @@ class SubscriptionDAO extends DAO {
 	 * @return object DAOResultFactory containing Subscriptions
 	 */
 	function &getSubscriptions($rangeInfo = null) {
+		// Opatan Inc. : joined with user_settings to provide setting_value of lastName
+		$locale = Locale::getLocale();
 		$result = &$this->retrieveRange(
-			'SELECT s.* FROM subscriptions s, users u WHERE s.user_id = u.user_id ORDER BY u.last_name ASC', false, $rangeInfo
+			'SELECT s.*, sl.setting_value AS last_name FROM subscriptions s, users u LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE s.user_id = u.user_id ORDER BY last_name ASC', array('lastName', $locale), $rangeInfo
 		);
 
 		$returner = &new DAOResultFactory($result, $this, '_returnSubscriptionFromRow');
@@ -349,8 +351,10 @@ class SubscriptionDAO extends DAO {
 	 * @return object DAOResultFactory containing matching Subscriptions
 	 */
 	function &getSubscriptionsByJournalId($journalId, $rangeInfo = null) {
+		// Opatan Inc. : joined with user_settings to provide setting_value of lastName
+		$locale = Locale::getLocale();
 		$result = &$this->retrieveRange(
-			'SELECT s.* FROM subscriptions s, users u WHERE s.user_id = u.user_id AND journal_id = ? ORDER BY u.last_name ASC', $journalId, $rangeInfo
+			'SELECT s.*, s.setting_value AS last_name FROM subscriptions s, users u LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE s.user_id = u.user_id AND journal_id = ? ORDER BY last_name ASC', array('lastName', $locale, $journalId), $rangeInfo
 		);
 
 		$returner = &new DAOResultFactory($result, $this, '_returnSubscriptionFromRow');
@@ -366,18 +370,23 @@ class SubscriptionDAO extends DAO {
 	 */
 	function &getSubscriptionsByDateEnd($dateEnd, $journalId, $rangeInfo = null) {
 		$dateEnd = explode('-', $dateEnd);
+		$locale  = Locale::getLocale();
 
+		// Opatan Inc. : joined with user_settings to provide setting_value of lastName
 		$result = &$this->retrieveRange(
-			'SELECT	s.*
+			'SELECT	s.*, sl.setting_value AS last_name
 			FROM	subscriptions s,
 				users u
+				LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?)
 			WHERE	u.user_id = s.user_id AND
 				EXTRACT(YEAR FROM date_end) = ? AND
 				EXTRACT(MONTH FROM date_end) = ? AND
 				EXTRACT(DAY FROM date_end) = ? AND
 				journal_id = ?
-			ORDER BY u.last_name ASC',
+			ORDER BY last_name ASC',
 			array(
+				'lastName',
+				$locale,
 				$dateEnd[0],
 				$dateEnd[1],
 				$dateEnd[2],

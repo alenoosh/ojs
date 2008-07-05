@@ -100,7 +100,10 @@ class UserXMLParser {
 								$newUser->setMiddleName($attrib->getValue());
 								break;
 							case 'last_name':
-								$newUser->setLastName($attrib->getValue());
+								// Opatan Inc. : localized lastName
+								$locale = $attrib->getAttribute('locale');
+								if (empty($locale)) $locale = $journalPrimaryLocale;
+								$newUser->setLastName($attrib->getValue(), $locale);
 								break;
 							case 'initials':
 								$newUser->setInitials($attrib->getValue());
@@ -339,7 +342,8 @@ class UserXMLParser {
 	 */
 	function generateUsername(&$user) {
 		$userDao = &DAORegistry::getDAO('UserDAO');
-		$baseUsername = String::regexp_replace('/[^A-Z0-9]/i', '', $user->getLastName());
+		// Opatan Inc. : localized lastName
+		$baseUsername = String::regexp_replace('/[^A-Z0-9]/i', '', $user->getLastName(null));
 		if (empty($baseUsername)) {
 			// Opatan Inc. : localized firstName
 			$baseUsername = String::regexp_replace('/[^A-Z0-9]/i', '', $user->getFirstName(null));

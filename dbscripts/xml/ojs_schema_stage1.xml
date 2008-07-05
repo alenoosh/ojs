@@ -142,9 +142,12 @@
 		</field>
 		-->
 		<field name="middle_name" type="C2" size="40"/>
+		<!-- Opatan Inc. : last_name is removed -->
+		<!--
 		<field name="last_name" type="C2" size="90">
 			<NOTNULL/>
 		</field>
+		-->
 		<field name="signature" type="X"/>
 		<field name="gender" type="C" size="1"/>
 		<field name="discipline" type="C2" size="255"/>

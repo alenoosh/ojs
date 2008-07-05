@@ -50,8 +50,9 @@
 				{translate key="user.role.editors"}
 				<ul class="plain">
 				{/if}
-				{* Opatan Inc. : getFirstName() is replaced with getUserFirstName() *}
-				<li>{$sectionEditor->getUserFirstName()|escape} {$sectionEditor->getLastName()|escape}{if strlen($sectionEditor->getAffiliation()) > 0}, {$sectionEditor->getAffiliation()|escape}{/if}</li>
+				{* Opatan Inc. : getFirstName() is replaced with getUserFirstName() and getLastName() is replaced with 
+				   getUserLastName() *}
+				<li>{$sectionEditor->getUserFirstName()|escape} {$sectionEditor->getUserLastName()|escape}{if strlen($sectionEditor->getAffiliation()) > 0}, {$sectionEditor->getAffiliation()|escape}{/if}</li>
 			{/foreach}
 		{/if}
 	{/foreach}

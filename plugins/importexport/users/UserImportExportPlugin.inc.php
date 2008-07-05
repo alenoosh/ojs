@@ -116,7 +116,8 @@ class UserImportExportPlugin extends ImportExportPlugin {
 					// Opatan Inc. : set localized firstName
 					$newUser->setFirstName(Request::getUserVar($i.'_firstName'), null);
 					$newUser->setMiddleName(Request::getUserVar($i.'_middleName'));
-					$newUser->setLastName(Request::getUserVar($i.'_lastName'));
+					// Opatan Inc. : set localized lastName
+					$newUser->setLastName(Request::getUserVar($i.'_lastName'), null);
 					$newUser->setUsername(Request::getUserVar($i.'_username'));
 					// Opatan Inc. : email changed to username				
 					$newUser->setEmail(Request::getUserVar($i.'_username'));

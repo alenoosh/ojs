@@ -34,7 +34,6 @@ class UserExportDom {
 			XMLCustomWriter::setAttribute($passwordNode, 'encrypted', Config::getVar('security', 'encryption'));
 			XMLCustomWriter::createChildWithText($doc, $userNode, 'salutation', $user->getSalutation(), false);
 			XMLCustomWriter::createChildWithText($doc, $userNode, 'middle_name', $user->getMiddleName(), false);
-			XMLCustomWriter::createChildWithText($doc, $userNode, 'last_name', $user->getLastName());
 			XMLCustomWriter::createChildWithText($doc, $userNode, 'initials', $user->getInitials(), false);
 			XMLCustomWriter::createChildWithText($doc, $userNode, 'gender', $user->getGender(), false);
 			XMLCustomWriter::createChildWithText($doc, $userNode, 'affiliation', $user->getAffiliation(), false);
@@ -54,6 +53,17 @@ class UserExportDom {
 						XMLCustomWriter::setAttribute($firstNameNode, 'locale', $locale);
 					}
 					unset($firstNameNode);
+				}
+			}
+
+			// Opatan Inc.
+			if (is_array($user->getLastName(null))) {
+				foreach($user->getLastName(null) as $locale => $value) {
+					$lastNameNode =& XMLCustomWriter::createChildWithText($doc, $userNode, 'last_name', $value, false);
+					if ($lastNameNode) {
+						XMLCustomWriter::setAttribute($lastNameNode, 'locale', $locale);
+					}
+					unset($lastNameNode);
 				}
 			}
 

@@ -53,12 +53,12 @@ class ReviewerSubmissionDAO extends DAO {
 	function &getReviewerSubmission($reviewId) {
 		$primaryLocale = Locale::getPrimaryLocale();
 		$locale = Locale::getLocale();
-		// Opatan Inc. : u.first_name is removed and us.setting_value of firstName is added	
+		// Opatan Inc. : u.first_name and u.last_name are removed and setting_value of firstName and lastName are added	
 		$result = &$this->retrieve(
 			'SELECT	a.*,
 				r.*,
 				r2.review_revision,
-				us.setting_value AS first_name, u.last_name,
+				sf.setting_value AS first_name, sl.setting_vlaue AS last_name,
 				COALESCE(stl.setting_value, stpl.setting_value) AS section_title,
 				COALESCE(sal.setting_value, sapl.setting_value) AS section_abbrev
 			FROM	articles a
@@ -70,7 +70,8 @@ class ReviewerSubmissionDAO extends DAO {
 				LEFT JOIN section_settings stl ON (s.section_id = stl.section_id AND stl.setting_name = ? AND stl.locale = ?)
 				LEFT JOIN section_settings sapl ON (s.section_id = sapl.section_id AND sapl.setting_name = ? AND sapl.locale = ?)
 				LEFT JOIN section_settings sal ON (s.section_id = sal.section_id AND sal.setting_name = ? AND sal.locale = ?)
-				LEFT JOIN user_settings us ON (u.user_id = us.user_id AND us.setting_name = ? AND us.locale = ?)
+				LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?)
+				LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?)
 			WHERE	r.review_id = ?',
 			array(
 				'title',
@@ -82,6 +83,8 @@ class ReviewerSubmissionDAO extends DAO {
 				'abbrev',
 				$locale,
 				'firstName',
+				$locale,
+				'lastName',
 				$locale,
 				$reviewId
 			)
@@ -206,11 +209,11 @@ class ReviewerSubmissionDAO extends DAO {
 	function &getReviewerSubmissionsByReviewerId($reviewerId, $journalId, $active = true, $rangeInfo = null) {
 		$primaryLocale = Locale::getPrimaryLocale();
 		$locale = Locale::getLocale();
-		// Opatan Inc. : u.first_name is removed and us.setting_value of firstName is added
+		// Opatan Inc. : u.first_name and u.last_name are removed and setting_value of firstName and lastName are added
 		$sql = 'SELECT	a.*,
 				r.*,
 				r2.review_revision,
-				us.setting_value AS first_name, u.last_name, 
+				sf.setting_value AS first_name, sl.setting_value AS last_name, 
 				COALESCE(stl.setting_value, stpl.setting_value) AS section_title,
 				COALESCE(sal.setting_value, sapl.setting_value) AS section_abbrev
 			FROM	articles a
@@ -222,7 +225,8 @@ class ReviewerSubmissionDAO extends DAO {
 				LEFT JOIN section_settings stl ON (s.section_id = stl.section_id AND stl.setting_name = ? AND stl.locale = ?)
 				LEFT JOIN section_settings sapl ON (s.section_id = sapl.section_id AND sapl.setting_name = ? AND sapl.locale = ?)
 				LEFT JOIN section_settings sal ON (s.section_id = sal.section_id AND sal.setting_name = ? AND sal.locale = ?)
-				LEFT JOIN user_settings us ON (u.user_id = us.user_id AND us.setting_name = ? AND us.locale = ?)
+				LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?)
+				LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?)
 
 			WHERE	a.journal_id = ?
 				AND r.reviewer_id = ?
@@ -246,6 +250,8 @@ class ReviewerSubmissionDAO extends DAO {
 				'abbrev',
 				$locale,
 				'firstName',
+				$locale,
+				'lastName',
 				$locale,
 				$journalId,
 				$reviewerId

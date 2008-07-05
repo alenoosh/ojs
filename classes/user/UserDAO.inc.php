@@ -383,42 +383,44 @@ class UserDAO extends DAO {
 
 	function &getUsersByField($field = USER_FIELD_NONE, $match = null, $value = null, $allowDisabled = true, $dbResultRange = null) {
 		$var = false;
+		$locale = Locale::getLocale();
+
 		// Opatan Inc. : the users table is joined with user_settings three times to provide setting_value
 		// of first_name , last_name and interests
-		$sql = 'SELECT *, uf.setting_value, ul.setting_value, ui.setting_value FROM users u LEFT JOIN user_settings ui ON (u.user_id = ui.user_id AND ui.setting_name = \'interests\'), user_settings uf, user_settings ul WHERE u.user_id = uf.user_id AND uf.setting_name = \'firstName\' AND u.user_id = ul.user_id AND ul.setting_name = \'lastName\'';
+		$sql = 'SELECT *, uf.setting_value, ul.setting_value, ui.setting_value FROM users u LEFT JOIN user_settings ui ON (u.user_id = ui.user_id AND ui.setting_name = \'interests\' AND ui.locale = \''.$locale.'\') LEFT JOIN user_settings uf ON (u.user_id = uf.user_id AND uf.setting_name = \'firstName\' AND uf.locale = \''.$locale.'\') LEFT JOIN user_settings ul ON (u.user_id = ul.user_id AND ul.setting_name = \'lastName\' AND ul.locale = \''.$locale.'\')';
 
 		if ($value != null) {
 			switch ($field) {
 				case USER_FIELD_USERID:
-					$sql .= ' AND u.user_id = ?';
+					$sql .= ' WHERE u.user_id = ?';
 					$var = $value;
 					break;
 				case USER_FIELD_USERNAME:
-					$sql .= ' AND LOWER(u.username) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
+					$sql .= ' WHERE LOWER(u.username) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
 					$var = $match == 'is' ? $value : "%$value%";
 					break;
 				case USER_FIELD_INITIAL:
-					$sql .= ' AND LOWER(ul.setting_value) LIKE LOWER(?)';
+					$sql .= ' WHERE LOWER(ul.setting_value) LIKE LOWER(?)';
 					$var = "$value%";
 					break;
 				case USER_FIELD_INTERESTS:
-					$sql .= ' AND LOWER(ui.setting_value) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
+					$sql .= ' WHERE LOWER(ui.setting_value) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
 					$var = $match == 'is' ? $value : "%$value%";
 					break;
 				case USER_FIELD_EMAIL:
-					$sql .= ' AND LOWER(u.email) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
+					$sql .= ' WHERE LOWER(u.email) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
 					$var = $match == 'is' ? $value : "%$value%";
 					break;
 				case USER_FIELD_URL:
-					$sql .= ' AND LOWER(u.url) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
+					$sql .= ' WHERE LOWER(u.url) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
 					$var = $match == 'is' ? $value : "%$value%";
 					break;
 				case USER_FIELD_FIRSTNAME:
-					$sql .= ' AND LOWER(uf.setting_value) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
+					$sql .= ' WHERE LOWER(uf.setting_value) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
 					$var = $match == 'is' ? $value : "%$value%";
 					break;
 				case USER_FIELD_LASTNAME:
-					$sql .= ' AND LOWER(ul.setting_value) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
+					$sql .= ' WHERE LOWER(ul.setting_value) ' . ($match == 'is' ? '=' : 'LIKE') . ' LOWER(?)';
 					$var = $match == 'is' ? $value : "%$value%";
 					break;
 			}

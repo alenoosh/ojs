@@ -138,7 +138,7 @@ class AuthorSubmitStep5Form extends AuthorSubmitForm {
 		AuthorAction::designateReviewVersion($authorSubmission, true);
 		unset($authorSubmission);
 
-		// Create additional submission mangement records
+		// Create additional submission management records
 		$copyeditorSubmissionDao = &DAORegistry::getDAO('CopyeditorSubmissionDAO');
 		$copyeditorSubmission = &new CopyeditorSubmission();
 		$copyeditorSubmission->setArticleId($article->getArticleId());
