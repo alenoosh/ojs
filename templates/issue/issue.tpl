@@ -18,7 +18,7 @@
 	<td rowspan="2">
 		<div class="articleCoverImage">
 		<a href="{url page="article" op="view" path=$article->getBestArticleId($currentJournal)}" class="file">
-		<img src="{$coverPagePath|escape}{$article->getFileName($locale)|escape}"{if $article->getCoverPageAltText($locale) != ''} alt="{$article->getCoverPageAltText($locale)|escape}"{else} alt="{translate key="article.coverPage.altText"}"{/if}/></a></div>
+		<img src="{$coverPagePath|escape}{$article->getFileName($locale)|escape}"{if $article->getCoverPageAltText($locale) != ''} alt="{$article->getCoverPageAltText($locale)|escape}" title="{$article->getCoverPageAltText($locale)|escape}"{else} alt="{translate key="article.coverPage.altText"}" title="{translate key="article.coverPage.altText"}"{/if}/></a></div>
 	</td>
 	{/if}
 
