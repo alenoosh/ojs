@@ -58,7 +58,7 @@ class ReviewerSubmissionDAO extends DAO {
 			'SELECT	a.*,
 				r.*,
 				r2.review_revision,
-				sf.setting_value AS first_name, sl.setting_vlaue AS last_name,
+				sf.setting_value AS first_name, sl.setting_value AS last_name,
 				COALESCE(stl.setting_value, stpl.setting_value) AS section_title,
 				COALESCE(sal.setting_value, sapl.setting_value) AS section_abbrev
 			FROM	articles a

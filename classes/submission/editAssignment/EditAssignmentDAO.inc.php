@@ -28,11 +28,7 @@ class EditAssignmentDAO extends DAO {
 		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
 			'SELECT e.*, sf.setting_value AS first_name, sl.setting_value AS last_name, u.email, u.initials, r.role_id AS editor_role_id FROM articles a LEFT JOIN edit_assignments e ON (a.article_id = e.article_id) LEFT JOIN users u ON (e.editor_id = u.user_id) LEFT JOIN roles r ON (r.user_id = e.editor_id AND r.role_id = ' . ROLE_ID_EDITOR . ' AND r.journal_id = a.journal_id) LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE e.edit_id = ? AND a.article_id = e.article_id',
-			'firstName',
-			$locale,
-			'lastName',
-			$locale,
-			$editId
+			array('firstName', $locale, 'lastName', $locale, $editId)
 			);
 
 		$returner = null;
@@ -84,11 +80,7 @@ class EditAssignmentDAO extends DAO {
 		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
 			'SELECT e.*, sf.setting_value AS first_name, sl.setting_value AS last_name, u.email, u.initials, r.role_id AS editor_role_id FROM articles a, edit_assignments e, users u, roles r, user_settings sf, user_settings sl WHERE r.user_id = e.editor_id AND r.role_id = ' . ROLE_ID_EDITOR . ' AND e.article_id = ? AND r.journal_id = a.journal_id AND a.article_id = e.article_id AND e.editor_id = u.user_id AND u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ? AND u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ? ORDER BY e.date_notified ASC',
-			$articleId,
-			'firstName',
-			$locale,
-			'lastName',
-			$locale
+			array($articleId, 'firstName', $locale,	'lastName', $locale)
 		);
 
 		$returner = &new DAOResultFactory($result, $this, '_returnEditAssignmentFromRow');
@@ -106,13 +98,8 @@ class EditAssignmentDAO extends DAO {
 		// firstName and lastName are added to selected columns
 		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
-			'SELECT e.*, sf.setting_value AS first_name, sl.setting_value AS last_name, u.email, u.initials, r.role_id AS editor_role_id FROM articles a LEFT JOIN edit_assignments e ON (a.article_id = e.article_id) LEFT JOIN users u ON (e.editor_id = u.user_id) LEFT JOIN roles r ON (r.user_id = e.editor_id AND r.role_id = ' . ROLE_ID_EDITOR . ' AND r.journal_id = a.journal_id) LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE e.article_id = ? AND a.article_id = e.article_id AND r.role_id IS NULL AND e.can_review = 1 ORDER BY e.date_notified ASC',
-			'firstName',
-			$locale,
-			'lastName',
-			$locale,
-			$articleId
-		);
+			'SELECT e.*, sf.setting_value AS first_name, sl.setting_value AS last_name, u.email, u.initials, r.role_id AS editor_role_id FROM articles a LEFT JOIN edit_assignments e ON (a.article_id = e.article_id) LEFT JOIN users u ON (e.editor_id = u.user_id) LEFT JOIN roles r ON (r.user_id = e.editor_id AND r.role_id = ' . ROLE_ID_EDITOR . ' AND r.journal_id = a.journal_id) LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE e.article_id = ? AND a.article_id = e.article_id AND r.role_id IS NULL AND e.can_review = 1 ORDER BY e.date_notified ASC', 
+			array('firstName', $locale, 'lastName', $locale, $articleId));
 
 		$returner = &new DAOResultFactory($result, $this, '_returnEditAssignmentFromRow');
 		return $returner;
@@ -130,11 +117,7 @@ class EditAssignmentDAO extends DAO {
 		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
 			'SELECT e.*, sf.setting_value AS first_name, sl.setting_value AS last_name, u.email, u.initials, r.role_id AS editor_role_id FROM articles a LEFT JOIN edit_assignments e ON (a.article_id = e.article_id) LEFT JOIN users u ON (e.editor_id = u.user_id) LEFT JOIN roles r ON (r.user_id = e.editor_id AND r.role_id = ' . ROLE_ID_EDITOR . ' AND r.journal_id = a.journal_id) LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE e.article_id = ? AND a.article_id = e.article_id AND r.role_id IS NULL AND e.can_edit = 1 ORDER BY e.date_notified ASC',
-			'firstName',
-			$locale,
-			'lastName',
-			$locale,
-			$articleId
+			array('firstName', $locale, 'lastName',	$locale, $articleId)
 			);
 
 		$returner = &new DAOResultFactory($result, $this, '_returnEditAssignmentFromRow');
@@ -152,11 +135,7 @@ class EditAssignmentDAO extends DAO {
 		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
 			'SELECT e.*, sf.setting_value AS first_name, sl.setting_value AS last_name, u.email, u.initials, r.role_id AS editor_role_id FROM articles a LEFT JOIN edit_assignments e ON (a.article_id = e.article_id) LEFT JOIN users u ON (e.editor_id = u.user_id) LEFT JOIN roles r ON (r.user_id = e.editor_id AND r.role_id = ' . ROLE_ID_EDITOR . ' AND r.journal_id = a.journal_id) LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE e.editor_id = ? AND a.article_id = e.article_id ORDER BY e.date_notified ASC',
-			'firstName',
-			$locale,
-			'lastName',
-			$locale,
-			$userId
+			array('firstName', $locale, 'lastName', $locale, $userId)
 			);
 
 		$returner = &new DAOResultFactory($result, $this, '_returnEditAssignmentFromRow');

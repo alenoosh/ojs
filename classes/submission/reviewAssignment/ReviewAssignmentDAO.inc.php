@@ -71,11 +71,7 @@ class ReviewAssignmentDAO extends DAO {
 		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
 			'SELECT r.*, r2.review_revision, a.review_file_id, sf.setting_value AS first_name, sl.setting_value AS last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE r.review_id = ?',
-			'firstName',
-			$locale,
-			'lastName',
-			$locale,
-			(int) $reviewId
+			array('firstName', $locale, 'lastName', $locale, (int) $reviewId)
 			);
 
 		$returner = null;
@@ -129,10 +125,7 @@ class ReviewAssignmentDAO extends DAO {
 		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
 			'SELECT r.*, r2.review_revision, a.review_file_id, sf.setting_value AS first_name, sl.setting_value AS last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE (r.cancelled IS NULL OR r.cancelled = 0) AND r.date_notified IS NOT NULL AND r.date_completed IS NULL AND r.declined <> 1 ORDER BY r.article_id',
-			'firstName',
-			$locale,
-			'lastName',
-			$locale
+			array('firstName', $locale, 'lastName',	$locale)
 		);
 
 		while (!$result->EOF) {
@@ -160,11 +153,7 @@ class ReviewAssignmentDAO extends DAO {
 			// of firstName and lastName are added to the selected columns
 			$result = &$this->retrieve(
 				'SELECT r.*, r2.review_revision, a.review_file_id, sf.setting_value AS first_name, sl.setting_value AS last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE r.article_id = ? ORDER BY round, review_id',
-				'firstName',
-				$locale,
-				'lastName',
-				$locale,
-				(int) $articleId
+				array('firstName', $locale, 'lastName', $locale, (int) $articleId)
 			);
 		} else {
 			// Opatan Inc. : u.first_name and u.last_name are removed and setting_value 
@@ -199,11 +188,7 @@ class ReviewAssignmentDAO extends DAO {
 		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
 			'SELECT r.*, r2.review_revision, a.review_file_id, sf.setting_value AS first_name, sl.setting_value AS last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE r.reviewer_id = ? ORDER BY round, review_id',
-			'firstName',
-			$locale,
-			'lastName',
-			$locale,
-			(int) $userId
+			array('firstName', $locale, 'lastName',	$locale, (int) $userId)
 		);
 
 		while (!$result->EOF) {
@@ -346,11 +331,7 @@ class ReviewAssignmentDAO extends DAO {
 		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
 			'SELECT r.*, r2.review_revision, a.review_file_id, sf.setting_value AS first_name, sl.setting_value AS last_name FROM review_assignments r LEFT JOIN users u ON (r.reviewer_id = u.user_id) LEFT JOIN review_rounds r2 ON (r.article_id = r2.article_id AND r.round = r2.round) LEFT JOIN articles a ON (r.article_id = a.article_id) LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE r.article_id = ? AND (r.cancelled = 1 OR r.declined = 1) ORDER BY round, review_id',
-			'firstName',
-			$locale,
-			'lastName',
-			$locale,
-			(int) $articleId
+			array('firstName', $locale, 'lastName',	$locale, (int) $articleId)
 		);
 
 		while (!$result->EOF) {
