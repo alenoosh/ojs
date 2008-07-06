@@ -125,20 +125,30 @@ class User extends DataObject {
 		return $this->setData('firstName', $firstName, $locale);
 	}
 
-	/**
-	 * Get middle name.
-	 * @return string
+ 	/**
+	 * Opatan Inc. : 
+	 * Get localized user middleName.
 	 */
-	function getMiddleName() {
-		return $this->getData('middleName');
+	function getUserMiddleName() {
+		return $this->getLocalizedData('middleName');
 	}
 
 	/**
+	 * Opatan Inc. : @param $locale string added
+	 * Get middle name.
+	 * @return string
+	 */
+	function getMiddleName($locale) {
+		return $this->getData('middleName', $locale);
+	}
+
+	/**
+	 * Opatan Inc. : @param $locale string added
 	 * Set middle name.
 	 * @param $middleName string
 	 */
-	function setMiddleName($middleName) {
-		return $this->setData('middleName', $middleName);
+	function setMiddleName($middleName, $locale) {
+		return $this->setData('middleName', $middleName, $locale);
 	}
 
 	/**
@@ -595,12 +605,12 @@ class User extends DataObject {
 	 * @return string
 	 */
 	function getFullName($lastFirst = false) {
-		$userSettingsDao = &DAORegistry::getDAO('UserSettingsDAO');
+		$locale = Locale::getLocale();
 		if ($lastFirst) {
-			return $userSettingsDao->getSetting($this->getUserId(), 'lastName') . ', ' . $userSettingsDao->getSetting($this->getUserId(), 'firstName') . ($this->getData('middleName') != '' ? ' ' . $this->getData('middleName') : ''); // Opatan Inc. : gets localized firstName and lastName
+			return $this->getData('lastName', $locale) . ', ' . $this->getData('firstName', $locale) . ($this->getData('middleName', $locale) != '' ? ' ' . $this->getData('middleName', $locale) : ''); // Opatan Inc. : gets localized firstName, middleName and lastName
 
 		} else {			
-			return $userSettingsDao->getSetting($this->getUserId(), 'firstName') . ' ' . ($this->getData('middleName') != '' ? $this->getData('middleName') . ' ' : '') . $userSettingsDao->getSetting($this->getUserId(), 'lastName'); // Opatan Inc. : gets localized firstName and lastName
+			return $this->getData('firstName', $locale) . ' ' . ($this->getData('middleName', $locale) != '' ? $this->getData('middleName', $locale) . ' ' : '') . $this->getData('lastName', $locale); // Opatan Inc. : gets localized firstName, middleName and lastName
 		}
 	}
 

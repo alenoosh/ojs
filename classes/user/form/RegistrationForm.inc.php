@@ -137,7 +137,7 @@ class RegistrationForm extends Form {
 	 * Assign form data to user-submitted data.
 	 */
 	function readInputData() {
-        	// Opatan Inc. : 'email', is removed 
+        	// Opatan Inc. : 'email' is removed 
 		$userVars = array(
 			'username', 'password', 'password2',
 			'salutation', 'firstName', 'middleName', 'lastName',
@@ -186,7 +186,7 @@ class RegistrationForm extends Form {
 			$user->setUsername($this->getData('username'));
 			$user->setSalutation($this->getData('salutation'));
 			$user->setFirstName($this->getData('firstName'), null); // Opatan Inc. : Localized
-			$user->setMiddleName($this->getData('middleName'));
+			$user->setMiddleName($this->getData('middleName'), null); // Opatan Inc. : Localized
 			$user->setInitials($this->getData('initials'));
 			$user->setLastName($this->getData('lastName'), null); // Opatan Inc. : Localized
 			$user->setGender($this->getData('gender'));

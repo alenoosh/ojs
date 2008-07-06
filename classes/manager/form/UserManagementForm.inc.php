@@ -131,7 +131,7 @@ class UserManagementForm extends Form {
 					'username' => $user->getUsername(),
 					'salutation' => $user->getSalutation(),
 					'firstName' => $user->getFirstName(null), // Opatan Inc. : Localized
-					'middleName' => $user->getMiddleName(),
+					'middleName' => $user->getMiddleName(null), // Opatan Inc. : Localized
 					'lastName' => $user->getLastName(null), // Opatan Inc. : Localized
 					'signature' => $user->getSignature(null), // Localized
 					'initials' => $user->getInitials(),
@@ -231,7 +231,7 @@ class UserManagementForm extends Form {
 
 		$user->setSalutation($this->getData('salutation'));
 		$user->setFirstName($this->getData('firstName'), null); // Opatan Inc. : Localized
-		$user->setMiddleName($this->getData('middleName'));
+		$user->setMiddleName($this->getData('middleName'), null); // Opatan Inc. : Localized
 		$user->setLastName($this->getData('lastName'), null); // Opatan Inc. : Localized
 		$user->setInitials($this->getData('initials'));
 		$user->setGender($this->getData('gender'));

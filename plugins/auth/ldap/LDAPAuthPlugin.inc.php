@@ -313,7 +313,8 @@ class LDAPAuthPlugin extends AuthPlugin {
 			// Opatan Inc. : Localized firstName
 			$user->setFirstName($firstName, Locale::getLocale());
 		if (isset($middleName))
-			$user->setMiddleName($middleName);
+			// Opatan Inc. : Localized middleName
+			$user->setMiddleName($middleName, Locale::getLocale());
 		if (isset($initials))
 			$user->setInitials($initials);
 		if (isset($lastName))

@@ -123,7 +123,7 @@ class CreateReviewerForm extends Form {
 
 		$user->setSalutation($this->getData('salutation'));
 		$user->setFirstName($this->getData('firstName'), null); // Opatan Inc. : Localized
-		$user->setMiddleName($this->getData('middleName'));
+		$user->setMiddleName($this->getData('middleName'), null); // Opatan Inc. : Localized
 		$user->setLastName($this->getData('lastName'), null); // Opatan Inc. : Localized
 		$user->setGender($this->getData('gender'));
 		$user->setDiscipline($this->getData('discipline'));

@@ -141,7 +141,10 @@
 			<NOTNULL/>
 		</field>
 		-->
+		<!-- Opatan Inc. : middle_name is removed -->
+		<!--
 		<field name="middle_name" type="C2" size="40"/>
+		-->
 		<!-- Opatan Inc. : last_name is removed -->
 		<!--
 		<field name="last_name" type="C2" size="90">

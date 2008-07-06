@@ -242,7 +242,17 @@ class EditorSubmissionDAO extends DAO {
 			'lastName', // Opatan Inc.
 			$locale, // Opatan Inc.
 			'lastName', // Opatan Inc.
-			$locale, // Opatan Inc.		
+			$locale, // Opatan Inc.
+			'middleName', // Opatan Inc.
+			$locale, // Opatan Inc.
+			'middleName', // Opatan Inc.
+			$locale, // Opatan Inc.
+			'middleName', // Opatan Inc.
+			$locale, // Opatan Inc.
+			'middleName', // Opatan Inc.
+			$locale, // Opatan Inc.
+			'middleName', // Opatan Inc.
+			$locale, // Opatan Inc.
 			$journalId
 		);
 		$searchSql = '';
@@ -345,6 +355,11 @@ class EditorSubmissionDAO extends DAO {
 				LEFT JOIN user_settings pesl ON (pe.user_id = pesl.user_id AND pesl.setting_name = ? AND pesl.locale = ?)
 				LEFT JOIN user_settings lesl ON (le.user_id = lesl.user_id AND lesl.setting_name = ? AND lesl.locale = ?)
 				LEFT JOIN user_settings resl ON (re.user_id = resl.user_id AND resl.setting_name = ? AND resl.locale = ?)
+				LEFT JOIN user_settings edsm ON (ed.user_id = edsm.user_id AND edsm.setting_name = ? AND edsm.locale = ?)
+				LEFT JOIN user_settings cesm ON (ce.user_id = cesm.user_id AND cesm.setting_name = ? AND cesm.locale = ?)
+				LEFT JOIN user_settings pesm ON (pe.user_id = pesm.user_id AND pesm.setting_name = ? AND pesm.locale = ?)
+				LEFT JOIN user_settings lesm ON (le.user_id = lesm.user_id AND lesm.setting_name = ? AND lesm.locale = ?)
+				LEFT JOIN user_settings resm ON (re.user_id = resm.user_id AND resm.setting_name = ? AND resm.locale = ?)
 			
 			WHERE
 				a.journal_id = ? AND a.submission_progress = 0';
@@ -378,9 +393,9 @@ class EditorSubmissionDAO extends DAO {
 	 */
 	function _generateUserNameSearchSQL($search, $searchMatch, $prefix, &$params) {
 		$first_last = $this->_dataSource->Concat($prefix.'sf.setting_value', '\' \'', $prefix.'sl.setting_value');
-		$first_middle_last = $this->_dataSource->Concat($prefix.'sf.setting_value', '\' \'', $prefix.'middle_name', '\' \'', $prefix.'sl.setting_value');
+		$first_middle_last = $this->_dataSource->Concat($prefix.'sf.setting_value', '\' \'', $prefix.'sm.setting_value', '\' \'', $prefix.'sl.setting_value');
 		$last_comma_first = $this->_dataSource->Concat($prefix.'sl.setting_value', '\', \'', $prefix.'sf.setting_value');
-		$last_comma_first_middle = $this->_dataSource->Concat($prefix.'sl.setting_value', '\', \'', $prefix.'sf.setting_value', '\' \'', $prefix.'middle_name');
+		$last_comma_first_middle = $this->_dataSource->Concat($prefix.'sl.setting_value', '\', \'', $prefix.'sf.setting_value', '\' \'', $prefix.'sm.setting_value');
 		if ($searchMatch === 'is') {
 			$searchSql = " AND (LOWER({$prefix}sl.setting_value) = LOWER(?) OR LOWER($first_last) = LOWER(?) OR LOWER($first_middle_last) = LOWER(?) OR LOWER($last_comma_first) = LOWER(?) OR LOWER($last_comma_first_middle) = LOWER(?))";
 		} else {

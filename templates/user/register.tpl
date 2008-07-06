@@ -96,7 +96,7 @@
 	
 <tr valign="top">
 	<td class="label">{fieldLabel name="middleName" key="user.middleName"}</td>
-	<td class="value"><input type="text" id="middleName" name="middleName" value="{$middleName|escape}" size="20" maxlength="40" class="textField" /></td>
+	<td class="value"><input type="text" id="middleName" name="middleName[{$formLocale|escape}]" value="{$middleName[$formLocale]|escape|nl2br}" size="20" maxlength="40" class="textField" /></td>
 </tr>
 	
 <tr valign="top">

@@ -33,7 +33,8 @@
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="user.middleName"}</td>
-		<td class="value">{$user->getMiddleName()|escape|default:"&mdash;"}</td>
+		{* Opatan Inc. : getMiddleName() is replaced with getUserMiddleName() *}
+		<td class="value">{$user->getUserMiddleName()|escape|default:"&mdash;"}</td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="user.lastName"}</td>

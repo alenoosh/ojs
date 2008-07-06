@@ -151,7 +151,11 @@
 			<NOTNULL/>
 		</field>
 		-->
+	 	<!-- Opatan Inc. : middle_name is removed and 
+	     	     it's stored in user_settings table instead -->
+		<!--		     
 		<field name="middle_name" type="C2" size="40"/>
+		-->
 		<!-- Opatan Inc. : last_name is removed and
 		     it's stored in user_settings table instead -->
 		<!--		     

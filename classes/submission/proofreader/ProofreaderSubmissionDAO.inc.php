@@ -160,6 +160,8 @@ class ProofreaderSubmissionDAO extends DAO {
 			$locale, // Opatan Inc.
 			'lastName', // Opatan Inc.
 			$locale, // Opatan Inc.
+			'middleName', // Opatan Inc.
+			$locale, // Opatan Inc.
 			$proofreaderId
 		);
 		if (isset($journalId)) $params[] = $journalId;
@@ -192,9 +194,9 @@ class ProofreaderSubmissionDAO extends DAO {
 				break;
 			case SUBMISSION_FIELD_EDITOR:
 				$first_last = $this->_dataSource->Concat('edsf.setting_value', '\' \'', 'edsl.setting_value');
-				$first_middle_last = $this->_dataSource->Concat('edsf.setting_value', '\' \'', 'ed.middle_name', '\' \'', 'edsl.setting_value');
+				$first_middle_last = $this->_dataSource->Concat('edsf.setting_value', '\' \'', 'edsm.setting_value', '\' \'', 'edsl.setting_value');
 				$last_comma_first = $this->_dataSource->Concat('edsl.setting_value', '\', \'', 'edsf.setting_value');
-				$last_comma_first_middle = $this->_dataSource->Concat('edsl.setting_value', '\', \'', 'edsf.setting_value', '\' \'', 'ed.middle_name');
+				$last_comma_first_middle = $this->_dataSource->Concat('edsl.setting_value', '\', \'', 'edsf.setting_value', '\' \'', 'edsm.setting_value');
 				if ($searchMatch === 'is') {
 					$searchSql = " AND (LOWER(edsl.setting_value) = LOWER(?) OR LOWER($first_last) = LOWER(?) OR LOWER($first_middle_last) = LOWER(?) OR LOWER($last_comma_first) = LOWER(?) OR LOWER($last_comma_first_middle) = LOWER(?))";
 				} else {
@@ -259,6 +261,7 @@ class ProofreaderSubmissionDAO extends DAO {
 				LEFT JOIN article_settings atl ON (a.article_id = atl.article_id AND atl.setting_name = ?)
 				LEFT JOIN user_settings edsf ON (ed.user_id = edsf.user_id AND edsf.setting_name = ? AND edsf.locale = ?)
 				LEFT JOIN user_settings edsl ON (ed.user_id = edsl.user_id AND edsl.setting_name = ? AND edsl.locale = ?)
+				LEFT JOIN user_settings edsm ON (ed.user_id = edsm.user_id AND edsm.setting_name = ? AND edsm.locale = ?)
 			WHERE
 				p.proofreader_id = ? AND
 				' . (isset($journalId)?'a.journal_id = ? AND':'') . '

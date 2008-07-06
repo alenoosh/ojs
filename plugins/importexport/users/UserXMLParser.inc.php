@@ -97,7 +97,10 @@ class UserXMLParser {
 								$newUser->setFirstName($attrib->getValue(), $locale);
 								break;
 							case 'middle_name':
-								$newUser->setMiddleName($attrib->getValue());
+								// Opatan Inc. : localized middleName
+								$locale = $attrib->getAttribute('locale');
+								if (empty($locale)) $locale = $journalPrimaryLocale;
+								$newUser->setMiddleName($attrib->getValue(), $locale);
 								break;
 							case 'last_name':
 								// Opatan Inc. : localized lastName

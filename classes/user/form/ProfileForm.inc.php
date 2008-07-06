@@ -109,7 +109,7 @@ class ProfileForm extends Form {
 		$this->_data = array(
 			'salutation' => $user->getSalutation(),
 			'firstName' => $user->getFirstName(null), // Opatan Inc. : Localized
-			'middleName' => $user->getMiddleName(),
+			'middleName' => $user->getMiddleName(null), // Opatan Inc. : Localized
 			'initials' => $user->getInitials(),
 			'lastName' => $user->getLastName(null), // Opatan Inc. : Localized
 			'gender' => $user->getGender(),
@@ -172,7 +172,7 @@ class ProfileForm extends Form {
 
 		$user->setSalutation($this->getData('salutation'));
 		$user->setFirstName($this->getData('firstName'), null); // Opatan Inc. : Localized
-		$user->setMiddleName($this->getData('middleName'));
+		$user->setMiddleName($this->getData('middleName'), null); // Opatan Inc. : Localized
 		$user->setLastName($this->getData('lastName'), null); // Opatan Inc. : Localized
 		$user->setGender($this->getData('gender'));
 		$user->setDiscipline($this->getData('discipline'));

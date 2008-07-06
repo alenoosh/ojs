@@ -79,7 +79,8 @@
 		</td>
 		{* Opatan Inc. : $user->getFirstName() is replaced with $user->getUserFirstName() *}
 		<td><input type="text" name="{$userKey|escape}_firstName" value="{$user->getUserFirstName()|escape}" size="9" class="textField" /></td>
-		<td><input type="text" name="{$userKey|escape}_middleName" value="{$user->getMiddleName()|escape}" size="9" class="textField" /></td>
+		{* Opatan Inc. : $user->getMiddleName() is replaced with $user->getUserMiddleName() *}	
+		<td><input type="text" name="{$userKey|escape}_middleName" value="{$user->getUserMiddleName()|escape}" size="9" class="textField" /></td>
 		{* Opatan Inc. : $user->getLastName() is replaced with $user->getUserLastName() *}
 		<td><input type="text" name="{$userKey|escape}_lastName" value="{$user->getUserLastName()|escape}" size="9" class="textField" /></td>
 		<td><input type="text" name="{$userKey|escape}_username" value="{$user->getUsername()|escape}" size="9" class="textField" /></td>
