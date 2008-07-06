@@ -70,7 +70,7 @@ class SectionEditorsDAO extends DAO {
 
 		// Opatan Inc. : tables are joined with user_settings to provide setting_value of firstName and lastName
 		$result = &$this->retrieve(
-			'SELECT u.*, sf.setting_value AS first_name, sl.setting_value AS last_name, e.can_review AS can_review, e.can_edit AS can_edit FROM users AS u LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?), section_editors AS e WHERE u.user_id = e.user_id AND e.journal_id = ? AND e.section_id = ? ORDER BY last_name, first_name', 
+			'SELECT u.*, sf.setting_value AS first_name, sl.setting_value AS last_name, e.can_review AS can_review, e.can_edit AS can_edit FROM users AS u LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?), section_editors AS e WHERE u.user_id = e.user_id AND e.journal_id = ? AND e.section_id = ? ORDER BY last_name, first_name',
 			array('firstName', $locale, 'lastName', $locale, $journalId, $sectionId)
 		);
 

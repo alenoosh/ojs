@@ -40,11 +40,7 @@ class ProofAssignmentDAO extends DAO {
 		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
 			'SELECT p.*, sf.setting_value AS first_name, sl.setting_value AS last_name, u.email FROM proof_assignments p LEFT JOIN users u ON (p.proofreader_id = u.user_id) LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE p.proof_id = ?',
-			'firstName',
-			$locale,
-			'lastName',
-			$locale,
-			$proofId
+			array('firstName', $locale, 'lastName', $locale, $proofId)
 			);
 
 		$returner = null;

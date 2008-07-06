@@ -39,11 +39,7 @@ class CopyAssignmentDAO extends DAO {
 		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
 			'SELECT c.*, sf.setting_value AS first_name, sl.setting_value AS last_name FROM copyed_assignments c LEFT JOIN users u ON (c.copyeditor_id = u.user_id) LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?) LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE c.copyed_id = ?',
-			'firstName',
-			$lcoale,
-			'lastName',
-			$locale,
-			$copyedId
+			array('firstName', $lcoale, 'lastName',	$locale, $copyedId)
 		);
 
 		$returner = null;

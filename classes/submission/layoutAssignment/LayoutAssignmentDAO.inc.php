@@ -45,11 +45,7 @@ class LayoutAssignmentDAO extends DAO {
 				LEFT JOIN user_settings sf ON (u.user_id = sf.user_id AND sf.setting_name = ? AND sf.locale = ?)
 				LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?)
 				WHERE layouted_id = ?',
-			'firstName',
-			$locale,
-			'lastName',
-			$locale,
-			$layoutId
+			array('firstName', $locale, 'lastName',	$locale, $layoutId)
 		);
 
 		$returner = null;
