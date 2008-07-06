@@ -32,7 +32,7 @@ public class DoInstall extends OJSTestCase {
 		setTextField("adminUsername", this.adminLogin);
 		setTextField("adminPassword", this.adminPassword);
 		setTextField("adminPassword2", this.adminPassword);
-		//OPATAN: setTextField("adminEmail", this.adminEmail);
+		// Opatan Inc. : setTextField("adminEmail", this.adminEmail); is removed
 		selectOptionByValue("databaseDriver", databaseDriver);
 		uncheckCheckbox("createDatabase");
 		setTextField("databaseHost", "localhost");

@@ -216,9 +216,9 @@ class Install extends Installer {
 			$this->executeSQL(sprintf('INSERT INTO site (primary_locale, installed_locales) VALUES (\'%s\', \'%s\')', $this->getParam('locale'), join(':', $this->installedLocales)));
 			$this->executeSQL(sprintf('INSERT INTO site_settings (setting_name, setting_type, setting_value, locale) VALUES (\'%s\', \'%s\', \'%s\', \'%s\')', 'title', 'string', addslashes(Locale::translate(INSTALLER_DEFAULT_SITE_TITLE)), $this->getParam('locale')));
 			$this->executeSQL(sprintf('INSERT INTO site_settings (setting_name, setting_type, setting_value, locale) VALUES (\'%s\', \'%s\', \'%s\', \'%s\')', 'contactName', 'string', addslashes(Locale::translate(INSTALLER_DEFAULT_SITE_TITLE)), $this->getParam('locale')));
-			$this->executeSQL(sprintf('INSERT INTO site_settings (setting_name, setting_type, setting_value, locale) VALUES (\'%s\', \'%s\', \'%s\', \'%s\')', 'contactEmail', 'string', addslashes(strtolower($this->getParam('adminUsername'))), $this->getParam('locale'))); //OPATAN: 'adminEmail' changed to 'adminUsername'  
-            $lowerAdminUsername = strtolower($this->getParam('adminUsername'));
-			$this->executeSQL(sprintf('INSERT INTO users (user_id, username, first_name, last_name, password, email, date_registered, date_last_login) VALUES (%d, \'%s\', \'%s\', \'%s\',  \'%s\', \'%s\', \'%s\', \'%s\')', 1, strtolower($this->getParam('adminUsername')), substr($lowerAdminUsername, 0, strpos($lowerAdminUsername, '@')), substr($lowerAdminUsername, 0, strpos($lowerAdminUsername, '@')), Validation::encryptCredentials(strtolower($this->getParam('adminUsername')), $this->getParam('adminPassword'), $this->getParam('encryption')), strtolower($this->getParam('adminUsername')), Core::getCurrentDate(), Core::getCurrentDate())); //OPATAN: 'adminEmail' changed to 'adminUsername' && first_name and last_name is not considered
+			$this->executeSQL(sprintf('INSERT INTO site_settings (setting_name, setting_type, setting_value, locale) VALUES (\'%s\', \'%s\', \'%s\', \'%s\')', 'contactEmail', 'string', addslashes(strtolower($this->getParam('adminUsername'))), $this->getParam('locale'))); // Opatan Inc. : 'adminEmail' changed to 'adminUsername'  
+		        $lowerAdminUsername = strtolower($this->getParam('adminUsername')); // Opatan Inc.
+			$this->executeSQL(sprintf('INSERT INTO users (user_id, username, first_name, last_name, password, email, date_registered, date_last_login) VALUES (%d, \'%s\', \'%s\', \'%s\',  \'%s\', \'%s\', \'%s\', \'%s\')', 1, strtolower($this->getParam('adminUsername')), substr($lowerAdminUsername, 0, strpos($lowerAdminUsername, '@')), substr($lowerAdminUsername, 0, strpos($lowerAdminUsername, '@')), Validation::encryptCredentials(strtolower($this->getParam('adminUsername')), $this->getParam('adminPassword'), $this->getParam('encryption')), strtolower($this->getParam('adminUsername')), Core::getCurrentDate(), Core::getCurrentDate())); // Opatan Inc. : 'adminEmail' changed to 'adminUsername' && first_name and last_name is not considered
 			$this->executeSQL(sprintf('INSERT INTO roles (journal_id, user_id, role_id) VALUES (%d, %d, %d)', 0, 1, ROLE_ID_SITE_ADMIN));
 
 		} else {
@@ -233,7 +233,7 @@ class Install extends Installer {
 			$site->setInstalledLocales($this->installedLocales);
 			$site->setSupportedLocales($this->installedLocales);
 			$site->setContactName($site->getTitle($locale), $locale);
-            //OPATAN: 'adminEmail' changed to 'adminUsername'           
+            		// Opatan Inc. : 'adminEmail' changed to 'adminUsername'           
 			$site->setContactEmail(strtolower($this->getParam('adminUsername')), $locale);
 			if (!$siteDao->insertSite($site)) {
 				$this->setError(INSTALLER_ERROR_DB, $this->dbconn->errorMsg());
@@ -243,13 +243,13 @@ class Install extends Installer {
 			// Add initial site administrator user
 			$userDao = &DAORegistry::getDAO('UserDAO', $this->dbconn);
 			$user = &new User();
-            		//OPATAN: strtolower is added to lowercase the username
+            		// Opatan Inc. : strtolower is added to lowercase the username
 			$user->setUsername(strtolower($this->getParam('adminUsername')));
 			$user->setPassword(Validation::encryptCredentials(strtolower($this->getParam('adminUsername')), $this->getParam('adminPassword'), $this->getParam('encryption')));
-            		//OPATAN: we set the username part of email address as first name
+            		// Opatan Inc. : we set the username part of email address as first name and as last name
 			$user->setFirstName(substr($user->getUsername(), 0, strpos($user->getUsername(), '@'))); 
 			$user->setLastName(substr($user->getUsername(), 0, strpos($user->getUsername(), '@')));
-            		//OPATAN: 'adminEmail' changed to 'adminUsername'           
+            		// Opatan Inc. : 'adminEmail' changed to 'adminUsername'           
 			$user->setEmail(strtolower($this->getParam('adminUsername')));
 			if (!$userDao->insertUser($user)) {
 				$this->setError(INSTALLER_ERROR_DB, $this->dbconn->errorMsg());

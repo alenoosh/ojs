@@ -96,6 +96,7 @@ class SuppFileDAO extends DAO {
 	 * @return array
 	 */
 	function getLocaleFieldNames() {
+		// Opatan Inc. : 'title' is changed to 'supp_title'
 		return array('supp_title', 'creator', 'subject', 'typeOther', 'description', 'publisher', 'sponsor', 'source');
 	}
 

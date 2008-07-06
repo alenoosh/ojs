@@ -14,10 +14,10 @@
 <ul class="steplist">
 <li{if $submitStep == 1} class="current"{/if}>{if $submitStep != 1 && $submissionProgress >= 1}<a href="{url op="submit" path="1" articleId=$articleId}">{/if}
 {translate key="author.submit.start"}{if $submitStep != 1 && $submissionProgress >= 1}</a>{/if}</li>
-
+{* Opatan Inc. : the title of step 2 is changed *}
 <li{if $submitStep == 2} class="current"{/if}>{if $submitStep != 2 && $submissionProgress >= 2}<a href="{url op="submit" path="2" articleId=$articleId}">{/if}
 {translate key="author.submit.submitOps"}{if $submitStep != 2 && $submissionProgress >= 2}</a>{/if}</li>
-{*
+{* Opatan Inc. : links of step 3 and 4 are removed
 <li{if $submitStep == 3} class="current"{/if}>{if $submitStep != 3 && $submissionProgress >= 3}<a href="{url op="submit" path="3" articleId=$articleId}">{/if}
 {translate key="author.submit.upload"}{if $submitStep != 3 && $submissionProgress >= 3}</a>{/if}</li>
 

@@ -8,6 +8,8 @@
  *
  * $Id$
  *}
+
+{* Opatan Inc. : author.submit.step2 is changed to author.submit.step234 *} 
 {assign var="pageTitle" value="author.submit.step234"}
 {include file="author/submit/submitHeader.tpl"}
 
@@ -15,6 +17,7 @@
 
 <div class="separator"></div>
 
+{* Opatan Inc. : enctype tag is added to allow file upload *}
 <form name="submit" method="post" action="{url op="saveSubmit" path=$submitStep}" enctype="multipart/form-data">
 <input type="hidden" name="articleId" value="{$articleId|escape}" />
 {include file="common/formErrors.tpl"}
@@ -34,6 +37,7 @@ function moveAuthor(dir, authorIndex) {
 </script>
 {/literal}
 
+{* Opatan Inc. : the javascript function related to checking supp file upload is included in step 2 *} 
 <script type="text/javascript">
 {literal}
 <!--
@@ -87,6 +91,8 @@ function confirmForgottenUpload() {
 {/if}
 
 <table width="100%" class="data">
+{* Opatan Inc. : for previously added authors , just the details of author is shown instead of the whole form *}
+{* Opatan Inc. : if the author is choosen to be edited , the editing form is shown *}
 {if $author.firstName and $author.edited eq 0}
 <tr valign="top">
     <td>
@@ -240,7 +246,7 @@ function confirmForgottenUpload() {
 	<td width="20%" class="label">{fieldLabel name="title" required="true" key="article.title"}</td>
 	<td width="80%" class="value"><input type="text" class="textField" name="title[{$formLocale|escape}]" id="title" value="{$title[$formLocale]|escape}" size="60" maxlength="255" /></td>
 </tr>
-
+{* Opatan Inc. : running title input box is added *}
 <tr valign="top">
 	<td width="20%" class="label">{fieldLabel name="runningTitle" key="article.runningTitle"}</td>
 	<td width="80%" class="value"><input type="text" class="textField" name="runningTitle[{$formLocale|escape}]" id="runningTitle" value="{$runningTitle[$formLocale]|escape}" size="60" maxlength="255" /></td>
@@ -391,7 +397,7 @@ function confirmForgottenUpload() {
 
 <div class="separator"></div>
 
-{* STEP 3 MERGED *}
+{* Opatan Inc. : STEP 3 MERGED *}
 <h3>{translate key="author.submit.submissionFile"}</h3>
 {translate key="author.submit.uploadInstructions"}
 
@@ -449,9 +455,9 @@ function confirmForgottenUpload() {
 </table>
 
 <div class="separator"></div>
-{* END OF STEP 3 MERGED *}
+{* Opatan Inc. : END OF STEP 3 MERGED *}
 
-{* STEP 4 MERGED *}
+{* Opatan Inc. : STEP 4 MERGED *}
 <h3>{translate key="author.submit.suppFile"}</h3>
 <p>{translate key="author.submit.supplementaryFilesInstructions"}</p>
 
@@ -501,7 +507,7 @@ function confirmForgottenUpload() {
 </table>
 
 <div class="separator"></div>
-{* END OF STEP 4 MERGED *}
+{* Opatan Inc. : END OF STEP 4 MERGED *}
 
 <p><input type="submit" value="{translate key="common.saveAndContinue"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="confirmAction('{url page="author"}', '{translate|escape:"jsparam" key="author.submit.cancelSubmission"}')" /></p>
 

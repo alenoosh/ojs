@@ -29,6 +29,7 @@
 <table class="data">
 <tr>
 	<td class="label"><label for="loginUsername">{translate key="user.username"}</label></td>
+	{* Opatan Inc. : size of username input box is changed *}
 	<td class="value"><input type="text" id="loginUsername" name="username" value="{$username|escape}" size="30" maxlength="90" class="textField" /></td>
 </tr>
 <tr>

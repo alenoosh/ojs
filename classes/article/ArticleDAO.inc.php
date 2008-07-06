@@ -33,6 +33,7 @@ class ArticleDAO extends DAO {
 	 * @return array
 	 */
 	function getLocaleFieldNames() {
+		// Opatan Inc. : runningTitle is added
 		return array('title', 'runningTitle', 'abstract', 'coverPageAltText', 'showCoverPage', 'originalFileName', 'fileName', 'width', 'height', 'discipline', 'subjectClass', 'subject', 'coverageGeo', 'coverageChron', 'coverageSample', 'type', 'sponsor');
 	}
 

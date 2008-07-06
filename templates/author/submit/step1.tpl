@@ -126,7 +126,7 @@ function checkSubmissionChecklist() {
 <table width="100%" class="data">
 
 <tr valign="top">
-	{* OPATAN: <td width="20%" class="label">{fieldLabel name="commentsToEditor" key="author.submit.comments"}</td> *}
+	{* Opatan Inc. : "Enter text (optional)" string is removed *}
 	<td width="80%" class="value"><textarea name="commentsToEditor" id="commentsToEditor" rows="3" cols="40" class="textArea">{$commentsToEditor|escape}</textarea></td>
 </tr>
 

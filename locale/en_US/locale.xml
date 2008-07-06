@@ -276,8 +276,9 @@
 	<message key="article.articles">Articles</message>
 	<message key="article.submissionId">Submission ID</message>
 	<message key="article.title">Title</message>
+	<!-- Opatan Inc. : article.runningTitle is added -->
 	<message key="article.runningTitle">Running Title</message>
-    <message key="article.authors">Authors</message>
+    	<message key="article.authors">Authors</message>
 	<message key="article.indexingInformation">Indexing Information</message>
 	<message key="article.metadata">Metadata</message>
 	<message key="article.journalSection">Journal Section</message>
@@ -344,6 +345,7 @@
 	<message key="submission.editorReview">Editor Review</message>
 	<message key="submission.notifyAuthor">Notify Author</message>
 	<message key="submission.notifyEditor">Notify Editor</message>
+	<!-- Opatan Inc. : message of submission.editorAuthorRecord is changed -->
 	<message key="submission.editorAuthorRecord">Editor/Author Correspondence</message>
 	<message key="submission.reviewersVersion">Reviewer's annotated version of file</message>
 	<message key="submission.postReviewVersion">Post-review version of file</message>
@@ -1923,14 +1925,18 @@ Active is how many reviews are currently being considered or underway.]]></messa
 	<message key="author.submit.step3">Step 3. Uploading the Submission</message>
 	<message key="author.submit.step4">Step 4. Uploading Supplementary Files</message>
 	<message key="author.submit.step4a">Step 4a. Add a Supplementary File</message>
-    <message key="author.submit.editSupp">Edit a Supplementary File</message>
+    	<!-- Opatan Inc. : author.submit.editSupp is added -->
+	<message key="author.submit.editSupp">Edit a Supplementary File</message>
 	<message key="author.submit.step5">Step 3. Confirming the Submission</message>
+	<!-- Opatan Inc. : author.submit.step234 is added -->
 	<message key="author.submit.step234">Step 2. Entering the Submission's Metadata, Uploading the Submission and Supplementary Files</message>
 	<message key="author.submit.start">1. Start</message>
-    <message key="author.submit.submitOps">2. Enter Metadata , Upload Submission and Supplementary Files</message>
+	<!-- Opatan Inc. : author.submit.submitOps is added -->
+    	<message key="author.submit.submitOps">2. Enter Metadata , Upload Submission and Supplementary Files</message>
 	<message key="author.submit.metadata">2. Enter Metadata</message>
 	<message key="author.submit.upload">3. Upload Submission</message>
 	<message key="author.submit.supplementaryFiles">4. Upload Supplementary Files</message>
+	<!-- Opatan Inc. : message of author.submit.confirmation is changed -->
 	<message key="author.submit.confirmation">3. Confirmation</message>
 	<message key="author.submit.cancelSubmission">You can complete this submission at a later date by selecting Active Submissions from the Author home.</message>
 	<message key="author.submit.notAccepting">This journal is not accepting submissions at this time.</message>
@@ -1956,6 +1962,7 @@ Active is how many reviews are currently being considered or underway.]]></messa
 	<message key="author.submit.verifyChecklist">You must make sure all items in the submission checklist are satisfied before continuing.</message>
 	<message key="author.submit.copyrightNoticeAgree">The authors agree to the terms of this Copyright Notice, which will apply to this submission if and when it is published by this journal (comments to the editor can be added below).</message>
 	<message key="author.submit.copyrightNoticeAgreeRequired">You must agree to the terms of the Copyright Notice before continuing.</message>
+	<!-- Opatan Inc. : message of author.submit.commentsForEditor is changed -->
 	<message key="author.submit.commentsForEditor">Covering Letter</message>
 	<message key="author.submit.comments">Enter text (optional)</message>
 	<message key="author.submit.form.sectionRequired">Please select an appropriate journal section for this submission.</message>
@@ -1966,6 +1973,7 @@ Active is how many reviews are currently being considered or underway.]]></messa
 	<message key="author.submit.selectPrincipalContact">Principal contact for editorial correspondence.</message>
 	<message key="author.submit.addAuthor">Add Author</message>
 	<message key="author.submit.deleteAuthor">Delete Author</message>
+	<!-- Opatan inc. : author.submit.editAuthor is added -->
 	<message key="author.submit.editAuthor">Edit Author</message>
     <message key="author.submit.submissionIndexingDescription">Provide terms for indexing the submission; separate terms with a semi-colon (term1; term2; term3).</message>
 	<message key="author.submit.submissionSupportingAgencies">Supporting Agencies</message>
@@ -1990,7 +1998,8 @@ Active is how many reviews are currently being considered or underway.]]></messa
 <li>Once the submission is uploaded, click Save and Continue at the bottom of this page.</li>
 </ol>]]></message>
 	<message key="author.submit.submissionFile">Submission File</message>
-    <message key="author.submit.suppFile">Supplementary Files</message>
+    	<!-- Opatan Inc. : author.submit.suppFile is added -->
+	<message key="author.submit.suppFile">Supplementary Files</message>
 	<message key="author.submit.uploadSubmissionFile">Upload submission file</message>
 	<message key="author.submit.replaceSubmissionFile">Replace submission file</message>
 	<message key="author.submit.noSubmissionFile">No submission file uploaded.</message>
@@ -2183,7 +2192,8 @@ current password.<br /><br />Enter your email address below to reset your passwo
 	<message key="user.profile.form.firstNameRequired">A first name is required.</message>
 	<message key="user.profile.form.lastNameRequired">A last name is required.</message>
 	<message key="user.profile.form.emailRequired">A valid email address is required.</message>
-    <message key="user.profile.form.userEmailRequired">A valid email address is required as username.</message>
+	<!-- Opatan Inc. : user.profile.form.userEmailRequired is added -->
+    	<message key="user.profile.form.userEmailRequired">A valid email address is required as username.</message>
 	<message key="user.profile.form.urlInvalid">The specified URL is not valid. Please double-check the URL and try again. (Hint: Try adding http:// to the beginning of the URL.)</message>
 	<message key="user.profile.form.usernameRequired">A username is required.</message>
 	<message key="user.profile.form.passwordRequired">A password is required.</message>
@@ -2212,6 +2222,7 @@ current password.<br /><br />Enter your email address below to reset your passwo
 	<message key="user.register.notAlreadyRegisteredOtherJournal"><![CDATA[<a href="{$registerUrl}">Click here</a> if you are <b>not</b> already registered with this or another journal on this site.]]></message>
 	<message key="user.register.loginToRegister">Enter your existing username and password to register with this journal.</message>
 	<message key="user.register.registrationDisabled">This journal is currently not accepting user registrations.</message>
+	<!-- Opatan Inc. : message of user.register.usernameRestriction is changed -->
 	<message key="user.register.usernameRestriction">Enter your email as your username.</message>
 	<message key="user.register.passwordLengthRestriction">The password must be at least {$length} characters.</message>
 	<message key="user.register.form.passwordLengthTooShort">The password you entered is not long enough.</message>
@@ -2369,7 +2380,7 @@ current password.<br /><br />Enter your email address below to reset your passwo
 	<message key="help.search">Search Help</message>
 	<message key="help.searchFor">Search help topics for</message>
 
-    <!-- Donations -->
+    	<!-- Donations -->
 	<message key="donations.thankYou">Thank You</message>
 	<message key="donations.thankYouMessage">Thank you for making a contribution.  Your contribution is much appreciated.</message>
 	
@@ -2510,6 +2521,7 @@ Your server currently supports mbstring: <strong>{$supportsMBString}</strong>]]>
 	<message key="installer.form.usernameAlphaNumeric">The administrator username can contain only alphanumeric characters, underscores, and hyphens, and must begin and end with an alphanumeric character.</message>
 	<message key="installer.form.passwordsDoNotMatch">The administrator passwords do not match.</message>
 	<message key="installer.form.emailRequired">A valid email address for the administrator account is required.</message>
+	<!-- Opatan Inc. : installer.form.adminEmailRequired is added -->
  	<message key="installer.form.adminEmailRequired">A valid email address as the administrator username is required.</message>   
 	<message key="installer.form.separateMultiple">Separate multiple values with commas</message>
 	<message key="installer.installErrorsOccurred">Errors occurred during installation</message>

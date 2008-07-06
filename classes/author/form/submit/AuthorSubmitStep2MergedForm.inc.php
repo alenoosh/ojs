@@ -14,6 +14,8 @@
  * $Id$
  */
 
+/* Opatan Inc. : Form for Merged Step 2 */
+
 import("author.form.submit.AuthorSubmitForm");
 
 class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
@@ -66,8 +68,9 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 			$this->_data = array(
 				'authors' => array(),
 				'title' => $article->getTitle(null), // Localized
-	            'runningTitle' => $article->getRunningTitle(null), // Localized
- 			    'abstract' => $article->getAbstract(null), // Localized
+				// Opatan Inc. : runningTitle is added
+	        	        'runningTitle' => $article->getRunningTitle(null), // Localized 
+ 			    	'abstract' => $article->getAbstract(null), // Localized
 				'discipline' => $article->getDiscipline(null), // Localized
 				'subjectClass' => $article->getSubjectClass(null), // Localized
 				'subject' => $article->getSubject(null), // Localized
@@ -114,8 +117,8 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 				'deletedAuthors',
 				'primaryContact',
 				'title',
-	            'runningTitle',
-     			'abstract',
+			        'runningTitle', // Opatan Inc. : runningTitle is added
+     				'abstract',
 				'discipline',
 				'subjectClass',
 				'subject',
@@ -145,6 +148,7 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 	 * @return array
 	 */
 	function getLocaleFieldNames() {
+		// Opatan Inc. : runningTitle is added
 		return array('title', 'runningTitle', 'abstract', 'subjectClass', 'subject', 'coverageGeo', 'coverageChron', 'coverageSample', 'type', 'sponsor');
 	}
 
@@ -182,8 +186,9 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		// Update article
 		$article = &$this->article;
 		$article->setTitle($this->getData('title'), null); // Localized
-	    $article->setRunningTitle($this->getData('runningTitle'), null); // Localized
-    	$article->setAbstract($this->getData('abstract'), null); // Localized
+		// Opatan Inc. : runningTitle is added
+	 	$article->setRunningTitle($this->getData('runningTitle'), null); // Localized
+	    	$article->setAbstract($this->getData('abstract'), null); // Localized
 		$article->setDiscipline($this->getData('discipline'), null); // Localized
 		$article->setSubjectClass($this->getData('subjectClass'), null); // Localized
 		$article->setSubject($this->getData('subject'), null); // Localized

@@ -96,6 +96,7 @@ class Article extends DataObject {
 	}
 
  	/**
+	 * Opatan Inc. :		
 	 * Get "localized" article running title (if applicable).
 	 * @return string
 	 */
@@ -309,6 +310,7 @@ class Article extends DataObject {
 	}
 
  	/**
+	 * Opatan Inc. :
 	 * Get running title.
 	 * @param $locale
 	 * @return string
@@ -318,6 +320,7 @@ class Article extends DataObject {
 	}
 
 	/**
+	 * Opatan Inc. :
 	 * Set running title.
 	 * @param $runningTitle string
 	 * @param $locale

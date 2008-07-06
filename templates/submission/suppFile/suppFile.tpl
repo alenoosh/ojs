@@ -40,6 +40,7 @@
 <p>{translate key="author.submit.supplementaryFileDataDescription"}</p>
 
 <table width="100%" class="data">
+	{* Opatan inc. : all input boxes except supp file title are removed *}
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="title" required="true" key="common.title"}</td>
 		<td width="80%" class="value"><input type="text" id="title" name="title[{$formLocale|escape}]" value="{$title[$formLocale]|escape}" size="60" maxlength="255" class="textField" /></td>

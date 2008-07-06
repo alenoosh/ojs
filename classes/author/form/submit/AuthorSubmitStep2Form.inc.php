@@ -139,7 +139,6 @@ class AuthorSubmitStep2Form extends AuthorSubmitForm {
 	 * @return int the article ID
 	 */
 	function execute() {
-        echo "hi";
 		$articleDao = &DAORegistry::getDAO('ArticleDAO');
 		$authorDao = &DAORegistry::getDAO('AuthorDAO');
 

@@ -117,8 +117,8 @@ class UserImportExportPlugin extends ImportExportPlugin {
 					$newUser->setMiddleName(Request::getUserVar($i.'_middleName'));
 					$newUser->setLastName(Request::getUserVar($i.'_lastName'));
 					$newUser->setUsername(Request::getUserVar($i.'_username'));
-					$newUser->setEmail(Request::getUserVar($i.'_username')); //OPATAN: email changed to username
-
+					// Opatan Inc. : email changed to username				
+					$newUser->setEmail(Request::getUserVar($i.'_username'));
 					$locales = array();
 					if (Request::getUserVar($i.'_locales') != null || is_array(Request::getUserVar($i.'_locales'))) {
 						foreach (Request::getUserVar($i.'_locales') as $locale) {

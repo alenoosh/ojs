@@ -85,6 +85,7 @@ class SuppFile extends ArticleFile {
 	 * @return string
 	 */
 	function getSuppFileTitle() {
+		// Opatan inc. : 'title' is changed to 'supp_title'
 		return $this->getLocalizedData('supp_title');
 	}
 
@@ -94,6 +95,7 @@ class SuppFile extends ArticleFile {
 	 * @return string
 	 */
 	function getTitle() {
+		// Opatan inc. : 'title' is changed to 'supp_title'
 		return $this->getData('supp_title');
 	}
 
@@ -103,6 +105,7 @@ class SuppFile extends ArticleFile {
 	 * @param $locale string
 	 */
 	function setTitle($title, $locale) {
+		// Opatan inc. : 'title' is changed to 'supp_title'
 		return $this->setData('supp_title', $title, $locale);
 	}
 

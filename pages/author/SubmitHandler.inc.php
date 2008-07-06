@@ -29,12 +29,13 @@ class SubmitHandler extends AuthorHandler {
 		$articleId = Request::getUserVar('articleId');
 
 		list($journal, $article) = SubmitHandler::validate($articleId, $step);
-
+		
+		// Opatan Inc. : is step is 2 , AuthorSubmitStep2MergedForm is loaded instead of AuthorSubmitStep2Form
 		if ($step == 2) {
-            $formClass = "AuthorSubmitStep2MergedForm";
-        } else {
-            $formClass = "AuthorSubmitStep{$step}Form";
-        }
+	            $formClass = "AuthorSubmitStep2MergedForm";
+        	} else {
+	            $formClass = "AuthorSubmitStep{$step}Form";
+        	}
 
 		import("author.form.submit.$formClass");
 
@@ -60,11 +61,12 @@ class SubmitHandler extends AuthorHandler {
 
 		list($journal, $article) = SubmitHandler::validate($articleId, $step);
 
+		// Opatan Inc. : is step is 2 , AuthorSubmitStep2MergedForm is loaded instead of AuthorSubmitStep2Form
 		if ($step == 2) {
-            $formClass = "AuthorSubmitStep2MergedForm";
-        } else {
-            $formClass = "AuthorSubmitStep{$step}Form";
-        }
+	            $formClass = "AuthorSubmitStep2MergedForm";
+	        } else {
+	            $formClass = "AuthorSubmitStep{$step}Form";
+	        }
 
 		import("author.form.submit.$formClass");
 
@@ -82,15 +84,16 @@ class SubmitHandler extends AuthorHandler {
 					$submitForm->setData('authors', $authors);
 
 				} else if (($editAuthor = Request::getUserVar('editAuthor')) && count($editAuthor) == 1) {
-                    $editData = true;
+					// Opatan Inc. : possibility of editing previously added author
+			                $editData = true;
   					list($editAuthor) = array_keys($editAuthor);
 					$editAuthor = (int) $editAuthor;
-                    $authors = $submitForm->getData('authors');
-                    $authors[$editAuthor]['edited'] = 1;
-                    $submitForm->setData('editAuthorId', $authors[$editAuthor]['authorId']);
-                    $submitForm->setData('authors', $authors);
+			                $authors = $submitForm->getData('authors');
+			                $authors[$editAuthor]['edited'] = 1;
+			                $submitForm->setData('editAuthorId', $authors[$editAuthor]['authorId']);
+			                $submitForm->setData('authors', $authors);
                     
-                } else if (($delAuthor = Request::getUserVar('delAuthor')) && count($delAuthor) == 1) {
+		                } else if (($delAuthor = Request::getUserVar('delAuthor')) && count($delAuthor) == 1) {
 					// Delete an author
 					$editData = true;
 					list($delAuthor) = array_keys($delAuthor);
@@ -140,15 +143,19 @@ class SubmitHandler extends AuthorHandler {
 					$submitForm->setData('authors', $authors);
 
 				} else if (Request::getUserVar('uploadSubmissionFile')) {
-                    $editData = true;
-                    $submitForm->uploadSubmissionFile('submissionFile');
+	        	            	// Opatan Inc. : Upload submission file section is included in step 2
+					$editData = true;
+        	        	    	$submitForm->uploadSubmissionFile('submissionFile');
 
-                } else if (Request::getUserVar('submitUploadSuppFile')) {
-                    $editData = true;
-               		list($journal, $article) = SubmitHandler::validate($articleId, 2);
-                	$submitForm->uploadSuppFile();
-                    $submitForm->execute();
-                }
+		                } else if (Request::getUserVar('submitUploadSuppFile')) {
+	        	            	// Opatan Inc. : Upload supplementary file section is included in step 2
+		                    	$editData = true;
+					list($journal, $article) = SubmitHandler::validate($articleId, 2);
+		                	// Opatan Inc. : SubmitHandler::submitUploadSuppFile() is removed and uploadSuppFile
+					// method of the form is replaced
+					$submitForm->uploadSuppFile();
+			                $submitForm->execute();
+		                }
 
 				break;
 
@@ -184,8 +191,9 @@ class SubmitHandler extends AuthorHandler {
 				$templateMgr->display('author/submit/complete.tpl');
 
 			} else if ($step == 2) {
-                Request::redirect(null, null, 'submit', $step+3, array('articleId' => $articleId));
-            } else {
+				// Opatan Inc. : if step is 2 , it is redirected to step 5 instead of step+1
+		                Request::redirect(null, null, 'submit', $step+3, array('articleId' => $articleId));
+		        } else {
 				Request::redirect(null, null, 'submit', $step+1, array('articleId' => $articleId));
 			}
 
@@ -207,7 +215,8 @@ class SubmitHandler extends AuthorHandler {
 
 		import("author.form.submit.AuthorSubmitSuppFileForm");
 		$submitForm = &new AuthorSubmitSuppFileForm($article);
-    	$submitForm->setData('supp_title', Locale::translate('common.untitled'));
+		// Opatan Inc. : 'title' is changed to 'supp_title'
+    		$submitForm->setData('supp_title', Locale::translate('common.untitled'));
 		$suppFileId = $submitForm->execute();
 
 		Request::redirect(null, null, 'submitSuppFile', $suppFileId, array('articleId' => $articleId));
@@ -256,6 +265,7 @@ class SubmitHandler extends AuthorHandler {
 
 		if ($submitForm->validate()) {
 			$submitForm->execute();
+			// Opatan Inc. : it is redirected to step 2 instead of step 4
 			Request::redirect(null, null, 'submit', '2', array('articleId' => $articleId));
 		} else {
 			$submitForm->display();
@@ -275,6 +285,7 @@ class SubmitHandler extends AuthorHandler {
 		$articleId = Request::getUserVar('articleId');
 		$suppFileId = isset($args[0]) ? (int) $args[0] : 0;
 
+		// Opatan Inc. : form of step 2 is validated instead of step 4
 		list($journal, $article) = SubmitHandler::validate($articleId, 2);
 
 		$suppFileDao = &DAORegistry::getDAO('SuppFileDAO');
@@ -286,6 +297,7 @@ class SubmitHandler extends AuthorHandler {
 			$articleFileManager->deleteFile($suppFile->getFileId());
 		}       
 
+		// Opatan Inc. : it is redirected to step 2 instead of step 4
 		Request::redirect(null, null, 'submit', '2', array('articleId' => $articleId));
 	}
 

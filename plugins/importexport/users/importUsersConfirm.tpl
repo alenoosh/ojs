@@ -41,7 +41,7 @@
 		<td width="10%">{translate key="user.middleName"}</td>
 		<td width="15%">{translate key="user.lastName"}</td>
 		<td width="15%">{translate key="user.username"}</td>
-		{* OPATAN: <td width="20%">{translate key="user.email"}</td> *}
+		{* Opatan Inc. : email column is removed *}
 		<td width="25%">{translate key="user.roles"}</td>
 	</tr>	
 	<tr>
@@ -81,7 +81,7 @@
 		<td><input type="text" name="{$userKey|escape}_middleName" value="{$user->getMiddleName()|escape}" size="9" class="textField" /></td>
 		<td><input type="text" name="{$userKey|escape}_lastName" value="{$user->getLastName()|escape}" size="9" class="textField" /></td>
 		<td><input type="text" name="{$userKey|escape}_username" value="{$user->getUsername()|escape}" size="9" class="textField" /></td>
-		{* OPATAN: <td><input type="text" name="{$userKey|escape}_email" value="{$user->getEmail()|escape}" size="9" class="textField" /></td> *}
+		{* Opatan Inc. : email input box is removed *}
 		<td>
 			<select name="{$userKey|escape}_roles[]" size="5" multiple="multiple" class="selectMenu">
 				{foreach from=$roleOptions item=roleOption key=roleKey}

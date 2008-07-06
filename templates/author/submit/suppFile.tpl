@@ -8,8 +8,10 @@
  *
  * $Id$
  *}
+
+{* Opatan Inc. : step 4a title is replaced with edit supp file title *}
 {assign var="pageTitle" value="author.submit.editSupp"}
-{* include file="author/submit/submitHeader.tpl" *}
+{* Opatan Inc. : the submission steps header is removed *}
 {assign var="pageCrumbTitle" value="author.submit"}
 {include file="common/header.tpl"}
 
@@ -35,6 +37,7 @@
 <p>{translate key="author.submit.supplementaryFileDataDescription"}</p>
 
 <table class="data" width="100%">
+{* Opatan Inc. : all the input boxes except the supp file title are removed *}
 <tr valign="top">
 	<td width="20%" class="label">{fieldLabel required="true" name="title" key="common.title"}</td>
 	<td width="80%" class="value"><input type="text" class="textField" name="title[{$formLocale|escape}]" id="title" value="{$title[$formLocale]|escape}" size="60" maxlength="255" /></td>

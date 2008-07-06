@@ -31,8 +31,7 @@ class ProfileForm extends Form {
 		$this->addCheck(new FormValidator($this, 'firstName', 'required', 'user.profile.form.firstNameRequired'));
 		$this->addCheck(new FormValidator($this, 'lastName', 'required', 'user.profile.form.lastNameRequired'));
 		$this->addCheck(new FormValidatorUrl($this, 'userUrl', 'optional', 'user.profile.form.urlInvalid'));
-		//OPATAN: $this->addCheck(new FormValidatorEmail($this, 'email', 'required', 'user.profile.form.emailRequired'));
-		//OPATAN: $this->addCheck(new FormValidatorCustom($this, 'email', 'required', 'user.register.form.emailExists', array(DAORegistry::getDAO('UserDAO'), 'userExistsByEmail'), array($user->getUserId(), true), true));
+		// Opatan Inc. : FormValidatorEmail and FormValidatorCustom for email are removed
 		$this->addCheck(new FormValidatorPost($this));
 	}
 
@@ -116,7 +115,7 @@ class ProfileForm extends Form {
 			'discipline' => $user->getDiscipline(),
 			'affiliation' => $user->getAffiliation(),
 			'signature' => $user->getSignature(null), // Localized
-			//OPATAN: 'email' => $user->getEmail(),
+			// Opatan Inc. : 'email' => $user->getEmail(), is removed
 			'userUrl' => $user->getUrl(),
 			'phone' => $user->getPhone(),
 			'fax' => $user->getFax(),
@@ -145,7 +144,7 @@ class ProfileForm extends Form {
 			'initials',
 			'affiliation',
 			'signature',
-			//OPATAN: 'email' removed
+			// Opatan Inc. : 'email' is removed
 			'userUrl',
 			'phone',
 			'fax',
@@ -179,7 +178,8 @@ class ProfileForm extends Form {
 		$user->setInitials($this->getData('initials'));
 		$user->setAffiliation($this->getData('affiliation'));
 		$user->setSignature($this->getData('signature'), null); // Localized
-		$user->setEmail($user->getUsername()); //OPATAN: $this->getData('email') changed to $user->getUsername()
+		// Opatan Inc. : $this->getData('email') changed to $user->getUsername()
+		$user->setEmail($user->getUsername()); 
 		$user->setUrl($this->getData('userUrl'));
 		$user->setPhone($this->getData('phone'));
 		$user->setFax($this->getData('fax'));
