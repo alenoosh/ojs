@@ -294,7 +294,7 @@ class SetupHandler extends ManagerHandler {
 						}
 					}
 					// OPatan Inc. : Edit into Config.inc.php-> files[files_dir]
-					if (Request::getUserVar('browsePublicFolder') != null) {
+					else if (Request::getUserVar('browsePublicFolder')) {
 						
 						$journal = &Request::getJournal();
 						$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
