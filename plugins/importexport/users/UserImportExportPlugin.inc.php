@@ -138,10 +138,12 @@ class UserImportExportPlugin extends ImportExportPlugin {
 					$newUser->setFax(Request::getUserVar($i.'_fax'));
 					$newUser->setPhone(Request::getUserVar($i.'_phone'));
 					$newUser->setUrl(Request::getUserVar($i.'_url'));
-					$newUser->setAffiliation(Request::getUserVar($i.'_affiliation'));
+					// Opatan Inc. : set localized affiliation
+					$newUser->setAffiliation(Request::getUserVar($i.'_affiliation'), null);
 					$newUser->setGender(Request::getUserVar($i.'_gender'));
 					$newUser->setInitials(Request::getUserVar($i.'_initials'));
-					$newUser->setSalutation(Request::getUserVar($i.'_salutation'));
+					// Opatan Inc. : set localized salutation
+					$newUser->setSalutation(Request::getUserVar($i.'_salutation'), null);
 					$newUser->setPassword(Request::getUserVar($i.'_password'));
 					$newUser->setMustChangePassword(Request::getUserVar($i.'_mustChangePassword'));
 					$newUser->setUnencryptedPassword(Request::getUserVar($i.'_unencryptedPassword'));

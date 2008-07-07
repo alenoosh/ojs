@@ -168,7 +168,7 @@ class JournalReportIterator extends DBRowIterator {
 			} else {
 				$ret['score'] = '';
 			}
-			$ret['affiliation'] = $user?$user->getAffiliation():'';
+			$ret['affiliation'] = $user?$user->getAffiliation(null):''; // Opatan Inc. : sets localized affiliation
 		} else {
 			$maxReviewers = $this->getMaxReviewers();
 			$ret['reviewers'] = $maxReviewers==0?array():array_fill(0, $maxReviewers, '');

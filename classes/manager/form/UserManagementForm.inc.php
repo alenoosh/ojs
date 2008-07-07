@@ -129,14 +129,14 @@ class UserManagementForm extends Form {
 				$this->_data = array(
 					'authId' => $user->getAuthId(),
 					'username' => $user->getUsername(),
-					'salutation' => $user->getSalutation(),
+					'salutation' => $user->getSalutation(null), // Opatan Inc. : Localized
 					'firstName' => $user->getFirstName(null), // Opatan Inc. : Localized
 					'middleName' => $user->getMiddleName(null), // Opatan Inc. : Localized
 					'lastName' => $user->getLastName(null), // Opatan Inc. : Localized
 					'signature' => $user->getSignature(null), // Localized
 					'initials' => $user->getInitials(),
 					'gender' => $user->getGender(),
-					'affiliation' => $user->getAffiliation(),
+					'affiliation' => $user->getAffiliation(null), // Opatan Inc. : Localized
 					// Opatan Inc. : 'email' => $user->getEmail() is removed
 					'userUrl' => $user->getUrl(),
 					'phone' => $user->getPhone(),
@@ -229,14 +229,14 @@ class UserManagementForm extends Form {
 			$user = &new User();
 		}
 
-		$user->setSalutation($this->getData('salutation'));
+		$user->setSalutation($this->getData('salutation'), null); // Opatan Inc. : Localized
 		$user->setFirstName($this->getData('firstName'), null); // Opatan Inc. : Localized
 		$user->setMiddleName($this->getData('middleName'), null); // Opatan Inc. : Localized
 		$user->setLastName($this->getData('lastName'), null); // Opatan Inc. : Localized
 		$user->setInitials($this->getData('initials'));
 		$user->setGender($this->getData('gender'));
 		$user->setDiscipline($this->getData('discipline'));
-		$user->setAffiliation($this->getData('affiliation'));
+		$user->setAffiliation($this->getData('affiliation'), null); // Opatan Inc. : Localized
 		$user->setSignature($this->getData('signature'), null); // Localized
 		// Opatan Inc. : if the form is edited , the email is set to $user->getUsername() else to $this->getData('username')
 		if ($user->getUsername()) {

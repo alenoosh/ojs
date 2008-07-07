@@ -69,10 +69,12 @@
 			<input type="hidden" name="{$userKey|escape}_fax" value="{$user->getFax()|escape}" />
 			<input type="hidden" name="{$userKey|escape}_phone" value="{$user->getPhone()|escape}" />
 			<input type="hidden" name="{$userKey|escape}_url" value="{$user->getUrl()|escape}" />
-			<input type="hidden" name="{$userKey|escape}_affiliation" value="{$user->getAffiliation()|escape}" />
+			{* Opatan Inc. : $user->getAffiliation() is replaced with $user->getUserAffiliation() *}
+			<input type="hidden" name="{$userKey|escape}_affiliation" value="{$user->getUserAffiliation()|escape}" />
 			<input type="hidden" name="{$userKey|escape}_gender" value="{$user->getGender()|escape}" />
 			<input type="hidden" name="{$userKey|escape}_initials" value="{$user->getInitials()|escape}" />
-			<input type="hidden" name="{$userKey|escape}_salutation" value="{$user->getSalutation()|escape}" />
+			{* Opatan Inc. : $user->getSalutation() is replaced with $user->getUserSalutation() *}
+			<input type="hidden" name="{$userKey|escape}_salutation" value="{$user->getUserSalutation()|escape}" />
 			<input type="hidden" name="{$userKey|escape}_password" value="{$user->getPassword()|escape}" />
 			<input type="hidden" name="{$userKey|escape}_unencryptedPassword" value="{$user->getUnencryptedPassword()|escape}" />
 			<input type="hidden" name="{$userKey|escape}_mustChangePassword" value="{$user->getMustChangePassword()|escape}" />

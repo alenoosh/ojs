@@ -32,10 +32,8 @@ class UserExportDom {
 			XMLCustomWriter::createChildWithText($doc, $userNode, 'username', $user->getUserName(), false);
 			$passwordNode =& XMLCustomWriter::createChildWithText($doc, $userNode, 'password', $user->getPassword());
 			XMLCustomWriter::setAttribute($passwordNode, 'encrypted', Config::getVar('security', 'encryption'));
-			XMLCustomWriter::createChildWithText($doc, $userNode, 'salutation', $user->getSalutation(), false);
 			XMLCustomWriter::createChildWithText($doc, $userNode, 'initials', $user->getInitials(), false);
 			XMLCustomWriter::createChildWithText($doc, $userNode, 'gender', $user->getGender(), false);
-			XMLCustomWriter::createChildWithText($doc, $userNode, 'affiliation', $user->getAffiliation(), false);
 			XMLCustomWriter::createChildWithText($doc, $userNode, 'email', $user->getEmail());
 			XMLCustomWriter::createChildWithText($doc, $userNode, 'url', $user->getUrl(), false);
 			XMLCustomWriter::createChildWithText($doc, $userNode, 'phone', $user->getPhone(), false);
@@ -74,6 +72,28 @@ class UserExportDom {
 						XMLCustomWriter::setAttribute($middleNameNode, 'locale', $locale);
 					}
 					unset($middleNameNode);
+				}
+			}
+
+			// Opatan Inc.
+			if (is_array($user->getAffiliation(null))) {
+				foreach($user->getAffiliation(null) as $locale => $value) {
+					$affiliationNode =& XMLCustomWriter::createChildWithText($doc, $userNode, 'affiliation', $value, false);
+					if ($affiliationNode) {
+						XMLCustomWriter::setAttribute($affiliationNode, 'locale', $locale);
+					}
+					unset($affiliationNode);
+				}
+			}
+
+			// Opatan Inc.
+			if (is_array($user->getSalutation(null))) {
+				foreach($user->getSalutation(null) as $locale => $value) {
+					$salutationNode =& XMLCustomWriter::createChildWithText($doc, $userNode, 'salutation', $value, false);
+					if ($salutationNode) {
+						XMLCustomWriter::setAttribute($salutationNode, 'locale', $locale);
+					}
+					unset($salutationNode);
 				}
 			}
 

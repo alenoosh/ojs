@@ -24,7 +24,8 @@
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="user.salutation"}</td>
-		<td class="value">{$user->getSalutation()|escape|default:"&mdash;"}</td>
+		{* Opatan Inc. : getSalutation() is replaced with getUserSalutation() *}
+		<td class="value">{$user->getUserSalutation()|escape|default:"&mdash;"}</td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="user.firstName"}</td>
@@ -43,7 +44,8 @@
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="user.affiliation"}</td>
-		<td class="value">{$user->getAffiliation()|escape|default:"&mdash;"}</td>
+		{* Opatan Inc. : getAffiliation() is replaced with getUserAffiliation() *}	
+		<td class="value">{$user->getUserAffiliation()|escape|default:"&mdash;"}</td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="user.signature"}</td>

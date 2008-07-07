@@ -596,7 +596,7 @@ class ImportOJS1 {
 				$user->setMiddleName(Core::cleanVar($row['chMiddleInitial']), Locale::getLocale()); //Opatan Inc.:Localized
 				$user->setInitials(Core::cleanVar($initials));
 				$user->setLastName(Core::cleanVar($row['chSurname']), Locale::getLocale()); // Opatan Inc. : Localized
-				$user->setAffiliation(Core::cleanVar($row['chAffiliation']));
+				$user->setAffiliation(Core::cleanVar($row['chAffiliation']), Locale::getLocale());// Opatan Inc. : Localized
 				$user->setEmail($email);
 				$user->setPhone(Core::cleanVar($row['chPhone']));
 				$user->setFax(Core::cleanVar($row['chFax']));

@@ -16,7 +16,8 @@
 <table class="data" width="100%">
 <tr valign="top">
 	<td width="20%" class="label">{translate key="user.salutation"}:</td>
-	<td width="80%" class="value">{$user->getSalutation()|escape}</td>
+	{* Opatan Inc. : getSalutation() is replaced with getUserSalutation() *}
+	<td width="80%" class="value">{$user->getUserSalutation()|escape}</td>
 </tr>
 <tr valign="top">
 	<td width="20%" class="label">{translate key="user.username"}:</td>
@@ -48,7 +49,8 @@
 </tr>
 <tr valign="top">
 	<td class="label">{translate key="user.affiliation"}:</td>
-	<td class="value">{$user->getAffiliation()|escape}</td>
+	{* Opatan Inc. : getAffiliation() is replaced with getUserAffiliation() *}
+	<td class="value">{$user->getUserAffiliation()|escape}</td>
 </tr>
 <tr valign="top">
 	<td class="label">{translate key="user.signature"}:</td>

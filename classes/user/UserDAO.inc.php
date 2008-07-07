@@ -131,14 +131,14 @@ class UserDAO extends DAO {
 		$user->setUserId($row['user_id']);
 		$user->setUsername($row['username']);
 		$user->setPassword($row['password']);
-		$user->setSalutation($row['salutation']);
+		// Opatan Inc. : $user->setSalutation is removed
 		// Opatan Inc. : $user->setFirstName is removed
 		// Opatan Inc. : $user->setMiddleName is removed
 		$user->setInitials($row['initials']);
 		// Opatan Inc. : $user->setLastName is removed
 		$user->setGender($row['gender']);
 		$user->setDiscipline($row['discipline']);
-		$user->setAffiliation($row['affiliation']);
+		// Opatan Inc. : $user->setAffiliation is removed
 		$user->setEmail($row['email']);
 		$user->setUrl($row['url']);
 		$user->setPhone($row['phone']);
@@ -173,20 +173,18 @@ class UserDAO extends DAO {
 			$user->setDateLastLogin(Core::getCurrentDate());
 		}
 		$this->update(
-			// Opatan Inc. : first_name and last_name and middle_name are removed
+			// Opatan Inc. : first_name, last_name, middle_name, affiliation and salutation are removed
 			sprintf('INSERT INTO users
-				(username, password, salutation, initials, gender, discipline, affiliation, email, url, phone, fax, mailing_address, country, locales, date_last_email, date_registered, date_validated, date_last_login, date_end_membership, must_change_password, disabled, disabled_reason, auth_id)
+				(username, password, initials, gender, discipline, email, url, phone, fax, mailing_address, country, locales, date_last_email, date_registered, date_validated, date_last_login, date_end_membership, must_change_password, disabled, disabled_reason, auth_id)
 				VALUES
-				(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, %s, %s, %s, %s, %s, ?, ?, ?, ?)',
+				(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, %s, %s, %s, %s, %s, ?, ?, ?, ?)',
 				$this->datetimeToDB($user->getDateLastEmail()), $this->datetimeToDB($user->getDateRegistered()), $this->datetimeToDB($user->getDateValidated()), $this->datetimeToDB($user->getDateLastLogin()), $this->datetimeToDB($user->getDateEndMembership())),
 			array(
 				$user->getUsername(),
 				$user->getPassword(),
-				$user->getSalutation(),
 				$user->getInitials(),
 				$user->getGender(),
 				$user->getDiscipline(),
-				$user->getAffiliation(),
 				$user->getEmail(),
 				$user->getUrl(),
 				$user->getPhone(),
@@ -207,7 +205,7 @@ class UserDAO extends DAO {
 	}
 
 	function getLocaleFieldNames() {
-		return array('firstName', 'middleName', 'lastName', 'biography', 'signature', 'interests');
+		return array('firstName', 'middleName', 'lastName', 'affiliation', 'salutation', 'biography', 'signature', 'interests');
 	}
 
 	function updateLocaleFields(&$user) {
@@ -226,17 +224,15 @@ class UserDAO extends DAO {
 		}
 
 		$this->updateLocaleFields($user);
-		// Opatan Inc. : first_name and last_name and middle_name are removed
+		// Opatan Inc. : first_name, last_name, middle_name, affiliation and salutation are removed
 		return $this->update(
 			sprintf('UPDATE users
 				SET
 					username = ?,
 					password = ?,
-					salutation = ?,
 					initials = ?,
 					gender = ?,
 					discipline = ?,
-					affiliation = ?,
 					email = ?,
 					url = ?,
 					phone = ?,
@@ -257,11 +253,9 @@ class UserDAO extends DAO {
 			array(
 				$user->getUsername(),
 				$user->getPassword(),
-				$user->getSalutation(),
 				$user->getInitials(),
 				$user->getGender(),
 				$user->getDiscipline(),
-				$user->getAffiliation(),
 				$user->getEmail(),
 				$user->getUrl(),
 				$user->getPhone(),

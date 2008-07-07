@@ -184,13 +184,13 @@ class RegistrationForm extends Form {
 			$user = &new User();
 
 			$user->setUsername($this->getData('username'));
-			$user->setSalutation($this->getData('salutation'));
+			$user->setSalutation($this->getData('salutation'), null); // Opatan Inc. : Localized
 			$user->setFirstName($this->getData('firstName'), null); // Opatan Inc. : Localized
 			$user->setMiddleName($this->getData('middleName'), null); // Opatan Inc. : Localized
 			$user->setInitials($this->getData('initials'));
 			$user->setLastName($this->getData('lastName'), null); // Opatan Inc. : Localized
 			$user->setGender($this->getData('gender'));
-			$user->setAffiliation($this->getData('affiliation'));
+			$user->setAffiliation($this->getData('affiliation'), null); // Opatan Inc. : Localized
 			$user->setSignature($this->getData('signature'), null); // Localized
 			$user->setEmail($this->getData('username')); // Opatan Inc. : 'email' changed to 'username'
 			$user->setUrl($this->getData('userUrl'));

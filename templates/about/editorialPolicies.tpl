@@ -51,8 +51,8 @@
 				<ul class="plain">
 				{/if}
 				{* Opatan Inc. : getFirstName() is replaced with getUserFirstName() and getLastName() is replaced with 
-				   getUserLastName() *}
-				<li>{$sectionEditor->getUserFirstName()|escape} {$sectionEditor->getUserLastName()|escape}{if strlen($sectionEditor->getAffiliation()) > 0}, {$sectionEditor->getAffiliation()|escape}{/if}</li>
+				   getUserLastName() and getAffiliation() is replaced with getUserAffiliation() *}
+				<li>{$sectionEditor->getUserFirstName()|escape} {$sectionEditor->getUserLastName()|escape}{if strlen($sectionEditor->getUserAffiliation()) > 0}, {$sectionEditor->getUserAffiliation()|escape}{/if}</li>
 			{/foreach}
 		{/if}
 	{/foreach}

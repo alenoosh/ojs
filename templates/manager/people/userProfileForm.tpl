@@ -88,7 +88,7 @@
 {/if}
 	<tr valign="top">
 		<td class="label">{fieldLabel name="salutation" key="user.salutation"}</td>
-		<td class="value"><input type="text" name="salutation" id="salutation" value="{$salutation|escape}" size="20" maxlength="40" class="textField" /></td>
+		<td class="value"><input type="text" name="salutation[{$formLocale|escape}]" id="salutation" value="{$salutation[$formLocale]|escape}" size="20" maxlength="40" class="textField" /></td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="firstName" required="true" key="user.firstName"}</td>
@@ -180,7 +180,7 @@
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="affiliation" key="user.affiliation"}</td>
-		<td class="value"><input type="text" name="affiliation" id="affiliation" value="{$affiliation|escape}" size="30" maxlength="90" class="textField" /></td>
+		<td class="value"><input type="text" name="affiliation[{$formLocale|escape}]" id="affiliation" value="{$affiliation[$formLocale]|escape}" size="30" maxlength="90" class="textField" /></td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="signature" key="user.signature"}</td>

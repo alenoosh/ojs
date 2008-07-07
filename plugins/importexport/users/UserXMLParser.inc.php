@@ -88,7 +88,10 @@ class UserXMLParser {
 								}
 								break;
 							case 'salutation':
-								$newUser->setSalutation($attrib->getValue());
+								// Opatan Inc. : localized salutation
+								$locale = $attrib->getAttribute('locale');
+								if (empty($locale)) $locale = $journalPrimaryLocale;
+								$newUser->setSalutation($attrib->getValue(), $locale);
 								break;
 							case 'first_name':
 								// Opatan Inc. : localized firstName
@@ -115,7 +118,10 @@ class UserXMLParser {
 								$newUser->setGender($attrib->getValue());
 								break;
 							case 'affiliation':
-								$newUser->setAffiliation($attrib->getValue());
+								// Opatan Inc. : localized affiliation
+								$locale = $attrib->getAttribute('locale');
+								if (empty($locale)) $locale = $journalPrimaryLocale;
+								$newUser->setAffiliation($attrib->getValue(), $locale);
 								break;
 							case 'email':
 								$newUser->setEmail($attrib->getValue()); // Opatan Inc. : ?

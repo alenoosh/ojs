@@ -107,14 +107,14 @@ class ProfileForm extends Form {
 		$user = &Request::getUser();
 
 		$this->_data = array(
-			'salutation' => $user->getSalutation(),
+			'salutation' => $user->getSalutation(null), // Opatan Inc. : Localized
 			'firstName' => $user->getFirstName(null), // Opatan Inc. : Localized
 			'middleName' => $user->getMiddleName(null), // Opatan Inc. : Localized
 			'initials' => $user->getInitials(),
 			'lastName' => $user->getLastName(null), // Opatan Inc. : Localized
 			'gender' => $user->getGender(),
 			'discipline' => $user->getDiscipline(),
-			'affiliation' => $user->getAffiliation(),
+			'affiliation' => $user->getAffiliation(null), // Opatan Inc. : Localized
 			'signature' => $user->getSignature(null), // Localized
 			// Opatan Inc. : 'email' => $user->getEmail(), is removed
 			'userUrl' => $user->getUrl(),
@@ -170,14 +170,14 @@ class ProfileForm extends Form {
 	function execute() {
 		$user = &Request::getUser();
 
-		$user->setSalutation($this->getData('salutation'));
+		$user->setSalutation($this->getData('salutation'), null); // Opatan Inc. : Localized
 		$user->setFirstName($this->getData('firstName'), null); // Opatan Inc. : Localized
 		$user->setMiddleName($this->getData('middleName'), null); // Opatan Inc. : Localized
 		$user->setLastName($this->getData('lastName'), null); // Opatan Inc. : Localized
 		$user->setGender($this->getData('gender'));
 		$user->setDiscipline($this->getData('discipline'));
 		$user->setInitials($this->getData('initials'));
-		$user->setAffiliation($this->getData('affiliation'));
+		$user->setAffiliation($this->getData('affiliation'), null); // Opatan Inc. : Localized
 		$user->setSignature($this->getData('signature'), null); // Localized
 		// Opatan Inc. : $this->getData('email') changed to $user->getUsername()
 		$user->setEmail($user->getUsername()); 

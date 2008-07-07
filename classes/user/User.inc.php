@@ -193,20 +193,30 @@ class User extends DataObject {
 		return $this->setData('lastName', $lastName, $locale);
 	}
 
-	/**
-	 * Get user salutation.
-	 * @return string
+ 	/**
+	 * Opatan Inc. : 
+	 * Get localized user salutation.
 	 */
-	function getSalutation() {
-		return $this->getData('salutation');
+	function getUserSalutation() {
+		return $this->getLocalizedData('salutation');
 	}
 
 	/**
+	 * Opatan Inc. : @param $locale string added
+	 * Get user salutation.
+	 * @return string
+	 */
+	function getSalutation($locale) {
+		return $this->getData('salutation', $locale);
+	}
+
+	/**
+	 * Opatan Inc. : @param $locale string added
 	 * Set user salutation.
 	 * @param $salutation string
 	 */
-	function setSalutation($salutation) {
-		return $this->setData('salutation', $salutation);
+	function setSalutation($salutation, $locale) {
+		return $this->setData('salutation', $salutation, $locale);
 	}
 
 	/**
@@ -241,20 +251,30 @@ class User extends DataObject {
 		return $this->setData('discipline', $discipline);
 	}
 
-	/**
-	 * Get affiliation (position, institution, etc.).
-	 * @return string
+ 	/**
+	 * Opatan Inc. :
+	 * Get localized user affiliation.
 	 */
-	function getAffiliation() {
-		return $this->getData('affiliation');
+	function getUserAffiliation() {
+		return $this->getLocalizedData('affiliation');
 	}
 
 	/**
+	 * Opatan Inc. : @param $locale string added
+	 * Get affiliation (position, institution, etc.).
+	 * @return string
+	 */
+	function getAffiliation($locale) {
+		return $this->getData('affiliation', $locale);
+	}
+
+	/**
+	 * Opatan Inc. : @param $locale string added
 	 * Set affiliation.
 	 * @param $affiliation string
 	 */
-	function setAffiliation($affiliation) {
-		return $this->setData('affiliation', $affiliation);
+	function setAffiliation($affiliation, $locale) {
+		return $this->setData('affiliation', $affiliation, $locale);
 	}
 
 	/**
@@ -615,8 +635,9 @@ class User extends DataObject {
 	}
 
 	function getContactSignature() {
+		$locale = Locale::getLocale();
 		$signature = $this->getFullName();
-		if ($this->getAffiliation()) $signature .= "\n" . $this->getAffiliation();
+		if ($this->getAffiliation($locale)) $signature .= "\n" . $this->getAffiliation($locale);
 		if ($this->getPhone()) $signature .= "\n" . Locale::translate('user.phone') . ' ' . $this->getPhone();
 		if ($this->getFax()) $signature .= "\n" . Locale::translate('user.fax') . ' ' . $this->getFax();
 		$signature .= "\n" . $this->getEmail();

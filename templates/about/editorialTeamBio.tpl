@@ -67,7 +67,8 @@
 <p>
 	<i>{$user->getFullName()|escape}</i> {icon name="mail" url=$address}<br />
 	{if $user->getUrl()}<a href="{$user->getUrl()|escape:"quotes"}" target="_new">{$user->getUrl()|escape}</a><br/>{/if}
-	{if $user->getAffiliation()}{$user->getAffiliation()|escape}{assign var=needsComma value=1}{/if}{if $country}{if $needsComma}, {/if}{$country|escape}{/if}
+	{* Opatan Inc. : getAffiliation() is replaced with getUserAffiliation() *}
+	{if $user->getUserAffiliation()}{$user->getUserAffiliation()|escape}{assign var=needsComma value=1}{/if}{if $country}{if $needsComma}, {/if}{$country|escape}{/if}
 </p>
 
 <p>{$user->getUserBiography()|nl2br|strip_unsafe_html}</p>

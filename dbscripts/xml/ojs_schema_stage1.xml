@@ -134,7 +134,10 @@
 		<field name="password" type="C2" size="40">
 			<NOTNULL/>
 		</field>
+		<!-- Opatan Inc. : salutation is removed -->
+		<!--
 		<field name="salutation" type="C2" size="40"/>
+		-->
 		<!-- Opatan Inc. : first_name is removed -->
 		<!--
 		<field name="first_name" type="C2" size="40">
@@ -155,7 +158,10 @@
 		<field name="gender" type="C" size="1"/>
 		<field name="discipline" type="C2" size="255"/>
 		<field name="initials" type="C2" size="5"/>
+		<!-- Opatan Inc. : affiliation is removed -->
+		<!--
 		<field name="affiliation" type="C2" size="255"/>
+		-->
 		<field name="email" type="C2" size="90">
 			<NOTNULL/>
 		</field>

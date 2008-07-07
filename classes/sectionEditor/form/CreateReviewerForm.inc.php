@@ -121,14 +121,14 @@ class CreateReviewerForm extends Form {
 		$userDao = &DAORegistry::getDAO('UserDAO');
 		$user = &new User();
 
-		$user->setSalutation($this->getData('salutation'));
+		$user->setSalutation($this->getData('salutation'), null); // Opatan Inc. : Localized
 		$user->setFirstName($this->getData('firstName'), null); // Opatan Inc. : Localized
 		$user->setMiddleName($this->getData('middleName'), null); // Opatan Inc. : Localized
 		$user->setLastName($this->getData('lastName'), null); // Opatan Inc. : Localized
 		$user->setGender($this->getData('gender'));
 		$user->setDiscipline($this->getData('discipline'));
 		$user->setInitials($this->getData('initials'));
-		$user->setAffiliation($this->getData('affiliation'));
+		$user->setAffiliation($this->getData('affiliation'), null); // Opatan Inc. : Localized
 		$user->setEmail($user->getUsername()); // Opatan Inc. : $this->getData('email') changed to $user->getUsername()
 		$user->setUrl($this->getData('userUrl'));
 		$user->setPhone($this->getData('phone'));
