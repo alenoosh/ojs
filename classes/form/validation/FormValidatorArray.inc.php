@@ -58,9 +58,16 @@ class FormValidatorArray extends FormValidator {
 
 			} else {
 				foreach ($this->fields as $field) {
-					if (trim($value[$field]) == '') {
-						$ret = false;
-						array_push($this->errorFields, "{$this->field}[{$key}][{$field}]");
+					if (is_array($field)) { 
+						if (trim($value[$field[0]][$field[1]]) == '') {
+							$ret = false;
+							array_push($this->errorFields, "{$this->field}[{$key}][{$field[0]}]");
+						}
+					} else {
+						if (trim($value[$field]) == '') {
+							$ret = false;
+							array_push($this->errorFields, "{$this->field}[{$key}][{$field}]");
+						}
 					}
 				}
 			}

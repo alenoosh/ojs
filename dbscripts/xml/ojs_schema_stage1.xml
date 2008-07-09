@@ -786,9 +786,12 @@
 			<NOTNULL/>
 			<DEFAULT VALUE="0"/>
 		</field>
+		<!-- Opatan Inc. : first_name is removed -->
+		<!--	
 		<field name="first_name" type="C2" size="40">
 			<NOTNULL/>
 		</field>
+		-->
 		<field name="middle_name" type="C2" size="40"/>
 		<field name="last_name" type="C2" size="90">
 			<NOTNULL/>

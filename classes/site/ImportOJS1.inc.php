@@ -1016,7 +1016,8 @@ class ImportOJS1 {
 				$authorRow = &$authorResult->fields;
 
 				$author = &new Author();
-				$author->setFirstName(Core::cleanVar($authorRow['chFirstName']));
+				// Opatan Inc. : Localized author firstName
+				$author->setFirstName(Core::cleanVar($authorRow['chFirstName']), Locale::getLocale());
 				$author->setMiddleName(Core::cleanVar($authorRow['chMiddleInitial']));
 				$author->setLastName(Core::cleanVar($authorRow['chSurname']));
 				$author->setAffiliation(Core::cleanVar($authorRow['chAffiliation']));

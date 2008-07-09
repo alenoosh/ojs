@@ -263,7 +263,6 @@ class NativeExportDom {
 		$root = &XMLCustomWriter::createElement($doc, 'author');
 		if ($author->getPrimaryContact()) XMLCustomWriter::setAttribute($root, 'primary_contact', 'true');
 
-		XMLCustomWriter::createChildWithText($doc, $root, 'firstname', $author->getFirstName());
 		XMLCustomWriter::createChildWithText($doc, $root, 'middlename', $author->getMiddleName(), false);
 		XMLCustomWriter::createChildWithText($doc, $root, 'lastname', $author->getLastName());
 
@@ -271,6 +270,12 @@ class NativeExportDom {
 		XMLCustomWriter::createChildWithText($doc, $root, 'country', $author->getCountry(), false);
 		XMLCustomWriter::createChildWithText($doc, $root, 'email', $author->getEmail(), false);
 		XMLCustomWriter::createChildWithText($doc, $root, 'url', $author->getUrl(), false);
+		// Opatan Inc. 
+		if (is_array($author->getFirstName(null))) foreach ($author->getFirstName(null) as $locale => $firstName) {
+			$firstNameNode = &XMLCustomWriter::createChildWithText($doc, $root, 'firstname', strip_tags($firstName), false);
+			if ($firstNameNode) XMLCustomWriter::setAttribute($firstNameNode, 'locale', $locale);
+			unset($firstNameNode);
+		}
 		if (is_array($author->getCompetingInterests(null))) foreach ($author->getCompetingInterests(null) as $locale => $competingInterests) {
 			$competingInterestsNode = &XMLCustomWriter::createChildWithText($doc, $root, 'competing_interests', strip_tags($competingInterests), false);
 			if ($competingInterestsNode) XMLCustomWriter::setAttribute($competingInterestsNode, 'locale', $locale);

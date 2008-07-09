@@ -159,6 +159,8 @@ class LayoutEditorSubmissionDAO extends DAO {
 			$locale, // Opatan Inc.
 			'middleName', // Opatan Inc.
 			$locale, // Opatan Inc.
+			'firstName', // Opatan Inc.
+			$locale, // Opatan Inc.
 			$editorId
 		);
 		if (isset($journalId)) $params[] = $journalId;
@@ -176,10 +178,10 @@ class LayoutEditorSubmissionDAO extends DAO {
 				$params[] = $search;
 				break;
 			case SUBMISSION_FIELD_AUTHOR:
-				$first_last = $this->_dataSource->Concat('aa.first_name', '\' \'', 'aa.last_name');
-				$first_middle_last = $this->_dataSource->Concat('aa.first_name', '\' \'', 'aa.middle_name', '\' \'', 'aa.last_name');
-				$last_comma_first = $this->_dataSource->Concat('aa.last_name', '\', \'', 'aa.first_name');
-				$last_comma_first_middle = $this->_dataSource->Concat('aa.last_name', '\', \'', 'aa.first_name', '\' \'', 'aa.middle_name');
+				$first_last = $this->_dataSource->Concat('aaf.setting_value', '\' \'', 'aa.last_name');
+				$first_middle_last = $this->_dataSource->Concat('aaf.setting_value', '\' \'', 'aa.middle_name', '\' \'', 'aa.last_name');
+				$last_comma_first = $this->_dataSource->Concat('aa.last_name', '\', \'', 'aaf.setting_value');
+				$last_comma_first_middle = $this->_dataSource->Concat('aa.last_name', '\', \'', 'aaf.setting_value', '\' \'', 'aa.middle_name');
 
 				if ($searchMatch === 'is') {
 					$searchSql = " AND (LOWER(aa.last_name) = LOWER(?) OR LOWER($first_last) = LOWER(?) OR LOWER($first_middle_last) = LOWER(?) OR LOWER($last_comma_first) = LOWER(?) OR LOWER($last_comma_first_middle) = LOWER(?))";
@@ -261,6 +263,8 @@ class LayoutEditorSubmissionDAO extends DAO {
 				LEFT JOIN user_settings edsf ON (ed.user_id = edsf.user_id AND edsf.setting_name = ? AND edsf.locale = ?)
 				LEFT JOIN user_settings edsl ON (ed.user_id = edsl.user_id AND edsl.setting_name = ? AND edsl.locale = ?)
 				LEFT JOIN user_settings edsm ON (ed.user_id = edsm.user_id AND edsm.setting_name = ? AND edsm.locale = ?)
+
+				LEFT JOIN article_author_settings aaf ON (aa.author_id = aaf.author_id AND aaf.setting_name = ? AND aaf.locale = ?)
 			WHERE
 				l.editor_id = ? AND
 				' . (isset($journalId)?'a.journal_id = ? AND':'') . '

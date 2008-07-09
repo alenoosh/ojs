@@ -697,8 +697,9 @@ class PublishedArticleDAO extends DAO {
 	 */
 	function getPublishedArticleAuthors($issueId) {
 		$authors = array();
+		$locale  = Locale::getLocale();
 		$result = &$this->retrieve(
-			'SELECT aa.* FROM article_authors aa, published_articles pa WHERE aa.article_id = pa.article_id AND pa.issue_id = ? ORDER BY pa.issue_id', $issueId
+			'SELECT aa.*, aaf.setting_value AS first_name FROM article_authors aa LEFT JOIN article_author_settings aaf ON (aa.author_id = aaf.author_id AND aaf.setting_name = ? AND aaf.locale = ?), published_articles pa WHERE aa.article_id = pa.article_id AND pa.issue_id = ? ORDER BY pa.issue_id', array('firstName', $locale, $issueId)
 		);
 
 		while (!$result->EOF) {
@@ -706,7 +707,7 @@ class PublishedArticleDAO extends DAO {
 			$author = &new Author();
 			$author->setAuthorId($row['author_id']);
 			$author->setArticleId($row['article_id']);
-			$author->setFirstName($row['first_name']);
+			$author->setFirstName($row['first_name'], null); // Opatan Inc. : Localized author firstName
 			$author->setMiddleName($row['middle_name']);
 			$author->setLastName($row['last_name']);
 			$author->setAffiliation($row['affiliation']);
