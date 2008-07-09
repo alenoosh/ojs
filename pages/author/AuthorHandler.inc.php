@@ -60,7 +60,10 @@ class AuthorHandler extends Handler {
 			
 			$completedPaymentDAO =& DAORegistry::getDAO('OJSCompletedPaymentDAO');
 			$templateMgr->assign_by_ref('completedPaymentDAO', $completedPaymentDAO);
-		} 				
+		}
+		/** Opatan Inc. **/ 
+		$journalPath = $journal->getPath();
+		$templateMgr->assign('journalTitle',$journalPath);
 
 		import('issue.IssueAction');
 		$issueAction = &new IssueAction();

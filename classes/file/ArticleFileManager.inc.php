@@ -60,13 +60,7 @@ class ArticleFileManager extends FileManager {
 		$articleDao = &DAORegistry::getDAO('ArticleDAO');
 		$this->article = &$articleDao->getArticle($articleId);
 		$journalId = $this->article->getJournalId();
-		if (Config::getVar('files', 'files_browse') != null) {
-			$this->filesDir = Config::getVar('files', 'files_browse') . '/journals/' . $journalId .'/articles/' . $articleId . '/';
-
-		}else {
-			$this->filesDir = Config::getVar('files', 'files_dir') . '/journals/' . $journalId .'/articles/' . $articleId . '/';
-			
-		}
+		$this->filesDir = Config::getVar('files', 'files_dir') . '/journals/' . $journalId .'/articles/' . $articleId . '/';
 	}
 
 	/**

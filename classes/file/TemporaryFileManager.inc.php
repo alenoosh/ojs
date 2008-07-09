@@ -27,15 +27,7 @@ class TemporaryFileManager extends FileManager {
 	 */
 	function TemporaryFileManager() {
 		
-		if (Config::getVar('files', 'files_browse') != null){
-			$this->filesDir = Config::getVar('files', 'files_browse') . '/temp/';
-
-
-		}else {
-			$this->filesDir = Config::getVar('files', 'files_dir') . '/temp/';
-		
-		}
-
+		$this->filesDir = Config::getVar('files', 'files_dir') . '/temp/';
 		$this->_performPeriodicCleanup();
 	}
 

@@ -141,7 +141,15 @@ class FilesHandler extends ManagerHandler {
 
 	function getRealFilesDir($currentDir) {
 		$journal = &Request::getJournal();
-		return Config::getVar('files', 'files_dir') . '/journals/' . $journal->getJournalId() .'/' . $currentDir;
+		if ($journal->getSetting('browsePublicFolder') == 'public') {
+
+			return Config::getVar('files', 'public_files_dir') . '/journals/' . $journal->getJournalId() .'/' . $currentDir;
+			
+
+		}else {
+			return Config::getVar('files', 'files_dir') . '/journals/' . $journal->getJournalId() .'/' . $currentDir;
+			
+		}
 	}
 
 	function fileNameFilter($var) {

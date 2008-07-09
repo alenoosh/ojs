@@ -494,7 +494,7 @@ function prepBlockFields() {
 <h3>5.9 {translate key="manager.setup.browsePublicFolder"}</h3>
 
 <select name="browsePublicFolder" class="selectMenu" id="browsePublicFolder">
-	<option value="" selected="selected">{translate key="common.chooseOne"}</option>
+	<option value="">{translate key="common.chooseOne"}</option>
 	<option value="public">{translate key="manager.setup.public"}</option>
 	<option value="{$files_dir}">{translate key="manager.setup.filesDir" files_dir=$files_dir}</option>
 </select>

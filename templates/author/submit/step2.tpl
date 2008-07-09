@@ -256,7 +256,9 @@ function confirmForgottenUpload() {
 <tr valign="top">
 {*Opatan Inc. -> Abstract Length Note*}
 	<td width="20%" class="label">{fieldLabel name="abstract" required="true" key="article.abstract"} 
-	<br />{translate key="author.submit.form.abstractLengthNote" abstractMinLength=$abstractMinimumLength abstractMaxLength=$abstractMaximumLength}</td>
+	<br />{if $abstractMinimumLength neq 0 && $abstractMaximumLength neq 0} {translate key="author.submit.form.abstractLengthNote" abstractMinLength=$abstractMinimumLength abstractMaxLength=$abstractMaximumLength}
+	{elseif $abstractMinimumLength neq 0 || $abstractMaximumLength neq 0} {translate key="author.submit.form.abstractLengthNote" abstractMinLength=$abstractMinimumLength abstractMaxLength=$abstractMaximumLength}{/if}
+	</td>
 
 	<td width="80%" class="value"><textarea name="abstract[{$formLocale|escape}]" id="abstract" class="textArea" rows="15" cols="60">{$abstract[$formLocale]|escape}</textarea></td>
 </tr>

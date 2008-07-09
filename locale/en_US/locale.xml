@@ -256,6 +256,16 @@
 	<message key="common.queue.short.completed">Archive</message>
 	<message key="common.queue.short.uploadSuppFile">Upload Supplementary files</message>
 	<message key="common.queue.short.viewDetails">View Article Details</message>
+	<!--Opatan Inc. -->
+ 	<message key="common.queue.short.uploadSuppFile">Upload Supplementary files</message>
+ 	<message key="common.queue.short.viewDetails">View Article Details</message>
+	<message key="common.queue.short.SubmitRevisedVersion">Submit Revised Version</message>
+	<message key="common.queue.short.editMetadata">Edit Metadata</message>
+	<message key="common.queue.short.viewCopyeditedArticle">View Copyedited Article</message>
+	<message key="common.queue.short.viewLayoutEditedArticle">View layout edited Article</message>
+	<message key="common.queue.short.notifyEditor">Notify Editor</message>
+	<message key="common.queue.short.authorGuidelines">Author Guidelines</message>
+	<message key="common.queue.short.startNewSubmission">Start New Submission</message>
 	
     <!--
 	 *

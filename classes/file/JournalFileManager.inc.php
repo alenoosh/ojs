@@ -35,13 +35,7 @@ class JournalFileManager extends FileManager {
 	function JournalFileManager(&$journal) {
 		$this->journalId = $journal->getJournalId();
 		$this->journal =& $journal;
-		if (Config::getVar('files', 'files_browse') != null){
-			$this->filesDir = Config::getVar('files', 'files_browse') . '/journals/' . $this->journalId . '/';
-
-
-		}else {
-			$this->filesDir = Config::getVar('files', 'files_dir') . '/journals/' . $this->journalId . '/';			
-		}
+		$this->filesDir = Config::getVar('files', 'files_dir') . '/journals/' . $this->journalId . '/';
 
 	}
 

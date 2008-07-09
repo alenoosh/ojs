@@ -142,12 +142,15 @@ function changeFormAction(formName, action) {
 function getSelectedArticleId() {
 	for (var i = 0; i <= document.formName.radioButtonName.length; i++) {
 		if (document.formName.radioButtonName[i].checked) {
+		
 			return document.formName.radioButtonName[i].value;
+		} else {
+			return -1;
+			
 		}
 	}
-	return -1;
 }
-function callSelectedUrl(url,op) {
+function callSelectedUrl(url,op,anchor) {
 	article_id = getSelectedArticleId();
 	if (article_id == -1) {
 		alert("Please Select an Article");
@@ -155,6 +158,7 @@ function callSelectedUrl(url,op) {
 	}
 	url = url.replace("article_id", article_id);
 	url = url.replace("function", op);
+	url = url.replace("anchor",anchor);
 	
-	 window.location.href = url;
+	window.location.href = url;
 }
