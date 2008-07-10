@@ -556,7 +556,7 @@ class Issue extends DataObject {
 			if (!empty($str)) {
 				$str .= $separator;
 			}
-			$str .= $lastOnly ? $a->getLastName() : $a->getFullName();
+			$str .= $lastOnly ? $a->getLastName(null) : $a->getFullName(); // Opatan Inc. : get Localized lastName
 		}
 		return $str;
 	}

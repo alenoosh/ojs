@@ -179,7 +179,7 @@ class PubMedExportDom {
 
 		// Opatan Inc. : XMLCustomWriter::createChildWithText($doc, $root, 'FirstName', ucfirst($author->getFirstName()));
 		XMLCustomWriter::createChildWithText($doc, $root, 'MiddleName', ucfirst($author->getMiddleName()), false);
-		XMLCustomWriter::createChildWithText($doc, $root, 'LastName', ucfirst($author->getLastName()));
+		// Opatan Inc. : XMLCustomWriter::createChildWithText($doc, $root, 'LastName', ucfirst($author->getLastName())); ???
 
 		// Opatan Inc. ??
 		if (is_array($author->getFirstName(null))) {

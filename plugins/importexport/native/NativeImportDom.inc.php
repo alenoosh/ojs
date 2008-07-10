@@ -807,7 +807,6 @@ class NativeImportDom {
 		
 		$author = &new Author();
 		if (($node = $authorNode->getChildByName('middlename'))) $author->setMiddleName($node->getValue());
-		if (($node = $authorNode->getChildByName('lastname'))) $author->setLastName($node->getValue());
 		if (($node = $authorNode->getChildByName('affiliation'))) $author->setAffiliation($node->getValue());
 		if (($node = $authorNode->getChildByName('country'))) $author->setCountry($node->getValue());
 		if (($node = $authorNode->getChildByName('email'))) $author->setEmail($node->getValue());
@@ -818,10 +817,21 @@ class NativeImportDom {
 			if ($locale == '') {
 				$locale = $journalPrimaryLocale;
 			} elseif (!in_array($locale, $journalSupportedLocales)) {
-				$errors[] = array('plugins.importexport.native.import.error.articleAuthorCompetingInterestsLocaleUnsupported', array('authorFullName' => $author->getFullName(), 'articleTitle' => $article->getArticleTitle(), 'issueTitle' => $issue->getIssueIdentification(), 'locale' => $locale));
+				$errors[] = array('plugins.importexport.native.import.error.articleAuthorFirstNameLocaleUnsupported', array('authorFullName' => $author->getFullName(), 'articleTitle' => $article->getArticleTitle(), 'issueTitle' => $issue->getIssueIdentification(), 'locale' => $locale));
 				return false;
 			} 
 			$author->setFirstName($node->getValue(), $locale);
+		}
+		// Opatan Inc.
+		for ($index=0; ($node = $authorNode->getChildByName('lastname', $index)); $index++) {
+			$locale = $node->getAttribute('locale');
+			if ($locale == '') {
+				$locale = $journalPrimaryLocale;
+			} elseif (!in_array($locale, $journalSupportedLocales)) {
+				$errors[] = array('plugins.importexport.native.import.error.articleAuthorLastNameLocaleUnsupported', array('authorFullName' => $author->getFullName(), 'articleTitle' => $article->getArticleTitle(), 'issueTitle' => $issue->getIssueIdentification(), 'locale' => $locale));
+				return false;
+			} 
+			$author->setLastName($node->getValue(), $locale);
 		}
 		for ($index=0; ($node = $authorNode->getChildByName('competing_interests', $index)); $index++) {
 			$locale = $node->getAttribute('locale');

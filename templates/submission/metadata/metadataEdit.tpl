@@ -45,6 +45,10 @@ function moveAuthor(dir, authorIndex) {
 				{foreach from=$author.firstName key="thisLocale" item="thisFirstName"}
 					{if $thisLocale != $formLocale}<input type="hidden" name="authors[{$authorIndex|escape}][firstName][{$thisLocale|escape}]" value="{$thisFirstName|escape}" />{/if}
 				{/foreach}		
+				{* Opatan Inc. *}
+				{foreach from=$author.lastName key="thisLocale" item="thisLastName"}
+					{if $thisLocale != $formLocale}<input type="hidden" name="authors[{$authorIndex|escape}][lastName][{$thisLocale|escape}]" value="{$thisLastName|escape}" />{/if}
+				{/foreach}		
 				{if $currentJournal->getSetting('requireAuthorCompetingInterests')}
 					{foreach from=$author.competingInterests key="thisLocale" item="thisCompetingInterests"}
 						{if $thisLocale != $formLocale}<input type="hidden" name="authors[{$authorIndex|escape}][competingInterests][{$thisLocale|escape}]" value="{$thisCompetingInterests|escape}" />{/if}
@@ -87,7 +91,7 @@ function moveAuthor(dir, authorIndex) {
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="authors-$authorIndex-lastName" required="true" key="user.lastName"}</td>
-		<td class="value"><input type="text" name="authors[{$authorIndex|escape}][lastName]" id="authors-{$authorIndex|escape}-lastName" value="{$author.lastName|escape}" size="20" maxlength="90" class="textField" /></td>
+		<td class="value"><input type="text" name="authors[{$authorIndex|escape}][lastName][{$formLocale|escape}]" id="authors-{$authorIndex|escape}-lastName" value="{$author.lastName[$formLocale]|escape}" size="20" maxlength="90" class="textField" /></td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="authors-$authorIndex-affiliation" key="user.affiliation"}</td>
@@ -155,7 +159,7 @@ function moveAuthor(dir, authorIndex) {
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="authors-0-lastName" required="true" key="user.lastName"}</td>
-		<td class="value"><input type="text" name="authors[0][lastName]" id="authors-0-lastName" size="20" maxlength="90" class="textField" /></td>
+		<td class="value"><input type="text" name="authors[0][lastName][{$formLocale|escape}]" id="authors-0-lastName" size="20" maxlength="90" class="textField" /></td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="authors-0-affiliation" key="user.affiliation"}</td>

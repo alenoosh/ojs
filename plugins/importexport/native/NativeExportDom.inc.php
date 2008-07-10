@@ -264,12 +264,17 @@ class NativeExportDom {
 		if ($author->getPrimaryContact()) XMLCustomWriter::setAttribute($root, 'primary_contact', 'true');
 
 		XMLCustomWriter::createChildWithText($doc, $root, 'middlename', $author->getMiddleName(), false);
-		XMLCustomWriter::createChildWithText($doc, $root, 'lastname', $author->getLastName());
 
 		XMLCustomWriter::createChildWithText($doc, $root, 'affiliation', $author->getAffiliation(), false);
 		XMLCustomWriter::createChildWithText($doc, $root, 'country', $author->getCountry(), false);
 		XMLCustomWriter::createChildWithText($doc, $root, 'email', $author->getEmail(), false);
 		XMLCustomWriter::createChildWithText($doc, $root, 'url', $author->getUrl(), false);
+		// Opatan Inc. 
+		if (is_array($author->getLastName(null))) foreach ($author->getLastName(null) as $locale => $lastName) {
+			$lastNameNode = &XMLCustomWriter::createChildWithText($doc, $root, 'lastname', strip_tags($lastName), false);
+			if ($lastNameNode) XMLCustomWriter::setAttribute($lastNameNode, 'locale', $locale);
+			unset($lastNameNode);
+		}	
 		// Opatan Inc. 
 		if (is_array($author->getFirstName(null))) foreach ($author->getFirstName(null) as $locale => $firstName) {
 			$firstNameNode = &XMLCustomWriter::createChildWithText($doc, $root, 'firstname', strip_tags($firstName), false);

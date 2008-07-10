@@ -17,16 +17,18 @@
 
 {iterate from=authors item=author}
 	{assign var=lastFirstLetter value=$firstLetter}
-	{assign var=firstLetter value=$author->getLastName()|String_substr:0:1}
+	{* Opatan Inc. : getLastName is replaced with getAuthorLastName *}
+	{assign var=firstLetter value=$author->getAuthorLastName()|String_substr:0:1}
 
 	{if $lastFirstLetter != $firstLetter}
 		<a name="{$firstLetter|escape}"></a>
 		<h3>{$firstLetter|escape}</h3>
 	{/if}
 	
-	{* Opatan Inc. : getFirstName is replaced with getAuthorFirstName *}
-	<a href="{url op="authors" path="view" firstName=$author->getAuthorFirstName() middleName=$author->getMiddleName() lastName=$author->getLastName() affiliation=$author->getAffiliation() country=$author->getCountry()}">
-		{$author->getLastName(true)|escape},
+	{* Opatan Inc. : (true) ???? *}
+	{* Opatan Inc. : getFirstName is replaced with getAuthorFirstName and getLastName(true) is replaced with getAuthorLastName *}
+	<a href="{url op="authors" path="view" firstName=$author->getAuthorFirstName() middleName=$author->getMiddleName() lastName=$author->getAuthorLastName() affiliation=$author->getAffiliation() country=$author->getCountry()}">
+		{$author->getAuthorLastName()|escape},
 		{$author->getAuthorFirstName()|escape}{if $author->getMiddleName()} {$author->getMiddleName()|escape}{/if}{if $author->getAffiliation()}, {$author->getAffiliation()|escape}{/if}
 	</a>
 	<br/>

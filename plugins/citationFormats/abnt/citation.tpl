@@ -13,9 +13,9 @@
 {assign var=authors value=$article->getAuthors()}
 {assign var=authorCount value=$authors|@count}
 {foreach from=$authors item=author name=authors key=i}
-	{* Opatan Inc. : getFirstName is replaced with getAuthorFirstName *}
+	{* Opatan Inc. : getFirstName is replaced with getAuthorFirstName and getLastName is replaced with getAuthorLastName *}
 	{assign var=firstName value=$author->getAuthorFirstName()}
-	{$author->getLastName()|escape}, {$firstName[0]|escape}.{if $i<$authorCount-1}; {/if}{/foreach}.
+	{$author->getAuthorLastName()|escape}, {$firstName[0]|escape}.{if $i<$authorCount-1}; {/if}{/foreach}.
 {$article->getArticleTitle()|strip_unsafe_html}.
 <b>{$journal->getJournalTitle()|escape}</b>, {translate key="plugins.citationFormat.acao.location"}{if $issue}, {$issue->getVolume()|escape}{/if}
 {$article->getDatePublished()|date_format:'%e %m %Y'}.

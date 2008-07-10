@@ -86,10 +86,11 @@ class AuthorDAO extends DAO {
 			FROM article_authors aa
 				LEFT JOIN articles a ON (aa.article_id = a.article_id)
 				LEFT JOIN article_author_settings aaf ON (aa.author_id = aaf.author_id AND aaf.setting_name = ? AND aaf.locale = ?)
+				LEFT JOIN article_author_settings aal ON (aa.author_id = aal.author_id AND aal.setting_name = ? AND aal.locale = ?)			
 			WHERE	aaf.setting_value = ?
 				AND a.status = ' . STATUS_PUBLISHED . '
 				AND (aa.middle_name = ?' . (empty($middleName)?' OR aa.middle_name IS NULL':'') . ')
-				AND aa.last_name = ?
+				AND aal.setting_value = ?
 				AND (aa.affiliation = ?' . (empty($affiliation)?' OR aa.affiliation IS NULL':'') . ')
 				AND (aa.country = ?' . (empty($country)?' OR aa.country IS NULL':'') . ') ' . 
 				($journalId!==null?(' AND a.journal_id = ?'):''),
@@ -132,7 +133,7 @@ class AuthorDAO extends DAO {
 		if (isset($journalId)) $params[] = $journalId;
 		if (isset($initial)) {
 			$params[] = String::strtolower($initial) . '%';
-			$initialSql = ' AND LOWER(aa.last_name) LIKE LOWER(?)';
+			$initialSql = ' AND LOWER(aal.setting_value) LIKE LOWER(?)';
 		} else {
 			$initialSql = '';
 		}
@@ -148,11 +149,12 @@ class AuthorDAO extends DAO {
 				0 AS seq,
 				aaf.setting_value AS first_name,
 				aa.middle_name AS middle_name,
-				aa.last_name AS last_name,
+				aal.setting_value AS last_name,
 				aa.affiliation AS affiliation,
 				aa.country
 			FROM	article_authors aa
-				LEFT JOIN article_author_settings aaf ON (aa.author_id = aaf.author_id AND aaf.setting_name = ? AND aaf.locale = ?),
+				LEFT JOIN article_author_settings aaf ON (aa.author_id = aaf.author_id AND aaf.setting_name = ? AND aaf.locale = ?)
+				LEFT JOIN article_author_settings aal ON (aa.author_id = aal.author_id AND aal.setting_name = ? AND aal.locale = ?),
 				articles a,
 				published_articles pa,
 				issues i
@@ -162,9 +164,9 @@ class AuthorDAO extends DAO {
 				(isset($journalId)?'AND a.journal_id = ? ':'') . '
 				AND pa.article_id = a.article_id
 				AND a.status = ' . STATUS_PUBLISHED . '
-				AND (aa.last_name IS NOT NULL AND aa.last_name <> \'\')' .
+				AND (aal.setting_value IS NOT NULL AND aal.setting_value <> \'\')' .
 				$initialSql . '
-			ORDER BY aa.last_name, first_name',
+			ORDER BY last_name, first_name',
 			empty($params)?false:$params,
 			$rangeInfo
 		);
@@ -202,7 +204,7 @@ class AuthorDAO extends DAO {
 	 * @return array
 	 */
 	function getLocaleFieldNames() {
-		return array('firstName', 'biography', 'competingInterests');
+		return array('firstName', 'lastName', 'biography', 'competingInterests');
 	}
 
 	/**
@@ -227,7 +229,7 @@ class AuthorDAO extends DAO {
 		$author->setArticleId($row['article_id']);
 		// Opatan Inc. : $author->setFirstName is removed
 		$author->setMiddleName($row['middle_name']);
-		$author->setLastName($row['last_name']);
+		// Opatan Inc. : $author->setLastName is removed
 		$author->setAffiliation($row['affiliation']);
 		$author->setCountry($row['country']);
 		$author->setEmail($row['email']);
@@ -247,16 +249,15 @@ class AuthorDAO extends DAO {
 	 * @param $author Author
 	 */	
 	function insertAuthor(&$author) {
-		// Opatan Inc. : first_name is removed
+		// Opatan Inc. : first_name and last_name is removed
 		$this->update(
 			'INSERT INTO article_authors
-				(article_id, middle_name, last_name, affiliation, country, email, url, primary_contact, seq)
+				(article_id, middle_name, affiliation, country, email, url, primary_contact, seq)
 				VALUES
-				(?, ?, ?, ?, ?, ?, ?, ?, ?)',
+				(?, ?, ?, ?, ?, ?, ?, ?)',
 			array(
 				$author->getArticleId(),
 				$author->getMiddleName() . '', // make non-null
-				$author->getLastName(),
 				$author->getAffiliation() . '', // make non-null
 				$author->getCountry(),
 				$author->getEmail(),
@@ -277,12 +278,11 @@ class AuthorDAO extends DAO {
 	 * @param $author Author
 	 */
 	function updateAuthor(&$author) {
-		// Opatan Inc. : author firstName is removed
+		// Opatan Inc. : author firstName and lastName is removed
 		$returner = $this->update(
 			'UPDATE article_authors
 				SET
 					middle_name = ?,
-					last_name = ?,
 					affiliation = ?,
 					country = ?,
 					email = ?,
@@ -292,7 +292,6 @@ class AuthorDAO extends DAO {
 				WHERE author_id = ?',
 			array(
 				$author->getMiddleName() . '', // make non-null
-				$author->getLastName(),
 				$author->getAffiliation() . '', // make non-null
 				$author->getCountry(),
 				$author->getEmail(),

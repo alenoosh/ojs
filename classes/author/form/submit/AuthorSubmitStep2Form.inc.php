@@ -63,7 +63,7 @@ class AuthorSubmitStep2Form extends AuthorSubmitForm {
 						'authorId' => $authors[$i]->getAuthorId(),
 						'firstName' => $authors[$i]->getFirstName(null), // Opatan Inc. : Localized author firstName
 						'middleName' => $authors[$i]->getMiddleName(),
-						'lastName' => $authors[$i]->getLastName(),
+						'lastName' => $authors[$i]->getLastName(null), // Opatan Inc. : Localized author lastName
 						'affiliation' => $authors[$i]->getAffiliation(),
 						'country' => $authors[$i]->getCountry(),
 						'email' => $authors[$i]->getEmail(),
@@ -177,7 +177,7 @@ class AuthorSubmitStep2Form extends AuthorSubmitForm {
 			if ($author != null) {
 				$author->setFirstName($authors[$i]['firstName'], null); // Opatan Inc. : Localized author firstName
 				$author->setMiddleName($authors[$i]['middleName']);
-				$author->setLastName($authors[$i]['lastName']);
+				$author->setLastName($authors[$i]['lastName'], null); // Opatan Inc. : Localized author lastName
 				$author->setAffiliation($authors[$i]['affiliation']);
 				$author->setCountry($authors[$i]['country']);
 				$author->setEmail($authors[$i]['email']);

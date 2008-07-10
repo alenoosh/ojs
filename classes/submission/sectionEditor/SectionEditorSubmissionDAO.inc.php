@@ -456,6 +456,8 @@ class SectionEditorSubmissionDAO extends DAO {
 			$locale, // Opatan Inc.
 			'firstName', // Opatan Inc.
 			$locale, // Opatan Inc.
+			'lastName', // Opatan Inc.
+			$locale, // Opatan Inc.
 			$journalId,
 			$sectionEditorId
 		);
@@ -473,15 +475,15 @@ class SectionEditorSubmissionDAO extends DAO {
 				$params[] = $search;
 				break;
 			case SUBMISSION_FIELD_AUTHOR:
-				$first_last = $this->_dataSource->Concat('aaf.setting_value', '\' \'', 'aa.last_name');
-				$first_middle_last = $this->_dataSource->Concat('aaf.setting_value', '\' \'', 'aa.middle_name', '\' \'', 'aa.last_name');
-				$last_comma_first = $this->_dataSource->Concat('aa.last_name', '\', \'', 'aaf.setting_value');
-				$last_comma_first_middle = $this->_dataSource->Concat('aa.last_name', '\', \'', 'aaf.setting_value', '\' \'', 'aa.middle_name');
+				$first_last = $this->_dataSource->Concat('aaf.setting_value', '\' \'', 'aal.setting_value');
+				$first_middle_last = $this->_dataSource->Concat('aaf.setting_value', '\' \'', 'aa.middle_name', '\' \'', 'aal.setting_value');
+				$last_comma_first = $this->_dataSource->Concat('aal.setting_value', '\', \'', 'aaf.setting_value');
+				$last_comma_first_middle = $this->_dataSource->Concat('aal.setting_value', '\', \'', 'aaf.setting_value', '\' \'', 'aa.middle_name');
 
 				if ($searchMatch === 'is') {
-					$searchSql = " AND (LOWER(aa.last_name) = LOWER(?) OR LOWER($first_last) = LOWER(?) OR LOWER($first_middle_last) = LOWER(?) OR LOWER($last_comma_first) = LOWER(?) OR LOWER($last_comma_first_middle) = LOWER(?))";
+					$searchSql = " AND (LOWER(aal.setting_value) = LOWER(?) OR LOWER($first_last) = LOWER(?) OR LOWER($first_middle_last) = LOWER(?) OR LOWER($last_comma_first) = LOWER(?) OR LOWER($last_comma_first_middle) = LOWER(?))";
 				} else {
-					$searchSql = " AND (LOWER(aa.last_name) LIKE LOWER(?) OR LOWER($first_last) LIKE LOWER(?) OR LOWER($first_middle_last) LIKE LOWER(?) OR LOWER($last_comma_first) LIKE LOWER(?) OR LOWER($last_comma_first_middle) LIKE LOWER(?))";
+					$searchSql = " AND (LOWER(aal.setting_value) LIKE LOWER(?) OR LOWER($first_last) LIKE LOWER(?) OR LOWER($first_middle_last) LIKE LOWER(?) OR LOWER($last_comma_first) LIKE LOWER(?) OR LOWER($last_comma_first_middle) LIKE LOWER(?))";
 					$search = '%' . $search . '%';
 				}
 				$params[] = $params[] = $params[] = $params[] = $params[] = $search;
@@ -584,7 +586,7 @@ class SectionEditorSubmissionDAO extends DAO {
 				LEFT JOIN user_settings edsm ON (ed.user_id = edsm.user_id AND edsm.setting_name = ? AND edsm.locale = ?)
 
 				LEFT JOIN article_author_settings aaf ON (aa.author_id = aaf.author_id AND aaf.setting_name = ? AND aaf.locale = ?)
-		
+				LEFT JOIN article_author_settings aal ON (aa.author_id = aal.author_id AND aal.setting_name = ? AND aal.locale = ?)	
 			WHERE	a.journal_id = ?
 				AND e.editor_id = ?
 				AND a.submission_progress = 0' . (!empty($additionalWhereSql)?" AND ($additionalWhereSql)":"");

@@ -52,7 +52,7 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		$locale = Locale::getLocale();
 		// Validation checks for this form
 		$this->addCheck(new FormValidatorCustom($this, 'authors', 'required', 'author.submit.form.authorRequired', create_function('$authors', 'return count($authors) > 0;')));
-		$this->addCheck(new FormValidatorArray($this, 'authors', 'required', 'author.submit.form.authorRequiredFields', array(array('firstName', $locale), 'lastName', 'email')));
+		$this->addCheck(new FormValidatorArray($this, 'authors', 'required', 'author.submit.form.authorRequiredFields', array(array('firstName', $locale), array('lastName', $locale), 'email')));
 		$this->addCheck(new FormValidatorLocale($this, 'title', 'required', 'author.submit.form.titleRequired'));
 		$this->addCheck(new FormValidatorPost($this));        
 	}
@@ -90,7 +90,7 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 						'authorId' => $authors[$i]->getAuthorId(),
 						'firstName' => $authors[$i]->getFirstName(null), // Opatan Inc. : Localized author firstName
 						'middleName' => $authors[$i]->getMiddleName(),
-						'lastName' => $authors[$i]->getLastName(),
+						'lastName' => $authors[$i]->getLastName(null), // Opatan Inc. : Localized author lastName
 						'affiliation' => $authors[$i]->getAffiliation(),
 						'country' => $authors[$i]->getCountry(),
 						'email' => $authors[$i]->getEmail(),
@@ -287,7 +287,7 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 			if ($author != null) {
 				$author->setFirstName($authors[$i]['firstName'], null); // Opatan Inc. : Localized author firstName
 				$author->setMiddleName($authors[$i]['middleName']);
-				$author->setLastName($authors[$i]['lastName']);
+				$author->setLastName($authors[$i]['lastName'], null); // Opatan Inc. : Localized author lastName
 				$author->setAffiliation($authors[$i]['affiliation']);
 				$author->setCountry($authors[$i]['country']);
 				$author->setEmail($authors[$i]['email']);

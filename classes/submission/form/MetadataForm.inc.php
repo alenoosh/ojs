@@ -113,9 +113,9 @@ class MetadataForm extends Form {
 					$this->_data['authors'],
 					array(
 						'authorId' => $authors[$i]->getAuthorId(),
-						'firstName' => $authors[$i]->getFirstName(null), // Opatan Inc. : localized author firstName
+						'firstName' => $authors[$i]->getFirstName(null), // Opatan Inc. : Localized author firstName
 						'middleName' => $authors[$i]->getMiddleName(),
-						'lastName' => $authors[$i]->getLastName(),
+						'lastName' => $authors[$i]->getLastName(null), // Opatan Inc. : Localized author lastName
 						'affiliation' => $authors[$i]->getAffiliation(),
 						'country' => $authors[$i]->getCountry(),
 						'countryLocalized' => $authors[$i]->getCountryLocalized(),
@@ -291,7 +291,7 @@ class MetadataForm extends Form {
 			if ($author != null) {
 				$author->setFirstName($authors[$i]['firstName'], null); // Opatan Inc. : Localized author firstName
 				$author->setMiddleName($authors[$i]['middleName']);
-				$author->setLastName($authors[$i]['lastName']);
+				$author->setLastName($authors[$i]['lastName'], null); // Opatan Inc. : Localized author lastName
 				$author->setAffiliation($authors[$i]['affiliation']);
 				$author->setCountry($authors[$i]['country']);
 				$author->setEmail($authors[$i]['email']);

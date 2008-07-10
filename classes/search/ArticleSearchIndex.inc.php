@@ -159,8 +159,12 @@ class ArticleSearchIndex {
 		for ($i=0, $count=count($authors); $i < $count; $i++) {
 			$author = &$authors[$i];
 			array_push($authorText, $author->getMiddleName());
-			array_push($authorText, $author->getLastName());
 			array_push($authorText, $author->getAffiliation());
+			// Opatan Inc.
+			$lastNames = $author->getLastName(null);
+			if (is_array($lastNames)) foreach ($lastNames as $lastName) { // Localized
+				array_push($authorText, strip_tags($lastName));
+			}
 			// Opatan Inc.
 			$firstNames = $author->getFirstName(null);
 			if (is_array($firstNames)) foreach ($firstNames as $firstName) { // Localized
