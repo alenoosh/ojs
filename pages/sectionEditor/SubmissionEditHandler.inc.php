@@ -186,7 +186,8 @@ class SubmissionEditHandler extends SectionEditorHandler {
 				SUBMISSION_EDITOR_DECISION_ACCEPT => 'editor.article.decision.accept',
 				SUBMISSION_EDITOR_DECISION_PENDING_REVISIONS => 'editor.article.decision.pendingRevisions',
 				SUBMISSION_EDITOR_DECISION_RESUBMIT => 'editor.article.decision.resubmit',
-				SUBMISSION_EDITOR_DECISION_DECLINE => 'editor.article.decision.decline'
+				SUBMISSION_EDITOR_DECISION_DECLINE => 'editor.article.decision.decline',
+				SUBMISSION_EDITOR_DECISION_MINOR => 'editor.article.decision.minor'
 			)
 		);
 		$templateMgr->assign_by_ref('lastDecision', $lastDecision);
@@ -315,6 +316,8 @@ class SubmissionEditHandler extends SectionEditorHandler {
 			case SUBMISSION_EDITOR_DECISION_PENDING_REVISIONS:
 			case SUBMISSION_EDITOR_DECISION_RESUBMIT:
 			case SUBMISSION_EDITOR_DECISION_DECLINE:
+			/**Opatan Inc.**/
+			case SUBMISSION_EDITOR_DECISION_MINOR:
 				SectionEditorAction::recordDecision($submission, $decision);
 				break;
 		}

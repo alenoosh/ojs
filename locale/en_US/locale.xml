@@ -1797,6 +1797,8 @@ Active is how many reviews are currently being considered or underway.]]></messa
 	<message key="editor.article.decision.pendingRevisions">Revisions Required</message>
 	<message key="editor.article.decision.resubmit">Resubmit for Review</message>
 	<message key="editor.article.decision.decline">Decline Submission</message>
+	<!--Opartan Inc.-->
+	<message key="editor.article.decision.minor">Accept with minor Revision</message>
 	<message key="editor.article.selectLayoutEditor">Select Layout Editor</message>
 	<message key="editor.article.replaceLayoutEditor">Replace Layout Editor</message>
 	<message key="editor.article.reviewSubmission">Review Submission</message>

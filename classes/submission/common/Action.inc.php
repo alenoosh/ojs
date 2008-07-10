@@ -19,6 +19,8 @@ define('SUBMISSION_EDITOR_DECISION_ACCEPT', 1);
 define('SUBMISSION_EDITOR_DECISION_PENDING_REVISIONS', 2);
 define('SUBMISSION_EDITOR_DECISION_RESUBMIT', 3);
 define('SUBMISSION_EDITOR_DECISION_DECLINE', 4);
+/**Opatan Inc.**/
+define('SUBMISSION_EDITOR_DECISION_MINOR', 5);
 
 /* These constants are used as search fields for the various submission lists */
 define('SUBMISSION_FIELD_AUTHOR', 1);
