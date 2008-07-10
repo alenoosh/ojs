@@ -896,7 +896,9 @@ class SectionEditorSubmission extends Article {
 			SUBMISSION_EDITOR_DECISION_ACCEPT => 'editor.article.decision.accept',
 			SUBMISSION_EDITOR_DECISION_PENDING_REVISIONS => 'editor.article.decision.pendingRevisions',
 			SUBMISSION_EDITOR_DECISION_RESUBMIT => 'editor.article.decision.resubmit',
-			SUBMISSION_EDITOR_DECISION_DECLINE => 'editor.article.decision.decline'
+			SUBMISSION_EDITOR_DECISION_DECLINE => 'editor.article.decision.decline',
+			/**Opatan Inc.**/
+			SUBMISSION_EDITOR_DECISION_MINOR => 'editor.article.decision.minor'
 		);
 		return $editorDecisionOptions;
 	}
