@@ -30,7 +30,8 @@ class Author extends DataObject {
 	 * @return string
 	 */
 	function getFullName() {
-		return $this->getData('firstName') . ' ' . ($this->getData('middleName') != '' ? $this->getData('middleName') . ' ' : '') . $this->getData('lastName');
+		$locale = Locale::getLocale();
+		return $this->getData('firstName', $locale) . ' ' . ($this->getData('middleName') != '' ? $this->getData('middleName') . ' ' : '') . $this->getData('lastName');
 	}
 
 	//
@@ -70,20 +71,30 @@ class Author extends DataObject {
 	}
 
 	/**
+	 * Opatan Inc. : 
+	 * Get localized author firstName
+	 */
+	 function getAuthorFirstName() {
+		return $this->getLocalizedData('firstName');
+	 }
+
+	/**
+	 * Opatan Inc. : @param $locale string added
 	 * Get first name.
 	 * @return string
 	 */
-	function getFirstName() {
-		return $this->getData('firstName');
+	function getFirstName($locale) {
+		return $this->getData('firstName', $locale);
 	}
 
 	/**
+	 * Opatan Inc. : @param $locale string added
 	 * Set first name.
 	 * @param $firstName string
 	 */
-	function setFirstName($firstName)
+	function setFirstName($firstName, $locale)
 	{
-		return $this->setData('firstName', $firstName);
+		return $this->setData('firstName', $firstName, $locale);
 	}
 
 	/**

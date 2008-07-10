@@ -60,6 +60,9 @@ function confirmForgottenUpload() {
 			{url|assign:"submitFormUrl" op="submit" path="2" articleId=$articleId}
 			{* Maintain localized author info across requests *}
 			{foreach from=$authors key=authorIndex item=author}
+				{foreach from=$author.firstName key="thisLocale" item="thisFirstName"}
+					{if $thisLocale != $formLocale}<input type="hidden" name="authors[{$authorIndex|escape}][firstName][{$thisLocale|escape}]" value="{$thisFirstName|escape}" />{/if}
+				{/foreach}
 				{if $currentJournal->getSetting('requireAuthorCompetingInterests')}
 					{foreach from=$author.competingInterests key="thisLocale" item="thisCompetingInterests"}
 						{if $thisLocale != $formLocale}<input type="hidden" name="authors[{$authorIndex|escape}][competingInterests][{$thisLocale|escape}]" value="{$thisCompetingInterests|escape}" />{/if}
@@ -93,16 +96,16 @@ function confirmForgottenUpload() {
 <table width="100%" class="data">
 {* Opatan Inc. : for previously added authors , just the details of author is shown instead of the whole form *}
 {* Opatan Inc. : if the author is choosen to be edited , the editing form is shown *}
-{if $author.firstName and $author.edited eq 0}
+{if $author.firstName[$formLocale] and $author.edited eq 0}
 <tr valign="top">
     <td>
-        {$author.firstName|escape}&nbsp;{$author.lastName|escape}&nbsp;{$author.email|escape}&nbsp;&nbsp;
+        {$author.firstName[$formLocale]|escape}&nbsp;{$author.lastName|escape}&nbsp;{$author.email|escape}&nbsp;&nbsp;
         <input type="submit" name="editAuthor[{$authorIndex|escape}]" value="{translate key="author.submit.editAuthor"}"
                class="button" />
     </td>
     <td>
-        <input type="hidden" name="authors[{$authorIndex|escape}][firstName]"
-               value="{$author.firstName|escape}" />
+        <input type="hidden" name="authors[{$authorIndex|escape}][firstName][{$formLocale|escape}]"
+               value="{$author.firstName[$formLocale]|escape}" />
         <input type="hidden" name="authors[{$authorIndex|escape}][middleName]"
                value="{$author.middleName|escape}" />
         <input type="hidden" name="authors[{$authorIndex|escape}][lastName]"
@@ -126,7 +129,7 @@ function confirmForgottenUpload() {
 {else}
 <tr valign="top">
 	<td width="20%" class="label">{fieldLabel name="authors-$authorIndex-firstName" required="true" key="user.firstName"}</td>
-	<td width="80%" class="value"><input type="text" class="textField" name="authors[{$authorIndex|escape}][firstName]" id="authors-{$authorIndex|escape}-firstName" value="{$author.firstName|escape}" size="20" maxlength="40" /></td>
+	<td width="80%" class="value"><input type="text" class="textField" name="authors[{$authorIndex|escape}][firstName][{$formLocale|escape}]" id="authors-{$authorIndex|escape}-firstName" value="{$author.firstName[$formLocale]|escape}" size="20" maxlength="40" /></td>
 </tr>
 <tr valign="top">
 	<td width="20%" class="label">{fieldLabel name="authors-$authorIndex-middleName" key="user.middleName"}</td>
@@ -190,7 +193,7 @@ function confirmForgottenUpload() {
 <table width="100%" class="data">
 <tr valign="top">
 	<td width="20%" class="label">{fieldLabel name="authors-0-firstName" required="true" key="user.firstName"}</td>
-	<td width="80%" class="value"><input type="text" class="textField" name="authors[0][firstName]" id="authors-0-firstName" size="20" maxlength="40" /></td>
+	<td width="80%" class="value"><input type="text" class="textField" name="authors[0][firstName][{$formLocale|escape}]" id="authors-0-firstName" size="20" maxlength="40" /></td>
 </tr>
 <tr valign="top">
 	<td width="20%" class="label">{fieldLabel name="authors-0-middleName" key="user.middleName"}</td>

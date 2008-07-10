@@ -129,7 +129,17 @@ class EruditExportDom {
 			$persNameNode = &XMLCustomWriter::createElement($doc, 'persname');
 			XMLCustomWriter::appendChild($authorNode, $persNameNode);
 
-			XMLCustomWriter::createChildWithText($doc, $persNameNode, 'firstname', $author->getFirstName());
+			// Opatan Inc. : ??
+			foreach((array) $author->getFirstName(null) as $locale => $firstName) {
+				$firstName = strip_tags($firstName);
+				$firstNameNode = &XMLCustomWriter::createElement($doc, 'firstname');
+				XMLCustomWriter::setAttribute ($firstNameNode, 'lang', $locale);
+				XMLCustomWriter::appendChild($persNameNode, $firstNameNode);
+				XMLCustomWriter::createChildWithText($doc, $firstNameNode, 'blocktext', $firstName);
+				unset($firstNameNode);
+			}
+
+			// Opatan Inc. : XMLCustomWriter::createChildWithText($doc, $persNameNode, 'firstname', $author->getFirstName());
 			XMLCustomWriter::createChildWithText($doc, $persNameNode, 'middlename', $author->getMiddleName(), false);
 			XMLCustomWriter::createChildWithText($doc, $persNameNode, 'familyname', $author->getLastName());
 

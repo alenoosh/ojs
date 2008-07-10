@@ -23,10 +23,11 @@
 		<a name="{$firstLetter|escape}"></a>
 		<h3>{$firstLetter|escape}</h3>
 	{/if}
-
-	<a href="{url op="authors" path="view" firstName=$author->getFirstName() middleName=$author->getMiddleName() lastName=$author->getLastName() affiliation=$author->getAffiliation() country=$author->getCountry()}">
+	
+	{* Opatan Inc. : getFirstName is replaced with getAuthorFirstName *}
+	<a href="{url op="authors" path="view" firstName=$author->getAuthorFirstName() middleName=$author->getMiddleName() lastName=$author->getLastName() affiliation=$author->getAffiliation() country=$author->getCountry()}">
 		{$author->getLastName(true)|escape},
-		{$author->getFirstName()|escape}{if $author->getMiddleName()} {$author->getMiddleName()|escape}{/if}{if $author->getAffiliation()}, {$author->getAffiliation()|escape}{/if}
+		{$author->getAuthorFirstName()|escape}{if $author->getMiddleName()} {$author->getMiddleName()|escape}{/if}{if $author->getAffiliation()}, {$author->getAffiliation()|escape}{/if}
 	</a>
 	<br/>
 {/iterate}

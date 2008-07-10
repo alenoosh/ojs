@@ -193,7 +193,7 @@ class CrossRefExportDom {
 			XMLCustomWriter::setAttribute($authorNode, 'sequence', 'additional');
 		}
 
-		XMLCustomWriter::createChildWithText($doc, $authorNode, 'given_name', ucfirst($author->getFirstName()).(($author->getMiddleName())?' '.ucfirst($author->getMiddleName()):''));
+		XMLCustomWriter::createChildWithText($doc, $authorNode, 'given_name', ucfirst($author->getFirstName()).(($author->getMiddleName())?' '.ucfirst($author->getMiddleName()):'')); // Opatan Inc. ???????
 		XMLCustomWriter::createChildWithText($doc, $authorNode, 'surname', ucfirst($author->getLastName()));
 
 		return $authorNode;

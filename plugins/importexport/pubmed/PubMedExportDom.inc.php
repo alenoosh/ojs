@@ -175,10 +175,22 @@ class PubMedExportDom {
 
 	function &generateAuthorDom(&$doc, &$author) {
 		$root = &XMLCustomWriter::createElement($doc, 'Author');
+		$locale = Locale::getLocale();
 
-		XMLCustomWriter::createChildWithText($doc, $root, 'FirstName', ucfirst($author->getFirstName()));
+		// Opatan Inc. : XMLCustomWriter::createChildWithText($doc, $root, 'FirstName', ucfirst($author->getFirstName()));
 		XMLCustomWriter::createChildWithText($doc, $root, 'MiddleName', ucfirst($author->getMiddleName()), false);
 		XMLCustomWriter::createChildWithText($doc, $root, 'LastName', ucfirst($author->getLastName()));
+
+		// Opatan Inc. ??
+		if (is_array($author->getFirstName(null))) {
+			foreach($author->getFirstName(null) as $locale => $value) {
+				$firstNameNode =& XMLCustomWriter::createChildWithText($doc, $root, 'FirstName', ucfirst($value));
+				if ($firstNameNode) {
+					XMLCustomWriter::setAttribute($firstNameNode, 'locale', $locale);
+				}
+				unset($firstNameNode);
+			}
+		}
 
 		if ($author->getPrimaryContact()) {
 			XMLCustomWriter::createChildWithText($doc, $root, 'Affiliation', $author->getAffiliation() . '. ' . $author->getEmail(), false);

@@ -13,7 +13,8 @@
 {assign var=authors value=$article->getAuthors()}
 {assign var=authorCount value=$authors|@count}
 {foreach from=$authors item=author name=authors key=i}
-	{assign var=firstName value=$author->getFirstName()}
+	{* Opatan Inc. : getFirstName is replaced with getAuthorFirstName *}
+	{assign var=firstName value=$author->getAuthorFirstName()}
 	{$author->getLastName()|escape}, {$firstName|escape}{if $i==$authorCount-2}, {translate key="rt.context.and"} {elseif $i<$authorCount-1}, {else}.{/if}
 {/foreach}
 
