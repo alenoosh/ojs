@@ -15,6 +15,8 @@
  */
 
 import('submission.reviewer.ReviewerAction');
+import('article.Article');
+import('submission.reviewer.ReviewerSubmission');
 
 class ReviewerHandler extends Handler {
 
@@ -39,20 +41,21 @@ class ReviewerHandler extends Handler {
 				$page = 'active';
 				$active = true;
 		}
-
+		/**Opatan Inc.**/
+		$submission = &new ReviewerSubmission();
 		$submissions = $reviewerSubmissionDao->getReviewerSubmissionsByReviewerId($user->getUserId(), $journal->getJournalId(), $active, $rangeInfo);
-
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign('reviewerRecommendationOptions', ReviewAssignment::getReviewerRecommendationOptions());
 		$templateMgr->assign('pageToDisplay', $page);
 		$templateMgr->assign_by_ref('submissions', $submissions);
-
+		$templateMgr->assign_by_ref('submission', $submission);
 		import('submission.reviewAssignment.ReviewAssignment');
 		$templateMgr->assign_by_ref('reviewerRecommendationOptions', ReviewAssignment::getReviewerRecommendationOptions());
 
 		import('issue.IssueAction');
 		$issueAction = &new IssueAction();
 		$templateMgr->register_function('print_issue_id', array($issueAction, 'smartyPrintIssueId'));
+		
 		$templateMgr->assign('helpTopicId', 'editorial.reviewersRole.submissions');
 		$templateMgr->display('reviewer/index.tpl');
 	}

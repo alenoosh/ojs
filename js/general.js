@@ -140,17 +140,19 @@ function changeFormAction(formName, action) {
 }
 // Opatan Inc. Task 6 :redirect link from article value
 function getSelectedArticleId() {
+
 	for (var i = 0; i <= document.formName.radioButtonName.length; i++) {
 		if (document.formName.radioButtonName[i].checked) {
-		
-			return document.formName.radioButtonName[i].value;
+		var a = [document.formName.radioButtonName[i].value,document.formName.radioButtonName[i].id];	
+			return a; 
 		} else {
 			return -1;
 			
 		}
 	}
+
 }
-function callSelectedUrl(url,op,anchor) {
+function callSelectedUrl(url,op,anchor,page,to,redirect,subject) {
 	article_id = getSelectedArticleId();
 	if (article_id == -1) {
 		alert("Please Select an Article");
@@ -159,6 +161,31 @@ function callSelectedUrl(url,op,anchor) {
 	url = url.replace("article_id", article_id);
 	url = url.replace("function", op);
 	url = url.replace("anchor",anchor);
+	url = url.replace("pach",page);
+	url = url.replace("tos",to);
+	url = url.replace("redirects",redirect);
+	url = url.replace("subjects",subject);
+
+	
 	
 	window.location.href = url;
 }
+function callUrl(url,page,op,redirect) {
+		article_id = getSelectedArticleId();
+	if (article_id == -1) {
+		alert("Please Select an Article");
+		return;
+	}
+	url = url.replace("hip",page);
+	url = url.replace("function", op);
+	url = url.replace("cur",redirect);
+	url = url.replace("subjects",article_id[1]);
+	url = url.replace("article_id", article_id[0]);
+	
+
+	
+	
+	window.location.href = url;
+
+}
+

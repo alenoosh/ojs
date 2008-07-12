@@ -24,7 +24,6 @@ class SubmissionReviewHandler extends ReviewerHandler {
 		$reviewId = $args[0];
 
 		list($journal, $submission, $user) = SubmissionReviewHandler::validate($reviewId);
-
 		$reviewAssignmentDao = &DAORegistry::getDAO('ReviewAssignmentDAO');
 		$reviewAssignment = $reviewAssignmentDao->getReviewAssignmentById($reviewId);
 

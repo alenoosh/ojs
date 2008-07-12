@@ -9,11 +9,16 @@
  * $Id$
  *}
 {assign var="pageTitle" value="common.queue.long.$pageToDisplay"}
+{assign var="articleId" value=$submission->getArticleId()}
+{assign var=editAssignments value=$submission->getEditAssignments()}
+
 {include file="common/header.tpl"}
 
 <ul class="menu">
 	<li{if ($pageToDisplay == "active")} class="current"{/if}><a href="{url path="active"}">{translate key="common.queue.short.active"}</a></li>
 	<li{if ($pageToDisplay == "completed")} class="current"{/if}><a href="{url path="completed"}">{translate key="common.queue.short.completed"}</a></li>
+	<li><a href="#" onclick="callUrl('{url page="hip" op="function"  redirectUrl="cur" subject="subjects"}','user','email','sd')">{translate key="common.queue.short.completed"}</a></li>
+	
 </ul>
 
 <br />
