@@ -132,7 +132,7 @@ class JournalReportIterator extends DBRowIterator {
 		$authorIndex = 0;
 		foreach ($authors as $author) {
 			$ret['authors'][$authorIndex] = $author->getFullName();
-			$ret['affiliations'][$authorIndex] = $author->getAffiliation();
+			$ret['affiliations'][$authorIndex] = $author->getAuthorAffiliation(); // Opatan Inc. : ???
 
 			$country = $author->getCountry();
 			if (!empty($country)) {
@@ -168,7 +168,7 @@ class JournalReportIterator extends DBRowIterator {
 			} else {
 				$ret['score'] = '';
 			}
-			$ret['affiliation'] = $user?$user->getAffiliation(null):''; // Opatan Inc. : sets localized affiliation
+			$ret['affiliation'] = $user?$user->getUserAffiliation():''; // Opatan Inc. : sets localized affiliation ???
 		} else {
 			$maxReviewers = $this->getMaxReviewers();
 			$ret['reviewers'] = $maxReviewers==0?array():array_fill(0, $maxReviewers, '');

@@ -458,6 +458,8 @@ class SectionEditorSubmissionDAO extends DAO {
 			$locale, // Opatan Inc.
 			'lastName', // Opatan Inc.
 			$locale, // Opatan Inc.
+			'middleName', // Opatan Inc.
+			$locale, // Opatan Inc.
 			$journalId,
 			$sectionEditorId
 		);
@@ -476,9 +478,9 @@ class SectionEditorSubmissionDAO extends DAO {
 				break;
 			case SUBMISSION_FIELD_AUTHOR:
 				$first_last = $this->_dataSource->Concat('aaf.setting_value', '\' \'', 'aal.setting_value');
-				$first_middle_last = $this->_dataSource->Concat('aaf.setting_value', '\' \'', 'aa.middle_name', '\' \'', 'aal.setting_value');
+				$first_middle_last = $this->_dataSource->Concat('aaf.setting_value', '\' \'', 'aam.setting_value', '\' \'', 'aal.setting_value');
 				$last_comma_first = $this->_dataSource->Concat('aal.setting_value', '\', \'', 'aaf.setting_value');
-				$last_comma_first_middle = $this->_dataSource->Concat('aal.setting_value', '\', \'', 'aaf.setting_value', '\' \'', 'aa.middle_name');
+				$last_comma_first_middle = $this->_dataSource->Concat('aal.setting_value', '\', \'', 'aaf.setting_value', '\' \'', 'aam.setting_value');
 
 				if ($searchMatch === 'is') {
 					$searchSql = " AND (LOWER(aal.setting_value) = LOWER(?) OR LOWER($first_last) = LOWER(?) OR LOWER($first_middle_last) = LOWER(?) OR LOWER($last_comma_first) = LOWER(?) OR LOWER($last_comma_first_middle) = LOWER(?))";
@@ -538,7 +540,7 @@ class SectionEditorSubmissionDAO extends DAO {
 				break;
 		}
 		
-		// Opatan Inc. : joined with user_settings two times to provide setting_value of firstName and lastName
+		// Opatan Inc. : joined with user_settings two times to provide setting_value of firstName, lastName and middleName
 		$sql = 'SELECT DISTINCT
 				a.*,
 				e.can_review AS can_review,
@@ -587,6 +589,7 @@ class SectionEditorSubmissionDAO extends DAO {
 
 				LEFT JOIN article_author_settings aaf ON (aa.author_id = aaf.author_id AND aaf.setting_name = ? AND aaf.locale = ?)
 				LEFT JOIN article_author_settings aal ON (aa.author_id = aal.author_id AND aal.setting_name = ? AND aal.locale = ?)	
+				LEFT JOIN article_author_settings aam ON (aa.author_id = aam.author_id AND aam.setting_name = ? AND aam.locale = ?)			
 			WHERE	a.journal_id = ?
 				AND e.editor_id = ?
 				AND a.submission_progress = 0' . (!empty($additionalWhereSql)?" AND ($additionalWhereSql)":"");

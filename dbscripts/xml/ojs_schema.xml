@@ -920,7 +920,11 @@
 			<NOTNULL/>
 		</field>
 		-->
+		<!-- Opatan Inc. : middle_name is removed and
+		     it's stored in article_author_settings table instead -->
+		<!--     
 		<field name="middle_name" type="C2" size="40"/>
+		-->
 		<!-- Opatan Inc. : last_name is removed and
 		     it's stored in article_author_settings table instead -->
 		<!--		     
@@ -928,7 +932,11 @@
 			<NOTNULL/>
 		</field>
 		-->
+		<!-- Opatan Inc. : affiliation is removed and 
+		     it's stored in article_author_settings table instead -->
+		<!--     
 		<field name="affiliation" type="C2" size="255"/>
+		-->
 		<field name="country" type="C2" size="90"/>
 		<field name="email" type="C2" size="90">
 			<NOTNULL/>

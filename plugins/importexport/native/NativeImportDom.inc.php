@@ -806,8 +806,6 @@ class NativeImportDom {
 		$journalPrimaryLocale = $journal->getPrimaryLocale();
 		
 		$author = &new Author();
-		if (($node = $authorNode->getChildByName('middlename'))) $author->setMiddleName($node->getValue());
-		if (($node = $authorNode->getChildByName('affiliation'))) $author->setAffiliation($node->getValue());
 		if (($node = $authorNode->getChildByName('country'))) $author->setCountry($node->getValue());
 		if (($node = $authorNode->getChildByName('email'))) $author->setEmail($node->getValue());
 		if (($node = $authorNode->getChildByName('url'))) $author->setUrl($node->getValue());
@@ -823,6 +821,17 @@ class NativeImportDom {
 			$author->setFirstName($node->getValue(), $locale);
 		}
 		// Opatan Inc.
+		for ($index=0; ($node = $authorNode->getChildByName('middlename', $index)); $index++) {
+			$locale = $node->getAttribute('locale');
+			if ($locale == '') {
+				$locale = $journalPrimaryLocale;
+			} elseif (!in_array($locale, $journalSupportedLocales)) {
+				$errors[] = array('plugins.importexport.native.import.error.articleAuthorMiddleNameLocaleUnsupported', array('authorFullName' => $author->getFullName(), 'articleTitle' => $article->getArticleTitle(), 'issueTitle' => $issue->getIssueIdentification(), 'locale' => $locale));
+				return false;
+			} 
+			$author->setMiddleName($node->getValue(), $locale);
+		}
+		// Opatan Inc.
 		for ($index=0; ($node = $authorNode->getChildByName('lastname', $index)); $index++) {
 			$locale = $node->getAttribute('locale');
 			if ($locale == '') {
@@ -832,6 +841,17 @@ class NativeImportDom {
 				return false;
 			} 
 			$author->setLastName($node->getValue(), $locale);
+		}
+		// Opatan Inc.
+		for ($index=0; ($node = $authorNode->getChildByName('affiliation', $index)); $index++) {
+			$locale = $node->getAttribute('locale');
+			if ($locale == '') {
+				$locale = $journalPrimaryLocale;
+			} elseif (!in_array($locale, $journalSupportedLocales)) {
+				$errors[] = array('plugins.importexport.native.import.error.articleAuthorAffiliationLocaleUnsupported', array('authorFullName' => $author->getFullName(), 'articleTitle' => $article->getArticleTitle(), 'issueTitle' => $issue->getIssueIdentification(), 'locale' => $locale));
+				return false;
+			} 
+			$author->setAffiliation($node->getValue(), $locale);
 		}
 		for ($index=0; ($node = $authorNode->getChildByName('competing_interests', $index)); $index++) {
 			$locale = $node->getAttribute('locale');

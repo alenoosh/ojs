@@ -34,7 +34,8 @@
 	</tr>{/if}
 	<tr valign="top">
 		<td class="label">{translate key="user.affiliation"}</td>
-		<td class="value">{$author->getAffiliation()|escape|default:"&mdash;"}</td>
+		{* Opatan Inc. : getAffiliation is replaced with getAuthorAffiliation *}
+		<td class="value">{$author->getAuthorAffiliation()|escape|default:"&mdash;"}</td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="common.country"}</td>

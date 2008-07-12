@@ -124,7 +124,7 @@ class Article extends DataObject {
 			if (!empty($str)) {
 				$str .= $separator;
 			}
-			$str .= $lastOnly ? $a->getLastName(null) : $a->getFullName(); // Opatan Inc. : gets localized author lastName
+			$str .= $lastOnly ? $a->getAuthorLastName() : $a->getFullName(); // Opatan Inc. : gets localized author lastName
 		}
 		return $str;
 	}

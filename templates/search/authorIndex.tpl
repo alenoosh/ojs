@@ -26,10 +26,10 @@
 	{/if}
 	
 	{* Opatan Inc. : (true) ???? *}
-	{* Opatan Inc. : getFirstName is replaced with getAuthorFirstName and getLastName(true) is replaced with getAuthorLastName *}
-	<a href="{url op="authors" path="view" firstName=$author->getAuthorFirstName() middleName=$author->getMiddleName() lastName=$author->getAuthorLastName() affiliation=$author->getAffiliation() country=$author->getCountry()}">
+	{* Opatan Inc. : getFirstName is replaced with getAuthorFirstName and getLastName(true) is replaced with getAuthorLastName and getMiddleName is replaced with getAuthorMiddleName and getAffiliation is replaced with getAuthorAffiliation *}
+	<a href="{url op="authors" path="view" firstName=$author->getAuthorFirstName() middleName=$author->getAuthorMiddleName() lastName=$author->getAuthorLastName() affiliation=$author->getAuthorAffiliation() country=$author->getCountry()}">
 		{$author->getAuthorLastName()|escape},
-		{$author->getAuthorFirstName()|escape}{if $author->getMiddleName()} {$author->getMiddleName()|escape}{/if}{if $author->getAffiliation()}, {$author->getAffiliation()|escape}{/if}
+		{$author->getAuthorFirstName()|escape}{if $author->getAuthorMiddleName()} {$author->getAuthorMiddleName()|escape}{/if}{if $author->getAuthorAffiliation()}, {$author->getAuthorAffiliation()|escape}{/if}
 	</a>
 	<br/>
 {/iterate}

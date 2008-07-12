@@ -386,7 +386,7 @@ class OAIDAO extends DAO {
 		$record->creator = array();
 		for ($i = 0, $num = count($authors); $i < $num; $i++) {
 			$authorName = $authors[$i]->getFullName();
-			$affiliation = $authors[$i]->getAffiliation();
+			$affiliation = $authors[$i]->getAuthorAffiliation(); // Opatan Inc. : gets localized author affiliation
 			if (!empty($affiliation)) {
 				$authorName .= '; ' . $affiliation;
 			}

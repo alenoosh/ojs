@@ -158,17 +158,25 @@ class ArticleSearchIndex {
 		$authors = $article->getAuthors();
 		for ($i=0, $count=count($authors); $i < $count; $i++) {
 			$author = &$authors[$i];
-			array_push($authorText, $author->getMiddleName());
-			array_push($authorText, $author->getAffiliation());
+			// Opatan Inc.
+			$firstNames = $author->getFirstName(null);
+			if (is_array($firstNames)) foreach ($firstNames as $firstName) { // Localized
+				array_push($authorText, strip_tags($firstName));
+			}	
 			// Opatan Inc.
 			$lastNames = $author->getLastName(null);
 			if (is_array($lastNames)) foreach ($lastNames as $lastName) { // Localized
 				array_push($authorText, strip_tags($lastName));
 			}
 			// Opatan Inc.
-			$firstNames = $author->getFirstName(null);
-			if (is_array($firstNames)) foreach ($firstNames as $firstName) { // Localized
-				array_push($authorText, strip_tags($firstName));
+			$middleNames = $author->getMiddleName(null);
+			if (is_array($middleNames)) foreach ($middleNames as $middleName) { // Localized
+				array_push($authorText, strip_tags($middleName));
+			}
+			// Opatan Inc.
+			$affiliations = $author->getAffiliation(null);
+			if (is_array($affiliations)) foreach ($affiliations as $affiliation) { // Localized
+				array_push($authorText, strip_tags($affiliation));
 			}
 			$bios = $author->getBiography(null);
 			if (is_array($bios)) foreach ($bios as $bio) { // Localized

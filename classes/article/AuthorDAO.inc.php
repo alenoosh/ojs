@@ -77,7 +77,7 @@ class AuthorDAO extends DAO {
 		$publishedArticles = array();
 		$locale = Locale::getLocale();
 		$publishedArticleDao = &DAORegistry::getDAO('PublishedArticleDAO');
-		$params = array('firstName', $locale, $firstName, $middleName, $lastName, $affiliation, $country);
+		$params = array('firstName', $locale, 'lastName', $locale, 'middleName', $locale, 'affiliation', $locale, $firstName, $middleName, $lastName, $affiliation, $country);
 		if ($journalId !== null) $params[] = $journalId;
 
 		$result = &$this->retrieve(
@@ -87,11 +87,13 @@ class AuthorDAO extends DAO {
 				LEFT JOIN articles a ON (aa.article_id = a.article_id)
 				LEFT JOIN article_author_settings aaf ON (aa.author_id = aaf.author_id AND aaf.setting_name = ? AND aaf.locale = ?)
 				LEFT JOIN article_author_settings aal ON (aa.author_id = aal.author_id AND aal.setting_name = ? AND aal.locale = ?)			
+				LEFT JOIN article_author_settings aam ON (aa.author_id = aam.author_id AND aam.setting_name = ? AND aam.locale = ?)
+				LEFT JOIN article_author_settings aaaf ON (aa.author_id = aaaf.author_id AND aaaf.setting_name = ? AND aaaf.locale = ?)			
 			WHERE	aaf.setting_value = ?
 				AND a.status = ' . STATUS_PUBLISHED . '
-				AND (aa.middle_name = ?' . (empty($middleName)?' OR aa.middle_name IS NULL':'') . ')
+				AND (aam.setting_value = ?' . (empty($middleName)?' OR aam.setting_value IS NULL':'') . ')
 				AND aal.setting_value = ?
-				AND (aa.affiliation = ?' . (empty($affiliation)?' OR aa.affiliation IS NULL':'') . ')
+				AND (aaaf.setting_value = ?' . (empty($affiliation)?' OR aaaf.setting_value IS NULL':'') . ')
 				AND (aa.country = ?' . (empty($country)?' OR aa.country IS NULL':'') . ') ' . 
 				($journalId!==null?(' AND a.journal_id = ?'):''),
 			$params
@@ -129,6 +131,12 @@ class AuthorDAO extends DAO {
 		$locale   = Locale::getLocale();
 		$params[] = 'firstName';
 		$params[] = $locale;
+		$params[] = 'lastName';
+		$params[] = $locale;
+		$params[] = 'middleName';
+		$params[] = $locale;
+		$params[] = 'affiliation';
+		$params[] = $locale;
 
 		if (isset($journalId)) $params[] = $journalId;
 		if (isset($initial)) {
@@ -148,13 +156,15 @@ class AuthorDAO extends DAO {
 				0 AS primary_contact,
 				0 AS seq,
 				aaf.setting_value AS first_name,
-				aa.middle_name AS middle_name,
+				aam.setting_value AS middle_name,
 				aal.setting_value AS last_name,
-				aa.affiliation AS affiliation,
+				aaaf.setting_value AS affiliation,
 				aa.country
 			FROM	article_authors aa
 				LEFT JOIN article_author_settings aaf ON (aa.author_id = aaf.author_id AND aaf.setting_name = ? AND aaf.locale = ?)
-				LEFT JOIN article_author_settings aal ON (aa.author_id = aal.author_id AND aal.setting_name = ? AND aal.locale = ?),
+				LEFT JOIN article_author_settings aal ON (aa.author_id = aal.author_id AND aal.setting_name = ? AND aal.locale = ?)
+				LEFT JOIN article_author_settings aam ON (aa.author_id = aam.author_id AND aam.setting_name = ? AND aam.locale = ?)
+				LEFT JOIN article_author_settings aaaf ON (aa.author_id = aaaf.author_id AND aaaf.setting_name = ? AND aaaf.locale = ?),
 				articles a,
 				published_articles pa,
 				issues i
@@ -204,7 +214,7 @@ class AuthorDAO extends DAO {
 	 * @return array
 	 */
 	function getLocaleFieldNames() {
-		return array('firstName', 'lastName', 'biography', 'competingInterests');
+		return array('firstName', 'lastName', 'middleName', 'affiliation', 'biography', 'competingInterests');
 	}
 
 	/**
@@ -228,9 +238,9 @@ class AuthorDAO extends DAO {
 		$author->setAuthorId($row['author_id']);
 		$author->setArticleId($row['article_id']);
 		// Opatan Inc. : $author->setFirstName is removed
-		$author->setMiddleName($row['middle_name']);
+		// Opatan Inc. : $author->setMiddleName is removed
 		// Opatan Inc. : $author->setLastName is removed
-		$author->setAffiliation($row['affiliation']);
+		// Opatan Inc. : $author->setAffiliation is removed
 		$author->setCountry($row['country']);
 		$author->setEmail($row['email']);
 		$author->setUrl($row['url']);
@@ -249,16 +259,14 @@ class AuthorDAO extends DAO {
 	 * @param $author Author
 	 */	
 	function insertAuthor(&$author) {
-		// Opatan Inc. : first_name and last_name is removed
+		// Opatan Inc. : first_name, middle_name, last_name and affiliation are removed
 		$this->update(
 			'INSERT INTO article_authors
-				(article_id, middle_name, affiliation, country, email, url, primary_contact, seq)
+				(article_id, country, email, url, primary_contact, seq)
 				VALUES
-				(?, ?, ?, ?, ?, ?, ?, ?)',
+				(?, ?, ?, ?, ?, ?)',
 			array(
 				$author->getArticleId(),
-				$author->getMiddleName() . '', // make non-null
-				$author->getAffiliation() . '', // make non-null
 				$author->getCountry(),
 				$author->getEmail(),
 				$author->getUrl(),
@@ -278,12 +286,10 @@ class AuthorDAO extends DAO {
 	 * @param $author Author
 	 */
 	function updateAuthor(&$author) {
-		// Opatan Inc. : author firstName and lastName is removed
+		// Opatan Inc. : author firstName, middleName, lastName and affiliation are removed
 		$returner = $this->update(
 			'UPDATE article_authors
 				SET
-					middle_name = ?,
-					affiliation = ?,
 					country = ?,
 					email = ?,
 					url = ?,
@@ -291,8 +297,6 @@ class AuthorDAO extends DAO {
 					seq = ?
 				WHERE author_id = ?',
 			array(
-				$author->getMiddleName() . '', // make non-null
-				$author->getAffiliation() . '', // make non-null
 				$author->getCountry(),
 				$author->getEmail(),
 				$author->getUrl(),

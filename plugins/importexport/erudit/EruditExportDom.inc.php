@@ -140,9 +140,9 @@ class EruditExportDom {
 			}
 
 			// Opatan Inc. : XMLCustomWriter::createChildWithText($doc, $persNameNode, 'firstname', $author->getFirstName());
-			XMLCustomWriter::createChildWithText($doc, $persNameNode, 'middlename', $author->getMiddleName(), false);
+			// Opatan Inc. : XMLCustomWriter::createChildWithText($doc, $persNameNode, 'middlename', $author->getMiddleName(), false); ????
 			// Opatan Inc. : XMLCustomWriter::createChildWithText($doc, $persNameNode, 'familyname', $author->getLastName()); ???
-
+			// Opatan Inc. : ???
 			if ($author->getAffiliation() != '') {
 				$affiliationNode = &XMLCustomWriter::createElement($doc, 'affiliation');
 				XMLCustomWriter::appendChild($authorNode, $affiliationNode);

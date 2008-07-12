@@ -233,8 +233,12 @@ class EditorSubmissionDAO extends DAO {
 			$locale, // Opatan Inc.
 			'firstName', // Opatan Inc.
 			$locale, // Opatan Inc.
+			'firstName', // Opatan Inc.
+			$locale, // Opatan Inc.		
 			'lastName', // Opatan Inc.
 			$locale, // Opatan Inc.
+			'lastName', // Opatan Inc.
+			$locale, // Opatan Inc.		
 			'lastName', // Opatan Inc.
 			$locale, // Opatan Inc.
 			'lastName', // Opatan Inc.
@@ -245,6 +249,8 @@ class EditorSubmissionDAO extends DAO {
 			$locale, // Opatan Inc.
 			'middleName', // Opatan Inc.
 			$locale, // Opatan Inc.
+			'middleName', // Opatan Inc.
+			$locale, // Opatan Inc.		
 			'middleName', // Opatan Inc.
 			$locale, // Opatan Inc.
 			'middleName', // Opatan Inc.
@@ -345,16 +351,19 @@ class EditorSubmissionDAO extends DAO {
 				LEFT JOIN section_settings sal ON (s.section_id = sal.section_id AND sal.setting_name = ? AND sal.locale = ?)
 				LEFT JOIN article_settings atpl ON (a.article_id = atpl.article_id AND atpl.setting_name = ? AND atpl.locale = ?)
 				LEFT JOIN article_settings atl ON (a.article_id = atl.article_id AND atl.setting_name = ? AND atl.locale = ?)
+				LEFT JOIN user_settings aasf ON (aa.author_id = aasf.author_id AND aasf.setting_name = ? AND aasf.locale = ?)
 				LEFT JOIN user_settings edsf ON (ed.user_id = edsf.user_id AND edsf.setting_name = ? AND edsf.locale = ?)
 				LEFT JOIN user_settings cesf ON (ce.user_id = cesf.user_id AND cesf.setting_name = ? AND cesf.locale = ?)
 				LEFT JOIN user_settings pesf ON (pe.user_id = pesf.user_id AND pesf.setting_name = ? AND pesf.locale = ?)
 				LEFT JOIN user_settings lesf ON (le.user_id = lesf.user_id AND lesf.setting_name = ? AND lesf.locale = ?)
 				LEFT JOIN user_settings resf ON (re.user_id = resf.user_id AND resf.setting_name = ? AND resf.locale = ?)
+				LEFT JOIN user_settings aasl ON (aa.author_id = aasl.author_id AND aasl.setting_name = ? AND aasl.locale = ?)
 				LEFT JOIN user_settings edsl ON (ed.user_id = edsl.user_id AND edsl.setting_name = ? AND edsl.locale = ?)
 				LEFT JOIN user_settings cesl ON (ce.user_id = cesl.user_id AND cesl.setting_name = ? AND cesl.locale = ?)
 				LEFT JOIN user_settings pesl ON (pe.user_id = pesl.user_id AND pesl.setting_name = ? AND pesl.locale = ?)
 				LEFT JOIN user_settings lesl ON (le.user_id = lesl.user_id AND lesl.setting_name = ? AND lesl.locale = ?)
 				LEFT JOIN user_settings resl ON (re.user_id = resl.user_id AND resl.setting_name = ? AND resl.locale = ?)
+				LEFT JOIN user_settings aasm ON (aa.author_id = aasm.author_id AND aasm.setting_name = ? AND aasm.locale = ?)
 				LEFT JOIN user_settings edsm ON (ed.user_id = edsm.user_id AND edsm.setting_name = ? AND edsm.locale = ?)
 				LEFT JOIN user_settings cesm ON (ce.user_id = cesm.user_id AND cesm.setting_name = ? AND cesm.locale = ?)
 				LEFT JOIN user_settings pesm ON (pe.user_id = pesm.user_id AND pesm.setting_name = ? AND pesm.locale = ?)
