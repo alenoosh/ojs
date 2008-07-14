@@ -208,7 +208,7 @@ class UserDAO extends DAO {
 	}
 
 	function getLocaleFieldNames() {
-		return array('firstName', 'biography', 'signature', 'interests');
+		return array('firstName', 'lastName', 'biography', 'signature', 'interests');
 	}
 
 	function updateLocaleFields(&$user) {
@@ -385,7 +385,7 @@ class UserDAO extends DAO {
 		$var = false;
 		// Opatan Inc. : the users table is joined with user_settings three times to provide setting_value
 		// of first_name , last_name and interests
-		$sql = 'SELECT *, uf.setting_value, ul.setting_value, ui.setting_value FROM users u, user_settings uf, user_settings ul, user_settings ui WHERE u.user_id = uf.user_id AND uf.setting_name = \'firstName\' AND u.user_id = ul.user_id AND ul.setting_name = \'lastName\' AND u.user_id = ui.user_id AND ui.setting_name = \'interests\'';
+		$sql = 'SELECT *, uf.setting_value, ul.setting_value, ui.setting_value FROM users u LEFT JOIN user_settings ui ON (u.user_id = ui.user_id AND ui.setting_name = \'interests\'), user_settings uf, user_settings ul WHERE u.user_id = uf.user_id AND uf.setting_name = \'firstName\' AND u.user_id = ul.user_id AND ul.setting_name = \'lastName\'';
 
 		if ($value != null) {
 			switch ($field) {
