@@ -117,6 +117,7 @@ class JournalSetupStep5Form extends JournalSetupForm {
 			'journalThemes' => $journalThemes
 		));
 		$templateMgr->assign('files_dir', $files_dir);
+		$templateMgr->assign_by_ref('journal',$journal);
 
 		// Make lists of the sidebar blocks available.
 		$templateMgr->initialize();
