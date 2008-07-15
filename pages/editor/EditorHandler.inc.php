@@ -39,7 +39,6 @@ class EditorHandler extends SectionEditorHandler {
 
 		$editorSubmissionDao = &DAORegistry::getDAO('EditorSubmissionDAO');
 		$sectionDao = &DAORegistry::getDAO('SectionDAO');
-
 		$sections = &$sectionDao->getSectionTitles($journal->getJournalId());
 		$templateMgr->assign('sectionOptions', array(0 => Locale::Translate('editor.allSections')) + $sections);
 		$templateMgr->assign('fieldOptions', EditorHandler::getSearchFieldOptions());
@@ -462,6 +461,7 @@ class EditorHandler extends SectionEditorHandler {
 		}
 		$templateMgr->assign('pageHierarchy', $pageHierarchy);
 	}
+	
 
 	//
 	// Issue

@@ -127,7 +127,12 @@ class SubmissionEditHandler extends SectionEditorHandler {
 		$articleId = isset($args[0]) ? (int) $args[0] : 0;
 		list($journal, $submission) = SubmissionEditHandler::validate($articleId, SECTION_EDITOR_ACCESS_REVIEW);
 		parent::setupTemplate(true, $articleId);
-
+		/** Opatan inc. **/
+		$mailSubmissionsToReviewers = Request::getUserVar('mailSubmissionsToReviewers');
+		$journal = &Request::getJournal();
+		$settingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+		$settingsDao->updateSetting($journal->getJournalId(),'mailSubmissionsToReviewers',$mailSubmissionsToReviewers,'bool');
+		$mailSubToRev = $journal->getSetting('mailSubmissionsToReviewers');
 		$sectionEditorSubmissionDao = &DAORegistry::getDAO('SectionEditorSubmissionDAO');
 		$reviewAssignmentDao = &DAORegistry::getDAO('ReviewAssignmentDAO');
 
@@ -201,6 +206,9 @@ class SubmissionEditHandler extends SectionEditorHandler {
 		$templateMgr->assign('allowCopyedit', $allowCopyedit);
 
 		$templateMgr->assign('helpTopicId', 'editorial.sectionEditorsRole.review');
+		$templateMgr->assign('articleId', $articleId);
+		/** Opatan Inc.**/
+		$templateMgr->assign('mailSubmissionsToReviewers',$mailSubToRev);
 		$templateMgr->display('sectionEditor/submissionReview.tpl');
 	}
 
