@@ -258,7 +258,9 @@ class CopyeditorSubmissionDAO extends DAO {
 			'firstName', // Opatan Inc.
 			$locale, // Opatan Inc.
 			'lastName', // Opatan Inc.
-			$locale // Opatan Inc.
+			$locale, // Opatan Inc.
+			'middleName', // Opatan Inc.
+			$locale
 		);
 
 		if (isset($journalId)) $params[] = $journalId;
@@ -278,9 +280,9 @@ class CopyeditorSubmissionDAO extends DAO {
 				break;
 			case SUBMISSION_FIELD_AUTHOR:
 				$first_last = $this->_dataSource->Concat('aaf.setting_value', '\' \'', 'aal.setting_value');
-				$first_middle_last = $this->_dataSource->Concat('aaf.setting_value', '\' \'', 'aa.middle_name', '\' \'', 'aal.setting_value');
+				$first_middle_last = $this->_dataSource->Concat('aaf.setting_value', '\' \'', 'aam.setting_value', '\' \'', 'aal.setting_value');
 				$last_comma_first = $this->_dataSource->Concat('aal.setting_value', '\', \'', 'aaf.setting_value');
-				$last_comma_first_middle = $this->_dataSource->Concat('aal.setting_value', '\', \'', 'aaf.setting_value', '\' \'', 'aa.middle_name');
+				$last_comma_first_middle = $this->_dataSource->Concat('aal.setting_value', '\', \'', 'aaf.setting_value', '\' \'', 'aam.setting_value');
 
 				if ($searchMatch === 'is') {
 					$searchSql = " AND (LOWER(aal.setting_value) = LOWER(?) OR LOWER($first_last) = LOWER(?) OR LOWER($first_middle_last) = LOWER(?) OR LOWER($last_comma_first) = LOWER(?) OR LOWER($last_comma_first_middle) = LOWER(?))";
@@ -366,6 +368,7 @@ class CopyeditorSubmissionDAO extends DAO {
 
 				LEFT JOIN article_author_settings aaf ON (aa.author_id = aaf.author_id AND aaf.setting_name = ? AND aaf.locale = ?)
 				LEFT JOIN article_author_settings aal ON (aa.author_id = aal.author_id AND aal.setting_name = ? AND aal.locale = ?)
+				LEFT JOIN article_author_settings aam ON (aa.author_id = aam.author_id AND aam.setting_name = ? AND aam.locale = ?)			
 			WHERE
 				' . (isset($journalId)?'a.journal_id = ? AND':'') . '
 				c.copyeditor_id = ? AND

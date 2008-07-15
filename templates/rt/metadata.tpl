@@ -37,7 +37,8 @@
 	<td width="25%">{translate key="rt.metadata.dublinCore.primaryAuthor"}</td>
 	<td>{translate key="rt.metadata.pkp.primaryAuthor"}</td>
 	<td>
-		{$author->getFullName()|escape}{if $author->getAffiliation()}; {$author->getAffiliation()|escape}{/if}{if $author->getCountry()}; {$author->getCountryLocalized()|escape}{/if}
+		{* Opatan Inc. : getAffiliation is replaced with getAuthorAffiliation *}
+		{$author->getFullName()|escape}{if $author->getAuthorAffiliation()}; {$author->getAuthorAffiliation()|escape}{/if}{if $author->getCountry()}; {$author->getCountryLocalized()|escape}{/if}
 		</td>
 </tr>
 {/foreach}

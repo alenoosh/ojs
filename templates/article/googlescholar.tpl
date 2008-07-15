@@ -17,8 +17,8 @@
 {if $issn}
 	<meta name="citation_issn" content="{$issn|strip_tags|escape}"/>
 {/if}
-	{* Opatan Inc. : getFirstName is replaced with getAuthorFirstName and getLastName is replaced with getAuthorLastName *}
-	<meta name="citation_authors" content="{foreach name="authors" from=$article->getAuthors() item=author}{$author->getAuthorLastName()|escape}, {$author->getAuthorFirstName()|escape}{if $author->getMiddleName() != ""} {$author->getMiddleName()|escape}{/if}{if !$smarty.foreach.authors.last}; {/if}{/foreach}"/>
+	{* Opatan Inc. : getFirstName is replaced with getAuthorFirstName and getLastName is replaced with getAuthorLastName and getMiddleName is replaced with getAuthorMiddleName *}
+	<meta name="citation_authors" content="{foreach name="authors" from=$article->getAuthors() item=author}{$author->getAuthorLastName()|escape}, {$author->getAuthorFirstName()|escape}{if $author->getAuthorMiddleName() != ""} {$author->getAuthorMiddleName()|escape}{/if}{if !$smarty.foreach.authors.last}; {/if}{/foreach}"/>
 	<meta name="citation_title" content="{$article->getArticleTitle()|strip_tags|escape}"/>
 	<meta name="citation_date" content="{$article->getDatePublished()|date_format:"%d/%m/%Y"}"/>
 	<meta name="citation_volume" content="{$issue->getVolume()|strip_tags|escape}"/>

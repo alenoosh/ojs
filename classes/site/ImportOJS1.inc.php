@@ -1018,10 +1018,12 @@ class ImportOJS1 {
 				$author = &new Author();
 				// Opatan Inc. : Localized author firstName
 				$author->setFirstName(Core::cleanVar($authorRow['chFirstName']), Locale::getLocale());
-				$author->setMiddleName(Core::cleanVar($authorRow['chMiddleInitial']));
+				// Opatan Inc. : Localized author middleName
+				$author->setMiddleName(Core::cleanVar($authorRow['chMiddleInitial']), Locale::getLocale());
 				// Opatan Inc. : Localized author lastName
 				$author->setLastName(Core::cleanVar($authorRow['chSurname']), Locale::getLocale());
-				$author->setAffiliation(Core::cleanVar($authorRow['chAffiliation']));
+				// Opatan Inc. : Localized author affiliation
+				$author->setAffiliation(Core::cleanVar($authorRow['chAffiliation']), Locale::getLocale());
 				$author->setEmail(Core::cleanVar($authorRow['chEmail']));
 				$author->setBiography(Core::cleanVar($authorRow['chBiography']), $locale);
 				$author->setPrimaryContact($authorRow['bPrimaryContact']);

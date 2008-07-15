@@ -31,8 +31,8 @@ class Author extends DataObject {
 	 */
 	function getFullName() {
 		$locale = Locale::getLocale();
-		// Opatan Inc. : gets localized author firstName and lastName
-		return $this->getData('firstName', $locale) . ' ' . ($this->getData('middleName') != '' ? $this->getData('middleName') . ' ' : '') . $this->getData('lastName', $locale);
+		// Opatan Inc. : gets localized author firstName, middleName and lastName
+		return $this->getData('firstName', $locale) . ' ' . ($this->getData('middleName', $locale) != '' ? $this->getData('middleName', $locale) . ' ' : '') . $this->getData('lastName', $locale);
 	}
 
 	//
@@ -99,20 +99,38 @@ class Author extends DataObject {
 	}
 
 	/**
+	 * Opatan Inc. : 
+	 * Get localized author middleName
+	 */
+	 function getAuthorMiddleName() {
+		return $this->getLocalizedData('middleName');
+	 }
+
+	/**
+	 * Opatan Inc. : @param $locale string added
 	 * Get middle name.
 	 * @return string
 	 */
-	function getMiddleName() {
-		return $this->getData('middleName');
+	function getMiddleName($locale) {
+		return $this->getData('middleName', $locale);
 	}
 
 	/**
+	 * Opatan Inc. : @param $locale string added
 	 * Set middle name.
 	 * @param $middleName string
 	 */
-	function setMiddleName($middleName) {
-		return $this->setData('middleName', $middleName);
+	function setMiddleName($middleName, $locale) {
+		return $this->setData('middleName', $middleName, $locale);
 	}
+
+	/**
+	 * Opatan Inc. : 
+	 * Get localized author firstName
+	 */
+	 function getAuthorLastName() {
+		return $this->getLocalizedData('lastName');
+	 }
 
 	/**
 	 * Opatan Inc. : @param $locale string added
@@ -133,19 +151,29 @@ class Author extends DataObject {
 	}
 
 	/**
+	 * Opatan Inc. : 
+	 * Get localized author affiliation
+	 */
+	 function getAuthorAffiliation() {
+		return $this->getLocalizedData('affiliation');
+	 }
+
+	/**
+	 * Opatan Inc. : @param $locale string added
 	 * Get affiliation (position, institution, etc.).
 	 * @return string
 	 */
-	function getAffiliation() {
-		return $this->getData('affiliation');
+	function getAffiliation($locale) {
+		return $this->getData('affiliation', $locale);
 	}
 
 	/**
+	 * Opatan Inc. : @param $locale string added
 	 * Set affiliation.
 	 * @param $affiliation string
 	 */
-	function setAffiliation($affiliation) {
-		return $this->setData('affiliation', $affiliation);
+	function setAffiliation($affiliation, $locale) {
+		return $this->setData('affiliation', $affiliation, $locale);
 	}
 
 	/**

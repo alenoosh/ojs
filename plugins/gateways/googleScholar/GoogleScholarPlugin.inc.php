@@ -232,7 +232,7 @@ class GoogleScholarPlugin extends GatewayPlugin {
 
 				// Given names in the form: FirstName MiddleName, where MiddleName is optional
 				$name = $author->getFirstName(null); // Opatan Inc. : gets Localized author firstName
-				if (($middleName = $author->getMiddleName()) != '') $name .= " $middleName";
+				if (($middleName = $author->getMiddleName()) != '') $name .= " $middleName"; // Opatan Inc. : ????
 
 				XMLCustomWriter::createChildWithText($document, $nameNode, 'given-names', $name, true);
 

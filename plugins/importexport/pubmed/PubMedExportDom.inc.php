@@ -178,7 +178,7 @@ class PubMedExportDom {
 		$locale = Locale::getLocale();
 
 		// Opatan Inc. : XMLCustomWriter::createChildWithText($doc, $root, 'FirstName', ucfirst($author->getFirstName()));
-		XMLCustomWriter::createChildWithText($doc, $root, 'MiddleName', ucfirst($author->getMiddleName()), false);
+		// Opatan Inc. : XMLCustomWriter::createChildWithText($doc, $root, 'MiddleName', ucfirst($author->getMiddleName()), false); ????
 		// Opatan Inc. : XMLCustomWriter::createChildWithText($doc, $root, 'LastName', ucfirst($author->getLastName())); ???
 
 		// Opatan Inc. ??
@@ -191,7 +191,8 @@ class PubMedExportDom {
 				unset($firstNameNode);
 			}
 		}
-
+		
+		// Opatan Inc. : ????
 		if ($author->getPrimaryContact()) {
 			XMLCustomWriter::createChildWithText($doc, $root, 'Affiliation', $author->getAffiliation() . '. ' . $author->getEmail(), false);
 		}

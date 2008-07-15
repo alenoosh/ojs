@@ -30,9 +30,9 @@
 		<td width="20%" class="label">{translate key="user.name"}</td>
 		<td width="80%" class="value">
 			{* Opatan Inc. : ????? *}
-			{assign var=emailString value="`$author.firstName[$formLocale]` `$author.middleName` `$author.lastName[$formLocale]` <`$author.email`>"}
+			{assign var=emailString value="`$author.firstName[$formLocale]` `$author.middleName[$formLocale]` `$author.lastName[$formLocale]` <`$author.email`>"}
 			{url|assign:"url" page="user" op="email" to=$emailString|to_array redirectUrl=$currentUrl articleId=$articleId}
-			{$author.firstName[$formLocale]|escape} {$author.middleName|escape} {$author.lastName[$formLocale]|escape} {icon name="mail" url=$url}
+			{$author.firstName[$formLocale]|escape} {$author.middleName[$formLocale]|escape} {$author.lastName[$formLocale]|escape} {icon name="mail" url=$url}
 		</td>
 	</tr>
 	<tr valign="top">
@@ -41,7 +41,8 @@
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="user.affiliation"}</td>
-		<td class="value">{$author.affiliation|escape|default:"&mdash;"}</td>
+		{* Opatan Inc. : ???? *}
+		<td class="value">{$author.affiliation[$formLocale]|escape|default:"&mdash;"}</td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="common.country"}</td>

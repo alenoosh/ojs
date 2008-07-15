@@ -88,10 +88,14 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 					$this->_data['authors'],
 					array(
 						'authorId' => $authors[$i]->getAuthorId(),
-						'firstName' => $authors[$i]->getFirstName(null), // Opatan Inc. : Localized author firstName
-						'middleName' => $authors[$i]->getMiddleName(),
-						'lastName' => $authors[$i]->getLastName(null), // Opatan Inc. : Localized author lastName
-						'affiliation' => $authors[$i]->getAffiliation(),
+						// Opatan Inc. : Localized author firstName					
+						'firstName' => $authors[$i]->getFirstName(null), 
+						// Opatan Inc. : Localized author middleName					
+						'middleName' => $authors[$i]->getMiddleName(null), 
+						// Opatan Inc. : Localized author lastName					
+						'lastName' => $authors[$i]->getLastName(null), 
+						// Opatan Inc. : Localized author affiliation
+						'affiliation' => $authors[$i]->getAffiliation(null),
 						'country' => $authors[$i]->getCountry(),
 						'email' => $authors[$i]->getEmail(),
 						'url' => $authors[$i]->getUrl(),
@@ -286,9 +290,9 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 
 			if ($author != null) {
 				$author->setFirstName($authors[$i]['firstName'], null); // Opatan Inc. : Localized author firstName
-				$author->setMiddleName($authors[$i]['middleName']);
+				$author->setMiddleName($authors[$i]['middleName'], null); // Opatan Inc. : Localized author middleName
 				$author->setLastName($authors[$i]['lastName'], null); // Opatan Inc. : Localized author lastName
-				$author->setAffiliation($authors[$i]['affiliation']);
+				$author->setAffiliation($authors[$i]['affiliation'], null); // Opatan Inc. : Localized author affiliation
 				$author->setCountry($authors[$i]['country']);
 				$author->setEmail($authors[$i]['email']);
 				$author->setUrl($authors[$i]['url']);

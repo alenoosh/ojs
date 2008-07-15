@@ -699,18 +699,18 @@ class PublishedArticleDAO extends DAO {
 		$authors = array();
 		$locale  = Locale::getLocale();
 		$result = &$this->retrieve(
-			'SELECT aa.*, aaf.setting_value AS first_name, aal.setting_value AS last_name FROM article_authors aa LEFT JOIN article_author_settings aaf ON (aa.author_id = aaf.author_id AND aaf.setting_name = ? AND aaf.locale = ?) LEFT JOIN article_author_settings aal ON (aa.author_id = aal.author_id AND aal.setting_name = ? AND aal.locale = ?), published_articles pa WHERE aa.article_id = pa.article_id AND pa.issue_id = ? ORDER BY pa.issue_id', array('firstName', $locale, 'lastName', $locale, $issueId)
+			'SELECT aa.*, aaf.setting_value AS first_name, aal.setting_value AS last_name, aam.setting_value AS middle_name FROM article_authors aa LEFT JOIN article_author_settings aaf ON (aa.author_id = aaf.author_id AND aaf.setting_name = ? AND aaf.locale = ?) LEFT JOIN article_author_settings aal ON (aa.author_id = aal.author_id AND aal.setting_name = ? AND aal.locale = ?) LEFT JOIN article_author_settings aam ON (aa.author_id = aam.author_id AND aam.setting_name = ? AND aam.locale = ?), published_articles pa WHERE aa.article_id = pa.article_id AND pa.issue_id = ? ORDER BY pa.issue_id', array('firstName', $locale, 'lastName', $locale, 'middleName', $locale, $issueId)
 		);
-
+		// Opatan Inc. : affiliation in sql query ???
 		while (!$result->EOF) {
 			$row = $result->GetRowAssoc(false);
 			$author = &new Author();
 			$author->setAuthorId($row['author_id']);
 			$author->setArticleId($row['article_id']);
 			$author->setFirstName($row['first_name'], null); // Opatan Inc. : Localized author firstName ???
-			$author->setMiddleName($row['middle_name']);
+			$author->setMiddleName($row['middle_name'], null); // Opatan Inc. : Localized author middleName ???
 			$author->setLastName($row['last_name'], null); // Opatan Inc. : Localized author lastName ???
-			$author->setAffiliation($row['affiliation']);
+			$author->setAffiliation($row['affiliation'], null); // Opatan Inc. : Localized author affiliation ???
 			$author->setEmail($row['email']);
 			$author->setBiography($row['biography']);
 			$author->setPrimaryContact($row['primary_contact']);
