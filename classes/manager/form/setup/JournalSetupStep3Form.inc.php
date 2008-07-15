@@ -48,10 +48,12 @@ class JournalSetupStep3Form extends JournalSetupForm {
 				'copySubmissionAckPrimaryContact' => 'bool',
 				'copySubmissionAckSpecified' => 'bool',
 				'copySubmissionAckAddress' => 'string',
-				// Opatan Inc. : Add abstract Minimum and maximum Lengtgh
+				'authorCanSpecifyReviewers' => 'bool', // Opatan Inc.
+				'reviewerIsOptional' => 'bool', // Opatan Inc.
+				'numberOfReviewers' => 'int', // Opatan Inc.
+				// Opatan Inc. : Add abstract Minimum and maximum Length
 				'abstractMinimumLength' => 'int',
 				'abstractMaximumLength' => 'int'
-
 			)
 		);
 

@@ -66,6 +66,7 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 			$article = &$this->article;
 			$this->_data = array(
 				'authors' => array(),
+				'reviewers' => array(),
 				'title' => $article->getTitle(null), // Localized
 				// Opatan Inc. : runningTitle is added
 	        	        'runningTitle' => $article->getRunningTitle(null), // Localized 
@@ -117,6 +118,7 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		$this->readUserVars(
 			array(
 				'authors',
+				'reviewers',
 				'deletedAuthors',
 				'primaryContact',
 				'title',
@@ -226,7 +228,24 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 			$templateMgr->assign('abstractMaximumLength',$abstractMaximumLength);
  
 		}
-
+		
+		if ($journalSettingsDao->getSetting($journal->getJournalId(), 'authorCanSpecifyReviewers')) {
+			$authorCanRecommend = &$journalSettingsDao->getSetting($journal->getJournalId(), 'authorCanSpecifyReviewers');
+			$reviewerIsOptional = &$journalSettingsDao->getSetting($journal->getJournalId(), 'reviewerIsOptional');
+			$numberOfReviewers  = &$journalSettingsDao->getSetting($journal->getJournalId(), 'numberOfReviewers');		
+			
+			$num = Array();
+			$count = 0;
+			$number = $numberOfReviewers;
+			while ($number) {
+				$num[] = ++$count;
+				$number--;
+			}
+			$templateMgr->assign('reviewerIsOptional', $reviewerIsOptional);
+			$templateMgr->assign('countOfReviewers', $numberOfReviewers);
+			$templateMgr->assign_by_ref('numberOfReviewers', $num);
+			$templateMgr->assign('authorCanSpecifyReviewers', $authorCanRecommend);
+		}
 
 		$countryDao =& DAORegistry::getDAO('CountryDAO');
 		$countries  =& $countryDao->getCountries();

@@ -81,6 +81,21 @@ class Core {
 	function getCurrentDate($ts = null) {
 		return date('Y-m-d H:i:s', isset($ts) ? $ts : time());
 	}
+	
+	/**
+	 * Opatan Inc. :
+	 * coverts date/time to timestamp.
+	 * @return int
+	 */
+	function convertDateTimeToTimestamp($dateTime)
+	{
+		$val = explode(" ", $dateTime);
+	        $date = explode("-", $val[0]);
+	        $time = explode(":", $val[1]);
+	        $timestamp = mktime($time[0], $time[1], $time[2], $date[1], $date[2], $date[0]);
+
+		return $timestamp;
+	}
 
 	/**
 	 * Return *nix timestamp with microseconds (in units of seconds).

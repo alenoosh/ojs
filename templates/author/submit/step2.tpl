@@ -85,6 +85,20 @@ function confirmForgottenUpload() {
 					{if $thisLocale != $formLocale}<input type="hidden" name="authors[{$authorIndex|escape}][biography][{$thisLocale|escape}]" value="{$thisBiography|escape}" />{/if}
 				{/foreach}
 			{/foreach}
+			{foreach from=$numberOfReviewers item=reviewerIndex}
+				{foreach from=$reviewers[$reviewerIndex].firstName key="thisLocale" item="thisRevFirstName"}
+					{if $thisLocale != $formLocale}<input type="hidden" name="reviewers[{$reviewerIndex|escape}][firstName][{$thisLocale|escape}]" value="{$thisRevFirstName|escape}" />{/if}
+				{/foreach}
+				{foreach from=$reviewers[$reviewerIndex].middleName key="thisLocale" item="thisRevMiddleName"}
+					{if $thisLocale != $formLocale}<input type="hidden" name="reviewers[{$reviewerIndex|escape}][middleName][{$thisLocale|escape}]" value="{$thisRevMiddleName|escape}" />{/if}
+				{/foreach}
+				{foreach from=$reviewers[$reviewerIndex].lastName key="thisLocale" item="thisRevLastName"}
+					{if $thisLocale != $formLocale}<input type="hidden" name="reviewers[{$reviewerIndex|escape}][lastName][{$thisLocale|escape}]" value="{$thisRevLastName|escape}" />{/if}
+				{/foreach}
+				{foreach from=$reviewers[$reviewerIndex].affiliation key="thisLocale" item="thisRevAffiliation"}
+					{if $thisLocale != $formLocale}<input type="hidden" name="reviewers[{$reviewerIndex|escape}][affiliation][{$thisLocale|escape}]" value="{$thisRevAffiliation|escape}" />{/if}
+				{/foreach}				
+			{/foreach}
 			{form_language_chooser form="submit" url=$submitFormUrl}
 			<span class="instruct">{translate key="form.formLanguage.description"}</span>
 		</td>
@@ -109,7 +123,7 @@ function confirmForgottenUpload() {
 <table width="100%" class="data">
 {* Opatan Inc. : for previously added authors , just the details of author is shown instead of the whole form *}
 {* Opatan Inc. : if the author is choosen to be edited , the editing form is shown *}
-{if $author.firstName[$formLocale] and $author.edited eq 0}
+{if $author.firstName[$formLocale] and $author.lastName[$formLocale] and $author.email and $author.edited eq 0}
 <tr valign="top">
     <td>
         {$author.firstName[$formLocale]|escape}&nbsp;{$author.lastName[$formLocale]|escape}&nbsp;{$author.email|escape}&nbsp;&nbsp;
@@ -417,6 +431,56 @@ function confirmForgottenUpload() {
 </table>
 
 <div class="separator"></div>
+
+{if $authorCanSpecifyReviewers}
+<h3>{translate key="author.submit.reviewerRecommendation"}</h3>
+<table class="data" width="100%">
+{foreach from=$numberOfReviewers item=reviewerIndex}
+	{if $countOfReviewers > 1}
+		<tr><td colspan="2"><h4>{translate key="author.submit.reviewerNumber"}&nbsp;{$reviewerIndex}</h4></td></tr>
+	{/if}
+	<tr valign="top">
+		<td width="20%" class="label">
+			{fieldLabel name="reviewers-$reviewerIndex-firstName" required="true" key="user.firstName"}
+		</td>
+		<td width="80%" class="value">
+			<input type="text" class="textField" name="reviewers[{$reviewerIndex|escape}][firstName]" 
+			       id="reviewers-{$reviewerIndex|escape}-firstName" value="{$reviewers[$reviewerIndex].firstName[$formLocale]}"
+			       size="20" maxlength="40" /></td>
+	</tr>
+	<tr valign="top">
+		<td width="20%" class="label">{fieldLabel name="reviewers-$reviewerIndex-middleName" key="user.middleName"}</td>
+		<td width="80%" class="value"><input type="text" class="textField" 
+		    name="reviewers[{$reviewerIndex|escape}][middleName]" 
+		    id="reviewers-{$reviewerIndex|escape}-middleName" value="{$reviewers[$reviewerIndex].middleName[$formLocale]}"
+		    size="20" maxlength="40" /></td>
+	</tr>
+	<tr valign="top">
+		<td width="20%" class="label">{fieldLabel name="reviewers-$reviewerIndex-lastName" required="true" key="user.lastName"}</td>
+		<td width="80%" class="value"><input type="text" class="textField" 
+		    name="reviewers[{$reviewerIndex|escape}][lastName]" 
+		    id="reviewers-{$reviewerIndex|escape}-lastName" value="{$reviewers[$reviewerIndex].lastName[$formLocale]}"
+		    size="20" maxlength="90" /></td>
+	</tr>
+	<tr valign="top">
+		<td width="20%" class="label">{fieldLabel name="reviewers-$reviewerIndex-affiliation" key="user.affiliation"}</td>
+		<td width="80%" class="value"><input type="text" class="textField"
+		    name="reviewers[{$reviewerIndex|escape}][affiliation]"
+		    id="reviewers-{$reviewerIndex|escape}-affiliation" value="{$reviewers[$reviewerIndex].affiliation[$formLocale]}"
+		    size="30" maxlength="255"/></td>
+	</tr>
+	<tr valign="top">
+		<td width="20%" class="label">{fieldLabel name="reviewers-$reviewerIndex-email" required="true" key="user.email"}</td>
+		<td width="80%" class="value"><input type="text" class="textField" name="reviewers[{$reviewerIndex|escape}][email]"
+		    id="reviewers-{$reviewerIndex|escape}-email" value="{$reviewers[$reviewerIndex].email}"
+		    size="30" maxlength="90" /></td>
+	</tr>
+	<tr><td>&nbsp;</td></tr>
+{/foreach}
+</table>
+<div class="separator"></div>
+{/if}
+
 
 {* Opatan Inc. : STEP 3 MERGED *}
 <h3>{translate key="author.submit.submissionFile"}</h3>

@@ -269,8 +269,72 @@
 
 <div class="separator"></div>
 
+<h3>3.5 {translate key="manager.setup.reviewerRecommendation"}</h3>
+	<script type="text/javascript">
+		{literal}
+		<!--
+			function toggleEnableReviewerRecommendation(form) {
+				if (form.authorCanSpecifyReviewers[0].checked) {
+					form.reviewerIsOptional.disabled = true;
+					form.numberOfReviewers.disabled = true;
+				} else {
+					form.reviewerIsOptional.disabled = false;
+					form.numberOfReviewers.disabled = false;
+				}
+			}
+		// -->
+		{/literal}
+	</script>
 
-<h3>3.5 {translate key="manager.setup.registerJournalForIndexing"}</h3>
+<table width="100%" class="data">
+	<tr valign="top">
+		<td width="5%" class="label" align="right">
+			<input type="radio" name="authorCanSpecifyReviewers" id="authorCanSpecifyReviewers-0" value="0" onclick="toggleEnableReviewerRecommendation(this.form)"{if not $authorCanSpecifyReviewers} checked="checked"{/if} />
+		</td>
+		<td width="95%" class="value">
+			<label for="authorCanSpecifyReviewers-0">{translate key="manager.setup.authorCantSpecifyReviewers"}</label>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="separator">&nbsp;</td>
+	</tr>
+	<tr valign="top">
+		<td width="5%" class="label" align="right">
+			<input type="radio" name="authorCanSpecifyReviewers" id="authorCanSpecifyReviewers-1" value="1" onclick="toggleEnableReviewerRecommendation(this.form)"{if $authorCanSpecifyReviewers} checked="checked"{/if} />
+		</td>
+		<td width="95%" class="value">
+			<label for="authorCanSpecifyReviewers-1">{translate key="manager.setup.authorCanSpecifyReviewers"}</label>
+			<table width="100%">
+				<tr valign="top">
+					<td width="5%" class="label">
+						<input type="checkbox" name="reviewerIsOptional" id="reviewerIsOptional" value="true"
+						       {if not $authorCanSpecifyReviewers} disabled="disabled"{/if} 
+						       {if $reviewerIsOptional}checked="checked"{/if} />
+					</td>
+					<td width="95%" class="value">
+						{fieldLabel key="manager.setup.reviewerRecommendation.reviewerIsOptional"}
+					</td>
+				</tr>
+			</table>
+			<table width="100%">
+				<tr valign="top">
+					<td width="30%" class="label">
+						{fieldLabel key="manager.setup.reviewerRecommendation.numberOfReviewers"}
+					</td>
+					<td width="70%" class="value">
+						<input type="text" class="textField" id="numberOfReviewers" name="numberOfReviewers"
+						       value="{$numberOfReviewers}" 
+						       {if not $authorCanSpecifyReviewers} disabled="disabled"{/if} />
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<div class="separator"></div>
+
+<h3>3.6 {translate key="manager.setup.registerJournalForIndexing"}</h3>
 
 {url|assign:"oaiSiteUrl" journal=$currentJournal->getPath()}
 {url|assign:"oaiUrl" page="oai"}
@@ -279,7 +343,7 @@
 
 <div class="separator"></div>
 
-<h3>3.6 {translate key="manager.setup.notifications"}</h3>
+<h3>3.7 {translate key="manager.setup.notifications"}</h3>
 
 <p>{translate key="manager.setup.notifications.description"}</p>
 
@@ -305,7 +369,7 @@
 
 <div class="separator"></div>
 
-<h3>3.7 {translate key="manager.setup.abstract"}</h3>
+<h3>3.8 {translate key="manager.setup.abstract"}</h3>
 <table width="100%" class="data">
 	<tr valign="top">
 		<td>{fieldLabel key="manager.setup.notifications.abstractMinimumLength"}&nbsp;&nbsp;<input type="text"  class="textField"  id="abstractMinimumLength" name="abstractMinimumLength" value="{$abstractMinimumLength}" /></td>

@@ -1169,7 +1169,13 @@ Title of classification system]]></message>
 Note that if your site administrator has already registered this site with the PKP Harvester, your journal will be indexed automatically and you do not need to register your journal.
 <br /><br />
 <a href="http://pkp.sfu.ca/harvester/add.php" target="_blank">Click here</a> and enter <span class="highlight">{$siteUrl}</span> under <b>Site URL</b>, and <span class="highlight">{$oaiUrl}</span> under <b>Base URL for OAI Archive</b>.]]></message>
-	<!-- OPatan Inc. -->
+	<!-- Opatan Inc. -->
+	<message key="manager.setup.reviewerRecommendation">Reviewer Recommendation</message>
+	<message key="manager.setup.reviewerRecommendation.numberOfReviewers">Allowed Number of Reviewers</message>
+	<message key="manager.setup.authorCantSpecifyReviewers">Do not allow author to recommend reviewer(s)</message>
+	<message key="manager.setup.authorCanSpecifyReviewers">Allow author to recommend reviewer(s)</message>
+	<message key="manager.setup.reviewerRecommendation.reviewerIsOptional">Specifying reviewers by author is optional</message>
+	<!-- Opatan Inc. -->
 	<message key="manager.setup.abstract">Abstract Length</message>
 	<message key="manager.setup.notifications.abstractMinimumLength">Minimum Length of Abstract</message>
 	<message key="manager.setup.notifications.abstractMaximumLength">Maximum Length of Abstract</message>
@@ -1317,7 +1323,10 @@ Select a model for handling these aspects of the editorial process. (To designat
 	<message key="manager.setup.browsePublicFolder">Browse Public Folder</message>
 	<message key="manager.setup.filesDir">{$files_dir}</message>
 	<message key="manager.setup.public">Public</message>
-
+	<!-- Opatan Inc. -->
+	<message key="manager.setup.dateDisplayType">Date Display Type</message>
+	<message key="manager.setup.gregorian">Gregorian</message>
+	<message key="manager.setup.jalali">Jalali</message>
 	
 	<!-- Languages -->
 	<message key="manager.languages.languageInstructions"><![CDATA[OJS can be made available to users in any of several supported languages. As well, OJS can operate as a multilingual system, providing users with an ability to toggle between languages on each page, and allowing certain data to be entered in several additional languages.<br /><br/>If a language supported by OJS is not listed below, ask your site administrator to install the language from the site administration interface. For instructions on adding support for new languages, please consult the OJS documentation.]]></message>
@@ -2010,7 +2019,10 @@ Active is how many reviews are currently being considered or underway.]]></messa
 	<message key="author.submit.form.authorRequiredFields">The first name, last name, and email address of each author is required.</message>
 	<message key="author.submit.form.titleRequired">Please enter the title of your article.</message>
 	<message key="author.submit.form.abstractRequired">Please enter the abstract of your article.</message>
-	<!--Opatan Inc. -> Abstract Length -->
+	<!-- Opatan Inc. -->
+	<message key="author.submit.reviewerRecommendation">Reviewer Recommendation</message>
+	<message key="author.submit.reviewerNumber">Reviewer Number</message>
+	<!--Opatan Inc. : Abstract Length -->
 	<message key="author.submit.form.abstractLength">The length of entered abstract is not in the valid range</message>
 	<message key="author.submit.form.abstractLengthNote">between ({$abstractMinLength}-{$abstractMaxLength}) words</message>
 	

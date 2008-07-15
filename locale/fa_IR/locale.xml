@@ -1177,8 +1177,16 @@ http://journals.mui.ac.ir/index.php/index/index
     <message key="manager.setup.registerJournalForIndexing" >ثبت نام مجله برای اندکس شدن و استخراج شدن متاداده</message>
     <message key="manager.setup.registerJournalForIndexingDescription" ><![CDATA[چنانچه مایل باشید محتوای این مجله در یک سیستم گسترده از بانکهای اطلاعاتی پژوهشی اندکس شود ، آدرس مجله خود را در <a href="http://pkp.sfu.ca/harvester/" target="_blank">سیستم استخراج کننده </a>متاداده پروژه عمومی دانش <a href="http://pkp.sfu.ca/harvester/add.php" target="_blank">ثبت کنید.</a>  این سیستم ، متاداده هر کدام از مقالات این مجله را جمع آوری میکند و امکان جستجوی دقیق و جامع را در سایتهای پژوهشی که تابع <a href="http://www.openarchives.org/OAI/openarchivesprotocol.htm#Introduction" target="_blank">پروتکل استخراج متاداده پیشگام بایگانی آزاد</a> هستند را فراهم میکند.<br />لازم به ذکر است چنانچه مدیر سایت نسبت به ثبت کل سایت در استخراج کننده pkp اقدام کرده است نیازی برای انجام مجدد آن از سوی شما نیست. <a href="http://pkp.sfu.ca/harvester/add.php" target="_blank">اینجا را کلیک کرده</a> و در قسمت <b>Site URL</b><br /> <span class="highlight">{$siteUrl}</span><br /> و در قسمت <b>Base URL for OAI Archive</b><br /> <span class="highlight">{$oaiUrl}</span><br /> را وارد کنید .توجه داشته باشید که سیستم پیشگام بایگانی آزاد OAI را میتوان از طریق نگارش فایل تنظیمات سیستم OJS از کار انداخت. در نسخه های آینده OJS امکان فعال یا غیر فعال ساختن این سیستم برای هرکدام از مجلات بطور مستقل وجود خواهد داشت.]]></message>
 
-
-
+	<!-- Opatan Inc. -->
+	<message key="manager.setup.reviewerRecommendation">پيشنهاد کارشناس</message>
+	<message key="manager.setup.reviewerRecommendation.numberOfReviewers">تعداد کارشناسهای مجاز</message>
+	<message key="manager.setup.authorCantSpecifyReviewers">نويسنده امکان پيشنهاد کارشناس نداشته باشد</message>
+	<message key="manager.setup.authorCanSpecifyReviewers">نويسنده امکان پيشنهاد کارشناس داشته باشد</message>
+	<message key="manager.setup.reviewerRecommendation.reviewerIsOptional">تعيين کارشناس توسط نويسنده الزامی نمی باشد</message>
+	<!-- Opatan Inc. -->
+	<message key="manager.setup.abstract">طول چکيده</message>
+	<message key="manager.setup.notifications.abstractMinimumLength">مينی موم طول چکيده</message>
+	<message key="manager.setup.notifications.abstractMaximumLength">ماکزيمم طول چکيده</message>
 
     <message key="manager.setup.notifications" >باخبر گشتن از ساب میشن نویسنده</message>
     <message key="manager.setup.notifications.description" >پس از اتمام ساب میشن یک مقاله یک نامه رسید اتوماتیک دریافت میکنند. متن این ایمیل قابل ویرایش است. همچنین یک کپی از این نامه را میتوان به نحو زیر ارسال کرد.</message>
@@ -1319,6 +1327,14 @@ http://journals.mui.ac.ir/index.php/index/index
     <message key="manager.setup.information.forReaders" >برای خوانندگان</message>
     <message key="manager.setup.information.forAuthors" >برای نویسندگان</message>
     <message key="manager.setup.information.forLibrarians" >برای کتابداران</message>
+    <!--Opatan Inc. -->
+    <message key="manager.setup.browsePublicFolder">Browse Public Folder</message>
+    <message key="manager.setup.filesDir">{$files_dir}</message>
+    <message key="manager.setup.public">Public</message>
+    <!-- Opatan Inc. -->
+    <message key="manager.setup.dateDisplayType">نوع تاريخ مورد استفاده برای نمايش</message>
+    <message key="manager.setup.gregorian">ميلادی</message>
+    <message key="manager.setup.jalali">شمسی</message>
 
     <!-- Languages -->
     <message key="manager.languages.languageInstructions" ><![CDATA[OJS میتواند در دسترس کاربران زبانهائی که توسط سیستم حمایت میشود قرار گیرد. همچنین OJS میتواند به عنوان یک سیستم نسبتا چند زبانی عمل کند و امکان تغییر زبان توسط کاربران در هر صفحه را فراهم کند. همچنین داده های خاصی را ممکن است بتوان حداکثر به دو زبان وارد کرد.<br /><br/>چنانچه یک زبان مود حمایت OJS در لیست زیر موجود نباشد از مدیر سایت بخواهید تا آن زبان را نصب کند. برای اطلاع از نحوه افزودن حمایت برای یک زبان جدید به مستندات OJS مراجعه کنید.]]></message>
@@ -2005,7 +2021,13 @@ http://journals.mui.ac.ir/index.php/index/index
     <message key="author.submit.form.authorRequiredFields" >نام ، نام خانوادگی و ایمیل هر نویسنده لازم است</message>
     <message key="author.submit.form.titleRequired" >لطفا عنوان مقاله را وارد کنید.</message>
     <message key="author.submit.form.abstractRequired" >لطفا چکیده مقاله را پارد کنید</message>   
-    
+    <!-- Opatan Inc. -->
+    <message key="author.submit.reviewerRecommendation">پيشنهاد کارشناس</message>
+    <message key="author.submit.reviewerNumber">کارشناس شماره</message>   
+    <!--Opatan Inc. : Abstract Length -->
+    <message key="author.submit.form.abstractLength">طول چکيده وارد شده بيشتر از حد مجاز است</message>     
+    <message key="author.submit.form.abstractLengthNote">({$abstractMinLength}-{$abstractMaxLength}) کلمه</message>
+
     <!-- Article Submission Step 3 -->
     <message key="author.submit.uploadInstructions" ><![CDATA[برای آپلود کردن مقاله خد به این مجله مراحل زیر را انجام دهید.
 <ol>
