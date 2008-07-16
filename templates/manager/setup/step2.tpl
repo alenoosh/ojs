@@ -54,36 +54,6 @@
 
 <p><textarea name="reviewGuidelines[{$formLocale|escape}]" id="reviewGuidelines" rows="12" cols="60" class="textArea">{$reviewGuidelines[$formLocale]|escape}</textarea></p>
 
-<h4>{translate key="manager.setup.reviewProcess"}</h4>
-
-<p>{translate key="manager.setup.reviewProcessDescription"}</p>
-
-<table width="100%" class="data">
-	<tr valign="top">
-		<td width="5%" class="label" align="right">
-			<input type="radio" name="mailSubmissionsToReviewers" id="mailSubmissionsToReviewers-0" value="0"{if not $mailSubmissionsToReviewers} checked="checked"{/if} />
-		</td>
-		<td width="95%" class="value">
-			<label for="mailSubmissionsToReviewers-0"><strong>{translate key="manager.setup.reviewProcessStandard"}</strong></label>
-			<br />
-			<span class="instruct">{translate key="manager.setup.reviewProcessStandardDescription"}</span>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2" class="separator">&nbsp;</td>
-	</tr>
-	<tr valign="top">
-		<td width="5%" class="label" align="right">
-			<input type="radio" name="mailSubmissionsToReviewers" id="mailSubmissionsToReviewers-1" value="1"{if $mailSubmissionsToReviewers} checked="checked"{/if} />
-		</td>
-		<td width="95%" class="value">
-			<label for="mailSubmissionsToReviewers-1"><strong>{translate key="manager.setup.reviewProcessEmail"}</strong></label>
-			<br />
-			<span class="instruct">{translate key="manager.setup.reviewProcessEmailDescription"}</span>
-		</td>
-	</tr>
-</table>
-
 <h4>{translate key="manager.setup.reviewOptions"}</h4>
 
 	<script type="text/javascript">
