@@ -140,19 +140,21 @@ function changeFormAction(formName, action) {
 }
 // Opatan Inc. Task 6 :redirect link from article value
 function getSelectedArticleId() {
-
-	for (var i = 0; i <= document.formName.radioButtonName.length; i++) {
+	for (var i=0; i<=document.formName.radioButtonName.length; i++) {
 		if (document.formName.radioButtonName[i].checked) {
-		var a = [document.formName.radioButtonName[i].value,document.formName.radioButtonName[i].id];	
-			return a; 
-		} else {
-			return -1;
-			
+			var c  = document.formName.radioButtonName[i].id;
+			var d  = document.formName.radioButtonName[i].value;
+			var a  = document.test.to.value;
+			var b  = document.test.redirectUrl.value;
+			var ar = [a,b,c,d];
+			return ar; 
+				
 		}
 	}
-
+	
+	
 }
-function callSelectedUrl(url,op,anchor,page,to,redirect,subject) {
+function callSelectedUrl(url,op,anchor) {
 	article_id = getSelectedArticleId();
 	if (article_id == -1) {
 		alert("Please Select an Article");
@@ -161,26 +163,22 @@ function callSelectedUrl(url,op,anchor,page,to,redirect,subject) {
 	url = url.replace("article_id", article_id);
 	url = url.replace("function", op);
 	url = url.replace("anchor",anchor);
-	url = url.replace("pach",page);
-	url = url.replace("tos",to);
-	url = url.replace("redirects",redirect);
-	url = url.replace("subjects",subject);
-
-	
 	
 	window.location.href = url;
 }
-function callUrl(url,page,op,redirect) {
+function callUrl(url,page,op) {
 		article_id = getSelectedArticleId();
+		//document.write(article_id[0]);
 	if (article_id == -1) {
 		alert("Please Select an Article");
 		return;
 	}
 	url = url.replace("hip",page);
 	url = url.replace("function", op);
-	url = url.replace("cur",redirect);
-	url = url.replace("subjects",article_id[1]);
-	url = url.replace("article_id", article_id[0]);
+	url = url.replace("to_email",article_id[0]);
+	url = url.replace("redirect_url",article_id[1]);
+	url = url.replace("subjects",article_id[2]);
+	url = url.replace("article_id", article_id[3]);
 	
 
 	

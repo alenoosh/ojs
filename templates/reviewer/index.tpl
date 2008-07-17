@@ -17,7 +17,7 @@
 <ul class="menu">
 	<li{if ($pageToDisplay == "active")} class="current"{/if}><a href="{url path="active"}">{translate key="common.queue.short.active"}</a></li>
 	<li{if ($pageToDisplay == "completed")} class="current"{/if}><a href="{url path="completed"}">{translate key="common.queue.short.completed"}</a></li>
-	<li><a href="#" onclick="callUrl('{url page="hip" op="function"  redirectUrl="cur" subject="subjects"}','user','email','sd')">{translate key="common.queue.short.completed"}</a></li>
+	<li><a href="#" onclick="callUrl('{url page="hip" op="function" to="to_email" redirectUrl="redirect_url" subject="subjects" articleId="article_id"}','user','email')">{translate key="common.queue.short.completed"}</a></li>
 	
 </ul>
 

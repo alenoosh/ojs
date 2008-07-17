@@ -28,7 +28,7 @@
 	{assign var="reviewId" value=$submission->getReviewId()}
 
 	<tr valign="top">
-		<td><input type="radio" name="radioButtonName" value="{$articleId}" id="{$submission->getArticleTitle()}"></td>
+		<td><input type="radio" name="radioButtonName" value="{$reviewId}" id="{$submission->getArticleTitle()}"></td>
 		<td>{$articleId|escape}</td>
 		<td>{$submission->getDateNotified()|date_format:$dateFormatTrunc}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
@@ -41,6 +41,7 @@
 	</tr>
 {/iterate}
 </form>
+
 {if $submissions->wasEmpty()}
 <tr>
 		<td colspan="7" class="nodata">{translate key="submissions.noSubmissions"}</td>
@@ -55,3 +56,15 @@
 	</tr>
 {/if}
 </table>
+{assign var=editAssignments value=$submission->getEditAssignments()}
+{foreach from=$editAssignments item=editAssignment}
+				{assign var=emailString value="`$editAssignment->getEditorFullName()` <`$editAssignment->getEditorEmail()`>"}
+						<br/>
+{/foreach}
+<form name="test">
+<input type="hidden" name="to" value="{$emailString}">
+<input type="hidden" name="redirectUrl" value="{$currentUrl}">
+</form>
+
+
+
