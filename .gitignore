@@ -1,6 +1,6 @@
 config.inc.php
 
-cache/*
+cache/f*.php
 
 cache/t_compile/*
 
