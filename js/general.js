@@ -138,20 +138,26 @@ function changeFormAction(formName, action) {
 	document.forms[formName].action = action;
 	document.forms[formName].submit();
 }
-// Opatan Inc. Task 6 :redirect link from article value
+// Opatan Inc. Task #6 :redirect link from article value
 function getSelectedArticleId() {
-	for (var i=0; i<=document.formName.radioButtonName.length; i++) {
-		if (document.formName.radioButtonName[i].checked) {
-			var c  = document.formName.radioButtonName[i].id;
-			var d  = document.formName.radioButtonName[i].value;
-			var a  = document.test.to.value;
-			var b  = document.test.redirectUrl.value;
-			var ar = [a,b,c,d];
-			return ar; 
-				
-		}
-	}
 	
+	if (document.formName.radioButtonName.length) {
+		for (var i=0; i<=document.formName.radioButtonName.length; i++) {
+
+			if (document.formName.radioButtonName[i].checked) {
+			
+				return document.formName.radioButtonName[i].value;
+								
+			}  
+		}
+		return -1;
+		
+	} else if (document.formName.radioButtonName.checked) {
+		
+		 	return document.formName.radioButtonName.value;
+							
+		} else return -1;
+		
 	
 }
 function callSelectedUrl(url,op,anchor) {
@@ -160,25 +166,56 @@ function callSelectedUrl(url,op,anchor) {
 		alert("Please Select an Article");
 		return;
 	}
-	url = url.replace("article_id", article_id);
 	url = url.replace("function", op);
 	url = url.replace("anchor",anchor);
+	url = url.replace("article_id", article_id);
+	
 	
 	window.location.href = url;
 }
+// //
+function getSelectedArticlePath() {
+	
+	if (document.formName.radioButtonName.length) {
+		for (var i=0; i<=document.formName.radioButtonName.length; i++) {
+
+			if (document.formName.radioButtonName[i].checked) {
+				var to           = document.test.to.value;
+				var redirectUrl  = document.test.redirectUrl.value;
+				var title        = document.formName.radioButtonName[i].id;
+				var articleId    = document.formName.radioButtonName[i].value;
+				
+			return path = [to,redirectUrl,title,articleId];
+				
+			}  
+		}
+		return -1;
+	} else if (document.formName.radioButtonName.checked) {
+		
+			var to           = document.test.to.value;
+			var redirectUrl  = document.test.redirectUrl.value;
+			var title        = document.formName.radioButtonName.id;
+			var articleId    = document.formName.radioButtonName.value;
+				
+		return path = [to,redirectUrl,title,articleId];
+				
+		} else return -1;
+		
+	
+}
+
 function callUrl(url,page,op) {
-		article_id = getSelectedArticleId();
-		//document.write(article_id[0]);
-	if (article_id == -1) {
+	path = getSelectedArticlePath();
+	if (path == -1) {
 		alert("Please Select an Article");
 		return;
 	}
 	url = url.replace("hip",page);
 	url = url.replace("function", op);
-	url = url.replace("to_email",article_id[0]);
-	url = url.replace("redirect_url",article_id[1]);
-	url = url.replace("subjects",article_id[2]);
-	url = url.replace("article_id", article_id[3]);
+	url = url.replace("to_email",path[0]);
+	url = url.replace("redirect_url",path[1]);
+	url = url.replace("subjects",path[2]);
+	url = url.replace("article_id", path[3]);
 	
 
 	
