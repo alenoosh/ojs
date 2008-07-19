@@ -51,7 +51,8 @@ class SubmissionEditHandler extends SectionEditorHandler {
 		$templateMgr->assign_by_ref('journalSettings', $journalSettings);
 		$templateMgr->assign('userId', $user->getUserId());
 		$templateMgr->assign('isEditor', $isEditor);
-
+		/**Opatan Inc.**/
+		$templateMgr->assign('articleId',$articleId);
 		$sectionDao = &DAORegistry::getDAO('SectionDAO');
 		$templateMgr->assign_by_ref('sections', $sectionDao->getSectionTitles($journal->getJournalId()));
 

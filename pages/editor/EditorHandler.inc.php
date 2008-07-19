@@ -31,6 +31,26 @@ class EditorHandler extends SectionEditorHandler {
 	function index($args) {
 		EditorHandler::validate();
 		EditorHandler::setupTemplate(EDITOR_SECTION_HOME);
+		/**Opatan Inc.**/
+		if (Request::getUserVar('submissionProgress')) {
+		$articleId = (int) Request::getUserVar('articleId');
+			import('db.DAO');
+			$DAO = &new DAO();
+				$DAO->update(
+			sprintf('UPDATE articles
+				SET
+					submission_progress = ?
+				WHERE article_id = ?'
+			),
+			array(
+				'2',
+				$articleId
+				
+			)
+			
+		);
+							
+		}
 
 		$templateMgr = &TemplateManager::getManager();
 		$journal = &Request::getJournal();

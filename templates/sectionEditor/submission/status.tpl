@@ -40,9 +40,15 @@
 		<td class="label">{translate key="submission.lastModified"}</td>
 		<td colspan="2" class="value">{$submission->getLastModified()|date_format:$dateFormatShort}</td>
 	</tr>
-	<tr>
+{*Opatan Inc.*}
+
+	<tr>	
+
 		<td></td>
 		<td></td>
-		<td><form action="{url op="editor"}" method="post">{translate key="submission.changeSection"} <select name="section" size="1" class="selectMenu">{html_options options=Incomplete}</select> <input type="submit" value="{translate key="common.record"}" class="button" /></form></td>
+		<td><form action="{url op="editor"}" method="post">{translate key="submission.changeSection"} <select name="submissionProgress"  size="1" class="selectMenu"><option name="submissionProgress" >{translate key="submissions.incomplete"}</option></select> 
+		<input type="hidden" name="articleId" value="{$articleId}" />
+		<input type="submit" value="{translate key="common.record"}" class="button" />
+		</form></td>
 	</tr>
 </table>
