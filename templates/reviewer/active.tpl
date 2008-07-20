@@ -28,7 +28,7 @@
 	{assign var="reviewId" value=$submission->getReviewId()}
 
 	<tr valign="top">
-		<td><input type="radio" name="radioButtonName" value="{$reviewId}" id="{$submission->getArticleTitle()}"></td>
+		<td><input type="radio" name="radioButtonName" value="{$reviewId}" id="{$submission->getArticleTitle()}" /></td>
 		<td>{$articleId|escape}</td>
 		<td>{$submission->getDateNotified()|date_format:$dateFormatTrunc}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
@@ -61,9 +61,9 @@
 				{assign var=emailString value="`$editAssignment->getEditorFullName()` <`$editAssignment->getEditorEmail()`>"}
 						<br/>
 {/foreach}
-<form name="test">
-<input type="hidden" name="to" value="{$emailString}">
-<input type="hidden" name="redirectUrl" value="{$currentUrl}">
+<form name="review">
+<input type="hidden" name="to" value="{$emailString|to_array}" />
+<input type="hidden" name="redirectUrl" value="{$currentUrl}" />
 </form>
 
 

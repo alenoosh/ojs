@@ -143,15 +143,14 @@ function getSelectedArticleId() {
 	
 	if (document.formName.radioButtonName.length) {
 		for (var i=0; i<=document.formName.radioButtonName.length; i++) {
-
 			if (document.formName.radioButtonName[i].checked) {
 			
 				return document.formName.radioButtonName[i].value;
 								
-			}  
-		}
-		return -1;
-		
+			} else if (i == document.formName.radioButtonName.length-1) { 
+				return -1; 
+			} 
+		}  		
 	} else if (document.formName.radioButtonName.checked) {
 		
 		 	return document.formName.radioButtonName.value;
@@ -180,28 +179,29 @@ function getSelectedArticlePath() {
 		for (var i=0; i<=document.formName.radioButtonName.length; i++) {
 
 			if (document.formName.radioButtonName[i].checked) {
-				var to           = document.test.to.value;
-				var redirectUrl  = document.test.redirectUrl.value;
+				var to           = document.review.to.value;
+				var redirectUrl  = document.review.redirectUrl.value;
 				var title        = document.formName.radioButtonName[i].id;
 				var articleId    = document.formName.radioButtonName[i].value;
 				
 			return path = [to,redirectUrl,title,articleId];
 				
-			}  
-		}
-		return -1;
+			} else if (i == document.formName.radioButtonName.length-1) { 
+				return -1; 
+			} 
+
+		}  
 	} else if (document.formName.radioButtonName.checked) {
 		
-			var to           = document.test.to.value;
-			var redirectUrl  = document.test.redirectUrl.value;
+			var to           = document.review.to.value;
+			var redirectUrl  = document.review.redirectUrl.value;
 			var title        = document.formName.radioButtonName.id;
 			var articleId    = document.formName.radioButtonName.value;
 				
 		return path = [to,redirectUrl,title,articleId];
 				
-		} else return -1;
-		
-	
+	} else return -1;
+			
 }
 
 function callUrl(url,page,op) {
