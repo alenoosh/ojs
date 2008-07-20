@@ -2019,6 +2019,9 @@ http://journals.mui.ac.ir/index.php/index/index
     <message key="author.submit.languageInstructions" ><![CDATA[English=en; French=fr; Spanish=es. <a href="http://www.loc.gov/standards/iso639-2/langcodes.html" target="_blank">کدهای دیگر</a>.]]></message>
     <message key="author.submit.form.authorRequired" >حداقل یک نویسنده لازم است</message>
     <message key="author.submit.form.authorRequiredFields" >نام ، نام خانوادگی و ایمیل هر نویسنده لازم است</message>
+    <!-- Opatan Inc. -->
+    <message key="author.submit.form.reviewerRequiredFields">نام، نام خانوادگی و آدرس ايميل هر کارشناس الزامی است.</message>
+   
     <message key="author.submit.form.titleRequired" >لطفا عنوان مقاله را وارد کنید.</message>
     <message key="author.submit.form.abstractRequired" >لطفا چکیده مقاله را پارد کنید</message>   
     <!-- Opatan Inc. -->

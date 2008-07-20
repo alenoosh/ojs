@@ -338,6 +338,10 @@ class ArticleDAO extends DAO {
 
 		$this->update('DELETE FROM article_settings WHERE article_id = ?', $articleId);
 		$this->update('DELETE FROM articles WHERE article_id = ?', $articleId);
+
+		// Opatan Inc. : delete article's suggested reviewers
+		$reviewerDao =&DAORegistry::getDAO('ReviewerDAO');
+		$reviewerDao->deleteReviewersByArticle($articleId);
 	}
 
 	/**

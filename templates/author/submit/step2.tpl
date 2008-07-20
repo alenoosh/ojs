@@ -85,19 +85,19 @@ function confirmForgottenUpload() {
 					{if $thisLocale != $formLocale}<input type="hidden" name="authors[{$authorIndex|escape}][biography][{$thisLocale|escape}]" value="{$thisBiography|escape}" />{/if}
 				{/foreach}
 			{/foreach}
-			{foreach from=$numberOfReviewers item=reviewerIndex}
-				{foreach from=$reviewers[$reviewerIndex].firstName key="thisLocale" item="thisRevFirstName"}
+			{foreach from=$reviewers key=reviewerIndex item=reviewer}
+				{foreach from=$reviewer.firstName key="thisLocale" item="thisRevFirstName"}
 					{if $thisLocale != $formLocale}<input type="hidden" name="reviewers[{$reviewerIndex|escape}][firstName][{$thisLocale|escape}]" value="{$thisRevFirstName|escape}" />{/if}
 				{/foreach}
-				{foreach from=$reviewers[$reviewerIndex].middleName key="thisLocale" item="thisRevMiddleName"}
+				{foreach from=$reviewer.middleName key="thisLocale" item="thisRevMiddleName"}
 					{if $thisLocale != $formLocale}<input type="hidden" name="reviewers[{$reviewerIndex|escape}][middleName][{$thisLocale|escape}]" value="{$thisRevMiddleName|escape}" />{/if}
 				{/foreach}
-				{foreach from=$reviewers[$reviewerIndex].lastName key="thisLocale" item="thisRevLastName"}
+				{foreach from=$reviewer.lastName key="thisLocale" item="thisRevLastName"}
 					{if $thisLocale != $formLocale}<input type="hidden" name="reviewers[{$reviewerIndex|escape}][lastName][{$thisLocale|escape}]" value="{$thisRevLastName|escape}" />{/if}
 				{/foreach}
-				{foreach from=$reviewers[$reviewerIndex].affiliation key="thisLocale" item="thisRevAffiliation"}
+				{foreach from=$reviewer.affiliation key="thisLocale" item="thisRevAffiliation"}
 					{if $thisLocale != $formLocale}<input type="hidden" name="reviewers[{$reviewerIndex|escape}][affiliation][{$thisLocale|escape}]" value="{$thisRevAffiliation|escape}" />{/if}
-				{/foreach}				
+				{/foreach}
 			{/foreach}
 			{form_language_chooser form="submit" url=$submitFormUrl}
 			<span class="instruct">{translate key="form.formLanguage.description"}</span>
@@ -435,44 +435,44 @@ function confirmForgottenUpload() {
 {if $authorCanSpecifyReviewers}
 <h3>{translate key="author.submit.reviewerRecommendation"}</h3>
 <table class="data" width="100%">
-{foreach from=$numberOfReviewers item=reviewerIndex}
+{foreach name=reviewers from=$reviewers item=reviewer key=reviewerIndex}
 	{if $countOfReviewers > 1}
-		<tr><td colspan="2"><h4>{translate key="author.submit.reviewerNumber"}&nbsp;{$reviewerIndex}</h4></td></tr>
+		<tr><td colspan="2"><h4>{translate key="author.submit.reviewerNumber"}&nbsp;{$reviewerIndex+1}</h4></td></tr>
 	{/if}
 	<tr valign="top">
 		<td width="20%" class="label">
 			{fieldLabel name="reviewers-$reviewerIndex-firstName" required="true" key="user.firstName"}
 		</td>
 		<td width="80%" class="value">
-			<input type="text" class="textField" name="reviewers[{$reviewerIndex|escape}][firstName]" 
-			       id="reviewers-{$reviewerIndex|escape}-firstName" value="{$reviewers[$reviewerIndex].firstName[$formLocale]}"
+			<input type="text" class="textField" name="reviewers[{$reviewerIndex|escape}][firstName][{$formLocale|escape}]"
+			       id="reviewers-{$reviewerIndex|escape}-firstName" value="{$reviewer.firstName[$formLocale]|escape}"
 			       size="20" maxlength="40" /></td>
 	</tr>
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="reviewers-$reviewerIndex-middleName" key="user.middleName"}</td>
 		<td width="80%" class="value"><input type="text" class="textField" 
-		    name="reviewers[{$reviewerIndex|escape}][middleName]" 
-		    id="reviewers-{$reviewerIndex|escape}-middleName" value="{$reviewers[$reviewerIndex].middleName[$formLocale]}"
+		    name="reviewers[{$reviewerIndex|escape}][middleName][{$formLocale|escape}]" 
+		    id="reviewers-{$reviewerIndex|escape}-middleName" value="{$reviewer.middleName[$formLocale]|escape}"
 		    size="20" maxlength="40" /></td>
 	</tr>
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="reviewers-$reviewerIndex-lastName" required="true" key="user.lastName"}</td>
-		<td width="80%" class="value"><input type="text" class="textField" 
-		    name="reviewers[{$reviewerIndex|escape}][lastName]" 
-		    id="reviewers-{$reviewerIndex|escape}-lastName" value="{$reviewers[$reviewerIndex].lastName[$formLocale]}"
+		<td width="80%" class="value"><input type="text" class="textField"
+		    name="reviewers[{$reviewerIndex|escape}][lastName][{$formLocale|escape}]"
+		    id="reviewers-{$reviewerIndex|escape}-lastName" value="{$reviewer.lastName[$formLocale]|escape}"
 		    size="20" maxlength="90" /></td>
 	</tr>
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="reviewers-$reviewerIndex-affiliation" key="user.affiliation"}</td>
 		<td width="80%" class="value"><input type="text" class="textField"
-		    name="reviewers[{$reviewerIndex|escape}][affiliation]"
-		    id="reviewers-{$reviewerIndex|escape}-affiliation" value="{$reviewers[$reviewerIndex].affiliation[$formLocale]}"
+		    name="reviewers[{$reviewerIndex|escape}][affiliation][{$formLocale|escape}]"
+		    id="reviewers-{$reviewerIndex|escape}-affiliation" value="{$reviewer.affiliation[$formLocale]|escape}"
 		    size="30" maxlength="255"/></td>
 	</tr>
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="reviewers-$reviewerIndex-email" required="true" key="user.email"}</td>
 		<td width="80%" class="value"><input type="text" class="textField" name="reviewers[{$reviewerIndex|escape}][email]"
-		    id="reviewers-{$reviewerIndex|escape}-email" value="{$reviewers[$reviewerIndex].email}"
+		    id="reviewers-{$reviewerIndex|escape}-email" value="{$reviewer.email|escape}"
 		    size="30" maxlength="90" /></td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>

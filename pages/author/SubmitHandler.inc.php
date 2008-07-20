@@ -61,7 +61,7 @@ class SubmitHandler extends AuthorHandler {
 
 		list($journal, $article) = SubmitHandler::validate($articleId, $step);
 
-		// Opatan Inc. : is step is 2 , AuthorSubmitStep2MergedForm is loaded instead of AuthorSubmitStep2Form
+		// Opatan Inc. : if step is 2 , AuthorSubmitStep2MergedForm is loaded instead of AuthorSubmitStep2Form
 		if ($step == 2) {
 	            $formClass = "AuthorSubmitStep2MergedForm";
 	        } else {

@@ -38,6 +38,7 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		parent::AuthorSubmitForm($article, 2);
 
 		$journal = &Request::getJournal();
+		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 
 		$this->articleId = $article->getArticleId();
 
@@ -54,6 +55,15 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		$this->addCheck(new FormValidatorCustom($this, 'authors', 'required', 'author.submit.form.authorRequired', create_function('$authors', 'return count($authors) > 0;')));
 		$this->addCheck(new FormValidatorArray($this, 'authors', 'required', 'author.submit.form.authorRequiredFields', array(array('firstName', $locale), array('lastName', $locale), 'email')));
 		$this->addCheck(new FormValidatorLocale($this, 'title', 'required', 'author.submit.form.titleRequired'));
+
+		// Opatan Inc. : if author can specify reviewers and specifying reviewers is not optional adds reviewers validator
+		if ($journalSettingsDao->getSetting($journal->getJournalId(), 'authorCanSpecifyReviewers')) {
+			$reviewerIsOptional = &$journalSettingsDao->getSetting($journal->getJournalId(), 'reviewerIsOptional');
+			if ($reviewerIsOptional == 0) {
+				$this->addCheck(new FormValidatorArray($this, 'reviewers', 'required', 'author.submit.form.reviewerRequiredFields', array(array('firstName', $locale), array('lastName', $locale), 'email')));
+			}
+		}
+	
 		$this->addCheck(new FormValidatorPost($this));        
 	}
 
@@ -61,12 +71,15 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 	 * Initialize form data from current article.
 	 */
 	function initData() {
+		$journal = &Request::getJournal();
+		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+
 		$sectionDao = &DAORegistry::getDAO('SectionDAO');
 		if (isset($this->article)) {
 			$article = &$this->article;
 			$this->_data = array(
 				'authors' => array(),
-				'reviewers' => array(),
+				'reviewers' => array(), // Opatan Inc.
 				'title' => $article->getTitle(null), // Localized
 				// Opatan Inc. : runningTitle is added
 	        	        'runningTitle' => $article->getRunningTitle(null), // Localized 
@@ -108,6 +121,19 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 					$this->setData('primaryContact', $i);
 				}
 			}
+			
+			// Opatan Inc.
+			if ($journalSettingsDao->getSetting($journal->getJournalId(), 'authorCanSpecifyReviewers')) {
+				$numberOfReviewers = &$journalSettingsDao->getSetting($journal->getJournalId(), 'numberOfReviewers');
+				if ($numberOfReviewers > 0) {
+					for ($i=0, $count=$numberOfReviewers; $i < $count; $i++) {
+						array_push(
+							$this->_data['reviewers'],
+							array('firstName', 'middleName', 'lastName', 'affiliation', 'email'));
+					}
+				}
+			}
+
 		}
 	}
 
@@ -115,27 +141,28 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 	 * Assign form data to user-submitted data.
 	 */
 	function readInputData() {
-		$this->readUserVars(
-			array(
-				'authors',
-				'reviewers',
-				'deletedAuthors',
-				'primaryContact',
-				'title',
-			        'runningTitle', // Opatan Inc. : runningTitle is added
-     				'abstract',
-				'discipline',
-				'subjectClass',
-				'subject',
-				'coverageGeo',
-				'coverageChron',
-				'coverageSample',
-				'type',
-				'language',
-				'sponsor',
-                		'supp_title'
-			)
-		);
+		$journal = &Request::getJournal();
+		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+			
+		$userVars = array('authors',
+				  'reviewers', // Opatan Inc.
+				  'deletedAuthors',
+				  'primaryContact',
+				  'title',
+			          'runningTitle', // Opatan Inc. : runningTitle is added
+	     			  'abstract',
+				  'discipline',
+				  'subjectClass',
+				  'subject',
+				  'coverageGeo',
+				  'coverageChron',
+				  'coverageSample',
+				  'type',
+				  'language',
+				  'sponsor',
+                		  'supp_title');
+
+		$this->readUserVars($userVars);
 
 		// Load the section. This is used in the step 2 form to
 		// determine whether or not to display indexing options.
@@ -197,8 +224,25 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 	 * @return array
 	 */
 	function getLocaleFieldNames() {
+		$journal = &Request::getJournal();
+		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+
 		// Opatan Inc. : runningTitle is added
-		return array('title', 'runningTitle', 'abstract', 'subjectClass', 'subject', 'coverageGeo', 'coverageChron', 'coverageSample', 'type', 'sponsor');
+		$localeFieldNames = array('title', 'runningTitle', 'abstract', 'subjectClass', 'subject', 'coverageGeo', 'coverageChron', 'coverageSample', 'type', 'sponsor');
+		// Opatan Inc. : if author can specify reviewers,  adds reviewer fields to localFieldNames
+		if ($journalSettingsDao->getSetting($journal->getJournalId(), 'authorCanSpecifyReviewers')) {
+			$numberOfReviewers = &$journalSettingsDao->getSetting($journal->getJournalId(), 'numberOfReviewers');
+			if ($numberOfReviewers > 0) {
+				for ($i=0, $count=$numberOfReviewers; $i < $count; $i++) {
+					array_push($localeFieldNames, 'reviewers['.(string)($i+1).'][firstName]');
+					array_push($localeFieldNames, 'reviewers['.(string)($i+1).'][middleName]');
+					array_push($localeFieldNames, 'reviewers['.(string)($i+1).'][lastName]');
+					array_push($localeFieldNames, 'reviewers['.(string)($i+1).'][affiliation]');
+				}
+			}
+		}			
+
+		return $localeFieldNames;
 	}
 
 	/**
@@ -272,6 +316,7 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 	function execute() {
 		$articleDao = &DAORegistry::getDAO('ArticleDAO');
 		$authorDao = &DAORegistry::getDAO('AuthorDAO');
+		$reviewerDao = &DAORegistry::getDAO('ReviewerDAO');
 
 		// Update article
 		$article = &$this->article;
@@ -332,6 +377,24 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		$deletedAuthors = explode(':', $this->getData('deletedAuthors'));
 		for ($i=0, $count=count($deletedAuthors); $i < $count; $i++) {
 			$article->removeAuthor($deletedAuthors[$i]);
+		}
+		
+		// Opatan Inc. : Insert reviewers
+		$reviewers = $this->getData('reviewers');
+		for ($i=0, $count=count($reviewers); $i < $count; $i++) {
+			$reviewer = &new Reviewer();
+
+			if ($reviewer != null) {
+				if ($reviewers[$i]['firstName'] != null && $reviewers[$i]['lastName'] != null &&
+				    $reviewers[$i]['email'] != null) {
+					$reviewer->setFirstName($reviewers[$i]['firstName'], null);					
+					$reviewer->setMiddleName($reviewers[$i]['middleName'], null);
+					$reviewer->setLastName($reviewers[$i]['lastName'], null);
+					$reviewer->setAffiliation($reviewers[$i]['affiliation'], null);
+					$reviewer->setEmail($reviewers[$i]['email']);		
+					$reviewerDao->insertReviewer($reviewer, $this->articleId);
+				}					
+			}
 		}
 
 		// Save the article

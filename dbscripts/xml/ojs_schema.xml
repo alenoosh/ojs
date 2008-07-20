@@ -2375,4 +2375,59 @@
 			<UNIQUE/>
 		</index>
 	</table>
+
+	<!--
+	  *
+	  * TABLE reviewers
+	  *
+	  -->
+	<table name="reviewers">
+		<field name="reviewer_id" type="I8">
+			<KEY />
+			<AUTOINCREMENT />
+		</field>
+		<field name="article_id" type="I8">
+			<NOTNULL/>
+		</field>
+		<field name="email" type="C2" size="90">
+			<NOTNULL/>
+		</field>
+		<index name="reviewers_email">
+			<col>article_id</col>
+			<col>email</col>
+			<UNIQUE />
+		</index>
+	</table>
+
+	<!--
+	  *
+	  * TABLE reviewer_settings
+	  *
+	 -->
+	<table name="reviewer_settings">
+		<field name="reviewer_id" type="I8">
+			<NOTNULL/>
+		</field>
+		<field name="locale" type="C2" size="5">
+			<NOTNULL/>
+			<DEFAULT VALUE=""/>
+		</field>
+		<field name="setting_name" type="C2" size="255">
+			<NOTNULL/>
+		</field>
+		<field name="setting_value" type="X"/>
+		<field name="setting_type" type="C2" size="6">
+			<NOTNULL/>
+		</field>
+		<descr>Locale-specific reviewer data</descr>
+		<index name="reviewer_settings_reviewer_id">
+			<col>reviewer_id</col>
+		</index>	
+		<index name="reviewer_settings_pkey">
+			<col>reviewer_id</col>
+			<col>locale</col>
+			<col>setting_name</col>
+			<UNIQUE />
+		</index>
+	</table>
 </schema>
