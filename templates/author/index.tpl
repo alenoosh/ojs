@@ -39,7 +39,7 @@
 	<li><a href="{url op="submit" path=""}">{translate key="common.queue.short.startNewSubmission"}</a></li>
 
 	<li><a href="#" onclick="callSelectedUrl('{url op="function" path="article_id"}','addSuppFile')">{translate key="common.queue.short.uploadSuppFile"}</a></li>
-	<li><a href="#" onclick="callSelectedUrl('{url op="function" path="article_id"}','submission')">{translate key="common.queue.short.viewDetails"}</a></li>
+	<li><a href="#" onclick="viewDetails('{url op="function" path="pathId" articleId="article_id"}','submission')">{translate key="common.queue.short.viewDetails"}</a></li>
 	<li><a href="#" onclick="callSelectedUrl('{url op="function" path="article_id" anchor="anchor"}','submissionReview','editorDecision')">{translate key="common.queue.short.SubmitRevisedVersion"}</a></li>
 	<li><a href="#" onclick="callSelectedUrl('{url op="function" path="article_id"}','viewMetadata')">{translate key="common.queue.short.editMetadata"}</a></li>
 	<li><a href="#" onclick="callSelectedUrl('{url op="function" path="article_id" anchor="anchor"}','submissionEditing','copyedit')">{translate key="common.queue.short.viewCopyeditedArticle"}</a></li>
