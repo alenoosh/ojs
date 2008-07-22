@@ -17,7 +17,12 @@
 <ul class="menu">
 	<li{if ($pageToDisplay == "active")} class="current"{/if}><a href="{url path="active"}">{translate key="common.queue.short.active"}</a></li>
 	<li{if ($pageToDisplay == "completed")} class="current"{/if}><a href="{url path="completed"}">{translate key="common.queue.short.completed"}</a></li>
-	<li><a href="#" onclick="callUrl('{url page="hip" op="function" to="to_email" redirectUrl="redirect_url" subject="subjects" articleId="article_id"}','user','email')">{translate key="common.queue.short.completed"}</a></li>
+	<li><a href="#" onclick="callUrl('{url page="user" op="function" to="to_email" redirectUrl="redirect_url" subject="subjects" articleId="article_id"}','user','email')">{translate key="common.queue.short.emailTheEditor"}</a></li>
+		<li><a href="#" onclick="callSelectedUrl('{url op="function" path="article_id" anchor="anchor"}','submission','reviewerGuidelines')">{translate key="reviewer.article.reviewerGuidelines"}</a></li>
+		<li><a href="#" onclick="callSelectedUrl('{url op="function" path="article_id"}','submission')">{translate key="common.queue.short.viewDetails"}</a></li>
+
+
+
 	
 </ul>
 

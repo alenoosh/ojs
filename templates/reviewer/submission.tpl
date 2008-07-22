@@ -321,7 +321,7 @@ function confirmSubmissionCheck() {
 	</td>
 </tr>
 </table>
-
+<a name="reviewerGuidelines"></a>
 {if $journal->getLocalizedSetting('reviewGuidelines') != ''}
 <div class="separator"></div>
 <h3>{translate key="reviewer.article.reviewerGuidelines"}</h3>

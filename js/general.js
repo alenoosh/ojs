@@ -138,15 +138,16 @@ function changeFormAction(formName, action) {
 	document.forms[formName].action = action;
 	document.forms[formName].submit();
 }
-// Opatan Inc. Task #6 :redirect link from article value
+/** Opatan Inc. :redirect link from article value **/
 function getSelectedArticleId() {
 	
 	if (document.formName.radioButtonName.length) {
 		for (var i=0; i<=document.formName.radioButtonName.length; i++) {
 			if (document.formName.radioButtonName[i].checked) {
-			
-				return document.formName.radioButtonName[i].value;
-								
+				var articleId =  document.formName.radioButtonName[i].value;
+				var progress  =  document.formName.radioButtonName[i].id;
+				return  value = [articleId,progress];				
+
 			} else if (i == document.formName.radioButtonName.length-1) { 
 				return -1; 
 			} 
@@ -156,23 +157,52 @@ function getSelectedArticleId() {
 		 	return document.formName.radioButtonName.value;
 							
 		} else return -1;
-		
-	
+
 }
 function callSelectedUrl(url,op,anchor) {
 	article_id = getSelectedArticleId();
 	if (article_id == -1) {
 		alert("Please Select an Article");
 		return;
-	}
-	url = url.replace("function", op);
-	url = url.replace("anchor",anchor);
-	url = url.replace("article_id", article_id);
+			
+	} 
+		url = url.replace("function", op);
+		url = url.replace("anchor",anchor);
+		url = url.replace("article_id", article_id[0]);
+		
+		window.location.href = url;
 	
-	
-	window.location.href = url;
 }
-// //
+/** Opatan Inc. : View Article's Detail **/
+function viewDetails(url,op) {
+	artiProg = getSelectedArticleId();
+	if (artiProg == -1) {
+		alert("Please Select an Article");
+		return;
+	}
+	if (artiProg[1] == 2) {
+		url = url.replace("function", "submit");
+		url = url.replace("pathId", 2);
+		url = url.replace("article_id",artiProg[0]);
+		
+		window.location.href = url;
+	} else if (artiProg[1] == 5)	{
+		url = url.replace("function", "submit");
+		url = url.replace("pathId", 5);
+		url = url.replace("article_id",artiProg[0]);
+
+	 window.location.href = url;
+		
+		
+	} else {
+		url = url.replace("function", op);
+		url = url.replace("pathId", artiProg[0]);
+		
+		window.location.href = url;
+	}
+
+}
+
 function getSelectedArticlePath() {
 	
 	if (document.formName.radioButtonName.length) {
@@ -181,10 +211,10 @@ function getSelectedArticlePath() {
 			if (document.formName.radioButtonName[i].checked) {
 				var to           = document.review.to.value;
 				var redirectUrl  = document.review.redirectUrl.value;
-				var title        = document.formName.radioButtonName[i].id;
+				var subject      = document.formName.radioButtonName[i].id;
 				var articleId    = document.formName.radioButtonName[i].value;
 				
-			return path = [to,redirectUrl,title,articleId];
+			return path = [to,redirectUrl,subject,articleId];
 				
 			} else if (i == document.formName.radioButtonName.length-1) { 
 				return -1; 
@@ -195,32 +225,31 @@ function getSelectedArticlePath() {
 		
 			var to           = document.review.to.value;
 			var redirectUrl  = document.review.redirectUrl.value;
-			var title        = document.formName.radioButtonName.id;
+			var subject      = document.formName.radioButtonName.id;
 			var articleId    = document.formName.radioButtonName.value;
 				
-		return path = [to,redirectUrl,title,articleId];
+		return path = [to,redirectUrl,subject,articleId];
 				
 	} else return -1;
 			
 }
-
+/** Opatan Inc. : send mail in review **/
 function callUrl(url,page,op) {
 	path = getSelectedArticlePath();
 	if (path == -1) {
 		alert("Please Select an Article");
 		return;
 	}
-	url = url.replace("hip",page);
+	url = url.replace("user",page);
 	url = url.replace("function", op);
 	url = url.replace("to_email",path[0]);
 	url = url.replace("redirect_url",path[1]);
 	url = url.replace("subjects",path[2]);
 	url = url.replace("article_id", path[3]);
 	
-
-	
-	
 	window.location.href = url;
 
 }
+
+
 

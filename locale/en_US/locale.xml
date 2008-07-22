@@ -266,6 +266,10 @@
 	<message key="common.queue.short.notifyEditor">Notify Editor</message>
 	<message key="common.queue.short.authorGuidelines">Author Guidelines</message>
 	<message key="common.queue.short.startNewSubmission">Start New Submission</message>
+	<message key="common.queue.short.emailTheEditor">Email the editor</message>
+	<message key="common.queue.short.viewDetails">View Details</message>
+
+
 	
     <!--
 	 *

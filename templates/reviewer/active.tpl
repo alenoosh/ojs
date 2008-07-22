@@ -58,11 +58,10 @@
 </table>
 {assign var=editAssignments value=$submission->getEditAssignments()}
 {foreach from=$editAssignments item=editAssignment}
-				{assign var=emailString value="`$editAssignment->getEditorFullName()` <`$editAssignment->getEditorEmail()`>"}
-						<br/>
+{assign var=emailString value="`$editAssignment->getEditorFullName()` <`$editAssignment->getEditorEmail()`>"}
 {/foreach}
 <form name="review">
-<input type="hidden" name="to" value="{$emailString|to_array}" />
+<input type="hidden" name="to" value="{$emailString}" />
 <input type="hidden" name="redirectUrl" value="{$currentUrl}" />
 </form>
 
