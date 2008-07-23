@@ -9,7 +9,6 @@
  * $Id$
  *}
 <a name="submissions"></a>
-
 <table class="listing" width="100%">
 	<tr><td colspan="7" class="headseparator">&nbsp;</td></tr>
 	<tr class="heading" valign="bottom">
@@ -26,9 +25,16 @@
 {iterate from=submissions item=submission}
 	{assign var="articleId" value=$submission->getArticleId()}
 	{assign var="reviewId" value=$submission->getReviewId()}
+	{assign var=editAssignments value=$submission->getEditAssignments()}
+	{foreach from=$editAssignments item=editAssignment}
+		{assign var=emailString value="`$editAssignment->getEditorFullName()` <`$editAssignment->getEditorEmail()`>"}
+	{/foreach}
 
 	<tr valign="top">
-		<td><input type="radio" name="radioButtonName" value="{$reviewId}" id="{$submission->getArticleTitle()}" /></td>
+		<td><input type="radio" name="radioButtonName" value="{$reviewId}" />
+		<input type="hidden" name="sendMail" value="{url page="user" op="email" to=$emailString|to_array redirectUrl=$currentUrl subject=$submission->getArticleTitle() articleId=$reviewId}">
+		</td>
+
 		<td>{$articleId|escape}</td>
 		<td>{$submission->getDateNotified()|date_format:$dateFormatTrunc}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
@@ -55,15 +61,8 @@
 		<td colspan="3" align="right">{page_links anchor="submissions" name="submissions" iterator=$submissions}</td>
 	</tr>
 {/if}
+
 </table>
-{assign var=editAssignments value=$submission->getEditAssignments()}
-{foreach from=$editAssignments item=editAssignment}
-{assign var=emailString value="`$editAssignment->getEditorFullName()` <`$editAssignment->getEditorEmail()`>"}
-{/foreach}
-<form name="review">
-<input type="hidden" name="to" value="{$emailString}" />
-<input type="hidden" name="redirectUrl" value="{$currentUrl}" />
-</form>
 
 
 
