@@ -197,6 +197,16 @@ class UserHandler extends Handler {
 		import('pages.user.RegistrationHandler');
 		RegistrationHandler::activateUser($args);
 	}
+	
+	function activateReviewer($args) {
+		import('pages.user.RegistrationHandler');
+		RegistrationHandler::activateReviewer($args);
+	}
+
+	function enrollAsReviewer($arg1, $arg2) {
+		import('pages.user.RegistrationHandler');
+		RegistrationHandler::enrollAsReviewer($arg1, $arg2);
+	}
 
 	//
 	// Email

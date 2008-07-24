@@ -18,6 +18,7 @@
 import('submission.sectionEditor.SectionEditorSubmission');
 import('submission.author.AuthorSubmission'); // Bring in editor decision constants
 import('submission.reviewer.ReviewerSubmission'); // Bring in editor decision constants
+import('reviewer.Reviewer');
 
 class SectionEditorSubmissionDAO extends DAO {
 	var $articleDao;
@@ -913,6 +914,44 @@ class SectionEditorSubmissionDAO extends DAO {
 	}
 
 	/**
+	 * Opatan Inc. :		
+	 * Retrieve a list of reviewers suggested by the author of the article.
+	 * @param $articleId int
+	 */
+	 function &getReviewersSuggestedForArticle($articleId)
+	 {
+		$locale = Locale::getLocale();
+		$paramArray = array(
+				    'firstName',
+				    $locale,
+				    'lastName',
+				    $locale,
+				    'middleName',
+				    $locale,
+				    'affiliation',
+				    $locale,
+				    $articleId);
+
+		$result = &$this->retrieve(
+	        	'SELECT DISTINCT
+				r.*, 
+				rf.setting_value AS first_name, rl.setting_value AS last_name, 
+				rm.setting_value AS middle_name, ra.setting_value AS affiliation
+			FROM	reviewers r
+				LEFT JOIN reviewer_settings rf ON (r.reviewer_id = rf.reviewer_id AND rf.setting_name = ? AND rf.locale = ?)
+				LEFT JOIN reviewer_settings rl ON (r.reviewer_id = rl.reviewer_id AND rl.setting_name = ? AND rl.locale = ?)
+				LEFT JOIN reviewer_settings rm ON (r.reviewer_id = rm.reviewer_id AND rm.setting_name = ? AND rm.locale = ?)
+				LEFT JOIN reviewer_settings ra ON (r.reviewer_id = ra.reviewer_id AND ra.setting_name = ? AND ra.locale = ?)
+			WHERE	r.article_id = ? 
+			ORDER BY last_name, first_name',
+			$paramArray
+		);
+
+		$returner = &new DAOResultFactory($result, $this, '_returnReviewerFromRow');
+		return $returner;	
+	 }
+
+	/**
 	 * Retrieve a list of all reviewers along with information about their current status with respect to an article's current round.
 	 * @param $journalId int
 	 * @param $articleId int
@@ -980,6 +1019,7 @@ class SectionEditorSubmissionDAO extends DAO {
 		);
 
 		$returner = &new DAOResultFactory($result, $this, '_returnReviewerUserFromRow');
+
 		return $returner;
 	}
 
@@ -990,6 +1030,24 @@ class SectionEditorSubmissionDAO extends DAO {
 		HookRegistry::call('SectionEditorSubmissionDAO::_returnReviewerUserFromRow', array(&$user, &$row));
 
 		return $user;
+	}
+	
+	// Opatan Inc.
+	function &_returnReviewerFromRow(&$row) {
+		$locale = Locale::getLocale();
+		$reviewer = &new Reviewer();
+		$reviewer->setReviewerId($row['reviewer_id']);
+		$reviewer->setFirstName($row['first_name'], $locale);
+		$reviewer->setMiddleName($row['middle_name'], $locale);
+		$reviewer->setLastName($row['last_name'], $locale);
+		$reviewer->setAffiliation($row['affiliation'], $locale);
+		$reviewer->setStatus($row['status']);
+		$reviewer->setEmail($row['email']);
+		$this->getDataObjectSettings('reviewer_settings', 'reviewer_id', $row['reviewer_id'], $reviewer);
+
+		HookRegistry::call('SectionEditorSubmissionDAO::_returnReviewerFromRow', array(&$reviewer, &$row));
+
+		return $reviewer;
 	}
 
 	/**

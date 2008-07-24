@@ -15,6 +15,12 @@
 
 <p>{translate key="user.register.completeForm"}</p>
 
+{* Opatan Inc. *}
+{if $isReviewer eq 1}
+	<input type="hidden" name="isReviewer" value="1" />
+	<input type="hidden" name="reviewerId" value="{$reviewerId}" />
+{/if}
+
 {if !$existingUser}
 	{url|assign:"url" page="user" op="register" existingUser=1}
 	<p>{translate key="user.register.alreadyRegisteredOtherJournal" registerUrl=$url}</p>

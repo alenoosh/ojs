@@ -102,6 +102,7 @@
 	<message key="common.changesSaved">Your changes have been saved.</message>
 	<message key="common.chooseOne">Choose One</message>
 	<message key="common.alreadyAssigned">Assigned</message>
+	<message key="common.considered">Considered</message> <!-- Opatan Inc. -->
 	<message key="common.assign">Assign</message>
 	<message key="common.assigned">Assigned</message>
 	<message key="common.record">Record</message>
@@ -513,6 +514,7 @@
 	<message key="user.role.sectionEditors">Section Editors</message>
 	<message key="user.role.layoutEditors">Layout Editors</message>
 	<message key="user.role.reviewers">Reviewers</message>
+	<message key="user.role.suggestedReviewers">Suggested Reviewers</message> <!-- Opatan Inc. -->
 	<message key="user.role.copyeditors">Copyeditors</message>
 	<message key="user.role.proofreaders">Proofreaders</message>
 	<message key="user.role.authors">Authors</message>

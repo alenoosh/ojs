@@ -74,11 +74,16 @@ class RegistrationHandler extends UserHandler {
 				$templateMgr->assign('backLinkLabel', 'user.login');
 				return $templateMgr->display('common/error.tpl');
 			}
-			if($source = Request::getUserVar('source'))
-				Request::redirectUrl($source);
-
-			else Request::redirect(null, 'login');
-
+			// Opatan Inc.
+			if (Request::getUserVar('isReviewer') == 1) {
+				$reviewerId = Request::getUserVar('reviewerId');
+				$source = Request::getUserVar('source');
+				RegistrationHandler::enrollAsReviewer($reviewerId, $source);
+			} else {
+				if($source = Request::getUserVar('source'))
+					Request::redirectUrl($source);	
+				else Request::redirect(null, 'login');
+			}
 		} else {
 			parent::setupTemplate(true);
 			$regForm->display();
@@ -130,9 +135,78 @@ class RegistrationHandler extends UserHandler {
 
 			$templateMgr =& TemplateManager::getManager();
 			$templateMgr->assign('message', 'user.login.activated');
-			return $templateMgr-display('common/message.tpl');
+			return $templateMgr->display('common/message.tpl');
 		}
 		Request::redirect(null, 'login');
+	}
+
+		
+	/**
+	 * Opatan Inc. :
+	 * Activate reviewer if the activation url has been clicked.
+	 */
+	function activateReviewer($args) {
+		$reviewerId = (int) $args[0];
+		$reviewerDao = &DAORegistry::getDAO('ReviewerDAO');
+		$reviewer = &$reviewerDao->getReviewer($reviewerId);
+
+		// mark this reviewer as assigned
+		$reviewer->setStatus(2);
+		$reviewerDao->updateReviewerStatus($reviewer);
+	
+		// enroll as reviewer
+		RegistrationHandler::validate();
+		import('user.form.RegistrationForm');
+
+		parent::setupTemplate(true);
+
+		$regForm = &new RegistrationForm();
+		$regForm->initData();
+		$regForm->setData('isReviewer', 1);
+		$regForm->setData('reviewerId', $reviewer->getReviewerId());
+		$regForm->setData('firstName', $reviewer->getFirstName(null));
+		$regForm->setData('lastName', $reviewer->getLastName(null));
+		$regForm->setData('username', $reviewer->getEmail());
+		if ($reviewer->getMiddleName(null)) {
+			$regForm->setData('middleName', $reviewer->getMiddleName(null));
+		}
+		if ($reviewer->getAffiliation(null)) {
+			$regForm->setData('affiliation', $reviewer->getAffiliation(null));
+		}
+		$regForm->display();
+	}
+	
+	/**
+	 * Opatan Inc.
+	 * Assign reviewer.
+	 */
+	function enrollAsReviewer($arg1, $arg2) {
+		$reviewerId = $arg1;
+		$source = $arg2;
+		$journal = Request::getJournal();
+
+		$reviewerDao = &DAORegistry::getDAO('ReviewerDAO');
+		$reviewer = &$reviewerDao->getReviewer($reviewerId);
+		
+		$userDao = &DAORegistry::getDAO('UserDAO');
+		$user = &$userDao->getUserByUsername($reviewer->getEmail());
+		$userId = $user->getUserId();
+		
+		// enroll as reviewer
+		$roleDao = &DAORegistry::getDAO('RoleDAO');
+		$roleName = 'reviewer';
+		$roleId = $roleDao->getRoleIdFromPath($roleName);
+		if ($roleId != null) {
+			$role = &new Role();
+			$role->setJournalId($journal->getJournalId());
+			$role->setUserId($userId);
+			$role->setRoleId($roleId);
+			$roleDao->insertRole($role);
+		}
+
+		if ($source)
+			Request::redirectUrl($source);
+		else Request::redirect(null, 'login');
 	}
 
 	/**

@@ -2392,6 +2392,10 @@
 		<field name="email" type="C2" size="90">
 			<NOTNULL/>
 		</field>
+		<field name="status" type="I1">
+			<NOTNULL/>
+			<DEFAULT VALUE="0" />
+		</field>
 		<index name="reviewers_email">
 			<col>article_id</col>
 			<col>email</col>

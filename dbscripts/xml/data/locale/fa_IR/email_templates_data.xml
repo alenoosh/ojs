@@ -827,5 +827,69 @@ jhvdo hkrqh: {$expiryDate}
 {$editorialContactSignature}</field>
 			<field name="description">This email from the Section Editor to the Layout Editor notifies them that an article's galleys are ready for final proofreading. It provides information on the article and how to access it.</field>
 		</row>
+		<!-- Opatan Inc. -->
+		<row>
+			<field name="email_key">REVIEW_SUGGEST</field>
+			<field name="subject">Article Review Suggest</field>
+			<field name="body">{$reviewerName}:
+
+شما به عنوان یک کارشناس ممتاز برای بررسی مقاله &quot;{$articleTitle}&quot; که برای {$journalName} ارسال شده است انتخاب شده اید. در ذیل، چکیده مقاله ارسالی برای شما گنجانده شده است و امیدوارم که در این زمینه مایل به همکاری با این مجله باشید
+
+اگر مايل به همکاری با اين مجله می باشيد ، بر روی لينک زير کليک کنيد :
+
+{$activateUrl}
+
+تا در وب سایت مجله عضو شده. سپس مشخص کنید که آیا مایل به قبول کارشناسی مقاله هستید یا خیر. همچنین به طور همزمان می توانید به مقاله ارسالی دسترسی پیدا کرده و متن کارشناسی و توصیه های خودرا ذخیره کنید. آدرس وب سایت مجله {$journalUrl} است.
+
+از توجه شما به این درخواست سپاسگزاری می کنم.
+
+{$editorialContactSignature}
+
+--------------------------------
+&quot;{$articleTitle}&quot;
+
+چکیده:
+{$articleAbstract}</field>
+			<field name="description">This email from the Section Editor to a Reviewer requests that the reviewer accept or decline the task of reviewing a submission. It provides information about the submission such as the title and abstract, a review due date, and how to access the submission itself. This message is used when the Standard Review Process is selected in Journal Setup, Step 2. (Otherwise see REVIEW_REQUEST_ATTACHED.)</field>
+		</row>
+		<row>
+			<field name="email_key">REVIEW_SUGGEST_ONECLICK</field>
+			<field name="subject">Article Review Suggest</field>
+			<field name="body">{$reviewerName}:
+
+شما به عنوان یک کارشناس ممتاز برای بررسی مقاله &quot;{$articleTitle}&quot; که برای {$journalName} ارسال شده است انتخاب شده اید. در ذیل، چکیده مقاله ارسالی برای شما گنجانده شده است و امیدوارم که در این زمینه مایل به همکاری با این مجله باشید.
+
+لطفا قبل از تاریخ {$weekLaterDate} در وب سایت مجله عضو شده و مشخص سازید که آیا مایل به قبول کارشناسی هستید یا خیر. همچنین به طور همزمان می توانید به مقاله ارسالی دسترسی پیدا کرده و متن کارشناسی و توصیه های خودرا ذخیره کنید.
+
+از توجه شما به این درخواست متشکرم.
+
+{$editorialContactSignature}
+
+
+--------------------------------
+&quot;{$articleTitle}&quot;
+
+چکیده:
+{$articleAbstract}</field>
+			<field name="description">This email from the Section Editor to a Reviewer requests that the reviewer accept or decline the task of reviewing a submission. It provides information about the submission such as the title and abstract, a review due date, and how to access the submission itself. This message is used when the Standard Review Process is selected in Journal Setup, Step 2, and one-click reviewer access is enabled.</field>
+		</row>
+		<row>
+			<field name="email_key">REVIEW_SUGGEST_ATTACHED</field>
+			<field name="subject">Article Review Request</field>
+			<field name="body">{$reviewerName}:
+
+شما به عنوان یک کارشناس ممتاز برای بررسی مقاله &quot;{$articleTitle}&quot; انتخاب شده اید و امیدوارم که در این زمینه مایل به همکاری با این مجله باشید. در ذیل متن راهنمای کارشناسی برای این مجله آمده است و مقاله ارسالی به این ایمیل پیوست شده است.
+
+لطفا با پاسخ دادن به این ایمیل قبل از تاریخ &lt;{$weekLaterDate}&lt; مشخص سازید که آیا قادر به انجام کارشناسی هستید یا خیر.
+
+از توجه شما به این درخواست سپاسگزارم.
+
+{$editorialContactSignature}
+
+راهنمای نویسندگان
+
+{$reviewGuidelines}</field>
+			<field name="description">This email is sent by the Section Editor to a Reviewer to request that they accept or decline the task of reviewing a submission. It includes the submission as an attachment. This message is used when the Email-Attachment Review Process is selected in Journal Setup, Step 2. (Otherwise see REVIEW_REQUEST.)</field>
+		</row>
 	</table>
 </data>
