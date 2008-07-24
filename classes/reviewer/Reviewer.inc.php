@@ -163,6 +163,39 @@ class Reviewer extends DataObject {
 	}
 
 	/**
+	 * Opatan Inc. :
+	 * Get reviewer status.
+	 * @return int
+	 */
+	function getStatus() {
+		return $this->getData('status');
+	}
+
+	/**
+	 * Opatan Inc. :
+	 * Set reviewer status.
+	 */
+	function setStatus($status) {
+		return $this->setData('status', $status);		
+	 }
+	
+	/**
+	 * Opatan Inc.
+	 * Set article id.
+	 */
+	function setArticleId($articleId) {
+		return $this->setData('articleId', $articleId);
+	}
+
+	/**
+	 * Opatan Inc.
+	 * Get article id.
+	 */
+	function getArticleId() {
+		return $this->getData('articleId');
+	}
+
+	/**
 	 * Retrieve array of user settings.
 	 * @param journalId int
 	 * @return array

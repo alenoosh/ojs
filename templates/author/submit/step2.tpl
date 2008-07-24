@@ -435,45 +435,49 @@ function confirmForgottenUpload() {
 {if $authorCanSpecifyReviewers}
 <h3>{translate key="author.submit.reviewerRecommendation"}</h3>
 <table class="data" width="100%">
-{foreach name=reviewers from=$reviewers item=reviewer key=reviewerIndex}
-	{if $countOfReviewers > 1}
-		<tr><td colspan="2"><h4>{translate key="author.submit.reviewerNumber"}&nbsp;{$reviewerIndex+1}</h4></td></tr>
-	{/if}
-	<tr valign="top">
-		<td width="20%" class="label">
+	<tr class="heading" valign="bottom">
+		{if $countOfReviewers > 1}<td width="25%">&nbsp;</td>{/if}
+		<td width="15%" class="label" align="center">
 			{fieldLabel name="reviewers-$reviewerIndex-firstName" required="true" key="user.firstName"}
 		</td>
-		<td width="80%" class="value">
+		<td width="15%" class="label" align="center">{fieldLabel name="reviewers-$reviewerIndex-middleName" key="user.middleName"}</td>
+		<td width="15%" class="label" align="center">{fieldLabel name="reviewers-$reviewerIndex-lastName" required="true" key="user.lastName"}</td>
+		<td width="15%" class="label" align="center">{fieldLabel name="reviewers-$reviewerIndex-affiliation" key="user.affiliation"}</td>
+		<td width="15%" class="label" align="center">{fieldLabel name="reviewers-$reviewerIndex-email" required="true" key="user.email"}</td>
+	</tr>
+{foreach name=reviewers from=$reviewers item=reviewer key=reviewerIndex}
+	<tr>
+		{if $countOfReviewers > 1}
+			<td width="25%">{translate key="author.submit.reviewerNumber"}&nbsp;{$reviewerIndex+1}</td>
+		{/if}			
+		<td width="15%" class="value">
 			<input type="text" class="textField" name="reviewers[{$reviewerIndex|escape}][firstName][{$formLocale|escape}]"
 			       id="reviewers-{$reviewerIndex|escape}-firstName" value="{$reviewer.firstName[$formLocale]|escape}"
-			       size="20" maxlength="40" /></td>
-	</tr>
-	<tr valign="top">
-		<td width="20%" class="label">{fieldLabel name="reviewers-$reviewerIndex-middleName" key="user.middleName"}</td>
-		<td width="80%" class="value"><input type="text" class="textField" 
-		    name="reviewers[{$reviewerIndex|escape}][middleName][{$formLocale|escape}]" 
-		    id="reviewers-{$reviewerIndex|escape}-middleName" value="{$reviewer.middleName[$formLocale]|escape}"
-		    size="20" maxlength="40" /></td>
-	</tr>
-	<tr valign="top">
-		<td width="20%" class="label">{fieldLabel name="reviewers-$reviewerIndex-lastName" required="true" key="user.lastName"}</td>
-		<td width="80%" class="value"><input type="text" class="textField"
-		    name="reviewers[{$reviewerIndex|escape}][lastName][{$formLocale|escape}]"
-		    id="reviewers-{$reviewerIndex|escape}-lastName" value="{$reviewer.lastName[$formLocale]|escape}"
-		    size="20" maxlength="90" /></td>
-	</tr>
-	<tr valign="top">
-		<td width="20%" class="label">{fieldLabel name="reviewers-$reviewerIndex-affiliation" key="user.affiliation"}</td>
-		<td width="80%" class="value"><input type="text" class="textField"
-		    name="reviewers[{$reviewerIndex|escape}][affiliation][{$formLocale|escape}]"
-		    id="reviewers-{$reviewerIndex|escape}-affiliation" value="{$reviewer.affiliation[$formLocale]|escape}"
-		    size="30" maxlength="255"/></td>
-	</tr>
-	<tr valign="top">
-		<td width="20%" class="label">{fieldLabel name="reviewers-$reviewerIndex-email" required="true" key="user.email"}</td>
-		<td width="80%" class="value"><input type="text" class="textField" name="reviewers[{$reviewerIndex|escape}][email]"
-		    id="reviewers-{$reviewerIndex|escape}-email" value="{$reviewer.email|escape}"
-		    size="30" maxlength="90" /></td>
+			       size="20" maxlength="40" />
+		</td>
+		<td width="15%" class="value">
+			<input type="text" class="textField"
+		    	       name="reviewers[{$reviewerIndex|escape}][middleName][{$formLocale|escape}]"
+		    	       id="reviewers-{$reviewerIndex|escape}-middleName" value="{$reviewer.middleName[$formLocale]|escape}"
+		    	       size="20" maxlength="40" />
+		</td>
+		<td width="15%" class="value">
+			<input type="text" class="textField"
+		    	       name="reviewers[{$reviewerIndex|escape}][lastName][{$formLocale|escape}]"
+		               id="reviewers-{$reviewerIndex|escape}-lastName" value="{$reviewer.lastName[$formLocale]|escape}"
+		               size="20" maxlength="90" />
+		</td>
+		<td width="15%" class="value">
+			<input type="text" class="textField"
+		               name="reviewers[{$reviewerIndex|escape}][affiliation][{$formLocale|escape}]"
+		               id="reviewers-{$reviewerIndex|escape}-affiliation" value="{$reviewer.affiliation[$formLocale]|escape}"
+		               size="20" maxlength="255" />
+		</td>
+		<td width="15%" class="value">
+			<input type="text" class="textField" name="reviewers[{$reviewerIndex|escape}][email]"
+		               id="reviewers-{$reviewerIndex|escape}-email" value="{$reviewer.email|escape}"
+		               size="20" maxlength="90" />
+		</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
 {/foreach}

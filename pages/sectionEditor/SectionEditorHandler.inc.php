@@ -235,6 +235,11 @@ class SectionEditorHandler extends Handler {
 		SubmissionEditHandler::notifyReviewer($args);
 	}
 
+	function notifySuggestedReviewer($args) {
+		import('pages.sectionEditor.SubmissionEditHandler');
+		SubmissionEditHandler::notifySuggestedReviewer($args);
+	}
+
 	function notifyAllReviewers($args) {
 		import('pages.sectionEditor.SubmissionEditHandler');
 		SubmissionEditHandler::notifyAllReviewers($args);
