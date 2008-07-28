@@ -4,6 +4,8 @@ cache/f*.php
 
 cache/t_compile/*
 
+!cache/t_compile/.cvsignore
+
 files/
 
 uploads/
