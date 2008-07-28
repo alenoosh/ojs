@@ -137,7 +137,7 @@ class Article extends DataObject {
 	function getFirstAuthor($lastOnly = false) {
 		$author = $this->authors[0];
 		// Opatan Inc. : gets localized author lastName	
-		return $lastOnly ? $author->getLastName(null) : $author->getFullName();
+		return $lastOnly ? $author->getAuthorLastName() : $author->getFullName();
 	}
 
 

@@ -25,8 +25,23 @@ class AuthorDAO extends DAO {
 	 * @return Author
 	 */
 	function &getAuthor($authorId) {
+		$locale = Locale::getLocale();
 		$result = &$this->retrieve(
-			'SELECT * FROM article_authors WHERE author_id = ?', $authorId
+			'SELECT 
+				aa.*, 				
+				aaf.setting_value AS first_name,
+				aam.setting_value AS middle_name,
+				aal.setting_value AS last_name,
+				aaaf.setting_value AS affiliation 
+			 FROM 
+			 	article_authors aa
+				LEFT JOIN article_author_settings aaf ON (aa.author_id = aaf.author_id AND aaf.setting_name = ? AND aaf.locale = ?)
+				LEFT JOIN article_author_settings aal ON (aa.author_id = aal.author_id AND aal.setting_name = ? AND aal.locale = ?)			
+				LEFT JOIN article_author_settings aam ON (aa.author_id = aam.author_id AND aam.setting_name = ? AND aam.locale = ?)
+				LEFT JOIN article_author_settings aaaf ON (aa.author_id = aaaf.author_id AND aaaf.setting_name = ? AND aaaf.locale = ?)
+			 WHERE author_id = ?', 
+			 array('firstName', $locale, 'lastName', $locale, 'middleName', 
+			       $locale, 'affiliation', $locale, $authorId)
 		);
 
 		$returner = null;
@@ -46,10 +61,24 @@ class AuthorDAO extends DAO {
 	 * @return array Authors ordered by sequence
 	 */
 	function &getAuthorsByArticle($articleId) {
+		$locale = Locale::getLocale();
 		$authors = array();
 		$result = &$this->retrieve(
-			'SELECT * FROM article_authors WHERE article_id = ? ORDER BY seq',
-			$articleId
+			'SELECT 
+				aa.*,
+				aaf.setting_value AS first_name,
+				aam.setting_value AS middle_name,
+				aal.setting_value AS last_name,
+				aaaf.setting_value AS affiliation
+			 FROM 
+			 	article_authors aa
+				LEFT JOIN article_author_settings aaf ON (aa.author_id = aaf.author_id AND aaf.setting_name = ? AND aaf.locale = ?)
+				LEFT JOIN article_author_settings aal ON (aa.author_id = aal.author_id AND aal.setting_name = ? AND aal.locale = ?)			
+				LEFT JOIN article_author_settings aam ON (aa.author_id = aam.author_id AND aam.setting_name = ? AND aam.locale = ?)
+				LEFT JOIN article_author_settings aaaf ON (aa.author_id = aaaf.author_id AND aaaf.setting_name = ? AND aaaf.locale = ?)
+			 WHERE article_id = ? ORDER BY seq',
+			 array('firstName', $locale, 'lastName', $locale, 'middleName', 
+			       $locale, 'affiliation', $locale, $articleId)
 		);
 
 		while (!$result->EOF) {
@@ -180,7 +209,7 @@ class AuthorDAO extends DAO {
 			empty($params)?false:$params,
 			$rangeInfo
 		);
-
+		//echo "<pre>"; print_r($result); echo "</pre>";
 		$returner = &new DAOResultFactory($result, $this, '_returnAuthorFromRow');
 		return $returner;
 	}
@@ -234,13 +263,14 @@ class AuthorDAO extends DAO {
 	 * @return Author
 	 */
 	function &_returnAuthorFromRow(&$row) {
+		$locale = Locale::getLocale();
 		$author = &new Author();
 		$author->setAuthorId($row['author_id']);
 		$author->setArticleId($row['article_id']);
-		// Opatan Inc. : $author->setFirstName is removed
-		// Opatan Inc. : $author->setMiddleName is removed
-		// Opatan Inc. : $author->setLastName is removed
-		// Opatan Inc. : $author->setAffiliation is removed
+		$author->setFirstName($row['first_name'], $locale); // Opatan Inc. : Localized author firstName
+		$author->setMiddleName($row['middle_name'], $locale); // Opatan Inc. : Localized author middleName
+		$author->setLastName($row['last_name'], $locale); // Opatan Inc. : Localized author lastName
+		$author->setAffiliation($row['affiliation'], $locale); // Opatan Inc. : Localized author affiliation
 		$author->setCountry($row['country']);
 		$author->setEmail($row['email']);
 		$author->setUrl($row['url']);
