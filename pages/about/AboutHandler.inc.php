@@ -108,7 +108,7 @@ class AboutHandler extends Handler {
 
 		// FIXME: This is pretty inefficient; should probably be cached.
 
-		if ($journal->getSetting('boardEnabled') != true) {
+		if ($journal->getSetting('boardEnabled') == "0") {
 			// Don't use the Editorial Team feature. Generate
 			// Editorial Team information using Role info.
 			$roleDao = &DAORegistry::getDAO('RoleDAO');
@@ -134,7 +134,9 @@ class AboutHandler extends Handler {
 			$templateMgr->assign_by_ref('copyEditors', $copyEditors);
 			$templateMgr->assign_by_ref('proofreaders', $proofreaders);
 			$templateMgr->display('about/editorialTeam.tpl');
-		} else {
+		
+		} else if ($journal->getSetting('boardEnabled') == "1") {
+		   
 			// The Editorial Team feature has been enabled.
 			// Generate information using Group data.
 			$groupDao =& DAORegistry::getDAO('GroupDAO');
@@ -160,7 +162,38 @@ class AboutHandler extends Handler {
 			$templateMgr->assign_by_ref('groups', $groups);
 			$templateMgr->assign_by_ref('teamInfo', $teamInfo);
 			$templateMgr->display('about/editorialTeamBoard.tpl');
+		} else if ($journal->getSetting('boardEnabled') == "2") {
+				
+				if($templateMgr->template_exists("")){
+					$templateMgr->display("");
+				} else {
+					$groupDao =& DAORegistry::getDAO('GroupDAO');
+					$groupMembershipDao =& DAORegistry::getDAO('GroupMembershipDAO');
+
+					$allGroups =& $groupDao->getGroups($journal->getJournalId(), GROUP_CONTEXT_EDITORIAL_TEAM);
+					$teamInfo = array();
+					$groups = array();
+					while ($group =& $allGroups->next()) {
+						if (!$group->getAboutDisplayed()) continue;
+						$memberships = array();
+						$allMemberships =& $groupMembershipDao->getMemberships($group->getGroupId());
+						while ($membership =& $allMemberships->next()) {
+							if (!$membership->getAboutDisplayed()) continue;
+							$memberships[] =& $membership;
+							unset($membership);
+						}
+						if (!empty($memberships)) $groups[] =& $group;
+						$teamInfo[$group->getGroupId()] = $memberships;
+						unset($group);
+					}
+	
+					$templateMgr->assign_by_ref('groups', $groups);
+					$templateMgr->assign_by_ref('teamInfo', $teamInfo);
+					$templateMgr->display('about/editorialTeamBoard.tpl');
+
+				}
 		}
+
 	}
 
 	/**
@@ -224,7 +257,7 @@ class AboutHandler extends Handler {
 		// FIXME: This is pretty inefficient. Should be cached.
 
 		$user = null;
-		if ($journal->getSetting('boardEnabled') != true) {
+		if ($journal->getSetting('boardEnabled') == "0") {
 			$editors = &$roleDao->getUsersByRoleId(ROLE_ID_EDITOR, $journal->getJournalId());
 			while ($potentialUser =& $editors->next()) {
 				if ($potentialUser->getUserId() == $userId)
@@ -260,7 +293,7 @@ class AboutHandler extends Handler {
 				unset($potentialUser);
 			}
 
-		} else {
+		} else if ($journal->getSetting('boardEnabled') == "1") {
 			$groupDao =& DAORegistry::getDAO('GroupDAO');
 			$groupMembershipDao =& DAORegistry::getDAO('GroupMembershipDAO');
 

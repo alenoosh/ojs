@@ -188,7 +188,6 @@ class MailTemplate extends Mail {
 	function assignParams($paramArray = array()) {
 		$subject = $this->getSubject();
 		$body = $this->getBody();
-
 		// Add commonly-used variables to the list
 		if (isset($this->journal)) {
 			// FIXME Include affiliation, title, etc. in signature?
@@ -207,7 +206,7 @@ class MailTemplate extends Mail {
 				$body = str_replace('{$' . $key . '}', $value, $body);
 			}
 		}
-
+	
 		$this->setSubject($subject);
 		$this->setBody($body);
 	}
