@@ -9,5 +9,6 @@ cache/t_compile/*
 files/
 
 uploads/
-
+public/journals
+public/site
 upload/

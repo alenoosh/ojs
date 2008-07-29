@@ -28,6 +28,10 @@
 
 <div class="separator"></div>
 
+{include file="sectionEditor/submission/reviewers.tpl"}
+
+<div class="separator"></div>
+
 {include file="sectionEditor/submission/editors.tpl"}
 
 <div class="separator"></div>

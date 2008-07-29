@@ -265,9 +265,10 @@ class GroupHandler extends ManagerHandler {
 	function setBoardEnabled($args) {
 		GroupHandler::validate();
 		$journal = &Request::getJournal();
-		$boardEnabled = Request::getUserVar('boardEnabled')==1?true:false;
+		$boardEnabled = Request::getUserVar('boardEnabled');
 		$journalSettingsDao =& DAORegistry::getDAO('JournalSettingsDAO');
-		$journalSettingsDao->updateSetting($journal->getJournalId(), 'boardEnabled', $boardEnabled);
+		/**Opatan Inc. : change boardEnabled from bool to int**/
+		$journalSettingsDao->updateSetting($journal->getJournalId(), 'boardEnabled', $boardEnabled,'int');
 		Request::redirect(null, null, 'groups');
 	}
 

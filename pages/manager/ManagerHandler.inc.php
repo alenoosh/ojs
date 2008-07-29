@@ -219,7 +219,6 @@ class ManagerHandler extends Handler {
 		PeopleHandler::signOutAsUser();
 	}
 
-
 	//
 	// Section Management
 	//

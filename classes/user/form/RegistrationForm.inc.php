@@ -127,6 +127,10 @@ class RegistrationForm extends Form {
 	 * Initialize default data.
 	 */
 	function initData() {
+		// Opatan Inc.
+		if (!$this->getData('isReviewer')) {
+			$this->setData('isReviewer', 0);
+		}
 		$this->setData('registerAsReader', 1);
 		$this->setData('existingUser', $this->existingUser);
 		$this->setData('userLocales', array());

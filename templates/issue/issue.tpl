@@ -41,14 +41,27 @@
 
 		{if $hasAccess || ($subscriptionRequired && $showGalleyLinks)}
 			{foreach from=$article->getLocalizedGalleys() item=galley name=galleyList}
-				<a href="{url page="article" op="view" path=$article->getBestArticleId($currentJournal)|to_array:$galley->getGalleyId()}" class="file">{$galley->getGalleyLabel()|escape}</a>
+				<a href="{url page="article" op="view" path=$article->getBestArticleId($currentJournal)|to_array:$galley->getGalleyId()}" class="file">{* Opatan Inc. : create file icons*}
+	  {if $galley->getGalleyLabel()|escape == "PDF"}
+		<img class="accessLogo" src="{$baseUrl}/templates/images/icons/pdf.gif" border="0" alt="PDF" title="PDF">
+	  {elseif $galley->getGalleyLabel()|escape == "HTML"}
+          	<img class="accessLogo" src="{$baseUrl}/templates/images/icons/html.gif" border="0" alt="HTML" title="HTML">
+	  {elseif $galley->getGalleyLabel()|escape == "PostScript"}
+          	<img class="accessLogo" src="{$baseUrl}/templates/images/icons/ps.gif" border="0" alt="PostScript" title="PostScript">
+	  {elseif $galley->getGalleyLabel()|escape == "XML"}
+          	<img class="accessLogo" src="{$baseUrl}/templates/images/icons/xml.gif" border="0" alt="XML" title="XML">
+	  {else}
+          	<img class="accessLogo" src="{$baseUrl}/templates/images/icons/untitled.gif" border="0" alt="UNTITLED" title="UNTITLED">
+	  {/if}</a>
 				{if $subscriptionRequired && $showGalleyLinks && $restrictOnlyPdf}
 					{if $article->getAccessStatus() || !$galley->isPdfGalley()}	
 						<img class="accessLogo" src="{$baseUrl}/templates/images/icons/fulltext_open_medium.gif">
 					{else}
 						<img class="accessLogo" src="{$baseUrl}/templates/images/icons/fulltext_restricted_medium.gif">
 					{/if}
+										
 				{/if}
+				
 			{/foreach}
 			{if $subscriptionRequired && $showGalleyLinks && !$restrictOnlyPdf}
 				{if $article->getAccessStatus()}

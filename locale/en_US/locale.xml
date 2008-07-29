@@ -102,6 +102,7 @@
 	<message key="common.changesSaved">Your changes have been saved.</message>
 	<message key="common.chooseOne">Choose One</message>
 	<message key="common.alreadyAssigned">Assigned</message>
+	<message key="common.considered">Considered</message> <!-- Opatan Inc. -->
 	<message key="common.assign">Assign</message>
 	<message key="common.assigned">Assigned</message>
 	<message key="common.record">Record</message>
@@ -513,6 +514,7 @@
 	<message key="user.role.sectionEditors">Section Editors</message>
 	<message key="user.role.layoutEditors">Layout Editors</message>
 	<message key="user.role.reviewers">Reviewers</message>
+	<message key="user.role.suggestedReviewers">Suggested Reviewers</message> <!-- Opatan Inc. -->
 	<message key="user.role.copyeditors">Copyeditors</message>
 	<message key="user.role.proofreaders">Proofreaders</message>
 	<message key="user.role.authors">Authors</message>
@@ -1381,6 +1383,7 @@ Select a model for handling these aspects of the editorial process. (To designat
 	<message key="manager.groups.enableBoard.description"><![CDATA[Under <a href="{$aboutEditorialTeamUrl}">People</a> in About the Journal:]]></message>
 	<message key="manager.groups.enableBoard">The Journal Manager creates titles and adds people under each title.</message>
 	<message key="manager.groups.disableBoard">OJS lists people in Editorial Team under assigned roles (Journal Manager, Copyeditor, etc.)</message>
+	<message key="manager.groups.customBoard">OJS uses a Customized Layout.</message>	
 	<message key="manager.groups.context.editorialTeam.short">Editorial Team</message>
 	<message key="manager.groups.context.editorialTeam">Have title appear under Editorial Team in People section of About the Journal (e.g. Editor)</message>
 	<message key="manager.groups.context.people">Have title appear as its own category under People (e.g. Editorial Board)</message>

@@ -11,20 +11,23 @@
 <a name="submissions"></a>
 
 <table class="listing" width="100%">
-	<tr><td class="headseparator" colspan="{if $statViews}7{else}6{/if}">&nbsp;</td></tr>
+	<tr><td class="headseparator" colspan="{if $statViews}8{else}7{/if}">&nbsp;</td></tr>
 	<tr valign="bottom" class="heading">
+		<td width="5%"></td>
 		<td width="5%">{translate key="common.id"}</td>
 		<td width="5%"><span class="disabled">MM-DD</span><br />{translate key="submissions.submit"}</td>
 		<td width="5%">{translate key="submissions.sec"}</td>
-		<td width="23%">{translate key="article.authors"}</td>
-		<td width="32%">{translate key="article.title"}</td>
+		<td width="20%">{translate key="article.authors"}</td>
+		<td width="30%">{translate key="article.title"}</td>
 		{if $statViews}<td width="5%">{translate key="submission.views"}</td>{/if}
 		<td width="25%" align="right">{translate key="common.status"}</td>
 	</tr>
-	<tr><td class="headseparator" colspan="{if $statViews}7{else}6{/if}">&nbsp;</td></tr>
+	<tr><td class="headseparator" colspan="{if $statViews}8{else}7{/if}">&nbsp;</td></tr>
+<form name="formName" action="#">
 {iterate from=submissions item=submission}
 	{assign var="articleId" value=$submission->getArticleId()}
 	<tr valign="top">
+		<td><input type="radio" name="radioButtonName" value="{$articleId}" id="{$progress}" /></td>
 		<td>{$articleId|escape}</td>
 		<td>{$submission->getDateSubmitted()|date_format:$dateFormatTrunc}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
@@ -57,15 +60,16 @@
 	</tr>
 
 	<tr>
-		<td colspan="{if $statViews}7{else}6{/if}" class="{if $submissions->eof()}end{/if}separator">&nbsp;</td>
+		<td colspan="{if $statViews}8{else}7{/if}" class="{if $submissions->eof()}end{/if}separator">&nbsp;</td>
 	</tr>
 {/iterate}
+</form>
 {if $submissions->wasEmpty()}
 	<tr>
-		<td colspan="{if $statViews}7{else}6{/if}" class="nodata">{translate key="submissions.noSubmissions"}</td>
+		<td colspan="{if $statViews}8{else}7{/if}" class="nodata">{translate key="submissions.noSubmissions"}</td>
 	</tr>
 	<tr>
-		<td colspan="{if $statViews}7{else}6{/if}" class="endseparator">&nbsp;</td>
+		<td colspan="{if $statViews}8{else}7{/if}" class="endseparator">&nbsp;</td>
 	</tr>
 {else}
 	<tr>

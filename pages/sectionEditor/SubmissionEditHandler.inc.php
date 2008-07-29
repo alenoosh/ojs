@@ -39,10 +39,15 @@ class SubmissionEditHandler extends SectionEditorHandler {
 
 		$sectionDao = &DAORegistry::getDAO('SectionDAO');
 		$section = &$sectionDao->getSection($submission->getSectionId());
+		
+		// Opatan Inc. : get reviewers suggested by the author for the article
+		$sectionEditorSubmissionDao = &DAORegistry::getDAO('SectionEditorSubmissionDAO');
+		$reviewers = &$sectionEditorSubmissionDao->getReviewersSuggestedForArticle($articleId);
 
 		$templateMgr = &TemplateManager::getManager();
 
 		$templateMgr->assign_by_ref('submission', $submission);
+		$templateMgr->assign_by_ref('reviewers', $reviewers);
 		$templateMgr->assign_by_ref('section', $section);
 		$templateMgr->assign_by_ref('authors', $submission->getAuthors());
 		$templateMgr->assign_by_ref('submissionFile', $submission->getSubmissionFile());
@@ -537,6 +542,20 @@ class SubmissionEditHandler extends SectionEditorHandler {
 
 		if (SectionEditorAction::notifyReviewer($submission, $reviewId, $send)) {
 			Request::redirect(null, null, 'submissionReview', $articleId);
+		}
+	}
+
+	function notifySuggestedReviewer($args = array()) {
+		$articleId = Request::getUserVar('articleId');
+		list($journal, $submission) = SubmissionEditHandler::validate($articleId, SECTION_EDITOR_ACCESS_REVIEW);
+
+		$reviewerId = Request::getUserVar('reviewerId');
+
+		$send = Request::getUserVar('send')?true:false;
+		parent::setupTemplate(true, $articleId, 'review');
+
+		if (SectionEditorAction::notifySuggestedReviewer($submission, $reviewerId, $send)) {
+			Request::redirect(null, null, 'submission', $articleId);
 		}
 	}
 
