@@ -1714,22 +1714,26 @@ class SectionEditorAction extends Action {
 		$userDao =& DAORegistry::getDAO('UserDAO');
 		$articleCommentDao =& DAORegistry::getDAO('ArticleCommentDAO');
 		$sectionEditorSubmissionDao =& DAORegistry::getDAO('SectionEditorSubmissionDAO');
-
 		$journal =& Request::getJournal();
+		$decisions = $sectionEditorSubmission->getDecisions();
+		$decisions = array_pop($decisions); // Rounds
+		$decision = array_pop($decisions);
 
 		$user =& Request::getUser();
 		import('mail.ArticleMailTemplate');
-		$email = &new ArticleMailTemplate($sectionEditorSubmission);
+		if ($decision && $decision['decision'] == SUBMISSION_EDITOR_DECISION_DECLINE) {
+			
+			$email = &new ArticleMailTemplate($sectionEditorSubmission, 'REVIEW_REQUEST');
+
+		}else {
+			$email = &new ArticleMailTemplate($sectionEditorSubmission);
+		}
 
 		$copyeditor =& $sectionEditorSubmission->getCopyeditor();
 
 		if ($send && !$email->hasErrors()) {
 			HookRegistry::call('SectionEditorAction::emailEditorDecisionComment', array(&$sectionEditorSubmission, &$send));
 			$email->send();
-
-			$decisions = $sectionEditorSubmission->getDecisions();
-			$decisions = array_pop($decisions); // Rounds
-			$decision = array_pop($decisions);
 
 			if ($decision && $decision['decision'] == SUBMISSION_EDITOR_DECISION_DECLINE) {
 				// If the most recent decision was a decline,
