@@ -107,7 +107,7 @@ class AboutHandler extends Handler {
 		$templateMgr->assign_by_ref('countries', $countries);
 
 		// FIXME: This is pretty inefficient; should probably be cached.
-
+		/**Opatan Inc. **/
 		if ($journal->getSetting('boardEnabled') == "0") {
 			// Don't use the Editorial Team feature. Generate
 			// Editorial Team information using Role info.
@@ -164,12 +164,19 @@ class AboutHandler extends Handler {
 			$templateMgr->display('about/editorialTeamBoard.tpl');
 		} else if ($journal->getSetting('boardEnabled') == "2") {
 				
-				if($templateMgr->template_exists("")){
-					$templateMgr->display("");
+				$curLoc = Locale::getLocale();
+				$journalId = $journal->getJournalId();
+				$publicJournalsDir = Config::getVar('files', 'public_files_dir') . '/journals/' . $journalId;
+				$templateMgr->assign('publicJournalsDir', $publicJournalsDir);
+				if (file_exists("{$publicJournalsDir}/editorialTeam_{$curLoc}.tpl")) {
+					$templateMgr->assign('customTemplateExist', true);
+					$templateMgr->assign('customTemplateName', "../{$publicJournalsDir}/editorialTeam_{$curLoc}.tpl");
+					$templateMgr->assign('customTemplateImageDir', Config::getVar('general', 'base_url') . '/'. Config::getVar('files', 'public_files_dir') . '/journals/' . $journalId);
+				
 				} else {
+					$templateMgr->assign('customTemplateExist', false);
 					$groupDao =& DAORegistry::getDAO('GroupDAO');
 					$groupMembershipDao =& DAORegistry::getDAO('GroupMembershipDAO');
-
 					$allGroups =& $groupDao->getGroups($journal->getJournalId(), GROUP_CONTEXT_EDITORIAL_TEAM);
 					$teamInfo = array();
 					$groups = array();
@@ -180,18 +187,19 @@ class AboutHandler extends Handler {
 						while ($membership =& $allMemberships->next()) {
 							if (!$membership->getAboutDisplayed()) continue;
 							$memberships[] =& $membership;
-							unset($membership);
+						unset($membership);
 						}
 						if (!empty($memberships)) $groups[] =& $group;
 						$teamInfo[$group->getGroupId()] = $memberships;
 						unset($group);
 					}
-	
-					$templateMgr->assign_by_ref('groups', $groups);
-					$templateMgr->assign_by_ref('teamInfo', $teamInfo);
-					$templateMgr->display('about/editorialTeamBoard.tpl');
-
 				}
+	
+				$templateMgr->assign_by_ref('groups', $groups);
+				$templateMgr->assign_by_ref('teamInfo', $teamInfo);
+				$templateMgr->display('about/editorialTeamBoard.tpl');
+
+				
 		}
 
 	}

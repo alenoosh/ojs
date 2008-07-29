@@ -10,7 +10,10 @@
  *}
 {assign var="pageTitle" value="about.editorialTeam"}
 {include file="common/header.tpl"}
-
+{* Opatan Inc.*}
+{if $customTemplateExist}
+{include file="$customTemplateName"}
+{else}
 {foreach from=$groups item=group}
 <h4>{$group->getGroupTitle()}</h4>
 {assign var=groupId value=$group->getGroupId()}
@@ -23,6 +26,6 @@
 	<br />
 {/foreach}
 {/foreach}
-
+{/if}
 
 {include file="common/footer.tpl"}
