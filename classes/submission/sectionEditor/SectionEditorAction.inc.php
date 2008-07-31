@@ -1821,14 +1821,30 @@ class SectionEditorAction extends Action {
 
 		$user =& Request::getUser();
 		import('mail.ArticleMailTemplate');
-		if ($decision && $decision['decision'] == SUBMISSION_EDITOR_DECISION_DECLINE) {
-			
-			$email = &new ArticleMailTemplate($sectionEditorSubmission, 'REVIEW_REQUEST');
-
-		}else {
-			$email = &new ArticleMailTemplate($sectionEditorSubmission);
+		/** Opatan Inc. **/
+		if ($decision) {
+			switch ($decision['decision']) {
+				case SUBMISSION_EDITOR_DECISION_ACCEPT:
+					$email = &new ArticleMailTemplate($sectionEditorSubmission, 'EDITOR_ACCEPT');
+					break;
+				case SUBMISSION_EDITOR_DECISION_PENDING_REVISIONS:
+					$email = &new ArticleMailTemplate($sectionEditorSubmission, 'EDITOR_REVISION_MAJOR');
+					break
+				case SUBMISSION_EDITOR_DECISION_RESUBMIT:
+					$email = &new ArticleMailTemplate($sectionEditorSubmission, 'EDITOR_RESUBMIT');
+					break;
+				case SUBMISSION_EDITOR_DECISION_DECLINE:
+					$email = &new ArticleMailTemplate($sectionEditorSubmission, 'EDITOR_DECLINE');
+					break;
+				case SUBMISSION_EDITOR_DECISION_MINOR:
+					$email = &new ArticleMailTemplate($sectionEditorSubmission, 'EDITOR_REVISION_MINOR');
+					break;
+				default:
+					$email = &new ArticleMailTemplate($sectionEditorSubmission);
+					break;
+			}
 		}
-
+				
 		$copyeditor =& $sectionEditorSubmission->getCopyeditor();
 
 		if ($send && !$email->hasErrors()) {
