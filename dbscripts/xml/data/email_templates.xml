@@ -106,6 +106,35 @@
 			<field name="from_role_id">256<!-- Editor --></field>
 			<field name="to_role_id">512<!-- Section Editor --></field>
 		</row>
+<!--Opatan Inc.-->
+		<row>
+			<field name="email_key">EDITOR_ACCEPT</field>
+			<field name="can_edit">1</field>
+			<field name="can_disable">1</field>
+		</row>
+		<row>
+			<field name="email_key">EDITOR_REVISION_MAJOR</field>
+			<field name="can_edit">1</field>
+			<field name="can_disable">1</field>
+		</row>
+		<row>
+			<field name="email_key">EDITOR_RESUBMIT</field>
+			<field name="can_edit">1</field>
+			<field name="can_disable">1</field>
+		</row>
+		<row>
+			<field name="email_key">EDITOR_DECLINE</field>
+			<field name="can_edit">1</field>
+			<field name="can_disable">1</field>
+		</row>
+		<row>
+			<field name="email_key">EDITOR_REVISION_MINOR</field>
+			<field name="can_edit">1</field>
+			<field name="can_disable">1</field>
+		</row>
+
+
+
 
 
 		<!--

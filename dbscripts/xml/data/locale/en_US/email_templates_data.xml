@@ -21,82 +21,7 @@
 		  * General
 		  *
 		  -->
-<!--** Opatan Inc. **-->
-		<row>
-			<field name="email_key">EDITOR_ACCEPT</field>
-			<field name="subject"></field>
-			<field name="body">Dear Dr {$Authors}
 
-I am pleased to inform you that your manuscript entitled "{$ariticleTitle}." has been accpeted for publication in the "{$journalTitle}," and sent for further processing (copy and layout editing). Please keep conatct with the editorial team to prepare a cleen galley of your paper.
-
-Yours sincerely
-{$editorialSignature}</field>
-			<field name="description"></field>
-		
-		</row>
-		<row>
-			<field name="email_key">EDITOR_REVISION_MAJOR</field>
-			<field name="subject"></field>
-			<field name="body">Dear Dr {$Authors}
-I have received feedback from the experts who were selected to review your manuscript entitled "{$ariticleTitle}." Unfortunately, the acceptability of the paper for publication in the {$journalTitle} cannot be decided at this time. The reviewers felt that the manuscript contains interesting and potentially important data, but are concerned about a number of general and specific points. Therefore the acceptability of the manuscript can not be determined without revision. Please carefully consider all reviewer comments if you submit a revision. The comments of the reviewers appear at the bottom of this e-mail.
-
-We must receive the revised manuscript within one month from today, or it may be considered a new submission.
-
-Yours sincerely
-{$editorialSignature}</field>
-			<field name="description"></field>
-		</row>
-		<row>
-			<field name="email_key">EDITOR_RESUBMIT</field>
-			<field name="subject"></field>
-			<field name="body">Dear Dr {$Authors}
-
-Thank you for submitting the manuscript "{$ariticleTitle}," to "{$journalTitle}". I have received feedback from the experts who were selected to review your manuscript entitled "{$ariticleTitle}." Regarding major problem with yyour paper I can not decide on it and after your revision it should be sent to for review again. Please carefully consider all reviewer comments if you submit a revision. The comments of the reviewers appear at the bottom of this e-mail.
-
-We must receive the revised manuscript within one month from today, or it may be considered a new submission.
-
-Yours sincerely
-{$editorialSignature</field>
-			<field name="description"></field>
-
-		</row>
-		<row>
-			<field name="email_key">EDITOR_DECLINE</field>
-			<field name="subject"></field>
-			<field name="body">Dear Dr {$Authors}
-
-Your manuscript entitled "{$ariticleTitle}." has been reviewed, and the reviewer comments can be found at the end of this letter. I am sorry to report that after careful review the decision has been made not to accept the manuscript for publication in The {$journalTitle}. Some of the reasons for this decision are outlined in the manuscript reviews.
-
-Submissions to the Journal have increased substantially in recent years and, unfortunately, this manuscript did not have the priority necessary for publication in The {$journalTitle}.
-
-We do appreciate the opportunity you gave us to consider this manuscript for publication in This Journal, and its our pleasure to consider future manuscripts of interest to our readers.
-
-
-If you have any questions or comments concerning this review, please contact me.
-
-Best Regards,
-{$editorialSignature}
-</field>
-			<field name="description"></field>
-		</row>
-		<row>
-			<field name="email_key">EDITOR_REVISION_MINOR</field>
-			<field name="subject"></filed>
-			<field name="body">Dear Dr {$Authors}
-I have received feedback from the experts who were selected to review your manuscript entitled "{$ariticleTitle}." The reviewers felt that the manuscript contains interesting and potentially important data. Providied some revision performd by the authors, if can be considered for publication in {$journalTitle}.
-
-Please carefully consider reviewer comments if you submit a revision. The comments of the reviewers appear at the bottom of this e-mail.
-
-We must receive the revised manuscript within one month from today, or it may be considered a new submission.
-
-Yours sincerely
-{$editorialSignature}
-
-</field>
-			<field name="description"></field>
-
-		</row>
-<!--**  //Opatan Inc.  **-->
 		<row>
 			<field name="email_key">PASSWORD_RESET_CONFIRM</field>
 			<field name="subject">Password Reset Confirmation</field>
@@ -975,5 +900,93 @@ Review Guidelines
 </field>
 			<field name="description">This email is sent by the Section Editor to a Reviewer to request that they accept or decline the task of reviewing a submission. It includes the submission as an attachment. This message is used when the Email-Attachment Review Process is selected in Journal Setup, Step 2. (Otherwise see REVIEW_REQUEST.)</field>
 		</row>
+<!--** Opatan Inc. **-->
+		<row>
+			<field name="email_key">EDITOR_ACCEPT</field>
+			<field name="subject">{$articleTitle}</field>
+			<field name="body">Dear Dr {$authorName}
+
+I am pleased to inform you that your manuscript entitled "{$articleTitle}." has been accpeted for publication in the "{$journalName}," and sent for further processing (copy and layout editing). Please keep conatct with the editorial team to prepare a cleen galley of your paper.
+
+Yours sincerely
+{$editorialContactSignature}</field>
+			<field name="description">Editor decision:Accept 
+Sender: Editor
+Recipient: Author</field>
+		
+		</row>
+		<row>
+			<field name="email_key">EDITOR_REVISION_MAJOR</field>
+			<field name="subject">{$articleTitle}</field>
+			<field name="body">Dear Dr {$authorName}
+I have received feedback from the experts who were selected to review your manuscript entitled "{$articleTitle}." Unfortunately, the acceptability of the paper for publication in the {$journalName} cannot be decided at this time. The reviewers felt that the manuscript contains interesting and potentially important data, but are concerned about a number of general and specific points. Therefore the acceptability of the manuscript can not be determined without revision. Please carefully consider all reviewer comments if you submit a revision. The comments of the reviewers appear at the bottom of this e-mail.
+
+We must receive the revised manuscript within one month from today, or it may be considered a new submission.
+
+Yours sincerely
+{$editorialContactSignature}</field>
+			<field name="description">Editor decision: Revision_major
+Sender: Editor
+Recipient: Author</field>
+		</row>
+		<row>
+			<field name="email_key">EDITOR_RESUBMIT</field>
+			<field name="subject">{$articleTitle}</field>
+			<field name="body">Dear Dr {$authorName}
+
+Thank you for submitting the manuscript "{$articleTitle}," to "{$journalName}". I have received feedback from the experts who were selected to review your manuscript entitled "{$articleTitle}." Regarding major problem with your paper I can not decide on it and after your revision it should be sent to for review again. Please carefully consider all reviewer comments if you submit a revision. The comments of the reviewers appear at the bottom of this e-mail.
+
+We must receive the revised manuscript within one month from today, or it may be considered a new submission.
+
+Yours sincerely
+{$editorialContactSignature}</field>
+			<field name="description">Editor decision: Resubmit
+Sender: Editor
+Recipient: Author
+</field>
+
+		</row>
+		<row>
+			<field name="email_key">EDITOR_DECLINE</field>
+			<field name="subject">{$articleTitle}</field>
+			<field name="body">Dear Dr {$authorName}
+
+Your manuscript entitled "{$articleTitle}." has been reviewed, and the reviewer comments can be found at the end of this letter. I am sorry to report that after careful review the decision has been made not to accept the manuscript for publication in The {$journalName}. Some of the reasons for this decision are outlined in the manuscript reviews.
+
+Submissions to the Journal have increased substantially in recent years and, unfortunately, this manuscript did not have the priority necessary for publication in The {$journalName}.
+
+We do appreciate the opportunity you gave us to consider this manuscript for publication in This Journal, and its our pleasure to consider future manuscripts of interest to our readers.
+
+
+If you have any questions or comments concerning this review, please contact me.
+
+Best Regards,
+{$editorialContactSignature}
+</field>
+			<field name="description">Editor decision: Reject
+Sender: Editor
+Recipient: Author
+</field>
+		</row>
+		<row>
+			<field name="email_key">EDITOR_REVISION_MINOR</field>
+			<field name="subject">{$articleTitle}</field>
+			<field name="body">Dear Dr {$authorName}
+I have received feedback from the experts who were selected to review your manuscript entitled "{$articleTitle}." The reviewers felt that the manuscript contains interesting and potentially important data. Providied some revision performd by the authors, if can be considered for publication in {$journalName}.
+
+Please carefully consider reviewer comments if you submit a revision. The comments of the reviewers appear at the bottom of this e-mail.
+
+We must receive the revised manuscript within one month from today, or it may be considered a new submission.
+
+Yours sincerely
+{$editorialContactSignature}
+</field>
+			<field name="description">Editor decision: Revision_minor
+Sender: Editor
+Recipient: Author
+</field>
+		</row>
+			
+<!--**  //Opatan Inc.  **-->
 	</table>
 </data>
