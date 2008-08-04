@@ -1829,7 +1829,7 @@ class SectionEditorAction extends Action {
 					break;
 				case SUBMISSION_EDITOR_DECISION_PENDING_REVISIONS:
 					$email = &new ArticleMailTemplate($sectionEditorSubmission, 'EDITOR_REVISION_MAJOR');
-					break
+					break;
 				case SUBMISSION_EDITOR_DECISION_RESUBMIT:
 					$email = &new ArticleMailTemplate($sectionEditorSubmission, 'EDITOR_RESUBMIT');
 					break;
