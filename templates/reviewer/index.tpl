@@ -25,7 +25,7 @@
 	<li><a href="#" onclick="sendMail()">{translate key="common.queue.short.emailTheEditor"}</a></li>
 	<li><a href="#" onclick="callSelectedUrl('{url op="function" path="article_id" anchor="anchor"}','submission','reviewerGuidelines')">{translate key="reviewer.article.reviewerGuidelines"}</a></li>
 	<li><a href="#" onclick="callSelectedUrl('{url op="function" path="article_id"}','submission')">{translate key="common.queue.short.viewDetails"}</a></li>
-	<li>{if ($pageToDisplay == "completed")}<a href="{url path="completed"}">{translate key="common.queue.short.getReviewerCertification"}</a>{/if}</li>
+	<li>{if ($pageToDisplay == "completed")}<a href="#" onclick="callSelectedUrl('{url op="function" path="article_id"}','getRevCertification')">{translate key="common.queue.short.getReviewerCertification"}</a>{/if}</li>
 </ul>
 
 <br />

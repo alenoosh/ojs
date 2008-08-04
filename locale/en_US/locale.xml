@@ -270,6 +270,7 @@
 	<message key="common.queue.short.emailTheEditor">Email the editor</message>
 	<message key="common.queue.short.viewDetails">View Details</message>
 	<message key="common.queue.short.getReviewerCertification">Get Reviewer Certification</message>
+	<message key="common.queue.long.revCertification">Reviwer Certification</message>
 
 
 	

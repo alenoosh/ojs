@@ -142,8 +142,13 @@ class ReviewerHandler extends Handler {
 	 * Get Reviewer Certification 
 	 *
 	 */
-	function getRevCertification() {
+	function getRevCertification($args) {
+		import('pages.reviewer.SubmissionReviewHandler');
+		$reviewId = $args[0];
+		
+		list($journal, $submission, $user) = SubmissionReviewHandler::validate($reviewId);
 		$templateMgr = &TemplateManager::getManager();
+		$templateMgr->assign_by_ref('submission', $submission);
 		$templateMgr->display("reviewer/getRevCertification.tpl");
 	}
 
