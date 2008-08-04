@@ -1818,7 +1818,10 @@ class SectionEditorAction extends Action {
 		$decisions = $sectionEditorSubmission->getDecisions();
 		$decisions = array_pop($decisions); // Rounds
 		$decision = array_pop($decisions);
-
+		$journal = &Request::getJournal();
+		$user = &Request::getUser();
+		$author = &$userDao->getUser($sectionEditorSubmission->getUserId());
+		if (!isset($author)) return true;
 		$user =& Request::getUser();
 		import('mail.ArticleMailTemplate');
 		/** Opatan Inc. **/
@@ -1839,11 +1842,9 @@ class SectionEditorAction extends Action {
 				case SUBMISSION_EDITOR_DECISION_MINOR:
 					$email = &new ArticleMailTemplate($sectionEditorSubmission, 'EDITOR_REVISION_MINOR');
 					break;
-				default:
-					$email = &new ArticleMailTemplate($sectionEditorSubmission);
-					break;
 			}
-		}
+
+		} else {  $email = &new ArticleMailTemplate($sectionEditorSubmission); }
 				
 		$copyeditor =& $sectionEditorSubmission->getCopyeditor();
 
@@ -1882,6 +1883,13 @@ class SectionEditorAction extends Action {
 						$email->addCc ($author->getEmail(), $author->getFullName());
 					}
 				}
+				/** Opatan Inc.**/
+				$paramArray = array(
+					'editorialContactSignature' => $user->getContactSignature(),
+					'authorName' => $author->getFullName()
+				);
+				$email->assignParams($paramArray);
+
 			} else {
 				if (Request::getUserVar('importPeerReviews')) {
 					$reviewAssignmentDao = &DAORegistry::getDAO('ReviewAssignmentDAO');

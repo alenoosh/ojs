@@ -137,6 +137,15 @@ class ReviewerHandler extends Handler {
 		}
 		$templateMgr->assign('pageHierarchy', $pageHierarchy);
 	}
+	
+	/**
+	 * Get Reviewer Certification 
+	 *
+	 */
+	function getRevCertification() {
+		$templateMgr = &TemplateManager::getManager();
+		$templateMgr->display("reviewer/getRevCertification.tpl");
+	}
 
 	//
 	// Submission Tracking
