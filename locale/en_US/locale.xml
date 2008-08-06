@@ -271,6 +271,7 @@
 	<message key="common.queue.short.viewDetails">View Details</message>
 	<message key="common.queue.short.getReviewerCertification">Get Reviewer Certification</message>
 	<message key="common.queue.long.revCertification">Reviwer Certification</message>
+	<message key="common.queue.long.opatan">Modified &amp; Maintained by <![CDATA[<a href="http://www.opatan.com" style="text-decoration:none;" >Opatan Inc.</a>]]></message>
 
 
 	

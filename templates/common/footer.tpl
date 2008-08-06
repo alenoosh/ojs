@@ -8,6 +8,7 @@
  *
  * $Id$
  *}
+ 
 {if $displayCreativeCommons}
 	<br /><br />
 	<a rel="license" target="_new" href="http://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" title="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/80x15.png" /></a>
@@ -42,5 +43,15 @@
 {/if}
 
 </div><!-- container -->
+<!-- Opatan Inc. -->
+<table width="100%"><tr><td>
+
+<table id="opatan">
+<tr><td valign="bottom">{translate key="common.queue.long.opatan"}</td></tr>
+ </table>
+
+</td></tr></table>
+
 </body>
 </html>
+
