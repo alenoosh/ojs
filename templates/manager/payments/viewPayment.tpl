@@ -40,7 +40,7 @@
 		<tr>
 			<td width="25%">{translate key="manager.payment.timestamp"}</td>
 			<td class="nowrap">
-			{$payment->getTimestamp()|escape}
+			{showdate value=$payment->getTimestamp() type=$calType}
 			</td>
 		<tr>
 		<tr>

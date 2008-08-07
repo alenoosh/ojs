@@ -28,7 +28,7 @@
 	{iterate from=submissions item=submission}
 	<tr valign="top" {if $submission->getFastTracked()} class="fastTracked"{/if}>
 		<td>{$submission->getArticleId()}</td>
-		<td>{$submission->getDateSubmitted()|date_format:$dateFormatTrunc}</td>
+		<td>{showdate value=$submission->getDateSubmitted() format=$dateFormatTrunc type=$calType}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
 		<td>{$submission->getAuthorString(true)|truncate:40:"..."|escape}</td>
 		<td><a href="{url op="submission" path=$submission->getArticleId()}" class="action">{$submission->getArticleTitle()|strip_unsafe_html|truncate:60:"..."}</a></td>

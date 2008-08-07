@@ -56,7 +56,7 @@
 </tr>
 <tr valign="top">
 	<td class="label">{translate key="common.dateUploaded"}</td>
-	<td class="value">{$galley->getDateUploaded()|date_format:$dateFormatShort}</td>
+	<td class="value">{showdate value=$galley->getDateUploaded() format=$dateFormatShort type=$calType}</td>
 </tr>
 
 <tr valign="top">
@@ -87,7 +87,7 @@
 </tr>
 <tr valign="top">
 	<td class="label">{translate key="common.dateUploaded"}</td>
-	<td class="value">{$styleFile->getDateUploaded()|date_format:$dateFormatShort}</td>
+	<td class="value">{showdate value=$styleFile->getDateUploaded() format=$dateFormatShort type=$calType}</td>
 </tr>
 <tr valign="top">
 	<td>&nbsp;</td>
@@ -131,7 +131,7 @@
 	<td><a class="action" href="{url op="downloadFile" path=$articleId|to_array:$imageFile->getFileId()}">{$imageFile->getFileName()|escape}</a></td>
 	<td>{$imageFile->getOriginalFileName()|escape}</td>
 	<td>{$imageFile->getNiceFileSize()}</td>
-	<td>{$imageFile->getDateUploaded()|date_format:$dateFormatShort}</td>
+	<td>{showdate value=$imageFile->getDateUploaded() format=$dateFormatShort type=$calType}</td>
 	<td align="right"><input type="button" name="deleteImage[{$imageFile->getFileId()}]" value="{translate key="common.delete"}" class="button" onclick="return confirmAction('{url escape="false" op="deleteArticleImage" path=$galley->getArticleId()|to_array:$galley->getGalleyId():$imageFile->getFileId():$imageFile->getRevision()}', '{translate|escape:"jsparam" key="submission.layout.confirmDeleteGalleyImage"}')" /></td>
 </tr>
 <tr>

@@ -635,9 +635,31 @@ class SectionEditorAction extends Action {
 		if ($reviewAssignment->getArticleId() == $articleId && !HookRegistry::call('SectionEditorAction::setDueDate', array(&$reviewAssignment, &$reviewer, &$dueDate, &$numWeeks))) {
 			$today = getDate();
 			$todayTimestamp = mktime(0, 0, 0, $today['mon'], $today['mday'], $today['year']);
-			if ($dueDate != null) {
-				$dueDateParts = explode('-', $dueDate);
+			// Opatan Inc.
+			$journal = &Request::getJournal();
+			$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+			if ($journal != null) {
+				$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
+				if (strcmp($dateDisplayType, "Jalali") == 0) {
+					$calType = 1;
+				} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
+					$calType = 0;
+				}
+			} else {
+				$calType = 0;
+			}	
 
+			if ($calType == 1) {
+				if ($dueDate != null) {
+					$jDateParts = explode('-', $dueDate);
+					$mdy = Core::jalaliToGregorian($jDateParts[0], $jDateParts[1], $jDateParts[2]);
+					$timestamp = mktime(0, 0, 0, $mdy["month"], $mdy["day"], $mdy["year"]);
+					$dueDate = date('Y-m-d', $timestamp);
+				}					
+			}
+		
+			if ($dueDate != null) {
+				$dueDateParts = explode('-', $dueDate);			
 				// Ensure that the specified due date is today or after today's date.
 				if ($todayTimestamp <= strtotime($dueDate)) {
 					$reviewAssignment->setDateDue(date('Y-m-d H:i:s', mktime(0, 0, 0, $dueDateParts[1], $dueDateParts[2], $dueDateParts[0])));

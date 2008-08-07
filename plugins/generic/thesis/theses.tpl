@@ -40,9 +40,9 @@
 	<br/>
 	{translate key="plugins.generic.thesis.manager.dateApproved"}
 	{translate key="common.between"}
-	{html_select_date prefix="dateFrom" time=$dateFrom all_extra="class=\"selectMenu\"" year_empty="" month_empty="" day_empty="" start_year="$yearOffsetPast"}
+	{html_select_date prefix="dateFrom" time=$dateFrom all_extra="class=\"selectMenu\"" year_empty="" month_empty="" day_empty="" start_year="$yearOffsetPast" type=$calType}
 	{translate key="common.and"}
-	{html_select_date prefix="dateTo" time=$dateTo all_extra="class=\"selectMenu\"" year_empty="" month_empty="" day_empty="" start_year="$yearOffsetPast"}
+	{html_select_date prefix="dateTo" time=$dateTo all_extra="class=\"selectMenu\"" year_empty="" month_empty="" day_empty="" start_year="$yearOffsetPast" type=$calType}
 	<br/>
 	<input type="submit" value="{translate key="common.search"}" class="button" />
 </form>
@@ -66,7 +66,7 @@
 {iterate from=theses item=thesis}
 	<tr valign="top">
 		<td>{translate key=$thesis->getStatusString()}</td>
-		<td>{$thesis->getDateApproved()|date_format:$dateFormatShort}</td>
+		<td>{showdate value=$thesis->getDateApproved() format=$dateFormatShort type=$calType}</td>
 		<td>{$thesis->getStudentFullName()|escape}</td>
 		<td>{$thesis->getTitle()|escape}</td>
 		<td><a href="{plugin_url path="edit" id=$thesis->getThesisId()}" class="action">{translate key="common.edit"}</a>&nbsp;|&nbsp;<a href="{plugin_url path="delete" id=$thesis->getThesisId()}" onclick="return confirm('{translate|escape:"jsparam" key="plugins.generic.thesis.manager.confirmDelete"}')" class="action">{translate key="common.delete"}</a></td>

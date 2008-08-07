@@ -19,12 +19,12 @@
 	<table class="data" width="100%">
 		<tr valign="top">
 			<td class="label" width="20%">{translate key="editor.article.todaysDate"}</td>
-			<td class="value" width="80%">{$todaysDate|escape}</td>
+			<td class="value" width="80%">{showdate value=$todaysDate format=$dateFormatShort type=$calType}</td>
 		</tr>
 		<tr valign="top">
 			<td class="label">{translate key="editor.article.requestedByDate"}</td>
 			<td class="value">
-				<input type="text" size="11" maxlength="10" name="dueDate" value="{if $dueDate}{$dueDate|date_format:"%Y-%m-%d"}{/if}" class="textField" onfocus="this.form.numWeeks.value=''" />
+				<input type="text" size="11" maxlength="10" name="dueDate" value="{if $dueDate}{showdate value=$dueDate format=$dateFormatShort type=$calType}{/if}" class="textField" onfocus="this.form.numWeeks.value=''" />
 				<span class="instruct">{translate key="editor.article.dueDateFormat"}</span>
 			</td>
 		</tr>

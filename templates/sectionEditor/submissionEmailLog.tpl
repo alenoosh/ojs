@@ -45,7 +45,7 @@
 	<tr><td class="headseparator" colspan="5">&nbsp;</td></tr>
 {iterate from=emailLogEntries item=logEntry}
 	<tr valign="top">
-		<td>{$logEntry->getDateSent()|date_format:$dateFormatShort}</td>
+		<td>{showdate value=$logEntry->getDateSent() format=$dateFormatShort type=$calType}</td>
 		<td>{$logEntry->getFrom()|truncate:40:"..."|escape}</td>
 		<td>{$logEntry->getRecipients()|truncate:40:"..."|escape}</td>
 		<td>{$logEntry->getSubject()|truncate:60:"..."|escape}</td>

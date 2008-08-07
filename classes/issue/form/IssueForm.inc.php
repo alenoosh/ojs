@@ -326,14 +326,32 @@ class IssueForm extends Form {
 			}
 		}
 		$issue->setShowCoverPage($showCoverPage, null); // Localized
+		
+		// Opatan Inc.
+		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+		if ($journal != null) {
+			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
+			if (strcmp($dateDisplayType, "Jalali") == 0) {
+				$calType = 1;
+			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
+				$calType = 0;
+			}
+		} else {
+			$calType = 0;
+		}
 
 		$month = $this->getData('Date_Month');
 		$day = $this->getData('Date_Day');
 		$year = $this->getData('Date_Year');
-
+		
 		if ($this->getData('accessStatus')) {
 			$issue->setAccessStatus($this->getData('accessStatus'));
-			$issue->setOpenAccessDate(date('Y-m-d H:i:s',mktime(0,0,0,$month,$day,$year)));
+			if ($calType == 1) {
+				$mdy = Core::jalaliToGregorian($year, $month, $day);
+				$issue->setOpenAccessDate(date('Y-m-d H:i:s', mktime(0,0,0,$mdy["month"],$mdy["day"],$mdy["year"])));
+			} else {
+				$issue->setOpenAccessDate(date('Y-m-d H:i:s', mktime(0,0,0,$month,$day,$year)));
+			}				
 		} else {
 			$issue->setAccessStatus(1);
 			$issue->setOpenAccessDate(Core::getCurrentDate());

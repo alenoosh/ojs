@@ -51,6 +51,18 @@ class ThesisForm extends Form {
 		$journal = &Request::getJournal();
 		parent::Form($thesisPlugin->getTemplatePath() . 'thesisForm.tpl');
 
+		// Opatan Inc.
+		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+		if ($journal != null) {
+			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
+			if (strcmp($dateDisplayType, "Jalali") == 0) {
+				$calType = 1;
+			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
+				$calType = 0;
+			}
+		} else {
+			$calType = 0;
+		}
 
 		// Status is provided and is valid value
 		$this->addCheck(new FormValidator($this, 'status', 'required', 'plugins.generic.thesis.manager.form.statusRequired'));	
@@ -68,7 +80,11 @@ class ThesisForm extends Form {
 
 		// Approval date is provided and valid
 		$this->addCheck(new FormValidator($this, 'dateApprovedYear', 'required', 'plugins.generic.thesis.manager.form.dateApprovedRequired'));
-		$this->addCheck(new FormValidatorCustom($this, 'dateApprovedYear', 'required', 'plugins.generic.thesis.manager.form.dateApprovedValid', create_function('$dateApprovedYear', '$minYear = date(\'Y\') + THESIS_APPROVED_YEAR_OFFSET_PAST; $maxYear = date(\'Y\'); return ($dateApprovedYear >= $minYear && $dateApprovedYear <= $maxYear) ? true : false;')));
+		if ($calType == 1) {
+			$this->addCheck(new FormValidatorCustom($this, 'dateApprovedYear', 'required', 'plugins.generic.thesis.manager.form.dateApprovedValid', create_function('$dateApprovedYear', '$minYear = Core::getCurrentJalaliYear() + THESIS_APPROVED_YEAR_OFFSET_PAST; $maxYear = Core::getCurrentJalaliYear(); return ($dateApprovedYear >= $minYear && $dateApprovedYear <= $maxYear) ? true : false;')));	
+		} else {
+			$this->addCheck(new FormValidatorCustom($this, 'dateApprovedYear', 'required', 'plugins.generic.thesis.manager.form.dateApprovedValid', create_function('$dateApprovedYear', '$minYear = date(\'Y\') + THESIS_APPROVED_YEAR_OFFSET_PAST; $maxYear = date(\'Y\'); return ($dateApprovedYear >= $minYear && $dateApprovedYear <= $maxYear) ? true : false;')));
+		}
 
 		$this->addCheck(new FormValidator($this, 'dateApprovedMonth', 'required', 'plugins.generic.thesis.manager.form.dateApprovedRequired'));
 		$this->addCheck(new FormValidatorCustom($this, 'dateApprovedMonth', 'required', 'plugins.generic.thesis.manager.form.dateApprovedValid', create_function('$dateApprovedMonth', 'return ($dateApprovedMonth >= 1 && $dateApprovedMonth <= 12) ? true : false;')));
@@ -204,7 +220,32 @@ class ThesisForm extends Form {
 		$thesis->setDepartment($this->getData('department'));
 		$thesis->setUniversity($this->getData('university'));
 		$thesis->setTitle($this->getData('title'));
-		$thesis->setDateApproved($this->getData('dateApprovedYear') . '-' . $this->getData('dateApprovedMonth') . '-' . $this->getData('dateApprovedDay'));
+
+		// Opatan Inc.
+		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+		if ($journal != null) {
+			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
+			if (strcmp($dateDisplayType, "Jalali") == 0) {
+				$calType = 1;
+			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
+				$calType = 0;
+			}
+		} else {
+			$calType = 0;
+		}
+
+		$month = $this->getData('dateApprovedMonth');
+		$day = $this->getData('dateApprovedDay');
+		$year = $this->getData('dateApprovedYear');
+
+		if ($calType == 1) {
+			$mdy = Core::jalaliToGregorian($year, $month, $day);
+			$year = $mdy["year"];
+			$month = $mdy["month"];
+			$day = $mdy["day"];
+		}
+
+		$thesis->setDateApproved($year . '-' . $month . '-' . $day);
 		$thesis->setUrl(strtolower($this->getData('url')));
 		$thesis->setAbstract($this->getData('abstract'));
 		$thesis->setComment($this->getData('comment'));

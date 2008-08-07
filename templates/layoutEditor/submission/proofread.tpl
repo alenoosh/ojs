@@ -33,40 +33,40 @@
 		<td width="5%">1.</td>
 		<td width="35%">{translate key="user.role.author"}</td>
 		<td>
-			{$proofAssignment->getDateAuthorNotified()|date_format:$dateFormatShort|default:"&mdash;"}
+			{showdate value=$proofAssignment->getDateAuthorNotified() format=$dateFormatShort type=$calType}
 		</td>
 		<td>
-				{$proofAssignment->getDateAuthorUnderway()|date_format:$dateFormatShort|default:"&mdash;"}
+				{showdate value=$proofAssignment->getDateAuthorUnderway() format=$dateFormatShort type=$calType}
 		</td>
 		<td>
-			{$proofAssignment->getDateAuthorCompleted()|date_format:$dateFormatShort|default:"&mdash;"}
+			{showdate value=$proofAssignment->getDateAuthorCompleted() format=$dateFormatShort type=$calType}
 		</td>
 	</tr>
 	<tr>
 		<td>2.</td>
 		<td>{translate key="user.role.proofreader"}</td>
 		<td>
-			{$proofAssignment->getDateProofreaderNotified()|date_format:$dateFormatShort|default:"&mdash;"}
+			{showdate value=$proofAssignment->getDateProofreaderNotified() format=$dateFormatShort type=$calType}
 		</td>
 		<td>
 			{if $useProofreaders}
-					{$proofAssignment->getDateProofreaderUnderway()|date_format:$dateFormatShort|default:"&mdash;"}
+					{showdate value=$proofAssignment->getDateProofreaderUnderway() format=$dateFormatShort type=$calType}
 			{else}
 				{translate key="common.notApplicableShort"}
 			{/if}
 		</td>
 		<td>
-			{$proofAssignment->getDateProofreaderCompleted()|date_format:$dateFormatShort|default:"&mdash;"}
+			{showdate value=$proofAssignment->getDateProofreaderCompleted() format=$dateFormatShort type=$calType}
 		</td>
 	</tr>
 	<tr>
 		<td>3.</td>
 		<td>{translate key="user.role.layoutEditor"}</td>
 		<td>
-			{$proofAssignment->getDateLayoutEditorNotified()|date_format:$dateFormatShort|default:"&mdash;"}
+			{showdate value=$proofAssignment->getDateLayoutEditorNotified() format=$dateFormatShort type=$calType}
 		</td>
 		<td>
-			{$proofAssignment->getDateLayoutEditorUnderway()|date_format:$dateFormatShort|default:"&mdash;"}
+			{showdate value=$proofAssignment->getDateLayoutEditorUnderway() format=$dateFormatShort type=$calType}
 		</td>
 		<td>
 			{if not $proofAssignment->getDateLayoutEditorNotified() or $proofAssignment->getDateLayoutEditorCompleted()}
@@ -76,7 +76,7 @@
 				{url|assign:"url" op="layoutEditorProofreadingComplete" articleId=$submission->getArticleId()}
 				{icon name="mail" onclick="return confirm('$confirmMessage')" url=$url}
 			{/if}
-			{$proofAssignment->getDateLayoutEditorCompleted()|date_format:$dateFormatShort|default:""}
+			{showdate value=$proofAssignment->getDateLayoutEditorCompleted() format=$dateFormatShort default="" type=$calType}
 		</td>
 	</tr>
 	<tr>
@@ -87,7 +87,7 @@
 {translate key="submission.proofread.corrections"}
 {if $submission->getMostRecentProofreadComment()}
 	{assign var="comment" value=$submission->getMostRecentProofreadComment()}
-	<a href="javascript:openComments('{url op="viewProofreadComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a>{$comment->getDatePosted()|date_format:$dateFormatShort}
+	<a href="javascript:openComments('{url op="viewProofreadComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a>{showdate value=$comment->getDatePosted() format=$dateFormatShort type=$calType}
 {else}
 	<a href="javascript:openComments('{url op="viewProofreadComments" path=$submission->getArticleId()}');" class="icon">{icon name="comment"}</a>
 {/if}

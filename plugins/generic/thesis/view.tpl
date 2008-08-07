@@ -20,7 +20,7 @@
 		<td>{$thesis->getDepartment()|escape}, {$thesis->getUniversity()|escape}</td>
 	</tr>
 	<tr valign="top">
-		<td>{$thesis->getDateApproved()|date_format:"%B, %Y"}</td>
+		<td>{showdate value=$thesis->getDateApproved() format="%B, %Y" type=$calType}</td>
 	</tr>
 	{if $thesis->getUrl()}
 	<tr valign="top">

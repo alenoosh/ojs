@@ -41,13 +41,13 @@
 				{icon name="mail" url=$url}
 			{/if}
 
-			{$proofAssignment->getDateAuthorNotified()|date_format:$dateFormatShort|default:""}
+			{showdate value=$proofAssignment->getDateAuthorNotified() format=$dateFormatShort default="" type=$calType}
 		</td>
 		<td>
-				{$proofAssignment->getDateAuthorUnderway()|date_format:$dateFormatShort|default:"&mdash;"}
+				{showdate value=$proofAssignment->getDateAuthorUnderway() format=$dateFormatShort type=$calType}
 		</td>
 		<td>
-			{$proofAssignment->getDateAuthorCompleted()|date_format:$dateFormatShort|default:"&mdash;"}
+			{showdate value=$proofAssignment->getDateAuthorCompleted() format=$dateFormatShort type=$calType}
 		</td>
 		<td>
 			{if $proofAssignment->getDateAuthorCompleted() && !$proofAssignment->getDateAuthorAcknowledged()}
@@ -56,7 +56,7 @@
 			{else}
 				{icon name="mail" disabled="disable"}
 			{/if}
-			{$proofAssignment->getDateAuthorAcknowledged()|date_format:$dateFormatShort|default:""}
+			{showdate value=$proofAssignment->getDateAuthorAcknowledged() format=$dateFormatShort default="" type=$calType}
 		</td>
 	</tr>
 	<tr>
@@ -80,11 +80,11 @@
 					<a href="{url op="editorInitiateProofreader" articleId=$submission->getArticleId()}" class="action">{translate key="common.initiate"}</a>
 				{/if}
 			{/if}
-			{$proofAssignment->getDateProofreaderNotified()|date_format:$dateFormatShort|default:""}
+			{showdate value=$proofAssignment->getDateProofreaderNotified() format=$dateFormatShort default="" type=$calType}
 		</td>
 		<td>
 			{if $useProofreaders}
-					{$proofAssignment->getDateProofreaderUnderway()|date_format:$dateFormatShort|default:"&mdash;"}
+					{showdate value=$proofAssignment->getDateProofreaderUnderway() format=$dateFormatShort type=$calType}
 			{else}
 				{translate key="common.notApplicableShort"}
 			{/if}
@@ -93,7 +93,7 @@
 			{if !$useProofreaders && !$proofAssignment->getDateProofreaderCompleted() && $proofAssignment->getDateProofreaderNotified()}
 				<a href="{url op="editorCompleteProofreader" articleId=$submission->getArticleId()}" class="action">{translate key="common.complete"}</a>
 			{else}
-				{$proofAssignment->getDateProofreaderCompleted()|date_format:$dateFormatShort|default:"&mdash;"}
+				{showdate value=$proofAssignment->getDateProofreaderCompleted() format=$dateFormatShort type=$calType}
 			{/if}
 		</td>
 		<td>
@@ -104,7 +104,7 @@
 				{else}
 					{icon name="mail" disabled="disable"}
 				{/if}
-				{$proofAssignment->getDateProofreaderAcknowledged()|date_format:$dateFormatShort|default:""}
+				{showdate value=$proofAssignment->getDateProofreaderAcknowledged() format=$dateFormatShort default="" type=$calType}
 			{else}
 				{translate key="common.notApplicableShort"}
 			{/if}
@@ -131,20 +131,20 @@
 					<a href="{url op="editorInitiateLayoutEditor" articleId=$submission->getArticleId()}" class="action">{translate key="common.initiate"}</a>
 				{/if}
 			{/if}
-				{$proofAssignment->getDateLayoutEditorNotified()|date_format:$dateFormatShort|default:""}
+				{showdate value=$proofAssignment->getDateLayoutEditorNotified() format=$dateFormatShort default="" type=$calType}
 		</td>
 		<td>
 			{if $useLayoutEditors}
-				{$proofAssignment->getDateLayoutEditorUnderway()|date_format:$dateFormatShort|default:"&mdash;"}
+				{showdate value=$proofAssignment->getDateLayoutEditorUnderway() format=$dateFormatShort type=$calType}
 			{else}
 				{translate key="common.notApplicableShort"}
 			{/if}
 		</td>
 		<td>
 			{if $useLayoutEditors}
-				{$proofAssignment->getDateLayoutEditorCompleted()|date_format:$dateFormatShort|default:"&mdash;"}
+				{showdate value=$proofAssignment->getDateLayoutEditorCompleted() format=$dateFormatShort type=$calType}
 			{elseif $proofAssignment->getDateLayoutEditorCompleted()}
-				{$proofAssignment->getDateLayoutEditorCompleted()|date_format:$dateFormatShort}
+				{showdate value=$proofAssignment->getDateLayoutEditorCompleted() format=$dateFormatShort type=$calType}
 			{elseif $proofAssignment->getDateLayoutEditorNotified()}
 				<a href="{url op="editorCompleteLayoutEditor" articleId=$submission->getArticleId()}" class="action">{translate key="common.complete"}</a>
 			{else}
@@ -159,7 +159,7 @@
 				{else}
 					{icon name="mail" disabled="disable"}
 				{/if}
-				{$proofAssignment->getDateLayoutEditorAcknowledged()|date_format:$dateFormatShort|default:""}
+				{showdate value=$proofAssignment->getDateLayoutEditorAcknowledged() format=$dateFormatShort default="" type=$calType}
 			{else}
 				{translate key="common.notApplicableShort"}
 			{/if}
@@ -173,7 +173,7 @@
 {translate key="submission.proofread.corrections"}
 {if $submission->getMostRecentProofreadComment()}
 	{assign var="comment" value=$submission->getMostRecentProofreadComment()}
-	<a href="javascript:openComments('{url op="viewProofreadComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a>{$comment->getDatePosted()|date_format:$dateFormatShort}
+	<a href="javascript:openComments('{url op="viewProofreadComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a>{showdate value=$comment->getDatePosted() format=$dateFormatShort type=$calType}
 {else}
 	<a href="javascript:openComments('{url op="viewProofreadComments" path=$submission->getArticleId()}');" class="icon">{icon name="comment"}</a>
 {/if}

@@ -31,7 +31,7 @@
 	<tr>
 		<td width="5%">{$smarty.foreach.galleys.iteration}.</td>
 		<td width="35%">{$galley->getGalleyLabel()} &nbsp; <a href="{url op="proofGalley" path=$submission->getArticleId()|to_array:$galley->getGalleyId()}" class="action">{translate key="submission.layout.viewProof"}</td>
-		<td><a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$galley->getFileId()}" class="file">{$galley->getFileName()|escape}</a> {$galley->getDateModified()|date_format:$dateFormatShort}</td>
+		<td><a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$galley->getFileId()}" class="file">{$galley->getFileName()|escape}</a> {showdate value=$galley->getDateModified() format=$dateFormatShort type=$calType}</td>
 	</tr>
 	{foreachelse}
 	<tr>
@@ -49,7 +49,7 @@
 	<tr>
 		<td width="5%">{$smarty.foreach.suppFiles.iteration}.</td>
 		<td width="35%">{$suppFile->getSuppFileTitle()|escape}</td>
-		<td><a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$suppFile->getFileId()}" class="file">{$suppFile->getFileName()|escape}</a> {$suppFile->getDateModified()|date_format:$dateFormatShort}</td>
+		<td><a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$suppFile->getFileId()}" class="file">{$suppFile->getFileName()|escape}</a> {showdate value=$suppFile->getDateModified() format=$dateFormatShort type=$calType}</td>
 	</tr>
 	{foreachelse}
 	<tr>
@@ -64,7 +64,7 @@
 {translate key="submission.layout.layoutComments"}
 {if $submission->getMostRecentLayoutComment()}
 	{assign var="comment" value=$submission->getMostRecentLayoutComment()}
-	<a href="javascript:openComments('{url op="viewLayoutComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a>{$comment->getDatePosted()|date_format:$dateFormatShort}
+	<a href="javascript:openComments('{url op="viewLayoutComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a>{showdate value=$comment->getDatePosted() format=$dateFormatShort type=$calType}
 {else}
 	<a href="javascript:openComments('{url op="viewLayoutComments" path=$submission->getArticleId()}');" class="icon">{icon name="comment"}</a>
 {/if}

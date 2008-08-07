@@ -42,7 +42,7 @@
 	{assign var="fastTracked" value=$submission->getFastTracked()}
 	<tr valign="top"{if $highlightClass || $fastTracked} class="{$highlightClass|escape} {if $fastTracked}fastTracked{/if}"{/if}>
 		<td>{$submission->getArticleId()}</td>
-		<td>{$submission->getDateSubmitted()|date_format:$dateFormatTrunc}</td>
+		<td>{showdate value=$submission->getDateSubmitted() format=$dateFormatTrunc type=$calType}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
 		<td>{$submission->getAuthorString(true)|truncate:40:"..."|escape}</td>
 		<td><a href="{url op="submissionReview" path=$submission->getArticleId()}" class="action">{$submission->getArticleTitle()|strip_unsafe_html|truncate:40:"..."}</a></td>
@@ -52,9 +52,9 @@
 				{foreach from=$reviewAssignments item=assignment name=assignmentList}
 					{if !$assignment->getCancelled()}
 					<tr valign="top">
-						<td width="33%" style="padding: 0 4px 0 0; font-size: 1.0em">{if $assignment->getDateNotified()}{$assignment->getDateNotified()|date_format:$dateFormatTrunc}{else}&mdash;{/if}</td>
+						<td width="33%" style="padding: 0 4px 0 0; font-size: 1.0em">{if $assignment->getDateNotified()}{showdate value=$assignment->getDateNotified() format=$dateFormatTrunc type=$calType}{else}&mdash;{/if}</td>
 						<td width="33%" style="padding: 0 4px 0 0; font-size: 1.0em">{if $assignment->getDateCompleted() || !$assignment->getDateConfirmed()}&mdash;{else}{$assignment->getWeeksDue()|default:"&mdash;"}{/if}</td>
-						<td width="34%" style="padding: 0 4px 0 0; font-size: 1.0em">{if $assignment->getDateCompleted()}{$assignment->getDateCompleted()|date_format:$dateFormatTrunc}{else}&mdash;{/if}</td>
+						<td width="34%" style="padding: 0 4px 0 0; font-size: 1.0em">{if $assignment->getDateCompleted()}{showdate value=$assignment->getDateCompleted() format=$dateFormatTrunc type=$calType}{else}&mdash;{/if}</td>
 					</tr>
 					{/if}
 				{foreachelse}
@@ -77,7 +77,7 @@
 			{foreach from=$submission->getDecisions() item=decisions}
 				{foreach from=$decisions item=decision name=decisionList}
 					{if $smarty.foreach.decisionList.last}
-							{$decision.dateDecided|date_format:$dateFormatTrunc}				
+							{showdate value=$decision.dateDecided format=$dateFormatTrunc type=$calType}
 					{/if}
 				{foreachelse}
 					&mdash;

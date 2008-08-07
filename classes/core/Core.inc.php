@@ -15,7 +15,6 @@
  */
 
 class Core {
-
 	/**
 	 * Get the path to the base OJS directory.
 	 * @return string
@@ -87,14 +86,156 @@ class Core {
 	 * coverts date/time to timestamp.
 	 * @return int
 	 */
-	function convertDateTimeToTimestamp($dateTime)
-	{
+	function convertDateTimeToTimestamp($dateTime) {
 		$val = explode(" ", $dateTime);
 	        $date = explode("-", $val[0]);
 	        $time = explode(":", $val[1]);
-	        $timestamp = mktime($time[0], $time[1], $time[2], $date[1], $date[2], $date[0]);
+		
+		if ($time[0] == null) {
+			$hour = $minute = $second = 0;
+		} else {
+			$hour = $time[0];
+			$minute = $time[1];
+			$second = $time[2];
+		}
+
+		if ($val[0] != $date[0]) {
+		        $timestamp = mktime($hour, $minute, $second, $date[1], $date[2], $date[0]);
+		} else {
+			return null;
+		}
 
 		return $timestamp;
+	}
+	
+	/**
+	 * Opatan Inc. :
+	 * convert gregorian to jalali.
+	 */
+	function &gregorianToJalali($timestamp) {
+		$gMonths = Array (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+		$jMonths = Array (31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
+		$jMonthName = Array ("", "Farvardin", "Ordibehesht", "Khordad", "Tir",
+ 	                             "Mordad", "Shahrivar", "Mehr", "Aban", "Azar",
+ 	                             "Dey", "Bahman", "Esfand");
+
+       		$date = getdate($timestamp);
+ 	                
+ 	        $gDay   = $date['mday'];
+ 	        $gWDay  = $date['wday'];
+ 	        $gMonth = $date['mon'];
+ 	        $gYear  = $date['year'];
+
+ 		$gy = $gYear - 1600;
+ 	        $gm = $gMonth - 1;
+ 	        $gd = $gDay - 1;
+ 	
+ 	        $gDayNo = 365 * $gy + (int) (($gy + 3) / 4) - (int) (($gy + 99) / 100) + (int) (($gy + 399) / 400);
+ 	
+ 	        for ($i = 0; $i < $gm; $i++) {
+ 	            $gDayNo += $gMonths[$i];
+ 	        }
+ 	  
+ 	        if ($gm > 1 && (($gy % 4 == 0 && $gy % 100 != 0) || ($gy % 400 == 0))) {
+ 	            // leap and after Feb
+ 	            ++$gDayNo;
+ 	        }
+ 	  
+ 	        $gDayNo += $gd;
+ 	        $jDayNo = $gDayNo-79;
+ 	
+ 	        $j_np = (int) ($jDayNo / 12053);
+ 	        $jDayNo %= 12053;
+ 	
+ 	        $jy = 979 + 33 * $j_np + 4 * (int) ($jDayNo / 1461);
+ 	
+ 	        $jDayNo %= 1461;
+ 	
+ 	        if ($jDayNo >= 366) {
+	            $jy += (int) (($jDayNo - 1) / 365);
+	            $jDayNo = ($jDayNo - 1) % 365;
+ 	        }
+ 	
+ 	        for ($i = 0; $i < 11 && $jDayNo >= $jMonths[$i]; $i++) {
+ 	            $jDayNo -= $jMonths[$i];
+ 	        }
+ 	  
+ 	        $jm = $i + 1;
+ 	        $jd = $jDayNo + 1;
+ 	
+ 	        $jalali = Array("year" => $jy, "month" => $jm, "day" => $jd, "monthName" => $jMonthName[$jm]);
+
+ 	        return $jalali;
+	}
+	
+	/**
+	 * Opatan Inc. :
+	 * Convert jalali to gregorian.
+	 */
+	function jalaliToGregorian($year, $month, $day) {
+		$gMonths = Array (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+		$jMonths = Array (31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
+
+ 	 	$jy = $year - 979;
+		$jm = $month - 1;
+		$jd = $day - 1;
+		$gm = 0;
+		$gd = 0;
+		$gy = 0;
+		$jDayNo = 365 * $jy + ((int)($jy/33))*8 + (int)((($jy%33) + 3)/4);
+		for ($i = 0; $i < $jm; ++$i) {
+  			$jDayNo += $jMonths[$i];
+		}
+		$jDayNo += $jd;
+		$gDayNo = $jDayNo + 79;
+		$gy = 1600 + 400 * (int)($gDayNo/146097);
+		$gDayNo = $gDayNo % 146097;
+		$leap = 1;
+		if ($gDayNo >= 36525) {
+			$gDayNo = $gDayNo - 1;
+			$gy += 100 * (int)($gDayNo/36524);
+			$gDayNo = $gDayNo % 36524;
+			if ($gDayNo >= 365) {
+				$gDayNo = $gDayNo + 1;
+			} else {
+				$leap = 0;
+			}
+		}
+		$gy += 4 * (int)($gDayNo/1461);
+		$gDayNo %= 1461;
+		if ($gDayNo >= 366) {
+			$leap = 0;
+			$gDayNo = $gDayNo - 1;
+			$gy += (int)($gDayNo / 365);
+			$gDayNo = $gDayNo % 365;
+		}
+		$i = 0;
+		$tmp = 0;
+		while ($gDayNo >= ($gMonths[$i] + $tmp)) {
+			if ($i == 1 && $leap == 1) {
+				$tmp = 1;
+			} else {
+				$tmp = 0;
+			}
+			$gDayNo -= $gMonths[$i] + $tmp;
+			$i = $i + 1;
+		}
+		$gm = $i + 1;
+	  	$gd = $gDayNo + 1;
+
+		return array("month" => $gm, "day" => $gd, "year" => $gy);
+	}
+	
+	/** 
+	 * Get the current jalali year.
+	 * @return int
+	 */
+	function getCurrentJalaliYear() {
+		$date = Core::getCurrentDate();
+		$timestamp = Core::convertDateTimeToTimestamp($date);
+		$jDate = &Core::gregorianToJalali($timestamp);
+
+		return $jDate["year"];
 	}
 
 	/**

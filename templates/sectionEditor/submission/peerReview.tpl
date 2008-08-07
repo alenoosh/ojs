@@ -53,7 +53,7 @@
 		{if $reviewFile}
 			<td width="80%" class="value">
 				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$reviewFile->getFileId():$reviewFile->getRevision()}" class="file">{$reviewFile->getFileName()|escape}</a>&nbsp;&nbsp;
-				{$reviewFile->getDateModified()|date_format:$dateFormatShort}{if $currentJournal->getSetting('showEnsuringLink')}&nbsp;&nbsp;&nbsp;&nbsp;<a class="action" href="javascript:openHelp('{get_help_id key="editorial.sectionEditorsRole.review.blindPeerReview" url="true"}')">{translate key="reviewer.article.ensuringBlindReview"}</a>{/if}
+				{showdate value=$reviewFile->getDateModified() format=$dateFormatShort type=$calType}{if $currentJournal->getSetting('showEnsuringLink')}&nbsp;&nbsp;&nbsp;&nbsp;<a class="action" href="javascript:openHelp('{get_help_id key="editorial.sectionEditorsRole.review.blindPeerReview" url="true"}')">{translate key="reviewer.article.ensuringBlindReview"}</a>{/if}
 			</td>
 		{else}
 			<td width="80%" class="nodata">{translate key="common.none"}</td>
@@ -82,7 +82,7 @@
 				<input type="hidden" name="fileId" value="{$suppFile->getSuppFileId()}" />
 
 				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$suppFile->getFileId():$suppFile->getRevision()}" class="file">{$suppFile->getFileName()|escape}</a>&nbsp;&nbsp;
-				{$suppFile->getDateModified()|date_format:$dateFormatShort}&nbsp;&nbsp;
+				{showdate value=$suppFile->getDateModified() format=$dateFormatShort type=$calType}&nbsp;&nbsp;
 				<label for="show">{translate key="editor.article.showSuppFile"}</label>
 				<input type="checkbox" name="show" id="show" value="1"{if $suppFile->getShowReviewers()==1} checked="checked"{/if}/>
 				<input type="submit" name="submit" value="{translate key="common.record"}" class="button" />
@@ -148,7 +148,7 @@
 					<td>
 						{url|assign:"reviewUrl" op="notifyReviewer" reviewId=$reviewAssignment->getReviewId() articleId=$submission->getArticleId()}
 						{if $reviewAssignment->getDateNotified()}
-							{$reviewAssignment->getDateNotified()|date_format:$dateFormatShort}
+							{showdate value=$reviewAssignment->getDateNotified() format=$dateFormatShort type=$calType}
 							{if !$reviewAssignment->getDateCompleted()}
 								{icon name="mail" url=$reviewUrl}
 							{/if}
@@ -160,19 +160,19 @@
 						{/if}
 					</td>
 					<td>
-						{$reviewAssignment->getDateConfirmed()|date_format:$dateFormatShort|default:"&mdash;"}
+						{showdate value=$reviewAssignment->getDateConfirmed() format=$dateFormatShort type=$calType}
 					</td>
 					<td>
 						{if $reviewAssignment->getDeclined()}
 							{translate key="sectionEditor.regrets"}
 						{else}
-							<a href="{url op="setDueDate" path=$reviewAssignment->getArticleId()|to_array:$reviewAssignment->getReviewId()}">{if $reviewAssignment->getDateDue()}{$reviewAssignment->getDateDue()|date_format:$dateFormatShort}{else}&mdash;{/if}</a>
+							<a href="{url op="setDueDate" path=$reviewAssignment->getArticleId()|to_array:$reviewAssignment->getReviewId()}">{if $reviewAssignment->getDateDue()}{showdate value=$reviewAssignment->getDateDue() format=$dateFormatShort type=$calType}{else}&mdash;{/if}</a>
 						{/if}
 					</td>
 					<td>
 						{url|assign:"thankUrl" op="thankReviewer" reviewId=$reviewAssignment->getReviewId() articleId=$submission->getArticleId()}
 						{if $reviewAssignment->getDateAcknowledged()}
-							{$reviewAssignment->getDateAcknowledged()|date_format:$dateFormatShort}
+							{showdate value=$reviewAssignment->getDateAcknowledged() format=$dateFormatShort type=$calType}
 						{elseif $reviewAssignment->getDateCompleted()}
 							{icon name="mail" url=$thankUrl}
 						{else}
@@ -191,12 +191,12 @@
 				{if $reviewAssignment->getRecommendation() !== null && $reviewAssignment->getRecommendation() !== ''}
 					{assign var="recommendation" value=$reviewAssignment->getRecommendation()}
 					{translate key=$reviewerRecommendationOptions.$recommendation}
-					&nbsp;&nbsp;{$reviewAssignment->getDateCompleted()|date_format:$dateFormatShort}
+					&nbsp;&nbsp;{showdate value=$reviewAssignment->getDateCompleted() format=$dateFormatShort type=$calType}
 				{else}
 					{translate key="common.none"}&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="{url op="remindReviewer" articleId=$submission->getArticleId() reviewId=$reviewAssignment->getReviewId()}" class="action">{translate key="reviewer.article.sendReminder"}</a>
 					{if $reviewAssignment->getDateReminded()}
-						&nbsp;&nbsp;{$reviewAssignment->getDateReminded()|date_format:$dateFormatShort}
+						&nbsp;&nbsp;{showdate value=$reviewAssignment->getDateReminded() format=$dateFormatShort type=$calType}
 						{if $reviewAssignment->getReminderWasAutomatic()}
 							&nbsp;&nbsp;{translate key="reviewer.article.automatic"}
 						{/if}
@@ -215,7 +215,7 @@
 			<td>
 				{if $reviewAssignment->getMostRecentPeerReviewComment()}
 					{assign var="comment" value=$reviewAssignment->getMostRecentPeerReviewComment()}
-					<a href="javascript:openComments('{url op="viewPeerReviewComments" path=$submission->getArticleId()|to_array:$reviewAssignment->getReviewId() anchor=$comment->getCommentId()}');" class="icon">{icon name="letter"}</a>&nbsp;&nbsp;{$comment->getDatePosted()|date_format:$dateFormatShort}
+					<a href="javascript:openComments('{url op="viewPeerReviewComments" path=$submission->getArticleId()|to_array:$reviewAssignment->getReviewId() anchor=$comment->getCommentId()}');" class="icon">{icon name="letter"}</a>&nbsp;&nbsp;{showdate value=$comment->getDatePosted() format=$dateFormatShort type=$calType}
 				{else}
 					<a href="javascript:openComments('{url op="viewPeerReviewComments" path=$submission->getArticleId()|to_array:$reviewAssignment->getReviewId()}');" class="icon">{icon name="letter"}</a>&nbsp;&nbsp;{translate key="submission.comments.noComments"}
 				{/if}
@@ -229,7 +229,7 @@
 					<tr valign="top">
 						<td valign="middle">
 							<form name="authorView{$reviewAssignment->getReviewId()}" method="post" action="{url op="makeReviewerFileViewable"}">
-								<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$reviewerFile->getFileId():$reviewerFile->getRevision()}" class="file">{$reviewerFile->getFileName()|escape}</a>&nbsp;&nbsp;{$reviewerFile->getDateModified()|date_format:$dateFormatShort}
+								<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$reviewerFile->getFileId():$reviewerFile->getRevision()}" class="file">{$reviewerFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$reviewerFile->getDateModified() format=$dateFormatShort type=$calType}
 								<input type="hidden" name="reviewId" value="{$reviewAssignment->getReviewId()}" />
 								<input type="hidden" name="articleId" value="{$submission->getArticleId()}" />
 								<input type="hidden" name="fileId" value="{$reviewerFile->getFileId()}" />
@@ -282,7 +282,7 @@
 				</select>&nbsp;&nbsp;
 				<input type="submit" value="{translate key="common.record"}" class="button" />
 				{if $reviewAssignment->getDateRated()}
-					&nbsp;&nbsp;{$reviewAssignment->getDateRated()|date_format:$dateFormatShort}
+					&nbsp;&nbsp;{showdate value=$reviewAssignment->getDateRated() format=$dateFormatShort type=$calType}
 				{/if}
 			</form>
 			</td>

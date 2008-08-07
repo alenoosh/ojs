@@ -30,9 +30,9 @@
 		{html_options_translate options=$dateFieldOptions selected=$dateSearchField}
 	</select>
 	{translate key="common.between"}
-	{html_select_date prefix="dateFrom" time=$dateFrom all_extra="class=\"selectMenu\"" year_empty="" month_empty="" day_empty="" start_year="-5" end_year="+1"}
+	{html_select_date prefix="dateFrom" time=$dateFrom all_extra="class=\"selectMenu\"" year_empty="" month_empty="" day_empty="" start_year="-5" end_year="+1" type=$calType}
 	{translate key="common.and"}
-	{html_select_date prefix="dateTo" time=$dateTo all_extra="class=\"selectMenu\"" year_empty="" month_empty="" day_empty="" start_year="-5" end_year="+1"}
+	{html_select_date prefix="dateTo" time=$dateTo all_extra="class=\"selectMenu\"" year_empty="" month_empty="" day_empty="" start_year="-5" end_year="+1" type=$calType}
 	<br/>
 	<input type="submit" value="{translate key="common.search"}" class="button" />
 </form>
@@ -58,11 +58,11 @@
 
 	<tr valign="top">
 		<td>{$articleId|escape}</td>
-		<td>{$layoutAssignment->getDateNotified()|date_format:$dateFormatTrunc}</td>
+		<td>{showdate value=$layoutAssignment->getDateNotified() format=$dateFormatTrunc type=$calType}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
 		<td>{$submission->getAuthorString(true)|truncate:40:"..."|escape}</td>
 		<td><a href="{url op="submission" path=$articleId}" class="action">{$submission->getArticleTitle()|strip_unsafe_html|truncate:60:"..."}</a></td>
-		<td>{$layoutAssignment->getDateCompleted()|date_format:$dateFormatTrunc}</td>
+		<td>{showdate value=$layoutAssignment->getDateCompleted() format=$dateFormatTrunc type=$calType}</td>
 		<td align="right">
 			{assign var="status" value=$submission->getStatus()}
 			{if $status == STATUS_ARCHIVED}

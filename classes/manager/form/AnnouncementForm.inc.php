@@ -43,8 +43,25 @@ class AnnouncementForm extends Form {
 		// Description is provided
 		$this->addCheck(new FormValidatorLocale($this, 'description', 'required', 'manager.announcements.form.descriptionRequired'));
 
+		// Opatan Inc.
+		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+		if ($journal != null) {
+			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
+			if (strcmp($dateDisplayType, "Jalali") == 0) {
+				$calType = 1;
+			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
+				$calType = 0;
+			}
+		} else {
+			$calType = 0;
+		}
+
 		// If provided, expiry date is valid
-		$this->addCheck(new FormValidatorCustom($this, 'dateExpireYear', 'optional', 'manager.announcements.form.dateExpireValid', create_function('$dateExpireYear', '$minYear = date(\'Y\'); $maxYear = date(\'Y\') + ANNOUNCEMENT_EXPIRE_YEAR_OFFSET_FUTURE; return ($dateExpireYear >= $minYear && $dateExpireYear <= $maxYear) ? true : false;')));
+		if ($calType == 1) {
+			$this->addCheck(new FormValidatorCustom($this, 'dateExpireYear', 'optional', 'manager.announcements.form.dateExpireValid', create_function('$dateExpireYear', '$minYear = Core::getCurrentJalaliYear(); $maxYear = Core::getCurrentJalaliYear() + ANNOUNCEMENT_EXPIRE_YEAR_OFFSET_FUTURE; return ($dateExpireYear >= $minYear && $dateExpireYear <= $maxYear) ? true : false;')));
+		} else {
+			$this->addCheck(new FormValidatorCustom($this, 'dateExpireYear', 'optional', 'manager.announcements.form.dateExpireValid', create_function('$dateExpireYear', '$minYear = date(\'Y\'); $maxYear = date(\'Y\') + ANNOUNCEMENT_EXPIRE_YEAR_OFFSET_FUTURE; return ($dateExpireYear >= $minYear && $dateExpireYear <= $maxYear) ? true : false;')));
+		}
 
 		$this->addCheck(new FormValidatorCustom($this, 'dateExpireYear', 'optional', 'manager.announcements.form.dateExpireYearIncompleteDate', create_function('$dateExpireYear, $form', '$dateExpireMonth = $form->getData(\'dateExpireMonth\'); $dateExpireDay = $form->getData(\'dateExpireDay\'); return ($dateExpireMonth != null && $dateExpireDay != null) ? true : false;'), array(&$this)));
 
@@ -143,7 +160,32 @@ class AnnouncementForm extends Form {
 		} else {
 			$announcement->setTypeId(null);
 		}
+		
+		// Opatan Inc.
+		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+		if ($journal != null) {
+			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
+			if (strcmp($dateDisplayType, "Jalali") == 0) {
+				$calType = 1;
+			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
+				$calType = 0;
+			}
+		} else {
+			$calType = 0;
+		}
 
+		if ($calType == 1) {
+			if ($this->getData('dateExpireYear') != null) {
+				$year = $this->getData('dateExpireYear');
+				$month = $this->getData('dateExpireMonth');
+				$day = $this->getData('dateExpireDay');
+				$mdy = Core::jalaliToGregorian($year, $month, $day);
+				$this->setData('dateExpireYear', $mdy["year"]);
+				$this->setData('dateExpireMonth', $mdy["month"]);
+				$this->setData('dateExpireDay', $mdy["day"]);
+			}
+		}
+	
 		if ($this->getData('dateExpireYear') != null) {
 			$announcement->setDateExpire($this->getData('dateExpireYear') . '-' . $this->getData('dateExpireMonth') . '-' . $this->getData('dateExpireDay'));
 		} else {

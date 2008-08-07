@@ -25,7 +25,7 @@ window.opener.location.reload();
 <tr valign="top">
 	<td width="25%">
 		<div class="commentRole">{translate key=$comment->getRoleName()}</div>
-		<div class="commentDate">{$comment->getDatePosted()|date_format:$datetimeFormatShort}</div>
+		<div class="commentDate">{showdate value=$comment->getDatePosted() format=$datetimeFormatShort type=$calType}</div>
 	</td>
 	<td width="75%">
 		{if $comment->getAuthorId() eq $userId and not $isLocked}

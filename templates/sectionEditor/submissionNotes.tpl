@@ -73,7 +73,7 @@
 <table width="100%" class="data">
 	<tr valign="top">
 		<td class="label" width="20%">{translate key="common.dateModified"}</td>
-		<td class="value" width="80%">{$articleNote->getDateModified()|date_format:$datetimeFormatShort}</td>
+		<td class="value" width="80%">{showdate value=$articleNote->getDateModified() format=$datetimeFormatShort type=$calType}</td>
 	</tr>
 	<tr valign="top">
 		<td class="label" width="20%">{translate key="common.title"}</td>
@@ -137,7 +137,7 @@
 				noteArray.push({$note->getNoteId()});
 			// -->
 			</script>
-			{$note->getDateCreated()|date_format:$dateFormatTrunc}
+			{showdate value=$note->getDateCreated() format=$dateFormatTrunc type=$calType}
 		</td>
 		<td><a class="action" href="javascript:toggleNote({$note->getNoteId()})">{$note->getTitle()}</a><div style="display: none" id="note{$note->getNoteId()}">{$note->getNote()|strip_unsafe_html|nl2br}</div></td>
 		<td>{if $note->getFileId()}<a class="action" href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$note->getFileId()}">{$note->getOriginalFileName()}</a>{else}&mdash;{/if}</td>

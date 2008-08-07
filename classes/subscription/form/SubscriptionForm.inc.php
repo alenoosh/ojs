@@ -48,9 +48,26 @@ class SubscriptionForm extends Form {
 		$this->addCheck(new FormValidator($this, 'typeId', 'required', 'manager.subscriptions.form.typeIdRequired'));
 		$this->addCheck(new FormValidatorCustom($this, 'typeId', 'required', 'manager.subscriptions.form.typeIdValid', create_function('$typeId, $journalId', '$subscriptionTypeDao = &DAORegistry::getDAO(\'SubscriptionTypeDAO\'); return $subscriptionTypeDao->subscriptionTypeExistsByTypeId($typeId, $journalId);'), array($journal->getJournalId())));
 
+		// Opatan Inc.
+		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+		if ($journal != null) {
+			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
+			if (strcmp($dateDisplayType, "Jalali") == 0) {
+				$calType = 1;
+			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
+				$calType = 0;
+			}
+		} else {
+			$calType = 0;
+		}
+
 		// Start date is provided and is valid	
 		$this->addCheck(new FormValidator($this, 'dateStartYear', 'required', 'manager.subscriptions.form.dateStartRequired'));	
-		$this->addCheck(new FormValidatorCustom($this, 'dateStartYear', 'required', 'manager.subscriptions.form.dateStartValid', create_function('$dateStartYear', '$minYear = date(\'Y\') + SUBSCRIPTION_YEAR_OFFSET_PAST; $maxYear = date(\'Y\') + SUBSCRIPTION_YEAR_OFFSET_FUTURE; return ($dateStartYear >= $minYear && $dateStartYear <= $maxYear) ? true : false;')));
+		if ($calType == 1) {
+			$this->addCheck(new FormValidatorCustom($this, 'dateStartYear', 'required', 'manager.subscriptions.form.dateStartValid', create_function('$dateStartYear', '$minYear = Core::getCurrentJalaliYear() + SUBSCRIPTION_YEAR_OFFSET_PAST; $maxYear = Core::getCurrentJalaliYear() + SUBSCRIPTION_YEAR_OFFSET_FUTURE; return ($dateStartYear >= $minYear && $dateStartYear <= $maxYear) ? true : false;')));
+		} else {
+			$this->addCheck(new FormValidatorCustom($this, 'dateStartYear', 'required', 'manager.subscriptions.form.dateStartValid', create_function('$dateStartYear', '$minYear = date(\'Y\') + SUBSCRIPTION_YEAR_OFFSET_PAST; $maxYear = date(\'Y\') + SUBSCRIPTION_YEAR_OFFSET_FUTURE; return ($dateStartYear >= $minYear && $dateStartYear <= $maxYear) ? true : false;')));
+		}
 
 		$this->addCheck(new FormValidator($this, 'dateStartMonth', 'required', 'manager.subscriptions.form.dateStartRequired'));
 		$this->addCheck(new FormValidatorCustom($this, 'dateStartMonth', 'required', 'manager.subscriptions.form.dateStartValid', create_function('$dateStartMonth', 'return ($dateStartMonth >= 1 && $dateStartMonth <= 12) ? true : false;')));
@@ -60,8 +77,11 @@ class SubscriptionForm extends Form {
 
 		// End date is provided and is valid	
 		$this->addCheck(new FormValidator($this, 'dateEndYear', 'required', 'manager.subscriptions.form.dateEndRequired'));	
-		$this->addCheck(new FormValidatorCustom($this, 'dateEndYear', 'required', 'manager.subscriptions.form.dateEndValid', create_function('$dateEndYear', '$minYear = date(\'Y\') + SUBSCRIPTION_YEAR_OFFSET_PAST; $maxYear = date(\'Y\') + SUBSCRIPTION_YEAR_OFFSET_FUTURE; return ($dateEndYear >= $minYear && $dateEndYear <= $maxYear) ? true : false;')));
-
+		if ($calType == 1) {
+			$this->addCheck(new FormValidatorCustom($this, 'dateEndYear', 'required', 'manager.subscriptions.form.dateEndValid', create_function('$dateEndYear', '$minYear = Core::getCurrentJalaliYear() + SUBSCRIPTION_YEAR_OFFSET_PAST; $maxYear = Core::getCurrentJalaliYear() + SUBSCRIPTION_YEAR_OFFSET_FUTURE; return ($dateEndYear >= $minYear && $dateEndYear <= $maxYear) ? true : false;')));
+		} else {
+			$this->addCheck(new FormValidatorCustom($this, 'dateEndYear', 'required', 'manager.subscriptions.form.dateEndValid', create_function('$dateEndYear', '$minYear = date(\'Y\') + SUBSCRIPTION_YEAR_OFFSET_PAST; $maxYear = date(\'Y\') + SUBSCRIPTION_YEAR_OFFSET_FUTURE; return ($dateEndYear >= $minYear && $dateEndYear <= $maxYear) ? true : false;')));
+		}
 		$this->addCheck(new FormValidator($this, 'dateEndMonth', 'required', 'manager.subscriptions.form.dateEndRequired'));
 		$this->addCheck(new FormValidatorCustom($this, 'dateEndMonth', 'required', 'manager.subscriptions.form.dateEndValid', create_function('$dateEndMonth', 'return ($dateEndMonth >= 1 && $dateEndMonth <= 12) ? true : false;')));
 
@@ -187,8 +207,40 @@ class SubscriptionForm extends Form {
 		$subscription->setJournalId($journal->getJournalId());
 		$subscription->setUserId($this->getData('userId'));
 		$subscription->setTypeId($this->getData('typeId'));
-		$subscription->setDateStart($this->getData('dateStartYear') . '-' . $this->getData('dateStartMonth'). '-' . $this->getData('dateStartDay'));
-		$subscription->setDateEnd($this->getData('dateEndYear') . '-' . $this->getData('dateEndMonth'). '-' . $this->getData('dateEndDay'));
+
+		// Opatan Inc.
+		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+		if ($journal != null) {
+			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
+			if (strcmp($dateDisplayType, "Jalali") == 0) {
+				$calType = 1;
+			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
+				$calType = 0;
+			}
+		} else {
+			$calType = 0;
+		}
+
+		$startYear = $this->getData('dateStartYear');
+		$startMonth = $this->getData('dateStartMonth');
+		$startDay = $this->getData('dateStartDay');
+		$endYear = $this->getData('dateEndYear');
+		$endMonth = $this->getData('dateEndMonth');
+		$endDay = $this->getData('dateEndDay');
+	
+		if ($calType == 1) {
+			$startMdy = Core::jalaliToGregorian($startYear, $startMonth, $startDay);
+			$endMdy = Core::jalaliToGregorian($endYear, $endMonth, $endDay);
+			$startYear = $startMdy["year"];
+			$startMonth = $startMdy["month"];
+			$startDay = $startMdy["day"];
+			$endYear = $endMdy["year"];
+			$endMonth = $endMdy["month"];
+			$endDay = $endMdy["day"];
+		}
+		
+		$subscription->setDateStart($startYear . '-' . $startMonth. '-' . $startDay);
+		$subscription->setDateEnd($endYear . '-' . $endMonth. '-' . $endDay);
 		$subscription->setMembership($this->getData('membership') ? $this->getData('membership') : null);
 		$subscription->setDomain($this->getData('domain') ? $this->getData('domain') : null);
 		$subscription->setIPRange($this->getData('ipRange') ? $this->getData('ipRange') : null);

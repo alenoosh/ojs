@@ -76,7 +76,7 @@
 			&mdash;
 		{/if}
 	</td>
-	<td>{if $reviewerStats.last_notified}{$reviewerStats.last_notified|date_format:$dateFormatShort}{else}&mdash;{/if}</td>
+	<td>{if $reviewerStats.last_notified}{showdate value=$reviewerStats.last_notified format=$dateFormatShort type=$calType}{else}&mdash;{/if}</td>
 	<td>{$reviewerStats.incomplete|default:0}</td>
 	<td>
 		{if $reviewer->review_id}

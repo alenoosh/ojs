@@ -29,7 +29,7 @@
 	<tr valign="top">
 		<td width="20%" class="label">{translate key="user.name"}</td>
 		<td width="80%" class="value">
-			{* Opatan Inc. : ????? *}
+			{* Opatan Inc. *}
 			{assign var=emailString value="`$author.firstName[$formLocale]` `$author.middleName[$formLocale]` `$author.lastName[$formLocale]` <`$author.email`>"}
 			{url|assign:"url" page="user" op="email" to=$emailString|to_array redirectUrl=$currentUrl articleId=$articleId}
 			{$author.firstName[$formLocale]|escape} {$author.middleName[$formLocale]|escape} {$author.lastName[$formLocale]|escape} {icon name="mail" url=$url}
@@ -41,7 +41,7 @@
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="user.affiliation"}</td>
-		{* Opatan Inc. : ???? *}
+		{* Opatan Inc. *}
 		<td class="value">{$author.affiliation[$formLocale]|escape|default:"&mdash;"}</td>
 	</tr>
 	<tr valign="top">
@@ -54,12 +54,12 @@
 			{url|assign:"competingInterestGuidelinesUrl" page="information" op="competingInterestGuidelines"}
 			{translate key="author.competingInterests" competingInterestGuidelinesUrl=$competingInterestGuidelinesUrl}
 		</td>
-		<td class="value">{$author.competingInterests|strip_unsafe_html|nl2br|default:"&mdash;"}</td>
+		<td class="value">{$author.competingInterests[$formLocale]|strip_unsafe_html|nl2br|default:"&mdash;"}</td>
 	</tr>
 	{/if}
 	<tr valign="top">
 		<td class="label">{translate key="user.biography"}</td>
-		<td class="value">{$author.biography|strip_unsafe_html|nl2br|default:"&mdash;"}</td>
+		<td class="value">{$author.biography[$formLocale]|strip_unsafe_html|nl2br|default:"&mdash;"}</td>
 	</tr>
 	{if !$smarty.foreach.authors.last}
 	<tr>

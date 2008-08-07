@@ -44,7 +44,7 @@
 </tr>
 <tr valign="top">
 	<td width="20%" class="label">{translate key="common.dateUploaded"}</td>
-	<td width="80%" class="value">{$submissionFile->getDateUploaded()|date_format:$datetimeFormatShort}</td>
+	<td width="80%" class="value">{showdate value=$submissionFile->getDateUploaded() format=$datetimeFormatShort type=$calType}</td>
 </tr>
 {else}
 <tr valign="top">

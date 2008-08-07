@@ -129,7 +129,7 @@ class EruditExportDom {
 			$persNameNode = &XMLCustomWriter::createElement($doc, 'persname');
 			XMLCustomWriter::appendChild($authorNode, $persNameNode);
 
-			// Opatan Inc. : ??
+			// Opatan Inc.
 			foreach((array) $author->getFirstName(null) as $locale => $firstName) {
 				$firstName = strip_tags($firstName);
 				$firstNameNode = &XMLCustomWriter::createElement($doc, 'firstname');
@@ -139,14 +139,33 @@ class EruditExportDom {
 				unset($firstNameNode);
 			}
 
-			// Opatan Inc. : XMLCustomWriter::createChildWithText($doc, $persNameNode, 'firstname', $author->getFirstName());
-			// Opatan Inc. : XMLCustomWriter::createChildWithText($doc, $persNameNode, 'middlename', $author->getMiddleName(), false); ????
-			// Opatan Inc. : XMLCustomWriter::createChildWithText($doc, $persNameNode, 'familyname', $author->getLastName()); ???
-			// Opatan Inc. : ???
-			if ($author->getAffiliation() != '') {
+			// Opatan Inc.
+			foreach((array) $author->getMiddleName(null) as $locale => $middleName) {
+				$middleName = strip_tags($middleName);
+				$middleNameNode = &XMLCustomWriter::createElement($doc, 'middlename');
+				XMLCustomWriter::setAttribute ($middleNameNode, 'lang', $locale);
+				XMLCustomWriter::appendChild($persNameNode, $middleNameNode);
+				XMLCustomWriter::createChildWithText($doc, $middleNameNode, 'blocktext', $middleName);
+				unset($middleNameNode);
+			}
+		
+			// Opatan Inc.
+			foreach((array) $author->getLastName(null) as $locale => $lastName) {
+				$lastName = strip_tags($lastName);
+				$lastNameNode = &XMLCustomWriter::createElement($doc, 'familyname');
+				XMLCustomWriter::setAttribute ($lastNameNode, 'lang', $locale);
+				XMLCustomWriter::appendChild($persNameNode, $lastNameNode);
+				XMLCustomWriter::createChildWithText($doc, $lastNameNode, 'blocktext', $lastName);
+				unset($lastNameNode);
+			}
+		
+			// Opatan Inc.
+			foreach ((array) $author->getAffiliation(null) as $locale => $affiliation) {
+				$affiliation = strip_tags($affiliation);
 				$affiliationNode = &XMLCustomWriter::createElement($doc, 'affiliation');
+				XMLCustomWriter::setAttribute($affiliationNode, 'lang', $locale);
 				XMLCustomWriter::appendChild($authorNode, $affiliationNode);
-				XMLCustomWriter::createChildWithText($doc, $affiliationNode, 'blocktext', $author->getAffiliation(), false);
+				XMLCustomWriter::createChildWithText($doc, $affiliationNode, 'blocktext', $affiliation, false);
 			}
 
 			$authorNum++;

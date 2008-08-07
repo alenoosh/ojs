@@ -36,10 +36,10 @@
 		</td>
 
 		<td>{$articleId|escape}</td>
-		<td>{$submission->getDateNotified()|date_format:$dateFormatTrunc}</td>
+		<td>{showdate value=$submission->getDateNotified() format=$dateFormatTrunc type=$calType}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
 		<td><a href="{url op="submission" path=$reviewId}" class="action">{$submission->getArticleTitle()|strip_unsafe_html|truncate:60:"..."}</a></td>
-		<td class="nowrap">{$submission->getDateDue()|date_format:$dateFormatTrunc}</td>
+		<td class="nowrap">{showdate value=$submission->getDateDue() format=$dateFormatTrunc type=$calType}</td>
 		<td>{$submission->getRound()}</td>
 	</tr>
 	<tr>

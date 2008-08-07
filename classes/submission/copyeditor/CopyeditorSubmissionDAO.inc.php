@@ -347,7 +347,7 @@ class CopyeditorSubmissionDAO extends DAO {
 				a.*,
 				c.*,
 				COALESCE(stl.setting_value, stpl.setting_value) AS section_title,
-				COALESCE(sal.setting_value, sapl.setting_value) AS section_abbrev,
+				COALESCE(sal.setting_value, sapl.setting_value) AS section_abbrev
 			FROM
 				articles a
 				INNER JOIN article_authors aa ON (aa.article_id = a.article_id)

@@ -29,7 +29,7 @@
 	<tr valign="top">
 		<td><input type="radio" name="radioButtonName" value="{$articleId}" id="{$progress}" /></td>
 		<td>{$articleId|escape}</td>
-		<td>{$submission->getDateSubmitted()|date_format:$dateFormatTrunc}</td>
+		<td>{showdate value=$submission->getDateSubmitted() format=$dateFormatTrunc type=$calType}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
 		<td>{$submission->getAuthorString(true)|truncate:40:"..."|escape}</td>
 		<td><a href="{url op="submission" path=$articleId}" class="action">{$submission->getArticleTitle()|strip_unsafe_html|truncate:60:"..."}</a></td>

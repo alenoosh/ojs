@@ -28,7 +28,7 @@
 	{assign var="articleId" value=$submission->getArticleId()}
 	<tr valign="top">
 		<td>{$submission->getArticleId()}</td>
-		<td>{$submission->getDateSubmitted()|date_format:$dateFormatShort}</td>
+		<td>{showdate value=$submission->getDateSubmitted() format=$dateFormatShort type=$calType}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
 		<td>{$submission->getAuthorString(true)|truncate:40:"..."|escape}</td>
 		<td><a href="{url op="submissionEditing" path=$articleId}" class="action">{$submission->getArticleTitle()|strip_unsafe_html|truncate:60:"..."}</a></td>

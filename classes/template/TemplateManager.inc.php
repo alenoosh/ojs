@@ -77,6 +77,21 @@ class TemplateManager extends Smarty {
 		$this->assign('datetimeFormatShort', Config::getVar('general', 'datetime_format_short'));
 		$this->assign('datetimeFormatLong', Config::getVar('general', 'datetime_format_long'));
 
+		// Opatan Inc.
+		$journal = &Request::getJournal();
+		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+
+		if ($journal != null) {
+			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
+			if (strcmp($dateDisplayType, "Jalali") == 0) {
+				$this->assign('calType', 1);
+			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
+				$this->assign('calType', 0);
+			}
+		} else {				
+			$this->assign('calType', 0);
+		}
+
 		$locale = Locale::getLocale();
 		$this->assign('currentLocale', $locale);
 

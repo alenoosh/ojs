@@ -177,11 +177,7 @@ class PubMedExportDom {
 		$root = &XMLCustomWriter::createElement($doc, 'Author');
 		$locale = Locale::getLocale();
 
-		// Opatan Inc. : XMLCustomWriter::createChildWithText($doc, $root, 'FirstName', ucfirst($author->getFirstName()));
-		// Opatan Inc. : XMLCustomWriter::createChildWithText($doc, $root, 'MiddleName', ucfirst($author->getMiddleName()), false); ????
-		// Opatan Inc. : XMLCustomWriter::createChildWithText($doc, $root, 'LastName', ucfirst($author->getLastName())); ???
-
-		// Opatan Inc. ??
+		// Opatan Inc.
 		if (is_array($author->getFirstName(null))) {
 			foreach($author->getFirstName(null) as $locale => $value) {
 				$firstNameNode =& XMLCustomWriter::createChildWithText($doc, $root, 'FirstName', ucfirst($value));
@@ -191,10 +187,40 @@ class PubMedExportDom {
 				unset($firstNameNode);
 			}
 		}
-		
-		// Opatan Inc. : ????
+
+		// Opatan Inc.
+		if (is_array($author->getMiddleName(null))) {
+			foreach($author->getMiddleName(null) as $locale => $value) {
+				$middleNameNode =& XMLCustomWriter::createChildWithText($doc, $root, 'MiddleName', ucfirst($value));
+				if ($middleNameNode) {
+					XMLCustomWriter::setAttribute($middleNameNode, 'locale', $locale);
+				}
+				unset($middleNameNode);
+			}
+		}
+
+		// Opatan Inc.
+		if (is_array($author->getLastName(null))) {
+			foreach($author->getLastName(null) as $locale => $value) {
+				$lastNameNode =& XMLCustomWriter::createChildWithText($doc, $root, 'LastName', ucfirst($value));
+				if ($lastNameNode) {
+					XMLCustomWriter::setAttribute($lastNameNode, 'locale', $locale);
+				}
+				unset($lastNameNode);
+			}
+		}
+
+		// Opatan Inc. 
 		if ($author->getPrimaryContact()) {
-			XMLCustomWriter::createChildWithText($doc, $root, 'Affiliation', $author->getAffiliation() . '. ' . $author->getEmail(), false);
+			if (is_array($author->getAffiliation(null))) {
+				foreach($author->getAffiliation(null) as $locale => $value) {
+					$affiliationNode =& XMLCustomWriter::createChildWithText($doc, $root, 'Affiliation', ucfirst($value));
+					if ($affiliationNode) {
+						XMLCustomWriter::setAttribute($affiliationNode, 'locale', $locale);
+					}
+					unset($affiliationNode);
+				}
+			}
 		}
 
 		return $root;

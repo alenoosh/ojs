@@ -188,6 +188,34 @@ class SubscriptionManagerHandler extends Handler {
 					$templateMgr->assign('subscriptionTitle', 'manager.subscriptions.editTitle');	
 				}
 
+				// Opatan Inc.
+				$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+				if ($journal != null) {
+					$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
+					if (strcmp($dateDisplayType, "Jalali") == 0) {
+						$calType = 1;
+					} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
+						$calType = 0;
+					}
+				} else {
+					$calType = 0;
+				}
+		
+				if ($calType == 1) {
+					$startYear = $subscriptionForm->getData('dateStartYear');
+					$startMonth = $subscriptionForm->getData('dateStartMonth');
+					$startDay = $subscriptionForm->getData('dateStartDay');
+					$endYear = $subscriptionForm->getData('dateEndYear');
+					$endMonth = $subscriptionForm->getData('dateEndMonth');
+					$endDay = $subscriptionForm->getData('dateEndDay');
+					$startMdy = Core::jalaliToGregorian($startYear, $startMonth, $startDay);
+					$endMdy = Core::jalaliToGregorian($endYear, $endMonth, $endDay);
+					$subscriptionForm->setData('dateStart', $startMdy["year"].'-'.
+							 	   $startMdy["month"].'-'.$startMdy["day"]);
+					$subscriptionForm->setData('dateEnd', $endMdy["year"].'-'.$endMdy["month"].'-'.$endMdy["day"]);
+				}
+
+
 				$subscriptionForm->display();
 			}
 

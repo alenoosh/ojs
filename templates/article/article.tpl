@@ -140,7 +140,8 @@
 	<li>
 		<a href="{url page="comment" op="view" path=$article->getArticleId()|to_array:$galleyId:$comment->getCommentId()}" target="_parent">{$comment->getTitle()|escape|default:"&nbsp;"}</a>
 		{if $comment->getChildCommentCount()==1}{translate key="comments.oneReply"}{elseif $comment->getChildCommentCount()>0}{translate key="comments.nReplies" num=$comment->getChildCommentCount()}{/if}<br/>
-		{if $poster}{translate key="comments.authenticated" userName=$comment->getPosterName()|escape}{elseif $comment->getPosterName()}{translate key="comments.anonymousNamed" userName=$comment->getPosterName()|escape}{else}{translate key="comments.anonymous"}{/if} ({$comment->getDatePosted()|date_format:$dateFormatShort})
+		{* Opatan Inc. : showdate plugin is used for showing date *}
+		{if $poster}{translate key="comments.authenticated" userName=$comment->getPosterName()|escape}{elseif $comment->getPosterName()}{translate key="comments.anonymousNamed" userName=$comment->getPosterName()|escape}{else}{translate key="comments.anonymous"}{/if} ({showdate value=$comment->getDatePosted() format=$dateFormatShort type=$calType})
 	</li>
 {/foreach}
 </ul>

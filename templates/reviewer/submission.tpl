@@ -82,19 +82,19 @@ function confirmSubmissionCheck() {
 <table width="100%" class="data">
 <tr valign="top">
 	<td class="label" width="20%">{translate key="reviewer.article.schedule.request"}</td>
-	<td class="value" width="80%">{if $submission->getDateNotified()}{$submission->getDateNotified()|date_format:$dateFormatShort}{else}&mdash;{/if}</td>
+	<td class="value" width="80%">{if $submission->getDateNotified()}{showdate value=$submission->getDateNotified() format=$dateFormatShort type=$calType}{else}&mdash;{/if}</td>
 </tr>
 <tr valign="top">
 	<td class="label">{translate key="reviewer.article.schedule.response"}</td>
-	<td class="value">{if $submission->getDateConfirmed()}{$submission->getDateConfirmed()|date_format:$dateFormatShort}{else}&mdash;{/if}</td>
+	<td class="value">{if $submission->getDateConfirmed()}{showdate value=$submission->getDateConfirmed() format=$dateFormatShort type=$calType}{else}&mdash;{/if}</td>
 </tr>
 <tr valign="top">
 	<td class="label">{translate key="reviewer.article.schedule.submitted"}</td>
-	<td class="value">{if $submission->getDateCompleted()}{$submission->getDateCompleted()|date_format:$dateFormatShort}{else}&mdash;{/if}</td>
+	<td class="value">{if $submission->getDateCompleted()}{showdate value=$submission->getDateCompleted() format=$dateFormatShort type=$calType}{else}&mdash;{/if}</td>
 </tr>
 <tr valign="top">
 	<td class="label">{translate key="reviewer.article.schedule.due"}</td>
-	<td class="value">{if $submission->getDateDue()}{$submission->getDateDue()|date_format:$dateFormatShort}{else}&mdash;{/if}</td>
+	<td class="value">{if $submission->getDateDue()}{showdate value=$submission->getDateDue() format=$dateFormatShort type=$calType}{else}&mdash;{/if}</td>
 </tr>
 </table>
 
@@ -168,7 +168,7 @@ function confirmSubmissionCheck() {
 					{if $submission->getDateConfirmed() or not $journal->getSetting('restrictReviewerAccessToFile')}
 						<a href="{url op="downloadFile" path=$reviewId|to_array:$articleId:$reviewFile->getFileId():$reviewFile->getRevision()}" class="file">{$reviewFile->getFileName()|escape}</a>
 					{else}{$reviewFile->getFileName()|escape}{/if}
-					&nbsp;&nbsp;{$reviewFile->getDateModified()|date_format:$dateFormatShort}
+					&nbsp;&nbsp;{showdate value=$reviewFile->getDateModified() format=$dateFormatShort type=$calType}
 					{else}
 					{translate key="common.none"}
 					{/if}
@@ -256,7 +256,7 @@ function confirmSubmissionCheck() {
 				</td>
 				<td class="value" width="70%">
 					<a href="{url op="downloadFile" path=$reviewId|to_array:$articleId:$reviewerFile->getFileId():$reviewerFile->getRevision()}" class="file">{$reviewerFile->getFileName()|escape}</a>
-					{$reviewerFile->getDateModified()|date_format:$dateFormatShort}
+					{showdate value=$reviewerFile->getDateModified() format=$dateFormatShort type=$calType}
 					{if ($submission->getRecommendation() === null || $submission->getRecommendation() === '') && (!$submission->getCancelled())}
 						<a class="action" href="{url op="deleteReviewerVersion" path=$reviewId|to_array:$reviewerFile->getFileId():$reviewerFile->getRevision()}">{translate key="common.delete"}</a>
 					{/if}
@@ -305,7 +305,7 @@ function confirmSubmissionCheck() {
 				{if $submission->getRecommendation() !== null && $submission->getRecommendation() !== ''}
 					{assign var="recommendation" value=$submission->getRecommendation()}
 					<b>{translate key=$reviewerRecommendationOptions.$recommendation}</b>&nbsp;&nbsp;
-					{$submission->getDateCompleted()|date_format:$dateFormatShort}
+					{showdate value=$submission->getDateCompleted() format=$dateFormatShort type=$calType}
 				{else}
 					<form name="recommendation" method="post" action="{url op="recordRecommendation"}">
 					<input type="hidden" name="reviewId" value="{$reviewId|escape}" />

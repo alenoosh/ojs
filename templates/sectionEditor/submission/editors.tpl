@@ -59,7 +59,7 @@
 					{/if}
 				/>
 			</td>
-			<td>{if $editAssignment->getDateNotified()}{$editAssignment->getDateNotified()|date_format:$dateFormatShort}{else}&mdash;{/if}</td>
+			<td>{if $editAssignment->getDateNotified()}{showdate value=$editAssignment->getDateNotified() format=$dateFormatShort type=$calType}{else}&mdash;{/if}</td>
 			{if $isEditor}
 				<td><a href="{url op="deleteEditAssignment" path=$editAssignment->getEditId()}" class="action">{translate key="common.delete"}</a></td>
 			{/if}

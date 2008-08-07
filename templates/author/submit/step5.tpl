@@ -38,7 +38,7 @@
 	<td><a class="file" href="{url op="download" path=$articleId|to_array:$file->getFileId()}">{$file->getOriginalFileName()|escape}</a></td>
 	<td>{if ($file->getType() == 'supp')}{translate key="article.suppFile"}{else}{translate key="author.submit.submissionFile"}{/if}</td>
 	<td>{$file->getNiceFileSize()}</td>
-	<td>{$file->getDateUploaded()|date_format:$dateFormatTrunc}</td>
+	<td>{showdate value=$file->getDateUploaded() format=$dateFormatTrunc type=$calType}</td>
 </tr>
 {foreachelse}
 <tr valign="top">

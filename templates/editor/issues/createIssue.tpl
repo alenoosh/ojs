@@ -26,7 +26,6 @@
 </form>
 
 <form name="issue" method="post" action="{url op="saveIssue"}" enctype="multipart/form-data">
-
 <div class="separator"></div>
 
 <h3>{translate key="editor.issues.identification"}</h3>
@@ -84,10 +83,10 @@
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="openAccessDate" key="editor.issues.accessDate"}</td>
-		{if ($Date_Year && $Date_Month && $Date_Day)} 
-			<td class="value">{html_select_date time="$Date_Year-$Date_Month-$Date_Day" end_year="+20" all_extra="class=\"selectMenu\""}</td>
+		{if ($Date_Year && $Date_Month && $Date_Day)}
+			<td class="value">{html_select_date time="$Date_Year-$Date_Month-$Date_Day" end_year="+20" all_extra="class=\"selectMenu\"" type=$calType}</td>
 		{else}
-			<td class="value">{html_select_date end_year="+20" all_extra="class=\"selectMenu\""}</td>
+			<td class="value">{html_select_date end_year="+20" all_extra="class=\"selectMenu\"" type=$calType}</td>
 		{/if}
 	</tr>
 </table>

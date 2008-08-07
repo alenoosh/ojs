@@ -26,7 +26,7 @@
 	{assign var="articleId" value=$submission->getArticleId()}
 	<tr valign="top">
 		<td>{$articleId|escape}</td>
-		<td>{$submission->getDateNotified()|date_format:$dateFormatTrunc}</td>
+		<td>{showdate value=$submission->getDateNotified() format=$dateFormatTrunc type=$calType}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
 		<td>{$submission->getAuthorString(true)|truncate:40:"..."|escape}</td>
 		<td><a href="{url op="submission" path=$articleId}" class="action">{$submission->getArticleTitle()|strip_unsafe_html|truncate:60:"..."}</a></td>

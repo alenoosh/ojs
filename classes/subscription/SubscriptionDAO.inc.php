@@ -354,7 +354,7 @@ class SubscriptionDAO extends DAO {
 		// Opatan Inc. : joined with user_settings to provide setting_value of lastName
 		$locale = Locale::getLocale();
 		$result = &$this->retrieveRange(
-			'SELECT s.*, sl.setting_value AS last_name FROM subscriptions s, users u LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE s.user_id = u.user_id AND journal_id = ? ORDER BY last_name ASC', array('lastName', $locale, $journalId), $rangeInfo
+			'SELECT s.*, sl.setting_value AS last_name FROM subscriptions s, users u LEFT JOIN user_settings sl ON (u.user_id = sl.user_id AND sl.setting_name = ? AND sl.locale = ?) WHERE s.user_id = u.user_id AND s.journal_id = ? ORDER BY last_name ASC', array('lastName', $locale, $journalId), $rangeInfo
 		);
 
 		$returner = &new DAOResultFactory($result, $this, '_returnSubscriptionFromRow');

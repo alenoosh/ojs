@@ -53,7 +53,7 @@
 </tr>
 <tr valign="top">
 	<td class="label">{fieldLabel name="dateApproved" required="true" key="plugins.generic.thesis.form.dateApproved"}</td>
-	<td class="value">{html_select_date prefix="dateApproved" all_extra="class=\"selectMenu\"" start_year="$yearOffsetPast" time="$dateApproved"}</td>
+	<td class="value">{html_select_date prefix="dateApproved" all_extra="class=\"selectMenu\"" start_year="$yearOffsetPast" time="$dateApproved" type=$calType}</td>
 </tr>
 <tr valign="top">
 	<td class="label">{fieldLabel name="title" required="true" key="plugins.generic.thesis.form.title"}</td>

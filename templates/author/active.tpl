@@ -30,7 +30,7 @@
 	<tr valign="top">
 		<td><input type="radio" name="radioButtonName" value="{$articleId}" id="{$progress}" /></td>
 		<td>{$articleId|escape}</td>
-		<td>{if $submission->getDateSubmitted()}{$submission->getDateSubmitted()|date_format:$dateFormatTrunc}{else}&mdash;{/if}</td>
+		<td>{if $submission->getDateSubmitted()}{showdate value=$submission->getDateSubmitted() format=$dateFormatTrunc type=$calType}{else}&mdash;{/if}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
 		<td>{$submission->getAuthorString(true)|truncate:40:"..."|escape}</td>
 		{if $progress == 0}

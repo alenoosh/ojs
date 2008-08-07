@@ -30,7 +30,7 @@
 		<td class="label">{translate key="submission.originalFile"}</td>
 		<td colspan="2" class="value">
 			{if $submissionFile}
-				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$submissionFile->getFileId()}" class="file">{$submissionFile->getFileName()|escape}</a>&nbsp;&nbsp;{$submissionFile->getDateModified()|date_format:$dateFormatShort}
+				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$submissionFile->getFileId()}" class="file">{$submissionFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$submissionFile->getDateModified() format=$dateFormatShort type=$calType}
 			{else}
 				{translate key="common.none"}
 			{/if}
@@ -40,7 +40,7 @@
 		<td class="label">{translate key="article.suppFilesAbbrev"}</td>
 		<td colspan="2" class="value">
 			{foreach name="suppFiles" from=$suppFiles item=suppFile}
-				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$suppFile->getFileId()}" class="file">{$suppFile->getFileName()|escape}</a>&nbsp;&nbsp;{$suppFile->getDateModified()|date_format:$dateFormatShort}&nbsp;&nbsp;<a href="{url op="editSuppFile" from="submission" path=$submission->getArticleId()|to_array:$suppFile->getSuppFileId()}" class="action">{translate key="common.edit"}</a>&nbsp;&nbsp;&nbsp;&nbsp;{if !$notFirst}&nbsp;&nbsp;&nbsp;&nbsp;<a href="{url op="addSuppFile" from="submission" path=$submission->getArticleId()}" class="action">{translate key="submission.addSuppFile"}</a>{/if}<br />
+				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$suppFile->getFileId()}" class="file">{$suppFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$suppFile->getDateModified() format=$dateFormatShort type=$calType}&nbsp;&nbsp;<a href="{url op="editSuppFile" from="submission" path=$submission->getArticleId()|to_array:$suppFile->getSuppFileId()}" class="action">{translate key="common.edit"}</a>&nbsp;&nbsp;&nbsp;&nbsp;{if !$notFirst}&nbsp;&nbsp;&nbsp;&nbsp;<a href="{url op="addSuppFile" from="submission" path=$submission->getArticleId()}" class="action">{translate key="submission.addSuppFile"}</a>{/if}<br />
 				{assign var=notFirst value=1}
 			{foreachelse}
 				{translate key="common.none"}&nbsp;&nbsp;&nbsp;&nbsp;<a href="{url op="addSuppFile" from="submission" path=$submission->getArticleId()}" class="action">{translate key="submission.addSuppFile"}</a>
@@ -58,7 +58,7 @@
 	</tr>
 	<tr>
 		<td class="label">{translate key="common.dateSubmitted"}</td>
-		<td>{$submission->getDateSubmitted()|date_format:$dateFormatShort}</td>
+		<td>{showdate value=$submission->getDateSubmitted() format=$dateFormatShort type=$calType}</td>
 	</tr>
 	<tr>
 		<td class="label">{translate key="section.section"}</td>

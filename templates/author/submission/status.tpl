@@ -27,10 +27,10 @@
 	</tr>
 	<tr>
 		<td class="label">{translate key="submission.initiated"}</td>
-		<td colspan="2" class="value">{$submission->getDateStatusModified()|date_format:$dateFormatShort}</td>
+		<td colspan="2" class="value">{showdate value=$submission->getDateStatusModified() format=$dateFormatShort type=$calType}</td>
 	</tr>
 	<tr>
 		<td class="label">{translate key="submission.lastModified"}</td>
-		<td colspan="2" class="value">{$submission->getLastModified()|date_format:$dateFormatShort}</td>
+		<td colspan="2" class="value">{showdate value=$submission->getLastModified() format=$dateFormatShort type=$calType}</td>
 	</tr>
 </table>

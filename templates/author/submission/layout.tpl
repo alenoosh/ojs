@@ -34,19 +34,19 @@
 	<tr>
 		<td colspan="2">
 			{if $layoutFile}
-				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$layoutFile->getFileId()}" class="file">{$layoutFile->getFileName()|escape}</a>&nbsp;&nbsp;{$layoutFile->getDateModified()|date_format:$dateFormatShort}
+				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$layoutFile->getFileId()}" class="file">{$layoutFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$layoutFile->getDateModified() format=$dateFormatShort type=$calType}
 			{else}
 				{translate key="common.none"}
 			{/if}
 		</td>
 		<td>
-			{$layoutAssignment->getDateNotified()|date_format:$dateFormatShort|default:"&mdash;"}
+			{showdate value=$layoutAssignment->getDateNotified() format=$dateFormatShort type=$calType}
 		</td>
 		<td>
-			{$layoutAssignment->getDateUnderway()|date_format:$dateFormatShort|default:"&mdash;"}
+			{showdate value=$layoutAssignment->getDateUnderway() format=$dateFormatShort type=$calType}
 		</td>
 		<td colspan="2">
-			{$layoutAssignment->getDateCompleted()|date_format:$dateFormatShort|default:"&mdash;"}
+			{showdate value=$layoutAssignment->getDateCompleted() format=$dateFormatShort type=$calType}
 		</td>
 	</tr>
 	<tr>
@@ -62,7 +62,7 @@
 	<tr>
 		<td width="5%">{$smarty.foreach.galleys.iteration}.</td>
 		<td width="35%">{$galley->getGalleyLabel()|escape} &nbsp; <a href="{url op="proofGalley" path=$submission->getArticleId()|to_array:$galley->getGalleyId()}" class="action">{translate key="submission.layout.viewProof"}</td>
-		<td colspan="3"><a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$galley->getFileId()}" class="file">{$galley->getFileName()|escape}</a>&nbsp;&nbsp;{$galley->getDateModified()|date_format:$dateFormatShort}</td>
+		<td colspan="3"><a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$galley->getFileId()}" class="file">{$galley->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$galley->getDateModified() format=$dateFormatShort type=$calType}</td>
 		<td>{$galley->getViews()}</td>
 	</tr>
 	{foreachelse}
@@ -81,7 +81,7 @@
 	<tr>
 		<td width="5%">{$smarty.foreach.suppFiles.iteration}.</td>
 		<td width="35%">{$suppFile->getSuppFileTitle()|escape}</td>
-		<td colspan="4"><a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$suppFile->getFileId()}" class="file">{$suppFile->getFileName()|escape}</a>&nbsp;&nbsp;{$suppFile->getDateModified()|date_format:$dateFormatShort}</td>
+		<td colspan="4"><a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$suppFile->getFileId()}" class="file">{$suppFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$suppFile->getDateModified() format=$dateFormatShort type=$calType}</td>
 	</tr>
 	{foreachelse}
 	<tr>
@@ -96,7 +96,7 @@
 {translate key="submission.layout.layoutComments"}
 {if $submission->getMostRecentLayoutComment()}
 	{assign var="comment" value=$submission->getMostRecentLayoutComment()}
-	<a href="javascript:openComments('{url op="viewLayoutComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a>{$comment->getDatePosted()|date_format:$dateFormatShort}
+	<a href="javascript:openComments('{url op="viewLayoutComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a>{showdate value=$comment->getDatePosted() format=$dateFormatShort type=$calType}
 {else}
 	<a href="javascript:openComments('{url op="viewLayoutComments" path=$submission->getArticleId()}');" class="icon">{icon name="comment"}</a>
 {/if}

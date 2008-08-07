@@ -32,13 +32,13 @@
 	{assign var="highlightClass" value=$submission->getHighlightClass()}
 	<tr valign="top"{if $highlightClass} class="{$highlightClass|escape}"{/if}>
 		<td>{$submission->getArticleId()}</td>
-		<td>{$submission->getDateSubmitted()|date_format:$dateFormatTrunc}</td>
+		<td>{showdate value=$submission->getDateSubmitted() format=$dateFormatTrunc type=$calType}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
 		<td>{$submission->getAuthorString(true)|truncate:40:"..."|escape}</td>
 		<td><a href="{url op="submissionEditing" path=$articleId}" class="action">{$submission->getArticleTitle()|strip_unsafe_html|truncate:60:"..."}</a></td>
-		<td>{$submission->getCopyeditorDateFinalCompleted()|date_format:$dateFormatTrunc|default:"&mdash;"}</td>
-		<td>{$layoutAssignment->getDateCompleted()|date_format:$dateFormatTrunc|default:"&mdash;"}</td>
-		<td>{$proofAssignment->getDateLayoutEditorCompleted()|date_format:$dateFormatTrunc|default:"&mdash;"}</td>
+		<td>{showdate value=$submission->getCopyeditorDateFinalCompleted() format=$dateFormatTrunc type=$calType}</td>
+		<td>{showdate value=$layoutAssignment->getDateCompleted() format=$dateFormatTrunc type=$calType}</td>
+		<td>{showdate value=$proofAssignment->getDateLayoutEditorCompleted() format=$dateFormatTrunc type=$calType}</td>
 	</tr>
 	<tr>
 		<td colspan="8" class="{if $submissions->eof()}end{/if}separator">&nbsp;</td>

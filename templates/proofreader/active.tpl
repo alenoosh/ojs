@@ -28,7 +28,7 @@
 
 	<tr valign="top">
 		<td>{$articleId|escape}</td>
-		<td>{$proofAssignment->getDateProofreaderNotified()|date_format:$dateFormatTrunc}</td>
+		<td>{showdate value=$proofAssignment->getDateProofreaderNotified() format=$dateFormatTrunc type=$calType}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
 		<td>{$submission->getAuthorString(true)|truncate:40:"..."|escape}</td>
 		<td><a href="{url op="submission" path=$articleId}" class="action">{$submission->getArticleTitle()|strip_unsafe_html|truncate:60:"..."}</a></td>

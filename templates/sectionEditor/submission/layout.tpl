@@ -48,21 +48,21 @@
 				{else}
 					{icon name="mail" disabled="disable"}
 				{/if}
-				{$layoutAssignment->getDateNotified()|date_format:$dateFormatShort|default:""}
+				{showdate value=$layoutAssignment->getDateNotified() format=$dateFormatShort default="" type=$calType}
 			{else}
 				{translate key="common.notApplicableShort"}
 			{/if}
 		</td>
 		<td>
 			{if $useLayoutEditors}
-				{$layoutAssignment->getDateUnderway()|date_format:$dateFormatShort|default:"&mdash;"}
+				{showdate value=$layoutAssignment->getDateUnderway() format=$dateFormatShort type=$calType}
 			{else}
 				{translate key="common.notApplicableShort"}
 			{/if}
 		</td>
 		<td>
 			{if $useLayoutEditors}
-				{$layoutAssignment->getDateCompleted()|date_format:$dateFormatShort|default:"&mdash;"}
+				{showdate value=$layoutAssignment->getDateCompleted() format=$dateFormatShort type=$calType}
 			{else}
 				{translate key="common.notApplicableShort"}
 			{/if}
@@ -75,7 +75,7 @@
 				{else}
 					{icon name="mail" disabled="disable"}
 				{/if}
-				{$layoutAssignment->getDateAcknowledged()|date_format:$dateFormatShort|default:""}
+				{showdate value=$layoutAssignment->getDateAcknowledged() format=$dateFormatShort default="" type=$calType}
 			{else}
 				{translate key="common.notApplicableShort"}
 			{/if}
@@ -85,7 +85,7 @@
 		<td colspan="6">
 			{translate key="common.file"}:&nbsp;&nbsp;&nbsp;&nbsp;
 			{if $layoutFile}
-				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$layoutFile->getFileId()}" class="file">{$layoutFile->getFileName()|escape}</a>&nbsp;&nbsp;{$layoutFile->getDateModified()|date_format:$dateFormatShort}
+				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$layoutFile->getFileId()}" class="file">{$layoutFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$layoutFile->getDateModified() format=$dateFormatShort type=$calType}
 			{else}
 				{translate key="submission.layout.noLayoutFile"}
 			{/if}
@@ -106,7 +106,7 @@
 	<tr>
 		<td width="2%">{$smarty.foreach.galleys.iteration}.</td>
 		<td width="26%">{$galley->getGalleyLabel()|escape} &nbsp; <a href="{url op="proofGalley" path=$submission->getArticleId()|to_array:$galley->getGalleyId()}" class="action">{translate key="submission.layout.viewProof"}</a></td>
-		<td colspan="2"><a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$galley->getFileId()}" class="file">{$galley->getFileName()|escape}</a>&nbsp;&nbsp;{$galley->getDateModified()|date_format:$dateFormatShort}</td>
+		<td colspan="2"><a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$galley->getFileId()}" class="file">{$galley->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$galley->getDateModified() format=$dateFormatShort type=$calType}</td>
 		<td><a href="{url op="orderGalley" d=u articleId=$submission->getArticleId() galleyId=$galley->getGalleyId()}" class="plain">&uarr;</a> <a href="{url op="orderGalley" d=d articleId=$submission->getArticleId() galleyId=$galley->getGalleyId()}" class="plain">&darr;</a></td>
 		<td>
 			<a href="{url op="editGalley" path=$submission->getArticleId()|to_array:$galley->getGalleyId()}" class="action">{translate key="common.edit"}</a>&nbsp;|&nbsp;<a href="{url op="deleteGalley" path=$submission->getArticleId()|to_array:$galley->getGalleyId()}" onclick="return confirm('{translate|escape:"jsparam" key="submission.layout.confirmDeleteGalley"}')" class="action">{translate key="common.delete"}</a>
@@ -131,7 +131,7 @@
 	<tr>
 		<td width="2%">{$smarty.foreach.suppFiles.iteration}.</td>
 		<td width="26%">{$suppFile->getSuppFileTitle()}</td>
-		<td colspan="2"><a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$suppFile->getFileId()}" class="file">{$suppFile->getFileName()|escape}</a>&nbsp;&nbsp;{$suppFile->getDateModified()|date_format:$dateFormatShort}</td>
+		<td colspan="2"><a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$suppFile->getFileId()}" class="file">{$suppFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$suppFile->getDateModified() format=$dateFormatShort type=$calType}</td>
 		<td><a href="{url op="orderSuppFile" d=u articleId=$submission->getArticleId() suppFileId=$suppFile->getSuppFileId()}" class="plain">&uarr;</a> <a href="{url op="orderSuppFile" d=d articleId=$submission->getArticleId() suppFileId=$suppFile->getSuppFileId()}" class="plain">&darr;</a></td>
 		<td colspan="2">
 			<a href="{url op="editSuppFile" from="submissionEditing" path=$submission->getArticleId()|to_array:$suppFile->getSuppFileId()}" class="action">{translate key="common.edit"}</a>&nbsp;|&nbsp;<a href="{url op="deleteSuppFile" from="submissionEditing" path=$submission->getArticleId()|to_array:$suppFile->getSuppFileId()}" onclick="return confirm('{translate|escape:"jsparam" key="submission.layout.confirmDeleteSupplementaryFile"}')" class="action">{translate key="common.delete"}</a>
@@ -158,7 +158,7 @@
 {translate key="submission.layout.layoutComments"}
 {if $submission->getMostRecentLayoutComment()}
 	{assign var="comment" value=$submission->getMostRecentLayoutComment()}
-	<a href="javascript:openComments('{url op="viewLayoutComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a>{$comment->getDatePosted()|date_format:$dateFormatShort}
+	<a href="javascript:openComments('{url op="viewLayoutComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a>{showdate value=$comment->getDatePosted() format=$dateFormatShort type=$calType}
 {else}
 	<a href="javascript:openComments('{url op="viewLayoutComments" path=$submission->getArticleId()}');" class="icon">{icon name="comment"}</a>
 {/if}

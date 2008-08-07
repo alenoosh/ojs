@@ -41,8 +41,21 @@ function smarty_function_html_select_date($params, &$smarty)
     require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
     require_once $smarty->_get_plugin_filepath('function','html_options');
     /* Default values. */
+    // Opatan Inc.
+    if (isset($params["type"])) {
+	    $calType = $params["type"];
+    } else {
+	    $calType = 0;	 	
+    }
     $prefix          = "Date_";
-    $start_year      = strftime("%Y");
+    if ($calType == 1) {
+	$date = Core::getCurrentDate();
+	$timestamp = Core::convertDateTimeToTimestamp($date);
+	$jalali = Core::gregorianToJalali($timestamp);
+	$start_year = $jalali["year"]; 
+    } else {
+	$start_year = strftime("%Y");			  
+    }
     $end_year        = $start_year;
     $display_days    = true;
     $display_months  = true;
@@ -151,16 +164,32 @@ function smarty_function_html_select_date($params, &$smarty)
     // make syntax "+N" or "-N" work with start_year and end_year
     if (preg_match('!^(\+|\-)\s*(\d+)$!', $end_year, $match)) {
         if ($match[1] == '+') {
-            $end_year = strftime('%Y') + $match[2];
+	    if ($calType == 1) {
+	            $end_year = $jalali["year"] + $match[2];
+            } else {
+	            $end_year = strftime('%Y') + $match[2];
+	    }
         } else {
-            $end_year = strftime('%Y') - $match[2];
+	    if ($calType == 1) {
+	            $end_year = $jalali["year"] - $match[2];
+            } else {
+		    $end_year = strftime('%Y') - $match[2];
+	    }				    
         }
     }
     if (preg_match('!^(\+|\-)\s*(\d+)$!', $start_year, $match)) {
         if ($match[1] == '+') {
-            $start_year = strftime('%Y') + $match[2];
+	    if ($calType == 1) {
+	            $start_year = $jalali["year"] + $match[2];
+            } else {
+	            $start_year = strftime('%Y') + $match[2];
+	    }
         } else {
-            $start_year = strftime('%Y') - $match[2];
+	    if ($calType == 1) {
+        	    $start_year = $jalali["year"] - $match[2];	
+	    } else {
+	            $start_year = strftime('%Y') - $match[2];
+	    }
         }
     }
     if (strlen($time[0]) > 0) {
@@ -187,8 +216,19 @@ function smarty_function_html_select_date($params, &$smarty)
             $month_names[''] = $month_empty;
             $month_values[''] = '';
         }
+	
+	// Opatan Inc.
+	if ($calType == 1) {
+		$jalaliMonthNames = array("", "Farvardin", "Ordibehesht", "Khordad", "Tir", "Mordad",
+				     "Shahrivar", "Mehr", "Aban", "Azar", "Dey", "Bahman", "Esfand");
+	}
+
         for ($i = 1; $i <= 12; $i++) {
-            $month_names[$i] = strftime($month_format, mktime(0, 0, 0, $i, 1, 2000));
+	    if ($calType == 1) {
+		    $month_names[$i] = $jalaliMonthNames[$i];
+	    } else {
+	            $month_names[$i] = strftime($month_format, mktime(0, 0, 0, $i, 1, 2000));
+	    }		
             $month_values[$i] = strftime($month_value_format, mktime(0, 0, 0, $i, 1, 2000));
         }
 
@@ -208,10 +248,18 @@ function smarty_function_html_select_date($params, &$smarty)
             $month_result .= ' ' . $all_extra;
         }
         $month_result .= $extra_attrs . '>'."\n";
-
+	
+	if ($calType == 1) {
+		if ($time[1] != 0) {
+			$mdy = Core::gregorianToJalali(mktime(0, 0, 0, $time[1], $time[2], $time[0]));
+		}
+		$selectedMonth = (int)$time[1] ? $mdy["month"] : '';
+	} else {
+		$selectedMonth = (int)$time[1] ? strftime($month_value_format, mktime(0, 0, 0, (int)$time[1], 1, 2000)) : '';
+	}
         $month_result .= smarty_function_html_options(array('output'     => $month_names,
                                                             'values'     => $month_values,
-                                                            'selected'   => (int)$time[1] ? strftime($month_value_format, mktime(0, 0, 0, (int)$time[1], 1, 2000)) : '',
+                                                            'selected'   => $selectedMonth,
                                                             'print_result' => false),
                                                       $smarty);
         $month_result .= '</select>';
@@ -245,9 +293,17 @@ function smarty_function_html_select_date($params, &$smarty)
             $day_result .= ' ' . $day_extra;
         }
         $day_result .= $extra_attrs . '>'."\n";
+	if ($calType == 1) {
+		if ($time[2] != 0) {
+			$mdy = Core::gregorianToJalali(mktime(0, 0, 0, $time[1], $time[2], $time[0]));
+		}
+		$selectedDay = ($time[2]!=0) ? $mdy["day"] : '';
+	} else {
+		$selectedDay = $time[2];
+	}
         $day_result .= smarty_function_html_options(array('output'     => $days,
                                                           'values'     => $day_values,
-                                                          'selected'   => $time[2],
+                                                          'selected'   => $selectedDay,
                                                           'print_result' => false),
                                                     $smarty);
         $day_result .= '</select>';
@@ -292,9 +348,17 @@ function smarty_function_html_select_date($params, &$smarty)
                 $year_result .= ' ' . $year_extra;
             }
             $year_result .= $extra_attrs . '>'."\n";
+	    if ($calType == 1) {
+	    	if ($time[0]) {
+			$mdy = Core::gregorianToJalali(mktime(0, 0, 0, $time[1], $time[2], $time[0]));
+		}
+		$selectedYear = $time[0] ? $mdy["year"] : '';
+	    } else {
+		$selectedYear = $time[0];
+	    }
             $year_result .= smarty_function_html_options(array('output' => $years,
                                                                'values' => $yearvals,
-                                                               'selected'   => $time[0],
+                                                               'selected'   => $selectedYear,
                                                                'print_result' => false),
                                                          $smarty);
             $year_result .= '</select>';
@@ -302,9 +366,9 @@ function smarty_function_html_select_date($params, &$smarty)
     }
 
     // Loop thru the field_order field
-    for ($i = 0; $i <= 2; $i++){
+    for ($i = 0; $i <= 2; $i++) {
         $c = substr($field_order, $i, 1);
-        switch ($c){
+        switch ($c) {
             case 'D':
                 $html_result .= $day_result;
                 break;
@@ -318,7 +382,7 @@ function smarty_function_html_select_date($params, &$smarty)
                 break;
         }
         // Add the field seperator
-        if($i < $field_separator_count) {
+        if ($i < $field_separator_count) {
             $html_result .= $field_separator;
         }
     }

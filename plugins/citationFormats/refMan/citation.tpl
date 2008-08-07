@@ -17,11 +17,11 @@ TY  - JOUR
 {foreach from=$article->getAuthors() item=author}
 AU  - {$author->getFullName(true)|escape}
 {/foreach}
-PY  - {$article->getDatePublished()|date_format:"%Y"}
+PY  - {showdate value=$article->getDatePublished() format="%Y" type=$calType}
 TI  - {$article->getArticleTitle()|strip_tags}
 JF  - {$journal->getJournalTitle()|escape}{if $issue}; {$issue->getIssueIdentification()|escape}{/if}
 
-Y2  - {$article->getDatePublished()|date_format:"%Y"}
+Y2  - {showdate value=$article->getDatePublished() format="%Y" type=$calType}
 KW  - {$article->getArticleSubject()|replace:';':','|escape}
 N2  - {$article->getArticleAbstract()|strip_tags|replace:"\n":" "|replace:"\r":" "}
 UR  - {$articleUrl}
