@@ -243,7 +243,7 @@ function confirmForgottenUpload() {
 </tr>
 {* Opatan Inc. : running title input box is added *}
 <tr valign="top">
-	<td width="20%" class="label">{fieldLabel name="runningTitle" key="article.runningTitle"}</td>
+	<td width="20%" class="label">{fieldLabel name="runningTitle" required="true" key="article.runningTitle"}</td>
 	<td width="80%" class="value"><input type="text" class="textField" name="runningTitle[{$formLocale|escape}]" id="runningTitle" value="{$runningTitle[$formLocale]|escape}" size="60" maxlength="255" /></td>
 </tr>
 

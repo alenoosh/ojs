@@ -55,7 +55,9 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		$this->addCheck(new FormValidatorCustom($this, 'authors', 'required', 'author.submit.form.authorRequired', create_function('$authors', 'return count($authors) > 0;')));
 		$this->addCheck(new FormValidatorArray($this, 'authors', 'required', 'author.submit.form.authorRequiredFields', array(array('firstName', $locale), array('lastName', $locale), 'email')));
 		$this->addCheck(new FormValidatorLocale($this, 'title', 'required', 'author.submit.form.titleRequired'));
-
+		// Opatan Inc.
+		$this->addCheck(new FormValidatorLocale($this, 'runningTitle', 'required', 'author.submit.form.runningTitleRequired'));
+		
 		// Opatan Inc. : if author can specify reviewers and specifying reviewers is not optional adds reviewers validator
 		if ($journalSettingsDao->getSetting($journal->getJournalId(), 'authorCanSpecifyReviewers')) {
 			$reviewerIsOptional = &$journalSettingsDao->getSetting($journal->getJournalId(), 'reviewerIsOptional');

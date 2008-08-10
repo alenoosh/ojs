@@ -2026,6 +2026,8 @@ http://journals.mui.ac.ir/index.php/index/index
     <message key="author.submit.form.reviewerRequiredFields">نام، نام خانوادگی و آدرس ايميل هر کارشناس الزامی است.</message>
    
     <message key="author.submit.form.titleRequired" >لطفا عنوان مقاله را وارد کنید.</message>
+    <!-- Opatan Inc. -->
+    <message key="author.submit.form.runningTitleRequired">لطفا عنوان مکرری مقاله را وارد کنيد.</message>
     <message key="author.submit.form.abstractRequired" >لطفا چکیده مقاله را پارد کنید</message>   
     <!-- Opatan Inc. -->
     <message key="author.submit.reviewerRecommendation">پيشنهاد کارشناس</message>

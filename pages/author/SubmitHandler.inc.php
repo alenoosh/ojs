@@ -83,18 +83,7 @@ class SubmitHandler extends AuthorHandler {
 					array_push($authors, array());
 					$submitForm->setData('authors', $authors);
 
-				} //else if (($editAuthor = Request::getUserVar('editAuthor')) && count($editAuthor) == 1) {
-					// Opatan Inc. : possibility of editing previously added author
-			            	//    $editData = true;
-  					//list($editAuthor) = array_keys($editAuthor);
-					//$editAuthor = (int) $editAuthor;
-			                //$authors = $submitForm->getData('authors');
-			                //$authors[$editAuthor]['edited'] = 1;
-			                //$submitForm->setData('editAuthorId', $authors[$editAuthor]['authorId']);
-			                //$submitForm->setData('authors', $authors);
-                    
-		                //} 
-				else if (($delAuthor = Request::getUserVar('delAuthor')) && count($delAuthor) == 1) {
+				} else if (($delAuthor = Request::getUserVar('delAuthor')) && count($delAuthor) == 1) {
 					// Delete an author
 					$editData = true;
 					list($delAuthor) = array_keys($delAuthor);
