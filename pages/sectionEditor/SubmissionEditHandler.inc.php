@@ -42,7 +42,7 @@ class SubmissionEditHandler extends SectionEditorHandler {
 		
 		// Opatan Inc. : get reviewers suggested by the author for the article
 		$sectionEditorSubmissionDao = &DAORegistry::getDAO('SectionEditorSubmissionDAO');
-		$reviewers = &$sectionEditorSubmissionDao->getReviewersSuggestedForArticle($articleId);
+		$reviewers = $sectionEditorSubmissionDao->getReviewersSuggestedForArticle($articleId);
 
 		$templateMgr = &TemplateManager::getManager();
 
@@ -413,28 +413,64 @@ class SubmissionEditHandler extends SectionEditorHandler {
 	 */
 	function createReviewer($args) {
 		$articleId = isset($args[0]) ? (int) $args[0] : 0;
+		$reviewerId = isset($args[1]) ? (int) $args[1] : 0;
+
 		list($journal, $submission) = SubmissionEditHandler::validate($articleId, SECTION_EDITOR_ACCESS_REVIEW);
+		
+		$reviewerDao = &DAORegistry::getDAO('ReviewerDAO');
 
 		import('sectionEditor.form.CreateReviewerForm');
 		$createReviewerForm =& new CreateReviewerForm($articleId);
 		parent::setupTemplate(true, $articleId);
-
-		if (isset($args[1]) && $args[1] === 'create') {
+		
+		if (isset($args[2]) && $args[2] === 'create') {			
 			$createReviewerForm->readInputData();
 			if ($createReviewerForm->validate()) {
 				// Create a user and enroll them as a reviewer.
+				if ($reviewerId) {
+					$reviewer = &$reviewerDao->getReviewer($reviewerId);
+					$createReviewerForm->setData('firstName', $reviewer->getFirstName(null));
+					$createReviewerForm->setData('lastName', $reviewer->getLastName(null));
+					if ($reviewer->getMiddleName(null)) {
+						$createReviewerForm->setData('middleName', $reviewer->getMiddleName(null));
+					}
+					if ($reviewer->getAffiliation(null)) {
+						$createReviewerForm->setData('affiliation', $reviewer->getAffiliation(null));
+					}
+					$createReviewerForm->setData('username', $reviewer->getEmail());
+				}
 				$newUserId = $createReviewerForm->execute();
+				if ($reviewerId) {
+					$reviewer->setStatus(1);
+					$reviewerDao->updateReviewerStatus($reviewer);
+				}
 				Request::redirect(null, null, 'selectReviewer', array($articleId, $newUserId));
 			} else {
 				$createReviewerForm->display();
 			}
 		} else {
+			// Opatan Inc.
+			if ($reviewerId) {
+				$reviewer = &$reviewerDao->getReviewer($reviewerId);
+				$createReviewerForm->setData('reviewerId', $reviewerId);
+				$createReviewerForm->setData('firstName', $reviewer->getFirstName(null));
+				$createReviewerForm->setData('lastName', $reviewer->getLastName(null));
+				if ($reviewer->getMiddleName(null)) {
+					$createReviewerForm->setData('middleName', $reviewer->getMiddleName(null));
+				}
+				if ($reviewer->getAffiliation(null)) {
+					$createReviewerForm->setData('affiliation', $reviewer->getAffiliation(null));
+				}
+				$createReviewerForm->setData('username', $reviewer->getEmail());
+			}
+
 			// Display the "create user" form.
 			if ($createReviewerForm->isLocaleResubmit()) {
 				$createReviewerForm->readInputData();
 			} else {
 				$createReviewerForm->initData();
 			}
+
 			$createReviewerForm->display();
 		}
 
@@ -542,20 +578,6 @@ class SubmissionEditHandler extends SectionEditorHandler {
 
 		if (SectionEditorAction::notifyReviewer($submission, $reviewId, $send)) {
 			Request::redirect(null, null, 'submissionReview', $articleId);
-		}
-	}
-
-	function notifySuggestedReviewer($args = array()) {
-		$articleId = Request::getUserVar('articleId');
-		list($journal, $submission) = SubmissionEditHandler::validate($articleId, SECTION_EDITOR_ACCESS_REVIEW);
-
-		$reviewerId = Request::getUserVar('reviewerId');
-
-		$send = Request::getUserVar('send')?true:false;
-		parent::setupTemplate(true, $articleId, 'review');
-
-		if (SectionEditorAction::notifySuggestedReviewer($submission, $reviewerId, $send)) {
-			Request::redirect(null, null, 'submission', $articleId);
 		}
 	}
 

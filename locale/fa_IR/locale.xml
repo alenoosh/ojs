@@ -1883,6 +1883,7 @@ http://journals.mui.ac.ir/index.php/index/index
     <message key="sectionEditor.regrets.result" >نتیجه</message>
     <message key="sectionEditor.review.enrollReviewer" >اعطای رل کارشناس به کاربران موجود</message>
     <message key="sectionEditor.review.createReviewer" >ایجاد کارشناس جدید</message>
+    <message key="sectionEditor.review.createSuggestedReviewer">ايجاد</message> <!-- Opatan Inc. -->
 
     <!-- Layout Editor -->
     <message key="layoutEditor.activeEditorialAssignments" >انتصابات جاری دبیری</message>

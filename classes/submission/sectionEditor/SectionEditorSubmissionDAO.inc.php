@@ -918,7 +918,7 @@ class SectionEditorSubmissionDAO extends DAO {
 	 * Retrieve a list of reviewers suggested by the author of the article.
 	 * @param $articleId int
 	 */
-	 function &getReviewersSuggestedForArticle($articleId)
+	 function getReviewersSuggestedForArticle($articleId)
 	 {
 		$locale = Locale::getLocale();
 		$paramArray = array(
@@ -946,6 +946,10 @@ class SectionEditorSubmissionDAO extends DAO {
 			ORDER BY last_name, first_name',
 			$paramArray
 		);
+		
+		if (!isset($result->fields[0])) {
+			return false;
+		}
 
 		$returner = &new DAOResultFactory($result, $this, '_returnReviewerFromRow');
 		return $returner;	

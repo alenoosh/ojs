@@ -26,9 +26,11 @@
 {include file="sectionEditor/submission/authorFees.tpl"}
 {/if}
 
+{if $reviewers}
 <div class="separator"></div>
 
 {include file="sectionEditor/submission/reviewers.tpl"}
+{/if}
 
 <div class="separator"></div>
 

@@ -129,6 +129,7 @@ class SectionEditorAction extends Action {
 		$sectionEditorSubmissionDao = &DAORegistry::getDAO('SectionEditorSubmissionDAO');
 		$reviewAssignmentDao = &DAORegistry::getDAO('ReviewAssignmentDAO');
 		$userDao = &DAORegistry::getDAO('UserDAO');
+		$reviewerDao = &DAORegistry::getDAO('ReviewerDAO');
 		$user = &Request::getUser();
 
 		$reviewAssignment = &$reviewAssignmentDao->getReviewAssignmentById($reviewId);
@@ -136,6 +137,12 @@ class SectionEditorAction extends Action {
 		if (isset($reviewAssignment) && $reviewAssignment->getArticleId() == $sectionEditorSubmission->getArticleId() && !HookRegistry::call('SectionEditorAction::clearReview', array(&$sectionEditorSubmission, $reviewAssignment))) {
 			$reviewer = &$userDao->getUser($reviewAssignment->getReviewerId());
 			if (!isset($reviewer)) return false;
+			// Opatan Inc.
+			//$reviewerObj = &$reviewerDao->getReviewerByEmail($reviewer->getEmail());
+			//if (isset($reviewerObj)) {
+			//	$reviewerObj->setStatus(0);
+			//	$reviewerDao->updateReviewerStatus($reviewerObj);
+			//}
 			$sectionEditorSubmission->removeReviewAssignment($reviewId);
 			$sectionEditorSubmissionDao->updateSectionEditorSubmission($sectionEditorSubmission);
 
@@ -255,107 +262,7 @@ class SectionEditorAction extends Action {
 			}
 		}
 		return true;
-	}
-	
-	/**
-	 * Notify the suggested reviewer before assigning him to do the review.
-	 * @param @reviewerId int
-	 * @param @sectionEditorSubmission object
-	 */
-	function notifySuggestedReviewer($sectionEditorSubmission, $reviewerId, $send = false) {
-		$journal = &Request::getJournal();
-		$user    = &Request::getUser();
-		$reviewerDao = &DAORegistry::getDAO('ReviewerDAO');
-		$reviewer = &$reviewerDao->getReviewer($reviewerId);
-
-		$isEmailBasedReview = $journal->getSetting('mailSubmissionsToReviewers')==1?true:false;
-		$reviewerAccessKeysEnabled = $journal->getSetting('reviewerAccessKeysEnabled');
-
-		// If we're using access keys, disable the address fields
-		// for this message. (Prevents security issue: section editor
-		// could CC or BCC someone else, or change the reviewer address,
-		// in order to get the access key.)
-		$preventAddressChanges = $reviewerAccessKeysEnabled;
-
-		import('mail.ArticleMailTemplate');
-
-		$email = &new ArticleMailTemplate($sectionEditorSubmission, $isEmailBasedReview?'REVIEW_SUGGEST_ATTACHED':($reviewerAccessKeysEnabled?'REVIEW_SUGGEST_ONECLICK':'REVIEW_SUGGEST'), null, $isEmailBasedReview?true:null);
-
-		if ($preventAddressChanges) {
-			$email->setAddressFieldsEnabled(false);
-		}
-
-		if (!$email->isEnabled() || ($send && !$email->hasErrors())) {
-			HookRegistry::call('SectionEditorAction::notifySuggestedReviewer', array(&$sectionEditorSubmission, &$email));
-			if ($email->isEnabled()) {
-				$email->setAssoc(ARTICLE_EMAIL_REVIEW_NOTIFY_REVIEWER, ARTICLE_EMAIL_TYPE_REVIEW, $reviewerId);
-				if ($reviewerAccessKeysEnabled) {
-					import('security.AccessKeyManager');
-					import('pages.reviewer.ReviewerHandler');
-					$accessKeyManager =& new AccessKeyManager();
-
-					// Key lifetime is the typical review period plus four weeks
-					$keyLifetime = ($journal->getSetting('numWeeksPerReview') + 4) * 7;
-					$email->addPrivateParam('ACCESS_KEY', $accessKeyManager->createKey('ReviewerContext', $reviewerId, $reviewerId, $keyLifetime));
-				}				
-				$email->assignParams(
-					array('activateUrl' => Request::url($journal->getPath(), 'user', 'activateReviewer', 
-					      array($reviewerId))));
-
-				if ($preventAddressChanges) {
-					// Ensure that this messages goes to the reviewer, and the reviewer ONLY.
-					$email->clearAllRecipients();
-					$email->addRecipient($reviewer->getEmail(), $reviewer->getFullName());
-				}
-				$email->send();
-			}
-			$reviewer->setStatus(1);
-			$reviewerDao->updateReviewerStatus($reviewer);
-			return true;
-		} else {
-			if (!Request::getUserVar('continued')) {
-				$weekLaterDate = strftime(Config::getVar('general', 'date_format_short'), strtotime('+1 week'));
-				//if ($reviewAssignment->getDateDue() != null) {
-				//	$reviewDueDate = strftime(Config::getVar('general', 'date_format_short'), strtotime($reviewAssignment->getDateDue()));
-				//} else {
-				//	$numWeeks = max((int) $journal->getSetting('numWeeksPerReview'), 2);
-				//	$reviewDueDate = strftime(Config::getVar('general', 'date_format_short'), strtotime('+' . $numWeeks . ' week'));
-				//}
-
-				$submissionUrl = Request::url(null, 'reviewer', 'submission', $reviewerId, $reviewerAccessKeysEnabled?array('key' => 'ACCESS_KEY'):array());
-
-				$paramArray = array(
-					'reviewerName' => $reviewer->getFullName(),
-					'weekLaterDate' => $weekLaterDate,
-					//'reviewDueDate' => $reviewDueDate,
-					'editorialContactSignature' => $user->getContactSignature(),
-					//'reviewGuidelines' => $journal->getLocalizedSetting('reviewGuidelines'),
-					'submissionReviewUrl' => $submissionUrl,
-					'abstractTermIfEnabled' => ($sectionEditorSubmission->getArticleAbstract() == ''?'':Locale::translate('article.abstract')),
-					'activateUrl' => Request::url($journal->getPath(), 'user', 'activateReviewer', array($reviewerId)));
-
-				$email->assignParams($paramArray);
-				$email->addRecipient($reviewer->getEmail(), $reviewer->getFullName());
-				if ($isEmailBasedReview) {
-					// An email-based review process was selected. Attach
-					// the current review version.
-					import('file.TemporaryFileManager');
-					$temporaryFileManager = &new TemporaryFileManager();
-					$reviewVersion =& $sectionEditorSubmission->getReviewFile();
-					if ($reviewVersion) {
-						$temporaryFile = $temporaryFileManager->articleToTemporaryFile($reviewVersion, $user->getUserId());
-						$email->addPersistAttachment($temporaryFile);
-					}
-				}
-			}
-			$email->displayEditForm(Request::url(null, null, 'notifySuggestedReviewer'), array('reviewerId' => $reviewerId, 'articleId' => $sectionEditorSubmission->getArticleId()));
-			$reviewer->setStatus(1);
-			$reviewerDao->updateReviewerStatus($reviewer);		
-			return false;
-		}
-
-		return true;
-	}
+	}	
 
 	/**
 	 * Cancels a review.
