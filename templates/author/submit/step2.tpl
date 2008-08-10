@@ -114,46 +114,12 @@ function confirmForgottenUpload() {
 
 {foreach name=authors from=$authors key=authorIndex item=author}
 <input type="hidden" name="authors[{$authorIndex|escape}][authorId]" value="{$author.authorId|escape}" />
-<input type="hidden" name="authors[{$authorIndex|escape}][edited]" value="0" />
 <input type="hidden" name="authors[{$authorIndex|escape}][seq]" value="{$authorIndex+1}" />
 {if $smarty.foreach.authors.total <= 1}
 <input type="hidden" name="primaryContact" value="{$authorIndex|escape}" />
 {/if}
 
 <table width="100%" class="data">
-{* Opatan Inc. : for previously added authors , just the details of author is shown instead of the whole form *}
-{* Opatan Inc. : if the author is choosen to be edited , the editing form is shown *}
-{if $author.firstName[$formLocale] and $author.lastName[$formLocale] and $author.email and $author.edited eq 0}
-<tr valign="top">
-    <td>
-        {$author.firstName[$formLocale]|escape}&nbsp;{$author.lastName[$formLocale]|escape}&nbsp;{$author.email|escape}&nbsp;&nbsp;
-        <input type="submit" name="editAuthor[{$authorIndex|escape}]" value="{translate key="author.submit.editAuthor"}"
-               class="button" />
-    </td>
-    <td>
-        <input type="hidden" name="authors[{$authorIndex|escape}][firstName][{$formLocale|escape}]"
-               value="{$author.firstName[$formLocale]|escape}" />
-        <input type="hidden" name="authors[{$authorIndex|escape}][middleName][{$formLocale|escape}]"
-               value="{$author.middleName[$formLocale]|escape}" />
-        <input type="hidden" name="authors[{$authorIndex|escape}][lastName][{$formLocale|escape}]"
-               value="{$author.lastName[$formLocale]|escape}" />
-        <input type="hidden" name="authors[{$authorIndex|escape}][affiliation][{$formLocale|escape}]"
-               value="{$author.affiliation[$formLocale]|escape}" />
-        <input type="hidden" name="authors[{$authorIndex|escape}][email]"
-               value="{$author.email|escape}" />
-        <input type="hidden" name="authors[{$authorIndex|escape}][country]"
-               value="{$author.country|escape}" />
-        <input type="hidden" name="authors[{$authorIndex|escape}][url]"
-               value="{$author.url|escape}" />
-        {if $currentJournal->getSetting('requireAuthorCompetingInterests')}
-            <input type="hidden" name="authors[{$authorIndex|escape}][competingInterests][{$formLocale|escape}]"
-                   value="{$author.competingInterests[$formLocale]|escape}" />
-        {/if}
-        <input type="hidden" name="authors[{$authorIndex|escape}][biography][{$formLocale|escape}]"
-               value="{$author.biography[$formLocale]|escape}" />
-    </td>
-</tr>
-{else}
 <tr valign="top">
 	<td width="20%" class="label">{fieldLabel name="authors-$authorIndex-firstName" required="true" key="user.firstName"}</td>
 	<td width="80%" class="value"><input type="text" class="textField" name="authors[{$authorIndex|escape}][firstName][{$formLocale|escape}]" id="authors-{$authorIndex|escape}-firstName" value="{$author.firstName[$formLocale]|escape}" size="20" maxlength="40" /></td>
@@ -197,7 +163,6 @@ function confirmForgottenUpload() {
 	<td width="20%" class="label">{fieldLabel name="authors-$authorIndex-biography" key="user.biography"}<br />{translate key="user.biography.description"}</td>
 	<td width="80%" class="value"><textarea name="authors[{$authorIndex|escape}][biography][{$formLocale|escape}]" class="textArea" id="authors-{$authorIndex|escape}-biography" rows="5" cols="40">{$author.biography[$formLocale]|escape}</textarea></td>
 </tr>
-{/if}
 {if $smarty.foreach.authors.total > 1}
 <tr valign="top">
 	<td colspan="2">
