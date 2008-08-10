@@ -207,6 +207,30 @@ class AuthorSubmitStep5Form extends AuthorSubmitForm {
 		return $this->articleId;
 	}
 
+ 	/**
+	 * Replace the submission file.
+	 * @param $fileName string
+	 * @return boolean
+	 */
+	function replaceSubmissionFile($fileName) {
+		import("file.ArticleFileManager");
+
+		$articleFileManager = &new ArticleFileManager($this->articleId);
+		$articleDao = &DAORegistry::getDAO('ArticleDAO');
+
+		if ($articleFileManager->uploadedFileExists($fileName)) {
+			// upload new submission file, overwriting previous if necessary
+			$submissionFileId = $articleFileManager->uploadSubmissionFile($fileName, $this->article->getSubmissionFileId(), true);
+		}
+
+		if (isset($submissionFileId)) {
+			$this->article->setSubmissionFileId($submissionFileId);
+			return $articleDao->updateArticle($this->article);
+
+		} else {
+			return false;
+		}
+	}
 }
 
 ?>

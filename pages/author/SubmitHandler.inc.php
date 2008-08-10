@@ -162,6 +162,16 @@ class SubmitHandler extends AuthorHandler {
 					return;
 				}
 				break;
+			// Opatan Inc.				
+			case 5:
+				if (Request::getUserVar('replaceSubmissionFile')) {
+					$editData = true;
+					import('file.ArticleFileManager');
+					$articleFileManager = &new ArticleFileManager($articleId);
+					$articleFileManager->deleteFile(Request::getUserVar('submissionFileId'));
+        	        	    	$submitForm->replaceSubmissionFile('submissionFile');
+		                }
+				break;
 		}
 
 		if (!isset($editData) && $submitForm->validate()) {

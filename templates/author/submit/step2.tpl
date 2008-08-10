@@ -453,17 +453,18 @@ function confirmForgottenUpload() {
 
 {* Opatan Inc. : STEP 3 MERGED *}
 <h3>{translate key="author.submit.submissionFile"}</h3>
-{translate key="author.submit.uploadInstructions"}
-
-{if $journalSettings.supportPhone}
-	{assign var="howToKeyName" value="author.submit.howToSubmit"}
-{else}
-	{assign var="howToKeyName" value="author.submit.howToSubmitNoPhone"}
+{if !$submissionFile}
+	{translate key="author.submit.uploadInstructions"}
+	{if $journalSettings.supportPhone}
+		{assign var="howToKeyName" value="author.submit.howToSubmit"}
+	{else}
+		{assign var="howToKeyName" value="author.submit.howToSubmitNoPhone"}
+	{/if}
+	<div class="separator"></div>
 {/if}
 
 <p>{translate key=$howToKeyName supportName=$journalSettings.supportName supportEmail=$journalSettings.supportEmail supportPhone=$journalSettings.supportPhone}</p>
 
-<div class="separator"></div>
 
 <table class="data" width="100%">
 {if $submissionFile}
@@ -492,14 +493,11 @@ function confirmForgottenUpload() {
 
 <div class="separator"></div>
 
+{if !$submissionFile}
 <table class="data" width="100%">
 <tr>
 	<td width="30%" class="label">
-		{if $submissionFile}
-			{fieldLabel name="submissionFile" key="author.submit.replaceSubmissionFile"}
-		{else}
-			{fieldLabel name="submissionFile" key="author.submit.uploadSubmissionFile"}
-		{/if}
+		{fieldLabel name="submissionFile" key="author.submit.uploadSubmissionFile"}
 	</td>
 	<td width="70%" class="value">
 		<input type="file" class="uploadField" name="submissionFile" id="submissionFile" /> <input name="uploadSubmissionFile" type="submit" class="button" value="{translate key="common.upload"}" />
@@ -509,6 +507,8 @@ function confirmForgottenUpload() {
 </table>
 
 <div class="separator"></div>
+{/if}
+
 {* Opatan Inc. : END OF STEP 3 MERGED *}
 
 {* Opatan Inc. : STEP 4 MERGED *}
