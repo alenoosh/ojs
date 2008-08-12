@@ -2035,6 +2035,7 @@ http://journals.mui.ac.ir/index.php/index/index
     <!--Opatan Inc. : Abstract Length -->
     <message key="author.submit.form.abstractLength">طول چکيده وارد شده بيشتر از حد مجاز است</message>     
     <message key="author.submit.form.abstractLengthNote">({$abstractMinLength}-{$abstractMaxLength}) کلمه</message>
+    <message key="author.submit.suppTitleRequired">لطفا عنوان فايل الحاقی را وارد کنيد.</message>
 
     <!-- Article Submission Step 3 -->
     <message key="author.submit.uploadInstructions" ><![CDATA[برای آپلود کردن مقاله خد به این مجله مراحل زیر را انجام دهید.

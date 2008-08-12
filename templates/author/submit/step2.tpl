@@ -37,6 +37,21 @@ function moveAuthor(dir, authorIndex) {
 </script>
 {/literal}
 
+{literal}
+<script type="text/javascript">
+<!--
+function suppTitleEntered() {
+	titleEntered = document.submit.supp_title.value;
+	if (!titleEntered) {
+		alert("{/literal}{translate key="author.submit.suppTitleRequired"}{literal}");
+		return false;
+	}
+	return true;
+}
+// -->
+</script>
+{/literal}
+
 {* Opatan Inc. : the javascript function related to checking supp file upload is included in step 2 *} 
 <script type="text/javascript">
 {literal}
@@ -554,7 +569,7 @@ function confirmForgottenUpload() {
 <tr>
 	<td width="30%" class="label">{fieldLabel name="uploadSuppFile" key="author.submit.uploadSuppFile"}</td>
 	<td width="70%" class="value">
-		<input type="file" name="uploadSuppFile" id="uploadSuppFile"  class="uploadField" /> <input name="submitUploadSuppFile" type="submit" class="button" value="{translate key="common.upload"}" />
+		<input type="file" name="uploadSuppFile" id="uploadSuppFile" class="uploadField" /> <input name="submitUploadSuppFile" type="submit" onclick="return suppTitleEntered()" class="button" value="{translate key="common.upload"}" />
 		{if $currentJournal->getSetting('showEnsuringLink')}<a class="action" href="javascript:openHelp('{get_help_id key="editorial.sectionEditorsRole.review.blindPeerReview" url="true"}')">{translate key="reviewer.article.ensuringBlindReview"}</a>{/if}
 	</td>
 </tr>
