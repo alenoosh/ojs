@@ -187,23 +187,22 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		$abstractLength = 0;
 		$abstractStr    = 0;
 		$abstract       = $this->getData('abstract');
-		$formLocale     = $this->getFormLocale();
+		$formLocale     = Locale::getLocale();
 		
 		if (isset($abstract[$formLocale])) {
-			foreach (str_word_count($abstract[$formLocale],1) as $key => $value) {
+			foreach (str_word_count($abstract[$formLocale], 1) as $key => $value) {
 				$abstractStr .= $value." ";
 			}
 			$str = eregi_replace(" +", " ", $abstractStr);
 			$array = explode(" ", $str);
 		
-			for($i=0; $i < count($array); $i++)
-			{
+			for ($i=0; $i < count($array); $i++) {
 				if (eregi("[0-9A-Za-zÀ-ÖØ-öø-ÿ]", $array[$i]))
 					$abstractLength++;
 			}
 	
-			//Opatan Inc. : Check Abstract Length
-			if ($abstractMinimumLength && $abstractMaximumLength ) {
+			// Opatan Inc. : Check Abstract Length
+			if ($abstractMinimumLength && $abstractMaximumLength) {
 				if (($abstractLength < $abstractMinimumLength) || ($abstractLength > $abstractMaximumLength)) {
 					$this->addCheck(new FormValidatorLocale($this, 'abstractLength', 'required', 'author.submit.form.abstractLength'));
 				}
@@ -218,7 +217,6 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 			}
 
 		}
-
 	}
 
 	/**
