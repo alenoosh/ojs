@@ -413,7 +413,7 @@ class SubmissionEditHandler extends SectionEditorHandler {
 	 */
 	function createReviewer($args) {
 		$articleId = isset($args[0]) ? (int) $args[0] : 0;
-		$reviewerId = isset($args[1]) ? (int) $args[1] : 0;
+		$reviewerId = Request::getUserVar('reviewerId') ? Request::getUserVar('reviewerId') : 0;
 
 		list($journal, $submission) = SubmissionEditHandler::validate($articleId, SECTION_EDITOR_ACCESS_REVIEW);
 		
@@ -423,7 +423,7 @@ class SubmissionEditHandler extends SectionEditorHandler {
 		$createReviewerForm =& new CreateReviewerForm($articleId);
 		parent::setupTemplate(true, $articleId);
 		
-		if (isset($args[2]) && $args[2] === 'create') {			
+		if (isset($args[1]) && $args[1] === 'create') {
 			$createReviewerForm->readInputData();
 			if ($createReviewerForm->validate()) {
 				// Create a user and enroll them as a reviewer.

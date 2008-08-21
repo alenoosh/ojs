@@ -52,6 +52,7 @@ class ThesisForm extends Form {
 		parent::Form($thesisPlugin->getTemplatePath() . 'thesisForm.tpl');
 
 		// Opatan Inc.
+		$calType = 0;
 		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 		if ($journal != null) {
 			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
@@ -60,8 +61,6 @@ class ThesisForm extends Form {
 			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
 				$calType = 0;
 			}
-		} else {
-			$calType = 0;
 		}
 
 		// Status is provided and is valid value
@@ -222,6 +221,7 @@ class ThesisForm extends Form {
 		$thesis->setTitle($this->getData('title'));
 
 		// Opatan Inc.
+		$calType = 0;
 		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 		if ($journal != null) {
 			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
@@ -230,8 +230,6 @@ class ThesisForm extends Form {
 			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
 				$calType = 0;
 			}
-		} else {
-			$calType = 0;
 		}
 
 		$month = $this->getData('dateApprovedMonth');

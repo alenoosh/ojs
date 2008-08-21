@@ -326,8 +326,9 @@ class IssueForm extends Form {
 			}
 		}
 		$issue->setShowCoverPage($showCoverPage, null); // Localized
-		
+				
 		// Opatan Inc.
+		$calType = 0;
 		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 		if ($journal != null) {
 			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
@@ -336,8 +337,6 @@ class IssueForm extends Form {
 			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
 				$calType = 0;
 			}
-		} else {
-			$calType = 0;
 		}
 
 		$month = $this->getData('Date_Month');

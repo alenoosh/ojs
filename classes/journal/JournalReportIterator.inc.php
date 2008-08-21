@@ -132,7 +132,7 @@ class JournalReportIterator extends DBRowIterator {
 		$authorIndex = 0;
 		foreach ($authors as $author) {
 			$ret['authors'][$authorIndex] = $author->getFullName();
-			$ret['affiliations'][$authorIndex] = $author->getAuthorAffiliation(); // Opatan Inc. : ???
+			$ret['affiliations'][$authorIndex] = $author->getAuthorAffiliation(); // Opatan Inc.
 
 			$country = $author->getCountry();
 			if (!empty($country)) {

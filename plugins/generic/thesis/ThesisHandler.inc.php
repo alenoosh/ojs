@@ -198,6 +198,7 @@ class ThesisHandler extends Handler {
 				$journalSettings = &$journalSettingsDao->getJournalSettings($journalId);
 
 				// Opatan Inc.
+				$calType = 0;
 				if ($journal != null) {
 					$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
 					if (strcmp($dateDisplayType, "Jalali") == 0) {
@@ -205,8 +206,6 @@ class ThesisHandler extends Handler {
 					} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
 						$calType = 0;
 					}
-				} else {
-					$calType = 0;
 				}
 
 				if ($calType == 1) {

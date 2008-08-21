@@ -11,7 +11,7 @@
 {assign var="pageTitle" value="sectionEditor.review.createReviewer"}
 {include file="common/header.tpl"}
 
-<form method="post" name="reviewerForm" action="{url op="createReviewer" path=$articleId|to_array:$reviewerId:"create"}">
+<form method="post" name="reviewerForm" action="{url op="createReviewer" path=$articleId|to_array:"create" reviewerId=$reviewerId}">
 {if $reviewerId}
 	<input type="hidden" name="reviewerId" value="{$reviewerId}" />
 {/if}
@@ -48,7 +48,7 @@
 		<td width="20%" class="label">{fieldLabel name="formLocale" key="form.formLanguage"}</td>
 		<td width="80%" class="value">
 			{if $reviewerId}
-				{url|assign:"createReviewerUrl" op="createReviewer" path=$articleId|to_array:$reviewerId}
+				{url|assign:"createReviewerUrl" op="createReviewer" path=$articleId reviewerId=$reviewerId}
 			{else}
 				{url|assign:"createReviewerUrl" op="createReviewer" path=$articleId}
 			{/if}
@@ -166,7 +166,14 @@
 	{/if}
 </table>
 
-<p><input type="submit" value="{translate key="common.save"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url path="selectReviewer" path=$articleId escape=false}'" /></p>
+<p>
+	<input type="submit" value="{translate key="common.save"}" class="button defaultButton" />
+	{if !$reviewerId}
+		<input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url op="selectReviewer" path=$articleId escape=false}'" />
+	{else}
+		<input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url op="submission" path=$articleId escape=false}'" />
+	{/if}
+</p>
 
 <p><span class="formRequired">{translate key="common.requiredField"}</span></p>
 

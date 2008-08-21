@@ -57,6 +57,7 @@ class StudentThesisForm extends Form {
 		}
 
 		// Opatan Inc.
+		$calType = 0;
 		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 		if ($journal != null) {
 			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
@@ -65,8 +66,6 @@ class StudentThesisForm extends Form {
 			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
 				$calType = 0;
 			}
-		} else {
-			$calType = 0;
 		}
 
 		// Degree is provided and is valid value
@@ -229,6 +228,7 @@ class StudentThesisForm extends Form {
 		$thesis->setTitle($this->getData('title'));
 
 		// Opatan Inc.
+		$calType = 0;
 		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 		if ($journal != null) {
 			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
@@ -237,8 +237,6 @@ class StudentThesisForm extends Form {
 			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
 				$calType = 0;
 			}
-		} else {
-			$calType = 0;
 		}
 
 		$month = $this->getData('dateApprovedMonth');

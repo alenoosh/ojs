@@ -209,7 +209,7 @@ class AuthorDAO extends DAO {
 			empty($params)?false:$params,
 			$rangeInfo
 		);
-		//echo "<pre>"; print_r($result); echo "</pre>";
+
 		$returner = &new DAOResultFactory($result, $this, '_returnAuthorFromRow');
 		return $returner;
 	}

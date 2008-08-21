@@ -227,12 +227,12 @@ class GoogleScholarPlugin extends GatewayPlugin {
 				XMLCustomWriter::setAttribute($contribNode, 'contrib-type', 'author');
 				$nameNode =& XMLCustomWriter::createElement($document, 'name');
 				XMLCustomWriter::appendChild($contribNode, $nameNode);
-				// Opatan Inc. : ????
-				XMLCustomWriter::createChildWithText($document, $nameNode, 'surname', $author->getLastName(), true);
+				// Opatan Inc.
+				XMLCustomWriter::createChildWithText($document, $nameNode, 'surname', $author->getAuthorLastName(), true);
 
 				// Given names in the form: FirstName MiddleName, where MiddleName is optional
-				$name = $author->getFirstName(null); // Opatan Inc. : gets Localized author firstName
-				if (($middleName = $author->getMiddleName()) != '') $name .= " $middleName"; // Opatan Inc. : ????
+				$name = $author->getAuthorFirstName(); // Opatan Inc. : gets Localized author firstName
+				if (($middleName = $author->getAuthorMiddleName()) != '') $name .= " $middleName"; // Opatan Inc.
 
 				XMLCustomWriter::createChildWithText($document, $nameNode, 'given-names', $name, true);
 

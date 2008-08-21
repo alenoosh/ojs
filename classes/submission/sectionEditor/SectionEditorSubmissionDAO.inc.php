@@ -918,8 +918,7 @@ class SectionEditorSubmissionDAO extends DAO {
 	 * Retrieve a list of reviewers suggested by the author of the article.
 	 * @param $articleId int
 	 */
-	 function getReviewersSuggestedForArticle($articleId)
-	 {
+	 function getReviewersSuggestedForArticle($articleId) {
 		$locale = Locale::getLocale();
 		$paramArray = array(
 				    'firstName',

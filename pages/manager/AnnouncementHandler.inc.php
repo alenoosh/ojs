@@ -134,6 +134,7 @@ class AnnouncementHandler extends ManagerHandler {
 			} else {
 				AnnouncementHandler::setupTemplate();
 				// Opatan Inc.
+				$calType = 0;
 				$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 				if ($journal != null) {
 					$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
@@ -142,8 +143,6 @@ class AnnouncementHandler extends ManagerHandler {
 					} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
 						$calType = 0;
 					}
-				} else {
-					$calType = 0;
 				}
 
 				$templateMgr = &TemplateManager::getManager();

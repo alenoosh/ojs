@@ -25,7 +25,7 @@
 	<td>{$reviewer->getEmail()|escape}</td>
 	<td align="center">
 		{if $reviewer->getStatus() eq 0}
-			<a class="action" href="{url op="createReviewer" path=$submission->getArticleId()|to_array:$reviewer->getReviewerId()}">{translate key="sectionEditor.review.createSuggestedReviewer"}</a>
+			<a class="action" href="{url op="createReviewer" path=$submission->getArticleId() reviewerId=$reviewer->getReviewerId()}">{translate key="sectionEditor.review.createSuggestedReviewer"}</a>
 		{elseif $reviewer->getStatus() eq 1}
 			{translate key="common.considered"}
 		{/if}

@@ -76,8 +76,9 @@ class SectionEditorsDAO extends DAO {
 
 		while (!$result->EOF) {
 			$row = $result->GetRowAssoc(false);
+			$user = $userDao->_returnUserFromRowWithData($row);
 			$users[] = array(
-				'user' => $userDao->_returnUserFromRow($row),
+				'user' => $user,
 				'canReview' => $row['can_review'],
 				'canEdit' => $row['can_edit']
 			);
@@ -118,7 +119,7 @@ class SectionEditorsDAO extends DAO {
 		);
 
 		while (!$result->EOF) {
-			$users[] = &$userDao->_returnUserFromRow($result->GetRowAssoc(false));
+			$users[] = &$userDao->_returnUserFromRowWithData($result->GetRowAssoc(false));
 			$result->moveNext();
 		}
 

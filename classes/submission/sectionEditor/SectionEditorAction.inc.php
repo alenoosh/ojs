@@ -533,7 +533,7 @@ class SectionEditorAction extends Action {
 	function setDueDate($articleId, $reviewId, $dueDate = null, $numWeeks = null) {
 		$reviewAssignmentDao = &DAORegistry::getDAO('ReviewAssignmentDAO');
 		$userDao = &DAORegistry::getDAO('UserDAO');
-		$user = &Request::getUser();
+		$user = &Request::getUser();		
 
 		$reviewAssignment = &$reviewAssignmentDao->getReviewAssignmentById($reviewId);
 		$reviewer = &$userDao->getUser($reviewAssignment->getReviewerId());
@@ -543,6 +543,7 @@ class SectionEditorAction extends Action {
 			$today = getDate();
 			$todayTimestamp = mktime(0, 0, 0, $today['mon'], $today['mday'], $today['year']);
 			// Opatan Inc.
+			$calType = 0;
 			$journal = &Request::getJournal();
 			$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 			if ($journal != null) {
@@ -552,10 +553,8 @@ class SectionEditorAction extends Action {
 				} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
 					$calType = 0;
 				}
-			} else {
-				$calType = 0;
-			}	
-
+			}
+			
 			if ($calType == 1) {
 				if ($dueDate != null) {
 					$jDateParts = explode('-', $dueDate);

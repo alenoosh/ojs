@@ -87,8 +87,10 @@ class TemplateManager extends Smarty {
 				$this->assign('calType', 1);
 			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
 				$this->assign('calType', 0);
+			} else {
+				$this->assign('calType', 0);
 			}
-		} else {				
+		} else {
 			$this->assign('calType', 0);
 		}
 
