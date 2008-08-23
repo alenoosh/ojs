@@ -148,8 +148,9 @@ class TemplateManager extends Smarty {
 				$journalStyleSheet = $journal->getSetting('journalStyleSheet');
 				/** Opatan Inc. **/
 				$curLocExt = Locale::getLocale();
-				if ($curLocExt != "en_US")
+				if ($curLocExt != "en_US") {
 					$journalStyleSheet['uploadName'] = str_replace("journalStyleSheet.css", "journalStyleSheet_{$curLocExt}.css", $journalStyleSheet['uploadName']);
+				}					
 				if ($journalStyleSheet) {
 					$this->addStyleSheet(Request::getBaseUrl() . '/' . PublicFileManager::getJournalFilesPath($journal->getJournalId()) . '/' . $journalStyleSheet['uploadName']);
 				}
