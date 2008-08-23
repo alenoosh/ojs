@@ -1,20 +1,22 @@
 {assign var="pageTitle" value="common.queue.long.revCertification"}
-{assign var="articleId" value=$submission->getArticleId()}
-{assign var=editAssignments value=$submission->getEditAssignments()}
+{assign var="articleTitle" value=$submission->getArticleTitle()}
 
 {include file="common/header.tpl"}
-Date: {$date}
+<h2>
+Date: {showdate value=$date format=$datetimeFormatShort type=$calType}<br />
 Subject: Review certification
-Reviewer: {$name}
-Journal: {$journal}
-Manuscript: {$articleTitle}
+Reviewer: {$reviewerName}<br />
+Journal: {$journalTitle}<br />
+Manuscript: {$articleTitle}<br /><br />
 
-To whom it may concern
+To whom it may concern<br /><br />
 
-This is to certificate that Dr "{$name}", has made excelent contribution to the quality of work the "{$journal}" publishes, by reviewing the manuscript "{$articleTitle}".
 
-I behalf of the editorial team I acknowledge Dr "{$name}" for this important review.
+This is to certificate that Dr. "{$reviewerName}", has made excelent contribution to the quality of work the "{$journalTitle}" publishes, by reviewing the manuscript "{$articleTitle}".<br />
+
+I behalf of the editorial team, acknowledge Dr. "{$reviewerName}" for this important review.<br />
 
 {$editorialSignature}
+</h2>
 {include file="common/footer.tpl"}
 

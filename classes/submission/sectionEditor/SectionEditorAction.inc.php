@@ -1746,11 +1746,9 @@ class SectionEditorAction extends Action {
 		$decisions = $sectionEditorSubmission->getDecisions();
 		$decisions = array_pop($decisions); // Rounds
 		$decision = array_pop($decisions);
-		$journal = &Request::getJournal();
 		$user = &Request::getUser();
 		$author = &$userDao->getUser($sectionEditorSubmission->getUserId());
 		if (!isset($author)) return true;
-		$user =& Request::getUser();
 		import('mail.ArticleMailTemplate');
 		/** Opatan Inc. **/
 		if ($decision) {

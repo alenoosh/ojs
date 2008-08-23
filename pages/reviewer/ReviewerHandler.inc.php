@@ -141,13 +141,19 @@ class ReviewerHandler extends Handler {
 	/**
 	 * Get Reviewer Certification 
 	 *
-	 */
+	*/
 	function getRevCertification($args) {
 		import('pages.reviewer.SubmissionReviewHandler');
-		$reviewId = $args[0];
-		
+		$reviewId    = $args[0];
+		$user        = &Request::getUser();
+		$journal     = &Request::getJournal();		
+		$currentDate = Core::getCurrentDate();
 		list($journal, $submission, $user) = SubmissionReviewHandler::validate($reviewId);
 		$templateMgr = &TemplateManager::getManager();
+		$templateMgr->assign('ContactSignature', $user->getContactSignature());
+		$templateMgr->assign('reviewerName', $user->getFullName());
+		$templateMgr->assign('journalTitle', $journal->getJournalTitle());
+		$templateMgr->assign('date',$currentDate);
 		$templateMgr->assign_by_ref('submission', $submission);
 		$templateMgr->display("reviewer/getRevCertification.tpl");
 	}

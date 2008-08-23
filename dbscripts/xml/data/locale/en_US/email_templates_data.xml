@@ -833,7 +833,7 @@ If you have any questions, please feel free to contact me.
 {$subscriptionContactSignature}</field>
 			<field name="description">This email notifies a subscriber that their subscription has expired. It provides the journal's URL along with instructions for access.</field>
 		</row>
-		<!-- Opatan Inc. -->
+<!-- ** Opatan Inc. ** -->
 		<row>
 			<field name="email_key">REVIEW_SUGGEST</field>
 			<field name="subject">Article Review Suggest</field>
