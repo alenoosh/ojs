@@ -49,6 +49,7 @@ class SubscriptionForm extends Form {
 		$this->addCheck(new FormValidatorCustom($this, 'typeId', 'required', 'manager.subscriptions.form.typeIdValid', create_function('$typeId, $journalId', '$subscriptionTypeDao = &DAORegistry::getDAO(\'SubscriptionTypeDAO\'); return $subscriptionTypeDao->subscriptionTypeExistsByTypeId($typeId, $journalId);'), array($journal->getJournalId())));
 
 		// Opatan Inc.
+		$calType = 0;
 		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 		if ($journal != null) {
 			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
@@ -57,8 +58,6 @@ class SubscriptionForm extends Form {
 			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
 				$calType = 0;
 			}
-		} else {
-			$calType = 0;
 		}
 
 		// Start date is provided and is valid	
@@ -209,6 +208,7 @@ class SubscriptionForm extends Form {
 		$subscription->setTypeId($this->getData('typeId'));
 
 		// Opatan Inc.
+		$calType = 0;
 		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 		if ($journal != null) {
 			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
@@ -217,8 +217,6 @@ class SubscriptionForm extends Form {
 			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
 				$calType = 0;
 			}
-		} else {
-			$calType = 0;
 		}
 
 		$startYear = $this->getData('dateStartYear');

@@ -1883,6 +1883,7 @@ http://journals.mui.ac.ir/index.php/index/index
     <message key="sectionEditor.regrets.result" >نتیجه</message>
     <message key="sectionEditor.review.enrollReviewer" >اعطای رل کارشناس به کاربران موجود</message>
     <message key="sectionEditor.review.createReviewer" >ایجاد کارشناس جدید</message>
+    <message key="sectionEditor.review.createSuggestedReviewer">ايجاد</message> <!-- Opatan Inc. -->
 
     <!-- Layout Editor -->
     <message key="layoutEditor.activeEditorialAssignments" >انتصابات جاری دبیری</message>
@@ -2025,6 +2026,8 @@ http://journals.mui.ac.ir/index.php/index/index
     <message key="author.submit.form.reviewerRequiredFields">نام، نام خانوادگی و آدرس ايميل هر کارشناس الزامی است.</message>
    
     <message key="author.submit.form.titleRequired" >لطفا عنوان مقاله را وارد کنید.</message>
+    <!-- Opatan Inc. -->
+    <message key="author.submit.form.runningTitleRequired">لطفا عنوان مکرری مقاله را وارد کنيد.</message>
     <message key="author.submit.form.abstractRequired" >لطفا چکیده مقاله را پارد کنید</message>   
     <!-- Opatan Inc. -->
     <message key="author.submit.reviewerRecommendation">پيشنهاد کارشناس</message>
@@ -2032,6 +2035,7 @@ http://journals.mui.ac.ir/index.php/index/index
     <!--Opatan Inc. : Abstract Length -->
     <message key="author.submit.form.abstractLength">طول چکيده وارد شده بيشتر از حد مجاز است</message>     
     <message key="author.submit.form.abstractLengthNote">({$abstractMinLength}-{$abstractMaxLength}) کلمه</message>
+    <message key="author.submit.suppTitleRequired">لطفا عنوان فايل الحاقی را وارد کنيد.</message>
 
     <!-- Article Submission Step 3 -->
     <message key="author.submit.uploadInstructions" ><![CDATA[برای آپلود کردن مقاله خد به این مجله مراحل زیر را انجام دهید.

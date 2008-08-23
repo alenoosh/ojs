@@ -37,6 +37,21 @@ function moveAuthor(dir, authorIndex) {
 </script>
 {/literal}
 
+{literal}
+<script type="text/javascript">
+<!--
+function suppTitleEntered() {
+	titleEntered = document.submit.supp_title.value;
+	if (!titleEntered) {
+		alert("{/literal}{translate key="author.submit.suppTitleRequired"}{literal}");
+		return false;
+	}
+	return true;
+}
+// -->
+</script>
+{/literal}
+
 {* Opatan Inc. : the javascript function related to checking supp file upload is included in step 2 *} 
 <script type="text/javascript">
 {literal}
@@ -114,46 +129,12 @@ function confirmForgottenUpload() {
 
 {foreach name=authors from=$authors key=authorIndex item=author}
 <input type="hidden" name="authors[{$authorIndex|escape}][authorId]" value="{$author.authorId|escape}" />
-<input type="hidden" name="authors[{$authorIndex|escape}][edited]" value="0" />
 <input type="hidden" name="authors[{$authorIndex|escape}][seq]" value="{$authorIndex+1}" />
 {if $smarty.foreach.authors.total <= 1}
 <input type="hidden" name="primaryContact" value="{$authorIndex|escape}" />
 {/if}
 
 <table width="100%" class="data">
-{* Opatan Inc. : for previously added authors , just the details of author is shown instead of the whole form *}
-{* Opatan Inc. : if the author is choosen to be edited , the editing form is shown *}
-{if $author.firstName[$formLocale] and $author.lastName[$formLocale] and $author.email and $author.edited eq 0}
-<tr valign="top">
-    <td>
-        {$author.firstName[$formLocale]|escape}&nbsp;{$author.lastName[$formLocale]|escape}&nbsp;{$author.email|escape}&nbsp;&nbsp;
-        <input type="submit" name="editAuthor[{$authorIndex|escape}]" value="{translate key="author.submit.editAuthor"}"
-               class="button" />
-    </td>
-    <td>
-        <input type="hidden" name="authors[{$authorIndex|escape}][firstName][{$formLocale|escape}]"
-               value="{$author.firstName[$formLocale]|escape}" />
-        <input type="hidden" name="authors[{$authorIndex|escape}][middleName][{$formLocale|escape}]"
-               value="{$author.middleName[$formLocale]|escape}" />
-        <input type="hidden" name="authors[{$authorIndex|escape}][lastName][{$formLocale|escape}]"
-               value="{$author.lastName[$formLocale]|escape}" />
-        <input type="hidden" name="authors[{$authorIndex|escape}][affiliation][{$formLocale|escape}]"
-               value="{$author.affiliation[$formLocale]|escape}" />
-        <input type="hidden" name="authors[{$authorIndex|escape}][email]"
-               value="{$author.email|escape}" />
-        <input type="hidden" name="authors[{$authorIndex|escape}][country]"
-               value="{$author.country|escape}" />
-        <input type="hidden" name="authors[{$authorIndex|escape}][url]"
-               value="{$author.url|escape}" />
-        {if $currentJournal->getSetting('requireAuthorCompetingInterests')}
-            <input type="hidden" name="authors[{$authorIndex|escape}][competingInterests][{$formLocale|escape}]"
-                   value="{$author.competingInterests[$formLocale]|escape}" />
-        {/if}
-        <input type="hidden" name="authors[{$authorIndex|escape}][biography][{$formLocale|escape}]"
-               value="{$author.biography[$formLocale]|escape}" />
-    </td>
-</tr>
-{else}
 <tr valign="top">
 	<td width="20%" class="label">{fieldLabel name="authors-$authorIndex-firstName" required="true" key="user.firstName"}</td>
 	<td width="80%" class="value"><input type="text" class="textField" name="authors[{$authorIndex|escape}][firstName][{$formLocale|escape}]" id="authors-{$authorIndex|escape}-firstName" value="{$author.firstName[$formLocale]|escape}" size="20" maxlength="40" /></td>
@@ -197,7 +178,6 @@ function confirmForgottenUpload() {
 	<td width="20%" class="label">{fieldLabel name="authors-$authorIndex-biography" key="user.biography"}<br />{translate key="user.biography.description"}</td>
 	<td width="80%" class="value"><textarea name="authors[{$authorIndex|escape}][biography][{$formLocale|escape}]" class="textArea" id="authors-{$authorIndex|escape}-biography" rows="5" cols="40">{$author.biography[$formLocale]|escape}</textarea></td>
 </tr>
-{/if}
 {if $smarty.foreach.authors.total > 1}
 <tr valign="top">
 	<td colspan="2">
@@ -278,7 +258,7 @@ function confirmForgottenUpload() {
 </tr>
 {* Opatan Inc. : running title input box is added *}
 <tr valign="top">
-	<td width="20%" class="label">{fieldLabel name="runningTitle" key="article.runningTitle"}</td>
+	<td width="20%" class="label">{fieldLabel name="runningTitle" required="true" key="article.runningTitle"}</td>
 	<td width="80%" class="value"><input type="text" class="textField" name="runningTitle[{$formLocale|escape}]" id="runningTitle" value="{$runningTitle[$formLocale]|escape}" size="60" maxlength="255" /></td>
 </tr>
 
@@ -488,17 +468,18 @@ function confirmForgottenUpload() {
 
 {* Opatan Inc. : STEP 3 MERGED *}
 <h3>{translate key="author.submit.submissionFile"}</h3>
-{translate key="author.submit.uploadInstructions"}
-
-{if $journalSettings.supportPhone}
-	{assign var="howToKeyName" value="author.submit.howToSubmit"}
-{else}
-	{assign var="howToKeyName" value="author.submit.howToSubmitNoPhone"}
+{if !$submissionFile}
+	{translate key="author.submit.uploadInstructions"}
+	{if $journalSettings.supportPhone}
+		{assign var="howToKeyName" value="author.submit.howToSubmit"}
+	{else}
+		{assign var="howToKeyName" value="author.submit.howToSubmitNoPhone"}
+	{/if}
+	<div class="separator"></div>
 {/if}
 
 <p>{translate key=$howToKeyName supportName=$journalSettings.supportName supportEmail=$journalSettings.supportEmail supportPhone=$journalSettings.supportPhone}</p>
 
-<div class="separator"></div>
 
 <table class="data" width="100%">
 {if $submissionFile}
@@ -527,14 +508,11 @@ function confirmForgottenUpload() {
 
 <div class="separator"></div>
 
+{if !$submissionFile}
 <table class="data" width="100%">
 <tr>
 	<td width="30%" class="label">
-		{if $submissionFile}
-			{fieldLabel name="submissionFile" key="author.submit.replaceSubmissionFile"}
-		{else}
-			{fieldLabel name="submissionFile" key="author.submit.uploadSubmissionFile"}
-		{/if}
+		{fieldLabel name="submissionFile" key="author.submit.uploadSubmissionFile"}
 	</td>
 	<td width="70%" class="value">
 		<input type="file" class="uploadField" name="submissionFile" id="submissionFile" /> <input name="uploadSubmissionFile" type="submit" class="button" value="{translate key="common.upload"}" />
@@ -544,6 +522,8 @@ function confirmForgottenUpload() {
 </table>
 
 <div class="separator"></div>
+{/if}
+
 {* Opatan Inc. : END OF STEP 3 MERGED *}
 
 {* Opatan Inc. : STEP 4 MERGED *}
@@ -589,7 +569,7 @@ function confirmForgottenUpload() {
 <tr>
 	<td width="30%" class="label">{fieldLabel name="uploadSuppFile" key="author.submit.uploadSuppFile"}</td>
 	<td width="70%" class="value">
-		<input type="file" name="uploadSuppFile" id="uploadSuppFile"  class="uploadField" /> <input name="submitUploadSuppFile" type="submit" class="button" value="{translate key="common.upload"}" />
+		<input type="file" name="uploadSuppFile" id="uploadSuppFile" class="uploadField" /> <input name="submitUploadSuppFile" type="submit" onclick="return suppTitleEntered()" class="button" value="{translate key="common.upload"}" />
 		{if $currentJournal->getSetting('showEnsuringLink')}<a class="action" href="javascript:openHelp('{get_help_id key="editorial.sectionEditorsRole.review.blindPeerReview" url="true"}')">{translate key="reviewer.article.ensuringBlindReview"}</a>{/if}
 	</td>
 </tr>
@@ -598,7 +578,7 @@ function confirmForgottenUpload() {
 <div class="separator"></div>
 {* Opatan Inc. : END OF STEP 4 MERGED *}
 
-<p><input type="submit" value="{translate key="common.saveAndContinue"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="confirmAction('{url page="author"}', '{translate|escape:"jsparam" key="author.submit.cancelSubmission"}')" /></p>
+<p><input type="submit"{if !$submissionFile} onclick="return confirm('{translate|escape:"jsparam" key="author.submit.noSubmissionConfirm"}')"{/if} value="{translate key="common.saveAndContinue"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="confirmAction('{url page="author"}', '{translate|escape:"jsparam" key="author.submit.cancelSubmission"}')" /></p>
 
 <p><span class="formRequired">{translate key="common.requiredField"}</span></p>
 

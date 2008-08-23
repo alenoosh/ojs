@@ -11,8 +11,10 @@
 {assign var="pageTitle" value="sectionEditor.review.createReviewer"}
 {include file="common/header.tpl"}
 
-<form method="post" name="reviewerForm" action="{url op="createReviewer" path=$articleId|to_array:"create"}">
-
+<form method="post" name="reviewerForm" action="{url op="createReviewer" path=$articleId|to_array:"create" reviewerId=$reviewerId}">
+{if $reviewerId}
+	<input type="hidden" name="reviewerId" value="{$reviewerId}" />
+{/if}
 {include file="common/formErrors.tpl"}
 
 <script type="text/javascript">
@@ -45,7 +47,24 @@
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="formLocale" key="form.formLanguage"}</td>
 		<td width="80%" class="value">
-			{url|assign:"createReviewerUrl" op="createReviewer"}
+			{if $reviewerId}
+				{url|assign:"createReviewerUrl" op="createReviewer" path=$articleId reviewerId=$reviewerId}
+			{else}
+				{url|assign:"createReviewerUrl" op="createReviewer" path=$articleId}
+			{/if}
+			{* Opatan Inc. *}
+			{foreach from=$firstName key="thisLocale" item="thisFirstName"}
+				{if $thisLocale != $formLocale}<input type="hidden" name="firstName[{$thisLocale|escape}]" value="{$thisFirstName|escape}" />{/if}
+			{/foreach}				
+			{foreach from=$lastName key="thisLocale" item="thisLastName"}
+				{if $thisLocale != $formLocale}<input type="hidden" name="lastName[{$thisLocale|escape}]" value="{$thisLastName|escape}" />{/if}
+			{/foreach}				
+			{foreach from=$middleName key="thisLocale" item="thisMiddleName"}
+				{if $thisLocale != $formLocale}<input type="hidden" name="middleName[{$thisLocale|escape}]" value="{$thisMiddleName|escape}" />{/if}
+			{/foreach}				
+			{foreach from=$affiliation key="thisLocale" item="thisAffiliation"}
+				{if $thisLocale != $formLocale}<input type="hidden" name="affiliation[{$thisLocale|escape}]" value="{$thisAffiliation|escape}" />{/if}
+			{/foreach}				
 			{form_language_chooser form="reviewerForm" url=$createReviewerUrl}
 			<span class="instruct">{translate key="form.formLanguage.description"}</span>
 		</td>
@@ -147,7 +166,14 @@
 	{/if}
 </table>
 
-<p><input type="submit" value="{translate key="common.save"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url path="selectReviewer" path=$articleId escape=false}'" /></p>
+<p>
+	<input type="submit" value="{translate key="common.save"}" class="button defaultButton" />
+	{if !$reviewerId}
+		<input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url op="selectReviewer" path=$articleId escape=false}'" />
+	{else}
+		<input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url op="submission" path=$articleId escape=false}'" />
+	{/if}
+</p>
 
 <p><span class="formRequired">{translate key="common.requiredField"}</span></p>
 

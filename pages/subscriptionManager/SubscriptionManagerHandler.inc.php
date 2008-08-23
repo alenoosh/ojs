@@ -189,6 +189,7 @@ class SubscriptionManagerHandler extends Handler {
 				}
 
 				// Opatan Inc.
+				$calType = 0;
 				$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 				if ($journal != null) {
 					$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
@@ -197,8 +198,6 @@ class SubscriptionManagerHandler extends Handler {
 					} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
 						$calType = 0;
 					}
-				} else {
-					$calType = 0;
 				}
 		
 				if ($calType == 1) {

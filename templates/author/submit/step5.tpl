@@ -13,7 +13,7 @@
 
 <p>{translate key="author.submit.confirmationDescription" journalTitle=$journal->getJournalTitle()}</p>
 
-<form method="post" action="{url op="saveSubmit" path=$submitStep}">
+<form method="post" action="{url op="saveSubmit" path=$submitStep}" enctype="multipart/form-data">
 <input type="hidden" name="articleId" value="{$articleId|escape}" />
 {include file="common/formErrors.tpl"}
 
@@ -32,11 +32,12 @@
 <tr>
 	<td colspan="5" class="headseparator">&nbsp;</td>
 </tr>
+{assign var="submissionFileId" value=0}
 {foreach from=$files item=file}
 <tr valign="top">
 	<td>{$file->getFileId()}</td>
 	<td><a class="file" href="{url op="download" path=$articleId|to_array:$file->getFileId()}">{$file->getOriginalFileName()|escape}</a></td>
-	<td>{if ($file->getType() == 'supp')}{translate key="article.suppFile"}{else}{translate key="author.submit.submissionFile"}{/if}</td>
+	<td>{if ($file->getType() == 'supp')}{translate key="article.suppFile"}{else}{assign var="submissionFileId" value=$file->getFileId()}{translate key="author.submit.submissionFile"}{/if}</td>
 	<td>{$file->getNiceFileSize()}</td>
 	<td>{showdate value=$file->getDateUploaded() format=$dateFormatTrunc type=$calType}</td>
 </tr>
@@ -48,6 +49,23 @@
 </table>
 
 <div class="separator"></div>
+
+{* Opatan Inc. *}
+{if $submissionFileId}
+<input type="hidden" name="submissionFileId" value="{$submissionFileId}" />
+<table class="data" width="100%">
+<tr>
+	<td width="30%" class="label">
+		{fieldLabel name="submissionFile" key="author.submit.replaceSubmissionFile"}
+	</td>
+	<td width="70%" class="value">
+		<input type="file" class="uploadField" name="submissionFile" id="submissionFile" /> <input name="replaceSubmissionFile" type="submit" class="button" value="{translate key="common.upload"}" />
+	</td>
+</tr>
+</table>
+
+<div class="separator"></div>
+{/if}
 
 {if $authorFees}
 	{include file="author/submit/authorFees.tpl" showPayLinks=1}

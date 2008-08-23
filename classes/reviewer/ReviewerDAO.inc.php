@@ -51,6 +51,38 @@ class ReviewerDAO extends DAO {
 	}
 
 	/**
+	 * Retrieve a reviewer by Email.
+	 * @param $email string
+	 * @return Reviewer
+	 */
+	function &getReviewerByEmail($email) {
+		$locale = Locale::getLocale();
+		$paramArray = array('firstName', $locale, 'lastName', $locale, 'middleName', $locale, 'affiliation', $locale, $email);
+		$result = &$this->retrieve(
+			'SELECT 
+				r.*,
+				rf.setting_value AS first_name, rl.setting_value AS last_name,
+				rm.setting_value AS middle_name, ra.setting_value AS affiliation
+			 FROM 
+			 	reviewers r
+				LEFT JOIN reviewer_settings rf ON (r.reviewer_id = rf.reviewer_id AND rf.setting_name = ? AND rf.locale = ?) 
+				LEFT JOIN reviewer_settings rl ON (r.reviewer_id = rl.reviewer_id AND rl.setting_name = ? AND rl.locale = ?)
+				LEFT JOIN reviewer_settings rm ON (r.reviewer_id = rm.reviewer_id AND rm.setting_name = ? AND rm.locale = ?)
+				LEFT JOIN reviewer_settings ra ON (r.reviewer_id = ra.reviewer_id AND ra.setting_name = ? AND ra.locale = ?) 
+			 WHERE r.email = ?',
+			 $paramArray 
+		);
+
+		$reviewer = null;
+		if ($result->RecordCount() != 0) {
+			$reviewer = &$this->_returnReviewerFromRow($result->GetRowAssoc(false));
+		}
+		$result->Close();
+		unset($result);
+		return $reviewer;
+	}
+
+	/**
 	 * Insert a new reviewer.
 	 * @param $reviewer Reviewer
 	 * @param $articleId

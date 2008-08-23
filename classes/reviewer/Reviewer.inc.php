@@ -196,46 +196,6 @@ class Reviewer extends DataObject {
 	}
 
 	/**
-	 * Retrieve array of user settings.
-	 * @param journalId int
-	 * @return array
-	 */
-	/*
-	function &getSettings($journalId = null) {
-		$userSettingsDao = &DAORegistry::getDAO('UserSettingsDAO');
-		$settings = &$userSettingsDao->getSettingsByJournal($this->getData('userId'), $journalId);
-		return $settings;
-	}
-	*/
-
-	/**
-	 * Retrieve a user setting value.
-	 * @param $name
-	 * @param $journalId int
-	 * @return mixed
-	 */
-	/*
-	function &getSetting($name, $journalId = null) {
-		$userSettingsDao = &DAORegistry::getDAO('UserSettingsDAO');
-		$setting = &$userSettingsDao->getSetting($this->getData('userId'), $name, $journalId);
-		return $setting;
-	}
-	*/
-
-	/**
-	 * Set a user setting value.
-	 * @param $name string
-	 * @param $value mixed
-	 * @param $type string optional
-	 */
-	/*
-	function updateSetting($name, $value, $type = null, $journalId = null) {
-		$userSettingsDao = &DAORegistry::getDAO('UserSettingsDAO');
-		return $userSettingsDao->updateSetting($this->getData('userId'), $name, $value, $type, $journalId);
-	}
-	*/
-
-	/**
 	 * Get the reviewer's complete name.
 	 * Includes first name, middle name (if applicable), and last name.
 	 * @param $lastFirst boolean return in "LastName, FirstName" format

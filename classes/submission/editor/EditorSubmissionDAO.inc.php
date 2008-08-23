@@ -274,7 +274,7 @@ class EditorSubmissionDAO extends DAO {
 				$params[] = $search;
 				break;
 			case SUBMISSION_FIELD_AUTHOR:
-				$searchSql = $this->_generateUserNameSearchSQL($search, $searchMatch, 'aa.', $params);
+				$searchSql = $this->_generateUserNameSearchSQL($search, $searchMatch, 'aa', $params);
 				break;
 			case SUBMISSION_FIELD_EDITOR:
 				$searchSql = $this->_generateUserNameSearchSQL($search, $searchMatch, 'ed', $params);

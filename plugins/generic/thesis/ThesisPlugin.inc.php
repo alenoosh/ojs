@@ -320,17 +320,15 @@ class ThesisPlugin extends GenericPlugin {
 							}				
 						} else {
 							// Opatan Inc.
+							$calType = 0;
 							$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 							if ($journal != null) {
-								$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(),
-														    'dateDisplayType');
+								$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId()															, 'dateDisplayType');
 								if (strcmp($dateDisplayType, "Jalali") == 0) {
 									$calType = 1;
 								} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
 									$calType = 0;
 								}
-							} else {
-								$calType = 0;
 							}
 
 							if ($calType == 1) {

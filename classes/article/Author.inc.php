@@ -126,7 +126,7 @@ class Author extends DataObject {
 
 	/**
 	 * Opatan Inc. : 
-	 * Get localized author firstName
+	 * Get localized author lastName
 	 */
 	 function getAuthorLastName() {
 		return $this->getLocalizedData('lastName');

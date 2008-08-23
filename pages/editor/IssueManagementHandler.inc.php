@@ -139,6 +139,7 @@ class IssueManagementHandler extends EditorHandler {
 			$templateMgr = &TemplateManager::getManager();
 			import('issue.IssueAction');
 			// Opatan Inc.
+			$calType = 0;
 			$journal = &Request::getJournal();
 			$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 			if ($journal != null) {
@@ -148,8 +149,6 @@ class IssueManagementHandler extends EditorHandler {
 				} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
 					$calType = 0;
 				}
-			} else {
-				$calType = 0;
 			}
 
 			if ($calType == 1) {
@@ -207,6 +206,7 @@ class IssueManagementHandler extends EditorHandler {
 		$journalId = $journal->getJournalId();
 
 		// Opatan Inc.
+		$calType = 0;
 		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 		if ($journal != null) {
 			$dateDisplayType = &$journalSettingsDao->getSetting($journalId, 'dateDisplayType');
@@ -215,8 +215,6 @@ class IssueManagementHandler extends EditorHandler {
 			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
 				$calType = 0;
 			}
-		} else {
-			$calType = 0;
 		}
 
 		$templateMgr = &TemplateManager::getManager();

@@ -533,6 +533,7 @@ class Request {
 	function getUserDateVar($prefix, $defaultDay = null, $defaultMonth = null, $defaultYear = null, $defaultHour = 0, $defaultMinute = 0, $defaultSecond = 0) {
 
 		// Opatan Inc.
+		$calType = 0;
 		$journal = &Request::getJournal();
 		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 		if ($journal != null) {
@@ -542,11 +543,8 @@ class Request {
 			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
 				$calType = 0;
 			}
-		} else {
-			$calType = 0;
-		}
+		}		
 
-		
 		$monthPart = Request::getUserVar($prefix . 'Month');
 		$dayPart = Request::getUserVar($prefix . 'Day');
 		$yearPart = Request::getUserVar($prefix . 'Year');

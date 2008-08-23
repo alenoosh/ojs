@@ -128,8 +128,8 @@ class CreateReviewerForm extends Form {
 		$user->setGender($this->getData('gender'));
 		$user->setDiscipline($this->getData('discipline'));
 		$user->setInitials($this->getData('initials'));
-		$user->setAffiliation($this->getData('affiliation'), null); // Opatan Inc. : Localized
-		$user->setEmail($user->getUsername()); // Opatan Inc. : $this->getData('email') changed to $user->getUsername()
+		$user->setAffiliation($this->getData('affiliation'), null); // Opatan Inc. : Localized		
+		$user->setEmail($this->getData('username')); // Opatan Inc. : $this->getData('email') changed to $user->getUsername()
 		$user->setUrl($this->getData('userUrl'));
 		$user->setPhone($this->getData('phone'));
 		$user->setFax($this->getData('fax'));

@@ -55,7 +55,9 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		$this->addCheck(new FormValidatorCustom($this, 'authors', 'required', 'author.submit.form.authorRequired', create_function('$authors', 'return count($authors) > 0;')));
 		$this->addCheck(new FormValidatorArray($this, 'authors', 'required', 'author.submit.form.authorRequiredFields', array(array('firstName', $locale), array('lastName', $locale), 'email')));
 		$this->addCheck(new FormValidatorLocale($this, 'title', 'required', 'author.submit.form.titleRequired'));
-
+		// Opatan Inc.
+		$this->addCheck(new FormValidatorLocale($this, 'runningTitle', 'required', 'author.submit.form.runningTitleRequired'));
+		
 		// Opatan Inc. : if author can specify reviewers and specifying reviewers is not optional adds reviewers validator
 		if ($journalSettingsDao->getSetting($journal->getJournalId(), 'authorCanSpecifyReviewers')) {
 			$reviewerIsOptional = &$journalSettingsDao->getSetting($journal->getJournalId(), 'reviewerIsOptional');
@@ -185,23 +187,22 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		$abstractLength = 0;
 		$abstractStr    = 0;
 		$abstract       = $this->getData('abstract');
-		$formLocale     = $this->getFormLocale();
+		$formLocale     = Locale::getLocale();
 		
 		if (isset($abstract[$formLocale])) {
-			foreach (str_word_count($abstract[$formLocale],1) as $key => $value) {
+			foreach (str_word_count($abstract[$formLocale], 1) as $key => $value) {
 				$abstractStr .= $value." ";
 			}
 			$str = eregi_replace(" +", " ", $abstractStr);
 			$array = explode(" ", $str);
 		
-			for($i=0; $i < count($array); $i++)
-			{
+			for ($i=0; $i < count($array); $i++) {
 				if (eregi("[0-9A-Za-zÀ-ÖØ-öø-ÿ]", $array[$i]))
 					$abstractLength++;
 			}
 	
-			//Opatan Inc. : Check Abstract Length
-			if ($abstractMinimumLength && $abstractMaximumLength ) {
+			// Opatan Inc. : Check Abstract Length
+			if ($abstractMinimumLength && $abstractMaximumLength) {
 				if (($abstractLength < $abstractMinimumLength) || ($abstractLength > $abstractMaximumLength)) {
 					$this->addCheck(new FormValidatorLocale($this, 'abstractLength', 'required', 'author.submit.form.abstractLength'));
 				}
@@ -216,7 +217,6 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 			}
 
 		}
-
 	}
 
 	/**
