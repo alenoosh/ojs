@@ -96,6 +96,21 @@ class Mail extends DataObject {
 	}
 
 	function setCcs($ccs) {
+		/** Opatan Inc. **/
+		if ($ccs != null) {
+			$recipients = $this->getRecipients();
+			$ccPosition = 0;
+			foreach ($ccs as $cc) {
+				foreach ($recipients as $recipient) {
+					if (strcmp($cc['email'], $recipient['email']) == 0) {
+						array_splice($ccs, $ccPosition, 1);
+						break;
+					}
+				}
+				$ccPosition++;
+			}
+		}
+
 		return $this->setData('ccs', $ccs);
 	}
 

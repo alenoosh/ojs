@@ -80,8 +80,9 @@ function deleteAttachment(fileId) {
 		{foreachelse}
 			<input type="text" name="cc[]" id="cc" size="40" maxlength="120" class="textField" {if !$addressFieldsEnabled}disabled="disabled" {/if}/>
 		{/foreach}
-
-		{if $blankCc}
+		
+		{* Opatan Inc. : checks to add a blank cc only if ccs is not empty *}
+		{if $blankCc and $cc}
 			<input type="text" name="cc[]" id="cc" size="40" maxlength="120" class="textField" {if !$addressFieldsEnabled}disabled="disabled" {/if}/>
 		{/if}
 	</td>
