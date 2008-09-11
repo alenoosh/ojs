@@ -13,8 +13,9 @@
 <input type="hidden" name="articleId" value="{$submission->getArticleId()}"/>
 <table class="listing" width="100%">
 <tr class="heading" valign="bottom">
-	<td width="45%">{translate key="user.name"}</td>
-	<td width="45%">{translate key="user.email"}</td>
+	<td width="30%">{translate key="user.name"}</td>
+	<td width="30%">{translate key="user.affiliation"}</td>
+	<td width="30%">{translate key="user.email"}</td>
 	<td width="10%" class="heading" align="center">{translate key="common.action"}</td>
 </tr>
 {iterate from=reviewers item=reviewer}
@@ -22,6 +23,11 @@
 
 <tr valign="top">
 	<td>{$reviewer->getFullName()|escape}</td>
+	{if $reviewer->getReviewerAffiliation()}
+		<td>{$reviewer->getReviewerAffiliation()|escape}</td>
+	{else}
+		<td>&mdash;</td>
+	{/if}
 	<td>{$reviewer->getEmail()|escape}</td>
 	<td align="center">
 		{if $reviewer->getStatus() eq 0}
