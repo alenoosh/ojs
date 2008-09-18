@@ -51,6 +51,57 @@ class ReviewerDAO extends DAO {
 	}
 
 	/**
+	 * Retrieve reviewers by article ID.
+	 * @param $articleId int
+	 * @return Reviewers
+	 */
+	function &getReviewers($articleId) {
+		$locale = Locale::getLocale();
+		$paramArray = array(
+				    'firstName',
+				    $locale,
+				    'lastName',
+				    $locale,
+				    'middleName',
+				    $locale,
+				    'affiliation',
+				    $locale,
+				    $articleId);
+
+		$result = &$this->retrieve(
+	        	'SELECT DISTINCT
+				r.*, 
+				rf.setting_value AS first_name, rl.setting_value AS last_name, 
+				rm.setting_value AS middle_name, ra.setting_value AS affiliation
+			FROM	reviewers r
+				LEFT JOIN reviewer_settings rf ON (r.reviewer_id = rf.reviewer_id AND rf.setting_name = ? AND rf.locale = ?)
+				LEFT JOIN reviewer_settings rl ON (r.reviewer_id = rl.reviewer_id AND rl.setting_name = ? AND rl.locale = ?)
+				LEFT JOIN reviewer_settings rm ON (r.reviewer_id = rm.reviewer_id AND rm.setting_name = ? AND rm.locale = ?)
+				LEFT JOIN reviewer_settings ra ON (r.reviewer_id = ra.reviewer_id AND ra.setting_name = ? AND ra.locale = ?)
+			WHERE	r.article_id = ? 
+			ORDER BY last_name, first_name',
+			$paramArray
+		);
+		
+		//if (!isset($result->fields[0])) {
+		//	return false;
+		//}
+
+		//$returner = &new DAOResultFactory($result, $this, '_returnReviewerFromRow');
+		//return $returner;	
+
+		while (!$result->EOF) {
+			$reviewers[] = &$this->_returnReviewerFromRow($result->GetRowAssoc(false));
+			$result->MoveNext();
+		}
+
+		$result->Close();
+		unset($result);
+
+		return $reviewers;
+	}
+
+	/**
 	 * Retrieve a reviewer by Email.
 	 * @param $email string
 	 * @return Reviewer
@@ -87,10 +138,16 @@ class ReviewerDAO extends DAO {
 	 * @param $reviewer Reviewer
 	 * @param $articleId
 	 */
-	function insertReviewer(&$reviewer, $articleId) {
-		$this->update(sprintf('INSERT INTO reviewers (email, article_id) VALUES (?, ?)'), array($reviewer->getEmail(), $articleId));
+	function insertReviewer(&$reviewer, $articleId, $insert, $reviewerId = 0) {
+		if ($insert == 0) {
+			$this->update(sprintf('UPDATE reviewers SET email = ? WHERE reviewer_id = ?'), array($reviewer->getEmail(), $reviewerId));
+			$reviewer->setReviewerId($reviewerId);
+		} else {
+			$this->update(sprintf('INSERT INTO reviewers (email, article_id) VALUES (?, ?)'), array($reviewer->getEmail(), $articleId));
+			$reviewer->setReviewerId($this->getInsertReviewerId());
+		}
 
-		$reviewer->setReviewerId($this->getInsertReviewerId());
+		//$reviewer->setReviewerId($this->getInsertReviewerId());
 		$this->updateLocaleFields($reviewer);
 		return $reviewer->getReviewerId();
 	}
@@ -113,6 +170,15 @@ class ReviewerDAO extends DAO {
 		return $reviewer;
 	}
 	
+	/**
+	 * Delete reviewer by reviewer ID
+	 * @param reviewerId
+	**/
+	function deleteReviewerByReviewerId($reviewerId) {
+		$this->update('DELETE FROM reviewers WHERE reviewer_id = ?', $reviewerId);
+		$this->update('DELETE FROM reviewer_settings WHERE reviewer_id = ?', $reviewerId);
+	}
+
 	/**
 	 * Delete reviewers by article id
 	 * @param $articleId

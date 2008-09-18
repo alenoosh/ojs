@@ -75,6 +75,7 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 	function initData() {
 		$journal = &Request::getJournal();
 		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
+		$reviewerDao = &DAORegistry::getDAO('ReviewerDAO');
 
 		$sectionDao = &DAORegistry::getDAO('SectionDAO');
 		if (isset($this->article)) {
@@ -127,11 +128,24 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 			// Opatan Inc.
 			if ($journalSettingsDao->getSetting($journal->getJournalId(), 'authorCanSpecifyReviewers')) {
 				$numberOfReviewers = &$journalSettingsDao->getSetting($journal->getJournalId(), 'numberOfReviewers');
-				if ($numberOfReviewers > 0) {
-					for ($i=0, $count=$numberOfReviewers; $i < $count; $i++) {
+				$reviewers = &$reviewerDao->getReviewers($this->articleId);
+				for ($i=0, $count=count($reviewers); $i < $count; $i++) {
+					array_push(
+						$this->_data['reviewers'],
+						array('reviewerId' => $reviewers[$i]->getReviewerId(),
+						      'firstName' => $reviewers[$i]->getFirstName(null),
+						      'middleName' => $reviewers[$i]->getMiddleName(null),
+						      'lastName' => $reviewers[$i]->getLastName(null),
+						      'affiliation' => $reviewers[$i]->getAffiliation(null),
+						      'email' => $reviewers[$i]->getEmail()));
+				}
+
+				if ($numberOfReviewers > $count) {
+					$diff = $numberOfReviewers - $count;
+					for ($i=0; $i < $diff; $i++) {
 						array_push(
 							$this->_data['reviewers'],
-							array('firstName', 'middleName', 'lastName', 'affiliation', 'email'));
+							array('reviewerId' => 0, 'firstName', 'middleName', 'lastName', 'affiliation', 'email'));
 					}
 				}
 			}
@@ -317,6 +331,7 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		$articleDao = &DAORegistry::getDAO('ArticleDAO');
 		$authorDao = &DAORegistry::getDAO('AuthorDAO');
 		$reviewerDao = &DAORegistry::getDAO('ReviewerDAO');
+		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 
 		// Update article
 		$article = &$this->article;
@@ -383,17 +398,32 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 		$reviewers = $this->getData('reviewers');
 		for ($i=0, $count=count($reviewers); $i < $count; $i++) {
 			$reviewer = &new Reviewer();
-
+			
 			if ($reviewer != null) {
-				if ($reviewers[$i]['firstName'] != null && $reviewers[$i]['lastName'] != null &&
+				$journal = &Request::getJournal();
+				if ($journalSettingsDao->getSetting($journal->getJournalId(), 'authorCanSpecifyReviewers')) {
+					$reviewerOptional = &$journalSettingsDao->getSetting($journal->getJournalId(), 'reviewerIsOptional');
+				}
+
+				$locale = Locale::getLocale();
+				if ($reviewers[$i]['firstName'][$locale] == null && $reviewers[$i]['lastName'][$locale] == null &&
+				    $reviewers[$i]['email'] == null && $reviewerOptional && $reviewers[$i]['reviewerId'] != 0) {
+					$reviewerDao->deleteReviewerByReviewerId($reviewers[$i]['reviewerId']);
+				}
+			
+				if ($reviewers[$i]['firstName'][$locale] != null && $reviewers[$i]['lastName'][$locale] != null &&
 				    $reviewers[$i]['email'] != null) {
-					$reviewer->setFirstName($reviewers[$i]['firstName'], null);					
+					$reviewer->setFirstName($reviewers[$i]['firstName'], null);
 					$reviewer->setMiddleName($reviewers[$i]['middleName'], null);
 					$reviewer->setLastName($reviewers[$i]['lastName'], null);
 					$reviewer->setAffiliation($reviewers[$i]['affiliation'], null);
-					$reviewer->setEmail($reviewers[$i]['email']);		
-					$reviewerDao->insertReviewer($reviewer, $this->articleId);
-				}					
+					$reviewer->setEmail($reviewers[$i]['email']);
+					if ($reviewers[$i]['reviewerId'] != 0) {
+						$reviewerDao->insertReviewer($reviewer, $this->articleId, 0, $reviewers[$i]['reviewerId']);
+					} else {
+						$reviewerDao->insertReviewer($reviewer, $this->articleId, 1);
+					}
+				}
 			}
 		}
 

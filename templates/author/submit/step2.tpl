@@ -429,7 +429,8 @@ function confirmForgottenUpload() {
 	<tr>
 		{if $countOfReviewers > 1}
 			<td width="25%">{translate key="author.submit.reviewerNumber"}&nbsp;{$reviewerIndex+1}</td>
-		{/if}			
+		{/if}
+		<input type="hidden" name="reviewers[{$reviewerIndex|escape}][reviewerId]" value="{$reviewer.reviewerId|escape}" />
 		<td width="15%" class="value">
 			<input type="text" class="textField" name="reviewers[{$reviewerIndex|escape}][firstName][{$formLocale|escape}]"
 			       id="reviewers-{$reviewerIndex|escape}-firstName" value="{$reviewer.firstName[$formLocale]|escape}"
