@@ -47,7 +47,7 @@
 		<td></td>
 		<td></td>
 		<td>
-			<a href="{url op="changeStatusToIncomplete" path=$articleId}" class="action">{translate key="submission.changeToIncomplete"}</a>
+			<a href="{url op="changeStatusToIncomplete" path=$articleId}" class="action">{translate key="submission.markAsIncomplete"}</a>
 		</td>
 	</tr>
 </table>
