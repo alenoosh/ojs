@@ -425,6 +425,12 @@ class SectionEditorHandler extends Handler {
 		SubmissionEditHandler::unsuitableSubmission($args);
 	}
 
+	// Opatan Inc.
+	function changeStatusToIncomplete($args) {
+		import('pages.sectionEditor.SubmissionEditHandler');
+		SubmissionEditHandler::changeStatusToIncomplete($args);
+	}
+
 	function restoreToQueue($args) {
 		import('pages.sectionEditor.SubmissionEditHandler');
 		SubmissionEditHandler::restoreToQueue($args);

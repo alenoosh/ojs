@@ -409,6 +409,7 @@
 	<message key="submissions.postAuthor">Post-Author</message>
 	<message key="submissions.reviewRound">Review Round</message>
 	<message key="submissions.incomplete">Incomplete</message>
+	<message key="submission.changeToIncomplete">Change to Incomplete</message>
 	<message key="submissions.proof">Proof</message>
 	<message key="submissions.submit">Submit</message>
 	<message key="submissions.editorDecision">Editor Decision</message>

@@ -389,6 +389,7 @@
     <message key="submissions.postAuthor" >پس از نویسنده</message>
     <message key="submissions.reviewRound" >دور کارشناسی</message>
     <message key="submissions.incomplete" >ناتمام</message>
+    <message key="submission.changeToIncomplete">اين مقاله نا تمام است.</message>
     <message key="submissions.proof" >بازبینی</message>
     <message key="submissions.submit" >سابمیت</message>
     <message key="submissions.editorDecision" >تصمیم دبیر</message>

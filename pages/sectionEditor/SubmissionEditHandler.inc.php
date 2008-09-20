@@ -1202,6 +1202,20 @@ class SubmissionEditHandler extends SectionEditorHandler {
 			Request::redirect(null, null, 'submission', $articleId);
 		}
 	}
+	
+	/**
+	 * Opatan Inc. :		
+	 * Change status of article to incomplete.
+	 * @param $args
+	 */
+	function changeStatusToIncomplete($args) {
+		$articleId = isset($args[0]) ? (int) $args[0] : 0;
+
+		$sectionEditorSubmissionDao = &DAORegistry::getDAO('SectionEditorSubmissionDAO');
+		$sectionEditorSubmissionDao->changeStatusToIncomplete($articleId);
+
+		Request::redirect(null, null, 'editor');
+	}
 
 	/**
 	 * Set section ID.

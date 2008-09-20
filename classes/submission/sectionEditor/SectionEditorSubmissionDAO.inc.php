@@ -1371,6 +1371,14 @@ class SectionEditorSubmissionDAO extends DAO {
 
 		return $statistics;
 	}
+	
+	/**
+	 * Opatan Inc. :		
+	 * Change status of article to incomplete.	 
+	 */
+	function changeStatusToIncomplete($articleId) {
+		$this->update(sprintf('UPDATE articles SET submission_progress = ? WHERE article_id = ?'), array('2', $articleId));
+	}
 }
 
 ?>

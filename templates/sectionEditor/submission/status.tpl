@@ -46,9 +46,8 @@
 
 		<td></td>
 		<td></td>
-		<td><form action="{url op="editor"}" method="post">{translate key="submission.changeSection"} <select name="submissionProgress"  size="1" class="selectMenu"><option name="submissionProgress" >{translate key="submissions.incomplete"}</option></select> 
-		<input type="hidden" name="articleId" value="{$articleId}" />
-		<input type="submit" value="{translate key="common.record"}" class="button" />
-		</form></td>
+		<td>
+			<a href="{url op="changeStatusToIncomplete" path=$articleId}" class="action">{translate key="submission.changeToIncomplete"}</a>
+		</td>
 	</tr>
 </table>
