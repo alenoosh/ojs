@@ -2034,8 +2034,9 @@ http://journals.mui.ac.ir/index.php/index/index
     <message key="author.submit.reviewerRecommendation">پيشنهاد کارشناس</message>
     <message key="author.submit.reviewerNumber">کارشناس شماره</message>   
     <!--Opatan Inc. : Abstract Length -->
-    <message key="author.submit.form.abstractLength">طول چکيده وارد شده بيشتر از حد مجاز است</message>     
+    <message key="author.submit.form.abstractLength">طول چکيده وارد شده بيشتر از حد مجاز است.</message>     
     <message key="author.submit.form.abstractLengthNote">({$abstractMinLength}-{$abstractMaxLength}) کلمه</message>
+    <message key="author.submit.form.lengthMessage">چکيده وارد شده {$length} کلمه می باشد.</message>
     <message key="author.submit.suppTitleRequired">لطفا عنوان فايل الحاقی را وارد کنيد.</message>
 
     <!-- Article Submission Step 3 -->

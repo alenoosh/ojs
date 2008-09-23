@@ -261,7 +261,12 @@ function confirmForgottenUpload() {
 	<td width="20%" class="label">{fieldLabel name="runningTitle" required="true" key="article.runningTitle"}</td>
 	<td width="80%" class="value"><input type="text" class="textField" name="runningTitle[{$formLocale|escape}]" id="runningTitle" value="{$runningTitle[$formLocale]|escape}" size="60" maxlength="255" /></td>
 </tr>
-
+<tr valign="top">
+	{if $lengthMessage}
+		<td>&nbsp;</td>
+		<td><font color="#990000">{$lengthMessage}</font></td>
+	{/if}
+</tr>
 {if $section->getAbstractsDisabled()==0}
 <tr valign="top">
 {*Opatan Inc. -> Abstract Length Note*}
