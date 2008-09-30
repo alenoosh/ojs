@@ -542,26 +542,15 @@ class SectionEditorAction extends Action {
 		if ($reviewAssignment->getArticleId() == $articleId && !HookRegistry::call('SectionEditorAction::setDueDate', array(&$reviewAssignment, &$reviewer, &$dueDate, &$numWeeks))) {
 			$today = getDate();
 			$todayTimestamp = mktime(0, 0, 0, $today['mon'], $today['mday'], $today['year']);
-			// Opatan Inc.
-			$calType = 0;
-			$journal = &Request::getJournal();
-			$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
-			if ($journal != null) {
-				$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
-				if (strcmp($dateDisplayType, "Jalali") == 0) {
-					$calType = 1;
-				} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
-					$calType = 0;
-				}
-			}
 			
-			if ($calType == 1) {
+			// Opatan Inc.
+			if (Locale::getLocale() == "fa_IR") {
 				if ($dueDate != null) {
 					$jDateParts = explode('-', $dueDate);
 					$mdy = Core::jalaliToGregorian($jDateParts[0], $jDateParts[1], $jDateParts[2]);
 					$timestamp = mktime(0, 0, 0, $mdy["month"], $mdy["day"], $mdy["year"]);
 					$dueDate = date('Y-m-d', $timestamp);
-				}					
+				}
 			}
 		
 			if ($dueDate != null) {

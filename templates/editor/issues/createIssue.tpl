@@ -84,9 +84,9 @@
 	<tr valign="top">
 		<td class="label">{fieldLabel name="openAccessDate" key="editor.issues.accessDate"}</td>
 		{if ($Date_Year && $Date_Month && $Date_Day)}
-			<td class="value">{html_select_date time="$Date_Year-$Date_Month-$Date_Day" end_year="+20" all_extra="class=\"selectMenu\"" type=$calType}</td>
+			<td class="value">{html_select_date time="$Date_Year-$Date_Month-$Date_Day" end_year="+20" all_extra="class=\"selectMenu\""}</td>
 		{else}
-			<td class="value">{html_select_date end_year="+20" all_extra="class=\"selectMenu\"" type=$calType}</td>
+			<td class="value">{html_select_date end_year="+20" all_extra="class=\"selectMenu\""}</td>
 		{/if}
 	</tr>
 </table>

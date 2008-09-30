@@ -16,9 +16,9 @@
 {foreach from=$article->getAuthors() item=author}
 %A {$author->getFullName(true)|escape}
 {/foreach}
-%D {showdate value=$article->getDatePublished() format="%Y" type=$calType}
+%D {showdate value=$article->getDatePublished() format="%Y"}
 %T {$article->getArticleTitle()|strip_tags}
-%B {showdate value=$article->getDatePublished() format="%Y" type=$calType}
+%B {showdate value=$article->getDatePublished() format="%Y"}
 %9 {$article->getArticleSubject()|escape}
 %! {$article->getArticleTitle()|strip_tags}
 %K {$article->getArticleSubject()|escape}

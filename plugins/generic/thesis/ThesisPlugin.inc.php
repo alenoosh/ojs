@@ -319,26 +319,6 @@ class ThesisPlugin extends GenericPlugin {
 								Request::redirect(null, 'manager', 'plugin', array('generic', $this->getName(), 'theses'));
 							}				
 						} else {
-							// Opatan Inc.
-							$calType = 0;
-							$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
-							if ($journal != null) {
-								$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId()															, 'dateDisplayType');
-								if (strcmp($dateDisplayType, "Jalali") == 0) {
-									$calType = 1;
-								} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
-									$calType = 0;
-								}
-							}
-
-							if ($calType == 1) {
-								$jMonth = $thesisForm->getData('dateApprovedMonth');
-								$jDay   = $thesisForm->getData('dateApprovedDay');
-								$jYear  = $thesisForm->getData('dateApprovedYear');
-								$mdy = Core::jalaliToGregorian($jYear, $jMonth, $jDay);
-								$thesisForm->setData('dateApproved', $mdy["year"].'-'.
-												     $mdy["month"].'-'.$mdy["day"]);
-							}
 					
 							if ($thesisId == null) {
 								$templateMgr->assign('thesisTitle', 'plugins.generic.thesis.manager.createTitle');

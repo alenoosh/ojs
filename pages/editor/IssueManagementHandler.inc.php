@@ -138,28 +138,6 @@ class IssueManagementHandler extends EditorHandler {
 		} else {
 			$templateMgr = &TemplateManager::getManager();
 			import('issue.IssueAction');
-			// Opatan Inc.
-			$calType = 0;
-			$journal = &Request::getJournal();
-			$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
-			if ($journal != null) {
-				$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
-				if (strcmp($dateDisplayType, "Jalali") == 0) {
-					$calType = 1;
-				} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
-					$calType = 0;
-				}
-			}
-
-			if ($calType == 1) {
-				$jMonth = $issueForm->getData('Date_Month');
-				$jDay   = $issueForm->getData('Date_Day');
-				$jYear  = $issueForm->getData('Date_Year');
-				$mdy = Core::jalaliToGregorian($jYear, $jMonth, $jDay);
-				$issueForm->setData('Date_Month', $mdy["month"]);
-				$issueForm->setData('Date_Day', $mdy["day"]);
-				$issueForm->setData('Date_Year', $mdy["year"]);
-			}
 			$templateMgr->assign('issueOptions', IssueAction::getIssueOptions());
 			$templateMgr->assign('helpTopicId', 'publishing.createIssue');
 			$issueForm->display();
@@ -205,18 +183,6 @@ class IssueManagementHandler extends EditorHandler {
 		$journal = &Request::getJournal();
 		$journalId = $journal->getJournalId();
 
-		// Opatan Inc.
-		$calType = 0;
-		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
-		if ($journal != null) {
-			$dateDisplayType = &$journalSettingsDao->getSetting($journalId, 'dateDisplayType');
-			if (strcmp($dateDisplayType, "Jalali") == 0) {
-				$calType = 1;
-			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
-				$calType = 0;
-			}
-		}
-
 		$templateMgr = &TemplateManager::getManager();
 		$templateMgr->assign('issueId', $issueId);
 
@@ -230,16 +196,6 @@ class IssueManagementHandler extends EditorHandler {
 		if ($issueForm->validate($issueId)) {
 			$issueForm->execute($issueId);
 			$issueForm->initData($issueId);
-		} else { // Opatan Inc.
-			if ($calType == 1) {
-				$jMonth = $issueForm->getData('Date_Month');
-				$jDay   = $issueForm->getData('Date_Day');
-				$jYear  = $issueForm->getData('Date_Year');
-				$mdy = Core::jalaliToGregorian($jYear, $jMonth, $jDay);
-				$issueForm->setData('Date_Month', $mdy["month"]);
-				$issueForm->setData('Date_Day', $mdy["day"]);
-				$issueForm->setData('Date_Year', $mdy["year"]);
-			}
 		}
 
 		$templateMgr->assign_by_ref('issue', $issue);

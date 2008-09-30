@@ -70,9 +70,9 @@
 	<td class="label">{fieldLabel name="dateExpire" key="manager.announcements.form.dateExpire"}</td>
 	<td class="value">
 		{if $dateExpire != null}
-			{html_select_date prefix="dateExpire" all_extra="class=\"selectMenu\"" end_year="$yearOffsetFuture" year_empty="" month_empty="" day_empty="" time="$dateExpire" type=$calType}
+			{html_select_date prefix="dateExpire" all_extra="class=\"selectMenu\"" end_year="$yearOffsetFuture" year_empty="" month_empty="" day_empty="" time="$dateExpire"}
 		{else}
-			{html_select_date prefix="dateExpire" all_extra="class=\"selectMenu\"" end_year="$yearOffsetFuture" year_empty="" month_empty="" day_empty="" time="-00-00" type=$calType}
+			{html_select_date prefix="dateExpire" all_extra="class=\"selectMenu\"" end_year="$yearOffsetFuture" year_empty="" month_empty="" day_empty="" time="-00-00"}
 		{/if}
 		<br />
 		<span class="instruct">{translate key="manager.announcements.form.dateExpireInstructions"}</span>

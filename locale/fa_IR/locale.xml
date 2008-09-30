@@ -255,6 +255,21 @@
     <message key="common.queue.short.active" >جاری</message>
     <message key="common.queue.long.completed" >تکمیل شد</message>
     <message key="common.queue.short.completed" >تکمیل شد</message>
+    <!--Opatan Inc. -->
+    <message key="common.queue.short.uploadSuppFile">آپلود فايلهای الحاقی</message>
+    <message key="common.queue.short.viewDetails">نمايش جزئيات مقاله</message>
+    <message key="common.queue.short.SubmitRevisedVersion">ثبت نسخه تجديد نظر يافته</message>
+    <message key="common.queue.short.editMetadata">ويرايش متا داده</message>
+    <message key="common.queue.short.viewCopyeditedArticle">نمايش نسخه ويرايش شده</message>
+    <message key="common.queue.short.viewLayoutEditedArticle">نمايش نسخه صفحه آرايی شده</message>
+    <message key="common.queue.short.notifyEditor">اطلاع رسانی به ويراستار</message>
+    <message key="common.queue.short.authorGuidelines">راهنمای نويسنده</message>
+    <message key="common.queue.short.startNewSubmission">ايجاد يک مقاله جديد</message>
+    <message key="common.queue.short.emailTheEditor">ارسال ايميل به ويراستار</message>
+    <message key="common.queue.short.viewDetails">نمايش جزئيات</message>
+    <message key="common.queue.short.getReviewerCertification">دريافت مدرک کارشناسی</message>
+    <message key="common.queue.long.revCertification">مدرک کارشناسی</message>
+    <message key="common.queue.long.opatan">Modified &amp; Maintained by <![CDATA[<a href="http://www.opatan.com" style="text-decoration:none;" >Opatan Inc.</a>]]></message>
 
     <!--
 	 *
@@ -1978,7 +1993,7 @@ http://journals.mui.ac.ir/index.php/index/index
     <message key="author.submit.metadata" >2: وارد کردن متاداده</message>
     <message key="author.submit.upload" >3. آپلود ساب میشن</message>
     <message key="author.submit.supplementaryFiles" >4. آپلود فایلهای الحاقی</message>
-    <message key="author.submit.confirmation" >۵. تأييد</message>
+    <message key="author.submit.confirmation" >۳. تأييد</message>
     <message key="author.submit.cancelSubmission" >میتوانید این ساب میشن را در وقتی دیگر کامل کنید. برای این کار به صفحه خانگی نویسنده رفته و ساب میشن های جاری را انتخاب کنید</message>
     <message key="author.submit.notAccepting" >این مجله در حال حاضر ساب میشن نمی پذیرد</message>
     <message key="author.submit.requestWaiver" >درخواست تخفیف</message>

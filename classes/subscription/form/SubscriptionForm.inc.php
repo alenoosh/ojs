@@ -48,21 +48,9 @@ class SubscriptionForm extends Form {
 		$this->addCheck(new FormValidator($this, 'typeId', 'required', 'manager.subscriptions.form.typeIdRequired'));
 		$this->addCheck(new FormValidatorCustom($this, 'typeId', 'required', 'manager.subscriptions.form.typeIdValid', create_function('$typeId, $journalId', '$subscriptionTypeDao = &DAORegistry::getDAO(\'SubscriptionTypeDAO\'); return $subscriptionTypeDao->subscriptionTypeExistsByTypeId($typeId, $journalId);'), array($journal->getJournalId())));
 
-		// Opatan Inc.
-		$calType = 0;
-		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
-		if ($journal != null) {
-			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
-			if (strcmp($dateDisplayType, "Jalali") == 0) {
-				$calType = 1;
-			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
-				$calType = 0;
-			}
-		}
-
 		// Start date is provided and is valid	
 		$this->addCheck(new FormValidator($this, 'dateStartYear', 'required', 'manager.subscriptions.form.dateStartRequired'));	
-		if ($calType == 1) {
+		if (Locale::getLocale() == "fa_IR") {
 			$this->addCheck(new FormValidatorCustom($this, 'dateStartYear', 'required', 'manager.subscriptions.form.dateStartValid', create_function('$dateStartYear', '$minYear = Core::getCurrentJalaliYear() + SUBSCRIPTION_YEAR_OFFSET_PAST; $maxYear = Core::getCurrentJalaliYear() + SUBSCRIPTION_YEAR_OFFSET_FUTURE; return ($dateStartYear >= $minYear && $dateStartYear <= $maxYear) ? true : false;')));
 		} else {
 			$this->addCheck(new FormValidatorCustom($this, 'dateStartYear', 'required', 'manager.subscriptions.form.dateStartValid', create_function('$dateStartYear', '$minYear = date(\'Y\') + SUBSCRIPTION_YEAR_OFFSET_PAST; $maxYear = date(\'Y\') + SUBSCRIPTION_YEAR_OFFSET_FUTURE; return ($dateStartYear >= $minYear && $dateStartYear <= $maxYear) ? true : false;')));
@@ -76,7 +64,7 @@ class SubscriptionForm extends Form {
 
 		// End date is provided and is valid	
 		$this->addCheck(new FormValidator($this, 'dateEndYear', 'required', 'manager.subscriptions.form.dateEndRequired'));	
-		if ($calType == 1) {
+		if (Locale::getLocale() == "fa_IR") {
 			$this->addCheck(new FormValidatorCustom($this, 'dateEndYear', 'required', 'manager.subscriptions.form.dateEndValid', create_function('$dateEndYear', '$minYear = Core::getCurrentJalaliYear() + SUBSCRIPTION_YEAR_OFFSET_PAST; $maxYear = Core::getCurrentJalaliYear() + SUBSCRIPTION_YEAR_OFFSET_FUTURE; return ($dateEndYear >= $minYear && $dateEndYear <= $maxYear) ? true : false;')));
 		} else {
 			$this->addCheck(new FormValidatorCustom($this, 'dateEndYear', 'required', 'manager.subscriptions.form.dateEndValid', create_function('$dateEndYear', '$minYear = date(\'Y\') + SUBSCRIPTION_YEAR_OFFSET_PAST; $maxYear = date(\'Y\') + SUBSCRIPTION_YEAR_OFFSET_FUTURE; return ($dateEndYear >= $minYear && $dateEndYear <= $maxYear) ? true : false;')));
@@ -207,18 +195,6 @@ class SubscriptionForm extends Form {
 		$subscription->setUserId($this->getData('userId'));
 		$subscription->setTypeId($this->getData('typeId'));
 
-		// Opatan Inc.
-		$calType = 0;
-		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
-		if ($journal != null) {
-			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
-			if (strcmp($dateDisplayType, "Jalali") == 0) {
-				$calType = 1;
-			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
-				$calType = 0;
-			}
-		}
-
 		$startYear = $this->getData('dateStartYear');
 		$startMonth = $this->getData('dateStartMonth');
 		$startDay = $this->getData('dateStartDay');
@@ -226,7 +202,7 @@ class SubscriptionForm extends Form {
 		$endMonth = $this->getData('dateEndMonth');
 		$endDay = $this->getData('dateEndDay');
 	
-		if ($calType == 1) {
+		if (Locale::getLocale() == "fa_IR") {
 			$startMdy = Core::jalaliToGregorian($startYear, $startMonth, $startDay);
 			$endMdy = Core::jalaliToGregorian($endYear, $endMonth, $endDay);
 			$startYear = $startMdy["year"];

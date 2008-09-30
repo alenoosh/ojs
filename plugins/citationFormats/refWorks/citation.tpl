@@ -18,7 +18,7 @@
 	journal = {{/literal}{$journal->getJournalTitle()|escape}{literal}},
 {/literal}{if $issue}{literal}	volume = {{/literal}{$issue->getVolume()|escape}{literal}},
 	number = {{/literal}{$issue->getNumber()|escape}{literal}},{/literal}{/if}{literal}
-	year = {{/literal}{showdate value=$article->getDatePublished() format='%Y' type=$calType}{literal}},
+	year = {{/literal}{showdate value=$article->getDatePublished() format='%Y'}{literal}},
 {/literal}{assign var=issn value=$journal->getSetting('issn')|escape}{if $issn}{literal}	issn = {{/literal}{$issn|escape}{literal}},{/literal}{/if}
 
 {literal}	url = {{/literal}{$articleUrl}{literal}}

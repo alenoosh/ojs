@@ -42,7 +42,7 @@
 		<td><input {if !$notFirst}checked {/if}name="issueId" type="radio" value="{$issue->getIssueId()}"/></td>
 		{assign var=notFirst value=1}
 		<td><a href="{url page="issue" op="issueToc" path=$issue->getIssueId()}" class="action">{$issue->getIssueIdentification()|escape}</a></td>
-		<td>{showdate value=$issue->getDatePublished() format=$dateFormatShort default="" type=$calType}</td>
+		<td>{showdate value=$issue->getDatePublished() format=$dateFormatShort default=""}</td>
 		<td>{$issue->getNumArticles()}</td>
 	</tr>
 	<tr>

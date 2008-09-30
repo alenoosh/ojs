@@ -94,7 +94,7 @@ class AnnouncementHandler extends ManagerHandler {
 			$announcementForm->display();
 
 		} else {
-				Request::redirect(null, null, 'announcements');
+			Request::redirect(null, null, 'announcements');
 		}
 	}
 
@@ -133,17 +133,6 @@ class AnnouncementHandler extends ManagerHandler {
 
 			} else {
 				AnnouncementHandler::setupTemplate();
-				// Opatan Inc.
-				$calType = 0;
-				$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
-				if ($journal != null) {
-					$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
-					if (strcmp($dateDisplayType, "Jalali") == 0) {
-						$calType = 1;
-					} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
-						$calType = 0;
-					}
-				}
 
 				$templateMgr = &TemplateManager::getManager();
 				$templateMgr->append('pageHierarchy', array(Request::url(null, 'manager', 'announcements'), 'manager.announcements'));
@@ -154,16 +143,6 @@ class AnnouncementHandler extends ManagerHandler {
 					$templateMgr->assign('announcementTitle', 'manager.announcements.editTitle');	
 				}
 
-				if ($calType == 1) {
-					if ($announcementForm->getData('dateExpireYear') != null) {
-						$year = $announcementForm->getData('dateExpireYear');
-						$month = $announcementForm->getData('dateExpireMonth');
-						$day = $announcementForm->getData('dateExpireDay');
-						$mdy = Core::jalaliToGregorian($year, $month, $day);
-						$announcementForm->setData('dateExpire', $mdy["year"].'-'.$mdy["month"].'-'.$mdy["day"]);
-					}
-				}
-			
 				$announcementForm->display();
 			}
 

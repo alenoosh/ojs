@@ -32,7 +32,6 @@ function smarty_function_showdate($params, &$smarty)
 	$completeDateTimeFormat = "%Y-%m-%dT%T%z";
 	$alphaMonthYear = "%B, %Y";
 
-	$type = $params["type"];
 	$format = $params["format"];
 	$value = $params["value"];	
 	if (isset($params["assign"])) {
@@ -57,8 +56,7 @@ function smarty_function_showdate($params, &$smarty)
 		}			
 	}
 
-	// 1 equals jalali and 0 equals gregorian
-	if ($type == 1) {
+	if (Locale::getLocale() == "fa_IR") {
 		$value = $params["value"];
 		$timestamp = Core::convertDateTimeToTimestamp($value);
 		if (!$timestamp) {

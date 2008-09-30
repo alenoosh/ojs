@@ -41,14 +41,8 @@ function smarty_function_html_select_date($params, &$smarty)
     require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
     require_once $smarty->_get_plugin_filepath('function','html_options');
     /* Default values. */
-    // Opatan Inc.
-    if (isset($params["type"])) {
-	    $calType = $params["type"];
-    } else {
-	    $calType = 0;	 	
-    }
     $prefix          = "Date_";
-    if ($calType == 1) {
+    if (Locale::getLocale() == "fa_IR") {
 	$date = Core::getCurrentDate();
 	$timestamp = Core::convertDateTimeToTimestamp($date);
 	$jalali = Core::gregorianToJalali($timestamp);
@@ -96,6 +90,12 @@ function smarty_function_html_select_date($params, &$smarty)
     $month_empty     = null;
     $year_empty      = null;
     $extra_attrs     = '';
+
+    // Opatan Inc.
+    if (Locale::getLocale() == "fa_IR") {
+	$jalaliMonthNames = array("", "Farvardin", "Ordibehesht", "Khordad", "Tir", "Mordad",
+			          "Shahrivar", "Mehr", "Aban", "Azar", "Dey", "Bahman", "Esfand");
+    }
 
     foreach ($params as $_key=>$_value) {
         switch ($_key) {
@@ -150,9 +150,22 @@ function smarty_function_html_select_date($params, &$smarty)
         // negative timestamp, use date()
         $time = date('Y-m-d', $time);
     }
+
     // If $time is not in format yyyy-mm-dd
     if (preg_match('/^(\d{0,4}-\d{0,2}-\d{0,2})/', $time, $found)) {
-        $time = $found[1];
+	    $temp = explode("-", $time);
+	    $yearDigits = bcdiv($temp[0], 10);
+	    $yearDigits = bcdiv($yearDigits, 10);
+	    $startYearDigits = bcdiv(Core::getCurrentJalaliYear(), 10);
+	    $startYearDigits = bcdiv($startYearDigits, 10);
+	    // Opatan Inc.
+	    if (Locale::getLocale() == "fa_IR" && $temp[0] && $yearDigits == $startYearDigits) {
+		$check = Core::jalaliToGregorian($temp[0], $temp[1], $temp[2]);
+		$time = $check["year"]."-".$check["month"]."-".$check["day"];
+            } else {
+		$time = $found[1];
+	    }				
+
     } else {
         // use smarty_make_timestamp to get an unix timestamp and
         // strftime to make yyyy-mm-dd
@@ -164,13 +177,13 @@ function smarty_function_html_select_date($params, &$smarty)
     // make syntax "+N" or "-N" work with start_year and end_year
     if (preg_match('!^(\+|\-)\s*(\d+)$!', $end_year, $match)) {
         if ($match[1] == '+') {
-	    if ($calType == 1) {
+	    if (Locale::getLocale() == "fa_IR") {
 	            $end_year = $jalali["year"] + $match[2];
             } else {
 	            $end_year = strftime('%Y') + $match[2];
 	    }
         } else {
-	    if ($calType == 1) {
+	    if (Locale::getLocale() == "fa_IR") {
 	            $end_year = $jalali["year"] - $match[2];
             } else {
 		    $end_year = strftime('%Y') - $match[2];
@@ -179,13 +192,13 @@ function smarty_function_html_select_date($params, &$smarty)
     }
     if (preg_match('!^(\+|\-)\s*(\d+)$!', $start_year, $match)) {
         if ($match[1] == '+') {
-	    if ($calType == 1) {
+	    if (Locale::getLocale() == "fa_IR") {
 	            $start_year = $jalali["year"] + $match[2];
             } else {
 	            $start_year = strftime('%Y') + $match[2];
 	    }
         } else {
-	    if ($calType == 1) {
+	    if (Locale::getLocale() == "fa_IR") {
         	    $start_year = $jalali["year"] - $match[2];	
 	    } else {
 	            $start_year = strftime('%Y') - $match[2];
@@ -215,16 +228,10 @@ function smarty_function_html_select_date($params, &$smarty)
         if(isset($month_empty)) {
             $month_names[''] = $month_empty;
             $month_values[''] = '';
-        }
-	
-	// Opatan Inc.
-	if ($calType == 1) {
-		$jalaliMonthNames = array("", "Farvardin", "Ordibehesht", "Khordad", "Tir", "Mordad",
-				     "Shahrivar", "Mehr", "Aban", "Azar", "Dey", "Bahman", "Esfand");
-	}
+        }	
 
         for ($i = 1; $i <= 12; $i++) {
-	    if ($calType == 1) {
+	    if (Locale::getLocale() == "fa_IR") {
 		    $month_names[$i] = $jalaliMonthNames[$i];
 	    } else {
 	            $month_names[$i] = strftime($month_format, mktime(0, 0, 0, $i, 1, 2000));
@@ -249,7 +256,7 @@ function smarty_function_html_select_date($params, &$smarty)
         }
         $month_result .= $extra_attrs . '>'."\n";
 	
-	if ($calType == 1) {
+	if (Locale::getLocale() == "fa_IR") {
 		if ($time[1] != 0) {
 			$mdy = Core::gregorianToJalali(mktime(0, 0, 0, $time[1], $time[2], $time[0]));
 		}
@@ -293,7 +300,7 @@ function smarty_function_html_select_date($params, &$smarty)
             $day_result .= ' ' . $day_extra;
         }
         $day_result .= $extra_attrs . '>'."\n";
-	if ($calType == 1) {
+	if (Locale::getLocale() == "fa_IR") {
 		if ($time[2] != 0) {
 			$mdy = Core::gregorianToJalali(mktime(0, 0, 0, $time[1], $time[2], $time[0]));
 		}
@@ -348,7 +355,7 @@ function smarty_function_html_select_date($params, &$smarty)
                 $year_result .= ' ' . $year_extra;
             }
             $year_result .= $extra_attrs . '>'."\n";
-	    if ($calType == 1) {
+	    if (Locale::getLocale() == "fa_IR") {
 	    	if ($time[0]) {
 			$mdy = Core::gregorianToJalali(mktime(0, 0, 0, $time[1], $time[2], $time[0]));
 		}

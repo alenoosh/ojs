@@ -18,9 +18,9 @@
 	{$author->getAuthorLastName()|escape}, {$firstName[0]|escape}.{if $i==$authorCount-2}, &amp; {elseif $i<$authorCount-1}, {/if}
 {/foreach}
 
-({showdate value=$article->getDatePublished() format='%Y' type=$calType}).
+({showdate value=$article->getDatePublished() format='%Y'}).
 {$apaCapitalized}.
 <i>{$journal->getJournalTitle()|capitalize}{if $issue}, {$issue->getVolume()|escape}</i>({$issue->getNumber()|escape}){else}</i>{/if}.
-{showdate item=now value=$smarty.now format=$dateFormatLong assign=1 type=$calType}
+{showdate item=now value=$smarty.now format=$dateFormatLong assign=1}
 {translate key="plugins.citationFormats.apa.retrieved" retrievedDate=$now url=$articleUrl}
 

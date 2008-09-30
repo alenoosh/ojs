@@ -43,20 +43,8 @@ class AnnouncementForm extends Form {
 		// Description is provided
 		$this->addCheck(new FormValidatorLocale($this, 'description', 'required', 'manager.announcements.form.descriptionRequired'));
 
-		// Opatan Inc.		
-		$calType = 0;
-		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
-		if ($journal != null) {
-			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
-			if (strcmp($dateDisplayType, "Jalali") == 0) {
-				$calType = 1;
-			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
-				$calType = 0;
-			}
-		}
-
 		// If provided, expiry date is valid
-		if ($calType == 1) {
+		if (Locale::getLocale() == "fa_IR") {
 			$this->addCheck(new FormValidatorCustom($this, 'dateExpireYear', 'optional', 'manager.announcements.form.dateExpireValid', create_function('$dateExpireYear', '$minYear = Core::getCurrentJalaliYear(); $maxYear = Core::getCurrentJalaliYear() + ANNOUNCEMENT_EXPIRE_YEAR_OFFSET_FUTURE; return ($dateExpireYear >= $minYear && $dateExpireYear <= $maxYear) ? true : false;')));
 		} else {
 			$this->addCheck(new FormValidatorCustom($this, 'dateExpireYear', 'optional', 'manager.announcements.form.dateExpireValid', create_function('$dateExpireYear', '$minYear = date(\'Y\'); $maxYear = date(\'Y\') + ANNOUNCEMENT_EXPIRE_YEAR_OFFSET_FUTURE; return ($dateExpireYear >= $minYear && $dateExpireYear <= $maxYear) ? true : false;')));
@@ -160,19 +148,7 @@ class AnnouncementForm extends Form {
 			$announcement->setTypeId(null);
 		}
 		
-		// Opatan Inc.
-		$calType = 0;
-		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
-		if ($journal != null) {
-			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
-			if (strcmp($dateDisplayType, "Jalali") == 0) {
-				$calType = 1;
-			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
-				$calType = 0;
-			}
-		}
-
-		if ($calType == 1) {
+		if (Locale::getLocale() == "fa_IR") {
 			if ($this->getData('dateExpireYear') != null) {
 				$year = $this->getData('dateExpireYear');
 				$month = $this->getData('dateExpireMonth');

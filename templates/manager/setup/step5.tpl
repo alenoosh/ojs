@@ -502,31 +502,6 @@ function prepBlockFields() {
 
 <div class="separator"></div>
 
-<h3>5.10 {translate key="manager.setup.dateDisplayType"}</h3>
-<table width="100%" class="data">
-	<tr valign="top">
-		<td width="5%" class="label" align="right">
-			<input type="radio" name="dateDisplayType" id="dateDisplayType-0" value="Gregorian"{if $dateDisplayType eq "Gregorian"} checked="checked"{/if} />
-		</td>
-		<td width="95%" class="value">
-			<label for="dateDisplayType-0">{translate key="manager.setup.gregorian"}</label>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2" class="separator">&nbsp;</td>
-	</tr>
-	<tr valign="top">
-		<td width="5%" class="label" align="right">
-			<input type="radio" name="dateDisplayType" id="dateDisplayType-1" value="Jalali"{if $dateDisplayType eq "Jalali"} checked="checked"{/if} />
-		</td>
-		<td width="95%" class="value">
-			<label for="dateDisplayType-1">{translate key="manager.setup.jalali"}</label>
-		</td>
-	</tr>
-</table>
-
-<div class="separator"></div>
-
 <p><input type="submit" onclick="prepBlockFields()" value="{translate key="common.saveAndContinue"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url op="setup" escape=false}'" /></p>
 
 <p><span class="formRequired">{translate key="common.requiredField"}</span></p>

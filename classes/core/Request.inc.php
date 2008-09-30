@@ -532,19 +532,6 @@ class Request {
 	 */
 	function getUserDateVar($prefix, $defaultDay = null, $defaultMonth = null, $defaultYear = null, $defaultHour = 0, $defaultMinute = 0, $defaultSecond = 0) {
 
-		// Opatan Inc.
-		$calType = 0;
-		$journal = &Request::getJournal();
-		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
-		if ($journal != null) {
-			$dateDisplayType = &$journalSettingsDao->getSetting($journal->getJournalId(), 'dateDisplayType');
-			if (strcmp($dateDisplayType, "Jalali") == 0) {
-				$calType = 1;
-			} else if (strcmp($dateDisplayType, "Gregorian") == 0) {
-				$calType = 0;
-			}
-		}		
-
 		$monthPart = Request::getUserVar($prefix . 'Month');
 		$dayPart = Request::getUserVar($prefix . 'Day');
 		$yearPart = Request::getUserVar($prefix . 'Year');
@@ -571,7 +558,7 @@ class Request {
 
 		if (empty($monthPart) || empty($dayPart) || empty($yearPart)) return null;
 
-		if ($calType == 1) {
+		if (Locale::getLocale() == "fa_IR") {
 			$mdy = Core::jalaliToGregorian($yearPart, $monthPart, $dayPart);
 			return mktime($hourPart, $minutePart, $secondPart, $mdy["month"], $mdy["day"], $mdy["year"]);
 		}
