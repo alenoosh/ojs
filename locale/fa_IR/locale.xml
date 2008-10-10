@@ -1349,10 +1349,6 @@ http://journals.mui.ac.ir/index.php/index/index
     <message key="manager.setup.browsePublicFolder">Browse Public Folder</message>
     <message key="manager.setup.filesDir">{$files_dir}</message>
     <message key="manager.setup.public">Public</message>
-    <!-- Opatan Inc. -->
-    <message key="manager.setup.dateDisplayType">نوع تاريخ مورد استفاده برای نمايش</message>
-    <message key="manager.setup.gregorian">ميلادی</message>
-    <message key="manager.setup.jalali">شمسی</message>
 
     <!-- Languages -->
     <message key="manager.languages.languageInstructions" ><![CDATA[OJS میتواند در دسترس کاربران زبانهائی که توسط سیستم حمایت میشود قرار گیرد. همچنین OJS میتواند به عنوان یک سیستم نسبتا چند زبانی عمل کند و امکان تغییر زبان توسط کاربران در هر صفحه را فراهم کند. همچنین داده های خاصی را ممکن است بتوان حداکثر به دو زبان وارد کرد.<br /><br/>چنانچه یک زبان مود حمایت OJS در لیست زیر موجود نباشد از مدیر سایت بخواهید تا آن زبان را نصب کند. برای اطلاع از نحوه افزودن حمایت برای یک زبان جدید به مستندات OJS مراجعه کنید.]]></message>

@@ -1333,10 +1333,6 @@ Select a model for handling these aspects of the editorial process. (To designat
 	<message key="manager.setup.browsePublicFolder">Browse Public Folder</message>
 	<message key="manager.setup.filesDir">{$files_dir}</message>
 	<message key="manager.setup.public">Public</message>
-	<!-- Opatan Inc. -->
-	<message key="manager.setup.dateDisplayType">Date Display Type</message>
-	<message key="manager.setup.gregorian">Gregorian</message>
-	<message key="manager.setup.jalali">Jalali</message>
 	
 	<!-- Languages -->
 	<message key="manager.languages.languageInstructions"><![CDATA[OJS can be made available to users in any of several supported languages. As well, OJS can operate as a multilingual system, providing users with an ability to toggle between languages on each page, and allowing certain data to be entered in several additional languages.<br /><br/>If a language supported by OJS is not listed below, ask your site administrator to install the language from the site administration interface. For instructions on adding support for new languages, please consult the OJS documentation.]]></message>

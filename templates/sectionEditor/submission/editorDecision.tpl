@@ -31,7 +31,7 @@
 		{foreach from=$submission->getDecisions($round) item=editorDecision key=decisionKey}
 			{if $decisionKey neq 0} | {/if}
 			{assign var="decision" value=$editorDecision.decision}
-			{translate key=$editorDecisionOptions.$decision}&nbsp;&nbsp;{showdate value=$editorDecision.dateDecided format=$dateFormatShort type=$calType}
+			{translate key=$editorDecisionOptions.$decision}&nbsp;&nbsp;{showdate value=$editorDecision.dateDecided format=$dateFormatShort}
 		{foreachelse}
 			{translate key="common.none"}
 		{/foreach}
@@ -54,7 +54,7 @@
 		{translate key="submission.editorAuthorRecord"}
 		{if $submission->getMostRecentEditorDecisionComment()}
 			{assign var="comment" value=$submission->getMostRecentEditorDecisionComment()}
-			<a href="javascript:openComments('{url op="viewEditorDecisionComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a>&nbsp;&nbsp;{showdate value=$comment->getDatePosted() format=$dateFormatShort type=$calType}
+			<a href="javascript:openComments('{url op="viewEditorDecisionComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a>&nbsp;&nbsp;{showdate value=$comment->getDatePosted() format=$dateFormatShort}
 		{else}
 			<a href="javascript:openComments('{url op="viewEditorDecisionComments" path=$submission->getArticleId()}');" class="icon">{icon name="comment"}</a>
 		{/if}
@@ -112,9 +112,9 @@
 					<input type="radio" name="editorDecisionFile" value="{$reviewFile->getFileId()},{$reviewFile->getRevision()}" />
 				{/if}
 				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$reviewFile->getFileId():$reviewFile->getRevision()}" class="file">{$reviewFile->getFileName()}</a>&nbsp;&nbsp;
-				{showdate value=$reviewFile->getDateModified() format=$dateFormatShort type=$calType}
+				{showdate value=$reviewFile->getDateModified() format=$dateFormatShort}
 				{if $copyeditFile && $copyeditFile->getSourceFileId() == $reviewFile->getFileId()}
-					&nbsp;&nbsp;&nbsp;&nbsp;{translate key="submission.sent"}&nbsp;&nbsp;{showdate value=$copyeditFile->getDateUploaded() format=$dateFormatShort type=$calType}
+					&nbsp;&nbsp;&nbsp;&nbsp;{translate key="submission.sent"}&nbsp;&nbsp;{showdate value=$copyeditFile->getDateUploaded() format=$dateFormatShort}
 				{/if}
 			</td>
 		</tr>
@@ -128,9 +128,9 @@
 			{/if}
 			<td width="80%" class="value">
 				{if $lastDecision == SUBMISSION_EDITOR_DECISION_ACCEPT || $lastDecision == SUBMISSION_EDITOR_DECISION_RESUBMIT}<input type="radio" name="editorDecisionFile" value="{$authorFile->getFileId()},{$authorFile->getRevision()}" /> {/if}<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$authorFile->getFileId():$authorFile->getRevision()}" class="file">{$authorFile->getFileName()}</a>&nbsp;&nbsp;
-				{showdate value=$authorFile->getDateModified() format=$dateFormatShort type=$calType}
+				{showdate value=$authorFile->getDateModified() format=$dateFormatShort}
 				{if $copyeditFile && $copyeditFile->getSourceFileId() == $authorFile->getFileId()}
-					&nbsp;&nbsp;&nbsp;&nbsp;{translate key="submission.sent"}&nbsp;&nbsp;{showdate value=$copyeditFile->getDateUploaded() format=$dateFormatShort type=$calType}
+					&nbsp;&nbsp;&nbsp;&nbsp;{translate key="submission.sent"}&nbsp;&nbsp;{showdate value=$copyeditFile->getDateUploaded() format=$dateFormatShort}
 				{/if}
 			</td>
 		</tr>
@@ -149,9 +149,9 @@
 			{/if}
 			<td width="80%" class="value">
 				{if $lastDecision == SUBMISSION_EDITOR_DECISION_ACCEPT || $lastDecision == SUBMISSION_EDITOR_DECISION_RESUBMIT}<input type="radio" name="editorDecisionFile" value="{$editorFile->getFileId()},{$editorFile->getRevision()}" /> {/if}<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$editorFile->getFileId():$editorFile->getRevision()}" class="file">{$editorFile->getFileName()}</a>&nbsp;&nbsp;
-				{showdate value=$editorFile->getDateModified() format=$dateFormatShort type=$calType}&nbsp;&nbsp;&nbsp;&nbsp;
+				{showdate value=$editorFile->getDateModified() format=$dateFormatShort}&nbsp;&nbsp;&nbsp;&nbsp;
 				{if $copyeditFile && $copyeditFile->getSourceFileId() == $editorFile->getFileId()}
-					{translate key="submission.sent"}&nbsp;&nbsp;{showdate value=$copyeditFile->getDateUploaded() format=$dateFormatShort type=$calType}&nbsp;&nbsp;&nbsp;&nbsp;
+					{translate key="submission.sent"}&nbsp;&nbsp;{showdate value=$copyeditFile->getDateUploaded() format=$dateFormatShort}&nbsp;&nbsp;&nbsp;&nbsp;
 				{/if}
 				<a href="{url op="deleteArticleFile" path=$submission->getArticleId()|to_array:$editorFile->getFileId():$editorFile->getRevision()}" class="action">{translate key="common.delete"}</a>
 			</td>

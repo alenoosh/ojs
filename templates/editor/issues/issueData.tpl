@@ -89,7 +89,7 @@
 		<td class="value">
 			{if $issue->getDatePublished()}
 				{translate key="editor.issues.published"}&nbsp;&nbsp;
-				{showdate value=$issue->getDatePublished() format=$dateFormatShort type=$calType}
+				{showdate value=$issue->getDatePublished() format=$dateFormatShort}
 			{else}
 				{translate key="editor.issues.unpublished"}
 			{/if}
@@ -97,7 +97,7 @@
 			{if $issue->getDateNotified()}
 				<br/>
 				{translate key="editor.usersNotified"}&nbsp;&nbsp;
-				{showdate value=$issue->getDateNotified() format=$dateFormatShort type=$calType}
+				{showdate value=$issue->getDateNotified() format=$dateFormatShort}
 			{/if}
 		</td>
 	</tr>
@@ -114,9 +114,9 @@
 	<tr valign="top">
 		<td class="label">{fieldLabel name="openAccessDate" key="editor.issues.accessDate"}</td>
 		{if ($Date_Year && $Date_Month && $Date_Day)}
-			<td class="value">{html_select_date time="$Date_Year-$Date_Month-$Date_Day" end_year="+20" all_extra="class=\"selectMenu\"" type=$calType}</td>
+			<td class="value">{html_select_date time="$Date_Year-$Date_Month-$Date_Day" end_year="+20" all_extra="class=\"selectMenu\""}</td>
 		{else}
-			<td class="value">{html_select_date end_year="+20" all_extra="class=\"selectMenu\"" type=$calType}</td>
+			<td class="value">{html_select_date end_year="+20" all_extra="class=\"selectMenu\""}</td>
 		{/if}
 	</tr>
 </table>

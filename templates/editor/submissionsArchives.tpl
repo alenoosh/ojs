@@ -33,7 +33,7 @@
 
 	<tr valign="top" {if $submission->getFastTracked()} class="fastTracked"{/if}>
 		<td>{$articleId|escape}</td>
-		<td>{showdate value=$submission->getDateSubmitted() format=$dateFormatShort type=$calType}</td>
+		<td>{showdate value=$submission->getDateSubmitted() format=$dateFormatShort}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
 		<td>{$submission->getAuthorString(true)|truncate:40:"..."|escape}</td>
 		<td><a href="{url op="submissionEditing" path=$articleId}" class="action">{$submission->getArticleTitle()|strip_unsafe_html|truncate:60:"..."}</a></td>

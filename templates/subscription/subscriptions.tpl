@@ -40,8 +40,8 @@
 	<tr valign="top">
 		<td>{$subscription->getUserFullName()|escape}</td>
 		<td>{$subscription->getSubscriptionTypeName()|escape}</td>
-		<td>{showdate value=$subscription->getDateStart() format=$dateFormatShort type=$calType}</td>
-		<td>{showdate value=$subscription->getDateEnd() format=$dateFormatShort type=$calType}</td>
+		<td>{showdate value=$subscription->getDateStart() format=$dateFormatShort}</td>
+		<td>{showdate value=$subscription->getDateEnd() format=$dateFormatShort}</td>
 		<td><a href="{url op="editSubscription" path=$subscription->getSubscriptionId()}" class="action">{translate key="common.edit"}</a>&nbsp;|&nbsp;<a href="{url op="deleteSubscription" path=$subscription->getSubscriptionId()}" onclick="return confirm('{translate|escape:"jsparam" key="manager.subscriptions.confirmDelete"}')" class="action">{translate key="common.delete"}</a></td>
 	</tr>
 	<tr>

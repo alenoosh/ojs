@@ -125,7 +125,7 @@ function prepBlockFields() {
 </table>
 
 {if $homeHeaderTitleImage[$formLocale]}
-{translate key="common.fileName"}: {$homeHeaderTitleImage[$formLocale].name|escape} {showdate value=$homeHeaderTitleImage[$formLocale].dateUploaded format=$datetimeFormatShort type=$calType} <input type="submit" name="deleteHomeHeaderTitleImage" value="{translate key="common.delete"}" class="button" />
+{translate key="common.fileName"}: {$homeHeaderTitleImage[$formLocale].name|escape} {showdate value=$homeHeaderTitleImage[$formLocale].dateUploaded format=$datetimeFormatShort} <input type="submit" name="deleteHomeHeaderTitleImage" value="{translate key="common.delete"}" class="button" />
 <br />
 <img src="{$publicFilesDir}/{$homeHeaderTitleImage[$formLocale].uploadName|escape:"url"}" width="{$homeHeaderTitleImage[$formLocale].width|escape}" height="{$homeHeaderTitleImage[$formLocale].height|escape}" style="border: 0;" alt="{translate key="common.homePageHeader.altText"}" title="{translate key="common.homePageHeader.altText"}" />
 <br />
@@ -151,7 +151,7 @@ function prepBlockFields() {
 </table>
 
 {if $homeHeaderLogoImage[$formLocale]}
-{translate key="common.fileName"}: {$homeHeaderLogoImage[$formLocale].name|escape} {showdate value=$homeHeaderLogoImage[$formLocale].dateUploaded format=$datetimeFormatShort type=$calType} <input type="submit" name="deleteHomeHeaderLogoImage" value="{translate key="common.delete"}" class="button" />
+{translate key="common.fileName"}: {$homeHeaderLogoImage[$formLocale].name|escape} {showdate value=$homeHeaderLogoImage[$formLocale].dateUploaded format=$datetimeFormatShort} <input type="submit" name="deleteHomeHeaderLogoImage" value="{translate key="common.delete"}" class="button" />
 <br />
 <img src="{$publicFilesDir}/{$homeHeaderLogoImage[$formLocale].uploadName|escape:"url"}" width="{$homeHeaderLogoImage[$formLocale].width|escape}" height="{$homeHeaderLogoImage[$formLocale].height|escape}" style="border: 0;" alt="{translate key="common.homePageHeaderLogo.altText"}" title="{translate key="common.homePageHeaderLogo.altText"}" />
 <br />
@@ -192,7 +192,7 @@ function prepBlockFields() {
 </table>
 
 {if $homepageImage[$formLocale]}
-{translate key="common.fileName"}: {$homepageImage[$formLocale].name|escape} {showdate value=$homepageImage[$formLocale].dateUploaded format=$datetimeFormatShort type=$calType} <input type="submit" name="deleteHomepageImage" value="{translate key="common.delete"}" class="button" />
+{translate key="common.fileName"}: {$homepageImage[$formLocale].name|escape} {showdate value=$homepageImage[$formLocale].dateUploaded format=$datetimeFormatShort} <input type="submit" name="deleteHomepageImage" value="{translate key="common.delete"}" class="button" />
 <br />
 <img src="{$publicFilesDir}/{$homepageImage[$formLocale].uploadName|escape:"url"}" width="{$homepageImage[$formLocale].width|escape}" height="{$homepageImage[$formLocale].height|escape}" style="border: 0;" alt="{translate key="common.journalHomepageImage.altText"}" title="{translate key="common.journalHomepageImage.altText"}" />
 <br />
@@ -246,7 +246,7 @@ function prepBlockFields() {
 </table>
 
 {if $pageHeaderTitleImage[$formLocale]}
-{translate key="common.fileName"}: {$pageHeaderTitleImage[$formLocale].name|escape} {showdate value=$pageHeaderTitleImage[$formLocale].dateUploaded format=$datetimeFormatShort type=$calType} <input type="submit" name="deletePageHeaderTitleImage" value="{translate key="common.delete"}" class="button" />
+{translate key="common.fileName"}: {$pageHeaderTitleImage[$formLocale].name|escape} {showdate value=$pageHeaderTitleImage[$formLocale].dateUploaded format=$datetimeFormatShort} <input type="submit" name="deletePageHeaderTitleImage" value="{translate key="common.delete"}" class="button" />
 <br />
 <img src="{$publicFilesDir}/{$pageHeaderTitleImage[$formLocale].uploadName|escape:"url"}" width="{$pageHeaderTitleImage[$formLocale].width|escape}" height="{$pageHeaderTitleImage[$formLocale].height|escape}" style="border: 0;" alt="{translate key="common.pageHeader.altText"}" title="{translate key="common.pageHeader.altText"}" />
 <br />
@@ -272,7 +272,7 @@ function prepBlockFields() {
 </table>
 
 {if $pageHeaderLogoImage[$formLocale]}
-{translate key="common.fileName"}: {$pageHeaderLogoImage[$formLocale].name|escape} {showdate value=$pageHeaderLogoImage[$formLocale].dateUploaded format=$datetimeFormatShort type=$calType} <input type="submit" name="deletePageHeaderLogoImage" value="{translate key="common.delete"}" class="button" />
+{translate key="common.fileName"}: {$pageHeaderLogoImage[$formLocale].name|escape} {showdate value=$pageHeaderLogoImage[$formLocale].dateUploaded format=$datetimeFormatShort} <input type="submit" name="deletePageHeaderLogoImage" value="{translate key="common.delete"}" class="button" />
 <br />
 <img src="{$publicFilesDir}/{$pageHeaderLogoImage[$formLocale].uploadName|escape:"url"}" width="{$pageHeaderLogoImage[$formLocale].width|escape}" height="{$pageHeaderLogoImage[$formLocale].height|escape}" style="border: 0;" alt="{translate key="common.pageHeaderLogo.altText"}" title="{translate key="common.pageHeaderLogo.altText"}" />
 <br />
@@ -400,7 +400,7 @@ function prepBlockFields() {
 </table>
 
 {if $journalStyleSheet}
-{translate key="common.fileName"}: <a href="{$publicFilesDir}/{$journalStyleSheet.uploadName|escape:"url"}" class="file">{$journalStyleSheet.name|escape}</a> {showdate value=$journalStyleSheet.dateUploaded format=$datetimeFormatShort type=$calType} <input type="submit" name="deleteJournalStyleSheet" value="{translate key="common.delete"}" class="button" />
+{translate key="common.fileName"}: <a href="{$publicFilesDir}/{$journalStyleSheet.uploadName|escape:"url"}" class="file">{$journalStyleSheet.name|escape}</a> {showdate value=$journalStyleSheet.dateUploaded format=$datetimeFormatShort} <input type="submit" name="deleteJournalStyleSheet" value="{translate key="common.delete"}" class="button" />
 {/if}
 
 <table border="0" align="center">

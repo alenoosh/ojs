@@ -59,7 +59,6 @@ class JournalSetupStep5Form extends JournalSetupForm {
 				'itemsPerPage' => 'int',
 				'numPageLinks' => 'int',
 				'journalTheme' => 'string',
-				'dateDisplayType' => 'string', // Opatan Inc. 
 				'browsePublicFolder'=> 'string' //Opatan Inc. :browse public folder
 			)
 		);

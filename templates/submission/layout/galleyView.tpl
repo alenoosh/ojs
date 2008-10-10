@@ -53,7 +53,7 @@
 	</tr>
 	<tr>
 		<td class="label">{translate key="common.dateUploaded"}</td>
-		<td class="value">{showdate value=$styleFile->getDateUploaded() format=$datetimeFormatShort type=$calType}</td>
+		<td class="value">{showdate value=$styleFile->getDateUploaded() format=$datetimeFormatShort}</td>
 	</tr>
 {else}
 <tr valign="top">
@@ -78,7 +78,7 @@
 	<td><a class="action" href="{url op="downloadFile" path=$articleId|to_array:$imageFile->getFileId()}">{$imageFile->getFileName()|escape}</a></td>
 	<td>{$imageFile->getOriginalFileName()|escape}</td>
 	<td>{$imageFile->getNiceFileSize()}</td>
-	<td>{showdate value=$imageFile->getDateUploaded() format=$dateFormatShort type=$calType}</td>
+	<td>{showdate value=$imageFile->getDateUploaded() format=$dateFormatShort}</td>
 </tr>
 <tr valign="top">
 	<td colspan="4" class="{if $smarty.foreach.submissions.last}end{/if}separator">&nbsp;</td>

@@ -64,7 +64,7 @@
 </tr>
 <tr valign="top">
 	<td width="20%" class="label">{translate key="common.dateUploaded"}</td>
-	<td width="80%" class="value">{showdate value=$suppFile->getDateUploaded() format=$datetimeFormatShort type=$calType}</td>
+	<td width="80%" class="value">{showdate value=$suppFile->getDateUploaded() format=$datetimeFormatShort}</td>
 </tr>
 </table>
 
@@ -100,7 +100,7 @@
 
 <div class="separator"></div>
 
-<p><input type="submit" value="{translate key="common.saveAndContinue"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url op="submit" path="4" articleId=$articleId escape=false}'" /></p>
+<p><input type="submit" value="{translate key="common.saveAndContinue"}" class="button defaultButton" /> <input type="button" value="{translate key="common.cancel"}" class="button" onclick="document.location.href='{url op="submit" path="2" articleId=$articleId escape=false}'" /></p>
 
 <p><span class="formRequired">{translate key="common.requiredField"}</span></p>
 

@@ -3,7 +3,7 @@
 
 {include file="common/header.tpl"}
 <h2>
-Date: {showdate value=$date format=$datetimeFormatShort type=$calType}<br />
+Date: {showdate value=$date format=$datetimeFormatShort}<br />
 Subject: Review certification
 Reviewer: {$reviewerName}<br />
 Journal: {$journalTitle}<br />

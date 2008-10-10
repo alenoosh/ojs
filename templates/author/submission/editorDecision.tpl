@@ -20,7 +20,7 @@
 		<td>
 			{if $lastEditorDecision}
 				{assign var="decision" value=$lastEditorDecision.decision}
-				{translate key=$editorDecisionOptions.$decision} {showdate value=$lastEditorDecision.dateDecided format=$dateFormatShort type=$calType}
+				{translate key=$editorDecisionOptions.$decision} {showdate value=$lastEditorDecision.dateDecided format=$dateFormatShort}
 			{else}
 				&mdash;
 			{/if}
@@ -37,7 +37,7 @@
 			{translate key="submission.editorAuthorRecord"}
 			{if $submission->getMostRecentEditorDecisionComment()}
 				{assign var="comment" value=$submission->getMostRecentEditorDecisionComment()}
-				<a href="javascript:openComments('{url op="viewEditorDecisionComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a> {showdate value=$comment->getDatePosted() format=$dateFormatShort type=$calType}
+				<a href="javascript:openComments('{url op="viewEditorDecisionComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a> {showdate value=$comment->getDatePosted() format=$dateFormatShort}
 			{else}
 				<a href="javascript:openComments('{url op="viewEditorDecisionComments" path=$submission->getArticleId()}');" class="icon">{icon name="comment"}</a>
 			{/if}
@@ -49,7 +49,7 @@
 		</td>
 		<td class="value" width="80%">
 			{foreach from=$editorFiles item=editorFile key=key}
-				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$editorFile->getFileId():$editorFile->getRevision()}" class="file">{$editorFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$editorFile->getDateModified() format=$dateFormatShort type=$calType}<br />
+				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$editorFile->getFileId():$editorFile->getRevision()}" class="file">{$editorFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$editorFile->getDateModified() format=$dateFormatShort}<br />
 			{foreachelse}
 				{translate key="common.none"}
 			{/foreach}
@@ -61,7 +61,7 @@
 		</td>
 		<td class="value" width="80%">
 			{foreach from=$authorFiles item=authorFile key=key}
-				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$authorFile->getFileId():$authorFile->getRevision()}" class="file">{$authorFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$authorFile->getDateModified() format=$dateFormatShort type=$calType}&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$authorFile->getFileId():$authorFile->getRevision()}" class="file">{$authorFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$authorFile->getDateModified() format=$dateFormatShort}&nbsp;&nbsp;&nbsp;&nbsp;
 				<a href="{url op="deleteArticleFile" path=$submission->getArticleId()|to_array:$authorFile->getFileId():$authorFile->getRevision()}" class="action">{translate key="common.delete"}</a><br />
 			{foreachelse}
 				{translate key="common.none"}

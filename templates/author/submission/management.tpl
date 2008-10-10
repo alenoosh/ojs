@@ -23,7 +23,7 @@
 		<td width="20%" class="label">{translate key="submission.originalFile"}</td>
 		<td width="80%" colspan="2" class="data">
 			{if $submissionFile}
-				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$submissionFile->getFileId():$submissionFile->getRevision()}" class="file">{$submissionFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$submissionFile->getDateModified() format=$dateFormatShort type=$calType}
+				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$submissionFile->getFileId():$submissionFile->getRevision()}" class="file">{$submissionFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$submissionFile->getDateModified() format=$dateFormatShort}
 			{else}
 				{translate key="common.none"}
 			{/if}
@@ -33,7 +33,7 @@
 		<td class="label">{translate key="article.suppFilesAbbrev"}</td>
 		<td width="30%" class="value">
 			{foreach name="suppFiles" from=$suppFiles item=suppFile}
-				<a href="{if $submission->getStatus() != STATUS_PUBLISHED && $submission->getStatus() != STATUS_ARCHIVED}{url op="editSuppFile" path=$submission->getArticleId()|to_array:$suppFile->getSuppFileId()}{else}{url op="downloadFile" path=$submission->getArticleId()|to_array:$suppFile->getFileId()}{/if}" class="file">{$suppFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$suppFile->getDateModified() format=$dateFormatShort type=$calType}<br />
+				<a href="{if $submission->getStatus() != STATUS_PUBLISHED && $submission->getStatus() != STATUS_ARCHIVED}{url op="editSuppFile" path=$submission->getArticleId()|to_array:$suppFile->getSuppFileId()}{else}{url op="downloadFile" path=$submission->getArticleId()|to_array:$suppFile->getFileId()}{/if}" class="file">{$suppFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$suppFile->getDateModified() format=$dateFormatShort}<br />
 			{foreachelse}
 				{translate key="common.none"}
 			{/foreach}
@@ -57,7 +57,7 @@
 	</tr>
 	<tr>
 		<td class="label">{translate key="common.dateSubmitted"}</td>
-		<td>{showdate value=$submission->getDateSubmitted() format=$datetimeFormatLong type=$calType}</td>
+		<td>{showdate value=$submission->getDateSubmitted() format=$datetimeFormatLong}</td>
 	</tr>
 	<tr valign="top">
 		<td width="20%" class="label">{translate key="section.section"}</td>

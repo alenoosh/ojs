@@ -32,8 +32,8 @@
 	<tr>
 		<td width="5%">1.</td>
 		<td width="35%">{translate key="user.role.author"}</td>
-		<td>{showdate value=$proofAssignment->getDateAuthorNotified() format=$dateFormatShort type=$calType}</td>
-		<td>{showdate value=$proofAssignment->getDateAuthorUnderway() format=$dateFormatShort type=$calType}</td>
+		<td>{showdate value=$proofAssignment->getDateAuthorNotified() format=$dateFormatShort}</td>
+		<td>{showdate value=$proofAssignment->getDateAuthorUnderway() format=$dateFormatShort}</td>
 				<td>
 			{if not $proofAssignment->getDateAuthorNotified() or $proofAssignment->getDateAuthorCompleted()}
 				{icon name="mail" disabled="disabled"}
@@ -42,22 +42,22 @@
 				{url|assign:"url" op="authorProofreadingComplete" articleId=$submission->getArticleId()}
 				{icon name="mail" onclick="return confirm('$confirmMessage')" url=$url}
 			{/if}
-			{showdate value=$proofAssignment->getDateAuthorCompleted() format=$dateFormatShort type=$calType default=""}
+			{showdate value=$proofAssignment->getDateAuthorCompleted() format=$dateFormatShort default=""}
 		</td>
 	</tr>
 	<tr>
 		<td>2.</td>
 		<td>{translate key="user.role.proofreader"}</td>
-		<td>{showdate value=$proofAssignment->getDateProofreaderNotified() format=$dateFormatShort type=$calType}</td>
-		<td>{showdate value=$proofAssignment->getDateProofreaderUnderway() format=$dateFormatShort type=$calType}</td>
-		<td>{showdate value=$proofAssignment->getDateProofreaderCompleted() format=$dateFormatShort type=$calType}</td>
+		<td>{showdate value=$proofAssignment->getDateProofreaderNotified() format=$dateFormatShort}</td>
+		<td>{showdate value=$proofAssignment->getDateProofreaderUnderway() format=$dateFormatShort}</td>
+		<td>{showdate value=$proofAssignment->getDateProofreaderCompleted() format=$dateFormatShort}</td>
 	</tr>
 	<tr>
 		<td>3.</td>
 		<td>{translate key="user.role.layoutEditor"}</td>
-		<td>{showdate value=$proofAssignment->getDateLayoutEditorNotified() format=$dateFormatShort type=$calType}</td>
-		<td>{showdate value=$proofAssignment->getDateLayoutEditorUnderway() format=$dateFormatShort type=$calType}</td>
-		<td>{showdate value=$proofAssignment->getDateLayoutEditorCompleted() format=$dateFormatShort type=$calType}</td>
+		<td>{showdate value=$proofAssignment->getDateLayoutEditorNotified() format=$dateFormatShort}</td>
+		<td>{showdate value=$proofAssignment->getDateLayoutEditorUnderway() format=$dateFormatShort}</td>
+		<td>{showdate value=$proofAssignment->getDateLayoutEditorCompleted() format=$dateFormatShort}</td>
 	</tr>
 	<tr>
 		<td colspan="5" class="separator">&nbsp;</td>
@@ -67,7 +67,7 @@
 {translate key="submission.proofread.corrections"}
 {if $submission->getMostRecentProofreadComment()}
         {assign var="comment" value=$submission->getMostRecentProofreadComment()}
-        <a href="javascript:openComments('{url op="viewProofreadComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a>{showdate value=$comment->getDatePosted() format=$dateFormatShort type=$calType}
+        <a href="javascript:openComments('{url op="viewProofreadComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a>{showdate value=$comment->getDatePosted() format=$dateFormatShort}
 {else}
         <a href="javascript:openComments('{url op="viewProofreadComments" path=$submission->getArticleId()}');" class="icon">{icon name="comment"}</a>
 {/if}

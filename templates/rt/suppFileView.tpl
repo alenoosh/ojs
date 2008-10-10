@@ -48,7 +48,7 @@
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="common.date"}</td>
-		<td class="value">{showdate value=$suppFile->getDateCreated() format=$dateFormatShort type=$calType}</td>
+		<td class="value">{showdate value=$suppFile->getDateCreated() format=$dateFormatShort}</td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="common.source"}</td>
@@ -82,7 +82,7 @@
 	</tr>
 	<tr valign="top">
 		<td class="infoLabel">{translate key="common.dateUploaded"}</td>
-		<td class="value">{showdate value=$suppFile->getDateUploaded() format=$datetimeFormatShort type=$calType}</td>
+		<td class="value">{showdate value=$suppFile->getDateUploaded() format=$datetimeFormatShort}</td>
 	</tr>
 	</table>
 {else}

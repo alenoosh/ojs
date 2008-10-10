@@ -43,7 +43,7 @@
 		<td>{if $file.isDir}{icon name="folder"}{else}{icon name="letter"}{/if}</td>
 		<td><a href="{url op="files" path=$filePath|explode:"/"}">{$file.name}</a></td>
 		<td>{$file.mimetype|escape|default:"&mdash;"}</td>
-		<td>{showdate value=$file.mtime format=$datetimeFormatShort type=$calType}</td>
+		<td>{showdate value=$file.mtime format=$datetimeFormatShort}</td>
 		<td>{$file.size|escape|default:"&mdash;"}</td>
 		<td align="right" class="nowrap">
 			{if !$file.isDir}

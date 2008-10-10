@@ -44,7 +44,7 @@
 	<tr><td class="headseparator" colspan="5">&nbsp;</td></tr>
 {iterate from=eventLogEntries item=logEntry}
 	<tr valign="top">
-		<td>{showdate value=$logEntry->getDateLogged() format=$dateFormatShort type=$calType}</td>
+		<td>{showdate value=$logEntry->getDateLogged() format=$dateFormatShort}</td>
 		<td>{$logEntry->getLogLevel()|escape}</td>
 		<td>
 			{assign var=emailString value="`$logEntry->getUserFullName()` <`$logEntry->getUserEmail()`>"}

@@ -67,7 +67,7 @@
 	</tr>
 	<tr>
 		<td class="label">{translate key="common.dateUploaded"}</td>
-		<td class="value">{showdate value=$suppFile->getDateUploaded() format=$dateFormatShort type=$calType}</td>
+		<td class="value">{showdate value=$suppFile->getDateUploaded() format=$dateFormatShort}</td>
 	</tr>
 </table>
 	

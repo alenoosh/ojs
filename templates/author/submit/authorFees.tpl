@@ -13,7 +13,7 @@
 {if $currentJournal->getSetting('submissionFeeEnabled')}
 	<p>{$currentJournal->getLocalizedSetting('submissionFeeName')|escape}:
 	{if $submissionPayment}
-		{translate key="payment.paid"} {showdate value=$submissionPayment->getTimestamp() format=$datetimeFormatLong type=$calType}
+		{translate key="payment.paid"} {showdate value=$submissionPayment->getTimestamp() format=$datetimeFormatLong}
 	{else}
 		{$currentJournal->getSetting('submissionFee')|string_format:"%.2f"} ({$currentJournal->getSetting('currency')}) 
 		{if $showPayLinks}<a class="action" href="{url op="paySubmissionFee" path=$articleId}">{translate key="payment.payNow"}</a>{/if}
@@ -23,7 +23,7 @@
 {if $currentJournal->getSetting('fastTrackFeeEnabled')}
 	<p>{$currentJournal->getLocalizedSetting('fastTrackFeeName')|escape}: 
 	{if $fastTrackPayment}
-		{translate key="payment.paid"} {showdate value=$fastTrackPayment->getTimestamp() format=$datetimeFormatLong type=$calType}
+		{translate key="payment.paid"} {showdate value=$fastTrackPayment->getTimestamp() format=$datetimeFormatLong}
 	{else}
 		{$currentJournal->getSetting('fastTrackFee')|string_format:"%.2f"} ({$currentJournal->getSetting('currency')})
 		{if $showPayLinks}<a class="action" href="{url op="payFastTrackFee" path=$articleId}">{translate key="payment.payNow"}</a>{/if}

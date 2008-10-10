@@ -503,7 +503,7 @@ function confirmForgottenUpload() {
 </tr>
 <tr valign="top">
 	<td width="20%" class="label">{translate key="common.dateUploaded"}</td>
-	<td width="80%" class="value">{showdate value=$submissionFile->getDateUploaded() format=$datetimeFormatShort type=$calType}</td>
+	<td width="80%" class="value">{showdate value=$submissionFile->getDateUploaded() format=$datetimeFormatShort}</td>
 </tr>
 {else}
 <tr valign="top">
@@ -555,7 +555,7 @@ function confirmForgottenUpload() {
 	<td>{$file->getSuppFileId()}</td>
 	<td>{$file->getSuppFileTitle()|escape}</td>
 	<td>{$file->getOriginalFileName()|escape}</td>
-	<td>{showdate value=$file->getDateSubmitted() format=$dateFormatTrunc type=$calType}</td>
+	<td>{showdate value=$file->getDateSubmitted() format=$dateFormatTrunc}</td>
 	<td align="right"><a href="{url op="submitSuppFile" path=$file->getSuppFileId() articleId=$articleId}" class="action">{translate key="common.edit"}</a>&nbsp;|&nbsp;<a href="{url op="deleteSubmitSuppFile" path=$file->getSuppFileId() articleId=$articleId}" onclick="return confirm('{translate|escape:"jsparam" key="author.submit.confirmDeleteSuppFile"}')" class="action">{translate key="common.delete"}</a></td>
 </tr>
 {foreachelse}

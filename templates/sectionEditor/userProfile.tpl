@@ -103,11 +103,11 @@
 </tr>
 <tr valign="top">
 	<td class="label">{translate key="user.dateRegistered"}:</td>
-	<td class="value">{showdate value=$user->getDateRegistered() format=$datetimeFormatLong type=$calType}</td>
+	<td class="value">{showdate value=$user->getDateRegistered() format=$datetimeFormatLong}</td>
 </tr>
 <tr valign="top">
 	<td class="label">{translate key="user.dateLastLogin"}:</td>
-	<td class="value">{showdate value=$user->getDateLastLogin() format=$datetimeFormatLong type=$calType}</td>
+	<td class="value">{showdate value=$user->getDateLastLogin() format=$datetimeFormatLong}</td>
 </tr>
 </table>
 

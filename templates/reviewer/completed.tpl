@@ -32,7 +32,7 @@
 		<input type="hidden" name="sendMail" value="{url page="user" op="email" to=$emailString|to_array redirectUrl=$currentUrl subject=$submission->getArticleTitle() articleId=$reviewId}">
 		</td>
 		<td>{$articleId|escape}</td>
-		<td>{showdate value=$submission->getDateNotified() format=$dateFormatTrunc type=$calType}</td>
+		<td>{showdate value=$submission->getDateNotified() format=$dateFormatTrunc}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
 		<td>{if !$submission->getDeclined()}<a href="{url op="submission" path=$reviewId}" class="action">{/if}{$submission->getArticleTitle()|strip_unsafe_html|truncate:60:"..."}{if !$submission->getDeclined()}</a>{/if}</td>
 		<td>

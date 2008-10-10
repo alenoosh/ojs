@@ -36,13 +36,13 @@
 	{assign var="fastTracked" value=$submission->getFastTracked()}
 	<tr valign="top"{if $highlightClass || $fastTracked} class="{$highlightClass|escape} {if $fastTracked}fastTracked{/if}"{/if}>
 		<td>{$submission->getArticleId()}</td>
-		<td>{showdate value=$submission->getDateSubmitted() format=$dateFormatTrunc type=$calType}</td>
+		<td>{showdate value=$submission->getDateSubmitted() format=$dateFormatTrunc}</td>
 		<td>{$submission->getSectionAbbrev()|escape}</td>
 		<td>{$submission->getAuthorString(true)|truncate:40:"..."|escape}</td>
 		<td><a href="{url op="submissionEditing" path=$submission->getArticleId()}" class="action">{$submission->getArticleTitle()|strip_unsafe_html|truncate:40:"..."}</a></td>
-		<td>{if $submission->getCopyeditorDateFinalCompleted()}{showdate value=$submission->getCopyeditorDateFinalCompleted() format=$dateFormatTrunc type=$calType}{else}&mdash;{/if}</td>
-		<td>{if $layoutAssignment->getDateCompleted()}{showdate value=$layoutAssignment->getDateCompleted() format=$dateFormatTrunc type=$calType}{else}&mdash;{/if}</td>
-		<td>{if $proofAssignment->getDateLayoutEditorCompleted()}{showdate value=$proofAssignment->getDateLayoutEditorCompleted() format=$dateFormatTrunc type=$calType}{else}&mdash;{/if}</td>
+		<td>{if $submission->getCopyeditorDateFinalCompleted()}{showdate value=$submission->getCopyeditorDateFinalCompleted() format=$dateFormatTrunc}{else}&mdash;{/if}</td>
+		<td>{if $layoutAssignment->getDateCompleted()}{showdate value=$layoutAssignment->getDateCompleted() format=$dateFormatTrunc}{else}&mdash;{/if}</td>
+		<td>{if $proofAssignment->getDateLayoutEditorCompleted()}{showdate value=$proofAssignment->getDateLayoutEditorCompleted() format=$dateFormatTrunc}{else}&mdash;{/if}</td>
 		<td>
 			{assign var="editAssignments" value=$submission->getEditAssignments()}
 			{foreach from=$editAssignments item=editAssignment}{$editAssignment->getEditorInitials()} {/foreach}

@@ -45,7 +45,7 @@
 	{iterate from=issues item=issue}
 	<tr valign="top">
 		<td><a href="{url op="issueToc" path=$issue->getIssueId()}" class="action">{$issue->getIssueIdentification()|escape}</a></td>
-		<td>{showdate value=$issue->getDatePublished() format=$dateFormatShort type=$calType}</td>
+		<td>{showdate value=$issue->getDatePublished() format=$dateFormatShort}</td>
 		<td>{$issue->getNumArticles()}</td>
 		<td>{if $pos != 1}<a href="{url op="moveIssue" path=$issue->getIssueId() d=u newPos=$pos-1}" class="plain">&uarr;</a>{else}&uarr;{/if} {if $pos != $issues->getCount()}<a href="{url op="moveIssue" path=$issue->getIssueId() d=d newPos=$pos+1}" class="plain">&darr;</a>{else}&darr;{/if}</td>
 		<td align="right"><a href="{url op="removeIssue" path=$issue->getIssueId()}" onclick="return confirm('{translate|escape:"jsparam" key="editor.issues.confirmDelete"}')" class="action">{translate key="common.delete"}</a></td>

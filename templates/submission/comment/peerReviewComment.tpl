@@ -33,7 +33,7 @@ window.opener.location.reload();
 				{translate key=$comment->getRoleName()}
 			{/if}
 		</div>
-		<div class="commentDate">{showdate value=$comment->getDatePosted() format=$datetimeFormatShort type=$calType}</div>
+		<div class="commentDate">{showdate value=$comment->getDatePosted() format=$datetimeFormatShort}</div>
 		<br />
 		<div class="commentNote">
 			{if $comment->getViewable()}

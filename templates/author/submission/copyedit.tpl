@@ -30,16 +30,16 @@
 	<tr>
 		<td width="5%">1.</td>
 		<td width="35%">{translate key="submission.copyedit.initialCopyedit"}</td>
-		<td>{showdate value=$submission->getCopyeditorDateNotified() format=$dateFormatShort type=$calType}</td>
-		<td>{showdate value=$submission->getCopyeditorDateUnderway() format=$dateFormatShort type=$calType}</td>
-		<td>{showdate value=$submission->getCopyeditorDateCompleted() format=$dateFormatShort type=$calType}</td>
+		<td>{showdate value=$submission->getCopyeditorDateNotified() format=$dateFormatShort}</td>
+		<td>{showdate value=$submission->getCopyeditorDateUnderway() format=$dateFormatShort}</td>
+		<td>{showdate value=$submission->getCopyeditorDateCompleted() format=$dateFormatShort}</td>
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
 		<td colspan="4">
 			{translate key="common.file"}:
 			{if $submission->getCopyeditorDateCompleted() && $initialCopyeditFile}
-				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$initialCopyeditFile->getFileId():$initialCopyeditFile->getRevision()}" class="file">{$initialCopyeditFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$initialCopyeditFile->getDateModified() format=$dateFormatShort type=$calType}
+				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$initialCopyeditFile->getFileId():$initialCopyeditFile->getRevision()}" class="file">{$initialCopyeditFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$initialCopyeditFile->getDateModified() format=$dateFormatShort}
 			{else}
 				{translate key="common.none"}
 			{/if}
@@ -51,8 +51,8 @@
 	<tr>
 		<td>2.</td>
 		<td>{translate key="submission.copyedit.editorAuthorReview"}</td>
-		<td>{showdate value=$submission->getCopyeditorDateAuthorNotified() format=$dateFormatShort type=$calType}</td>
-		<td>{showdate value=$submission->getCopyeditorDateAuthorUnderway() format=$dateFormatShort type=$calType}</td>
+		<td>{showdate value=$submission->getCopyeditorDateAuthorNotified() format=$dateFormatShort}</td>
+		<td>{showdate value=$submission->getCopyeditorDateAuthorUnderway() format=$dateFormatShort}</td>
 		<td>
 			{if not $submission->getCopyeditorDateAuthorNotified() or $submission->getCopyeditorDateAuthorCompleted()}
 				{icon name="mail" disabled="disabled"}
@@ -61,7 +61,7 @@
 				{translate|assign:"confirmMessage" key="common.confirmComplete"}
 				{icon name="mail" onclick="return confirm('$confirmMessage')" url=$url}
 			{/if}
-			{showdate value=$submission->getCopyeditorDateAuthorCompleted() format=$dateFormatShort type=$calType default=""}
+			{showdate value=$submission->getCopyeditorDateAuthorCompleted() format=$dateFormatShort default=""}
 		</td>
 	</tr>
 	<tr>
@@ -69,7 +69,7 @@
 		<td colspan="5">
 			{translate key="common.file"}:
 			{if $submission->getCopyeditorDateAuthorNotified() && $editorAuthorCopyeditFile}
-				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$editorAuthorCopyeditFile->getFileId():$editorAuthorCopyeditFile->getRevision()}" class="file">{$editorAuthorCopyeditFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$editorAuthorCopyeditFile->getDateModified() format=$dateFormatShort type=$calType}
+				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$editorAuthorCopyeditFile->getFileId():$editorAuthorCopyeditFile->getRevision()}" class="file">{$editorAuthorCopyeditFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$editorAuthorCopyeditFile->getDateModified() format=$dateFormatShort}
 			{else}
 				{translate key="common.none"}
 			{/if}
@@ -88,16 +88,16 @@
 	<tr>
 		<td>3.</td>
 		<td>{translate key="submission.copyedit.finalCopyedit"}</td>
-		<td>{showdate value=$submission->getCopyeditorDateFinalNotified() format=$dateFormatShort type=$calType}</td>
-		<td>{showdate value=$submission->getCopyeditorDateFinalUnderway() format=$dateFormatShort type=$calType}</td>
-		<td>{showdate value=$submission->getCopyeditorDateFinalCompleted() format=$dateFormatShort type=$calType}</td>
+		<td>{showdate value=$submission->getCopyeditorDateFinalNotified() format=$dateFormatShort}</td>
+		<td>{showdate value=$submission->getCopyeditorDateFinalUnderway() format=$dateFormatShort}</td>
+		<td>{showdate value=$submission->getCopyeditorDateFinalCompleted() format=$dateFormatShort}</td>
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
 		<td colspan="4">
 			{translate key="common.file"}:
 			{if $submission->getCopyeditorDateFinalCompleted() && $finalCopyeditFile}
-				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$finalCopyeditFile->getFileId():$finalCopyeditFile->getRevision()}" class="file">{$finalCopyeditFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$finalCopyeditFile->getDateModified() format=$dateFormatShort type=$calType}
+				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$finalCopyeditFile->getFileId():$finalCopyeditFile->getRevision()}" class="file">{$finalCopyeditFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$finalCopyeditFile->getDateModified() format=$dateFormatShort}
 			{else}
 				{translate key="common.none"}
 			{/if}
@@ -111,7 +111,7 @@
 {translate key="submission.copyedit.copyeditComments"}
 {if $submission->getMostRecentCopyeditComment()}
 	{assign var="comment" value=$submission->getMostRecentCopyeditComment()}
-	<a href="javascript:openComments('{url op="viewCopyeditComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a>{showdate value=$comment->getDatePosted() format=$dateFormatShort type=$calType}
+	<a href="javascript:openComments('{url op="viewCopyeditComments" path=$submission->getArticleId() anchor=$comment->getCommentId()}');" class="icon">{icon name="comment"}</a>{showdate value=$comment->getDatePosted() format=$dateFormatShort}
 {else}
 	<a href="javascript:openComments('{url op="viewCopyeditComments" path=$submission->getArticleId()}');" class="icon">{icon name="comment"}</a>
 {/if}

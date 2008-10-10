@@ -15,7 +15,7 @@
 		<td width="20%">{$currentJournal->getLocalizedSetting('submissionFeeName')|escape}</td>
 		<td width="80%">
 	{if $submissionPayment}
-		{translate key="payment.paid"} {showdate value=$submissionPayment->getTimestamp() format=$datetimeFormatLong type=$calType}
+		{translate key="payment.paid"} {showdate value=$submissionPayment->getTimestamp() format=$datetimeFormatLong}
 	{else} 
 		<a class="action" href="{url op="waiveSubmissionFee" path=$submission->getArticleId() markAsPaid=true}">{translate key="payment.paymentReceived"}</a>&nbsp;|&nbsp;<a class="action" href="{url op="waiveSubmissionFee" path=$submission->getArticleId()}">{translate key="payment.waive"}</a>
 	{/if}
@@ -27,7 +27,7 @@
 		<td width="20%">{$currentJournal->getLocalizedSetting('fastTrackFeeName')|escape}</td>
 		<td width="80%"> 
 	{if $fastTrackPayment}
-		{translate key="payment.paid"} {showdate value=$fastTrackPayment->getTimestamp() format=$datetimeFormatLong type=$calType}
+		{translate key="payment.paid"} {showdate value=$fastTrackPayment->getTimestamp() format=$datetimeFormatLong}
 	{else}
 		<a class="action" href="{url op="waiveFastTrackFee" path=$submission->getArticleId() markAsPaid=true}">{translate key="payment.paymentReceived"}</a>&nbsp;|&nbsp;<a class="action" href="{url op="waiveFastTrackFee" path=$submission->getArticleId()}">{translate key="payment.waive"}</a>		
 	{/if}
@@ -39,7 +39,7 @@
 		<td width="20%">{$currentJournal->getLocalizedSetting('publicationFeeName')|escape}</td>
 		<td width="80%">
 	{if $publicationPayment}
-		{translate key="payment.paid"} {showdate value=$publicationPayment->getTimestamp() format=$datetimeFormatLong type=$calType}
+		{translate key="payment.paid"} {showdate value=$publicationPayment->getTimestamp() format=$datetimeFormatLong}
 	{else}
 		<a class="action" href="{url op="waivePublicationFee" path=$submission->getArticleId() markAsPaid=true}">{translate key="payment.paymentReceived"}</a>&nbsp;|&nbsp;<a class="action" href="{url op="waivePublicationFee" path=$submission->getArticleId()}">{translate key="payment.waive"}</a>		
 	{/if}

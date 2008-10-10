@@ -73,7 +73,7 @@
 	<tr><td class="headseparator" colspan="5">&nbsp;</td></tr>
 {iterate from=eventLogEntries item=logEntry}
 	<tr valign="top">
-		<td>{showdate value=$logEntry->getDateLogged() format=$dateFormatShort type=$calType}</td>
+		<td>{showdate value=$logEntry->getDateLogged() format=$dateFormatShort}</td>
 		<td>{$logEntry->getLogLevel()}</td>
 		<td>
 			{assign var=emailString value="`$logEntry->getUserFullName()` <`$logEntry->getUserEmail()`>"}
@@ -120,7 +120,7 @@
 	<tr><td class="headseparator" colspan="6">&nbsp;</td></tr>
 {iterate from=emailLogEntries item=logEntry}
 	<tr valign="top">
-		<td>{showdate value=$logEntry->getDateSent() format=$dateFormatShort type=$calType}</td>
+		<td>{showdate value=$logEntry->getDateSent() format=$dateFormatShort}</td>
 		<td>{$logEntry->getFrom()|truncate:40:"..."|escape}</td>
 		<td>{$logEntry->getRecipients()|truncate:40:"..."|escape}</td>
 		<td>{$logEntry->getSubject()|truncate:60:"..."|escape}</td>
@@ -164,7 +164,7 @@
 		// -->
 	</script>
 	<tr valign="top">
-		<td>{showdate value=$note->getDateCreated() format=$dateFormatShort type=$calType}</td>
+		<td>{showdate value=$note->getDateCreated() format=$dateFormatShort}</td>
 		<td><a class="action" href="javascript:toggleNote({$note->getNoteId()})">{$note->getTitle()|escape}</a><div style="display: none" id="{$note->getNoteId()}" name="{$note->getNoteId()}">{$note->getNote()|strip_unsafe_html|nl2br}</div></td>
 		<td>{if $note->getFileId()}<a class="action" href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$note->getFileId()}">{$note->getOriginalFileName()}</a>{else}&mdash;{/if}</td>
 		<td align="right"><a href="{url op="submissionNotes" path=$submission->getArticleId()|to_array:"edit":$note->getNoteId()}" class="action">{translate key="common.view"}</a>&nbsp;|&nbsp;<a href="{url op="removeSubmissionNote" articleId=$submission->getArticleId() noteId=$note->getNoteId() fileId=$note->getFileId()}" onclick="return confirm('{translate|escape:"jsparam" key="submission.notes.confirmDelete"}')" class="action">{translate key="common.delete"}</a></td>

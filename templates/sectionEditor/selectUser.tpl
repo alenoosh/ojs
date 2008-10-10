@@ -43,7 +43,7 @@
 	<td><a class="action" href="{url op="userProfile" path=$userid}">{$user->getFullName(true)|escape}</a></td>
 	<td>{if $stats.complete}{$stats.complete}{else}0{/if}</td>
 	<td>{if $stats.incomplete}{$stats.incomplete}{else}0{/if}</td>
-	<td>{if $stats.last_assigned}{showdate value=$stats.last_assigned format=$dateFormatShort type=$calType}{else}&mdash;{/if}</td>
+	<td>{if $stats.last_assigned}{showdate value=$stats.last_assigned format=$dateFormatShort}{else}&mdash;{/if}</td>
 	<td>
 		{if $currentUser != $userid}
 			<a href="{url op=$actionHandler path=$articleId|to_array:$userid}" class="action">{translate key="common.assign"}</a>

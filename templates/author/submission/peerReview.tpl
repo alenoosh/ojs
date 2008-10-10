@@ -28,7 +28,7 @@
 		<td class="value" width="80%">
 			{assign var="reviewFile" value=$reviewFilesByRound[$round]}
 			{if $reviewFile}
-				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$reviewFile->getFileId():$reviewFile->getRevision()}" class="file">{$reviewFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$reviewFile->getDateModified() format=$dateFormatShort type=$calType}
+				<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$reviewFile->getFileId():$reviewFile->getRevision()}" class="file">{$reviewFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$reviewFile->getDateModified() format=$dateFormatShort}
 			{else}
 				{translate key="common.none"}
 			{/if}
@@ -40,7 +40,7 @@
 		</td>
 		<td class="value" width="80%">
 			{if $reviewEarliestNotificationByRound[$round]}
-				{showdate value=$reviewEarliestNotificationByRound[$round] format=$dateFormatShort type=$calType}
+				{showdate value=$reviewEarliestNotificationByRound[$round] format=$dateFormatShort}
 			{else}
 				&mdash;
 			{/if}
@@ -52,7 +52,7 @@
 		</td>
 		<td class="value" width="80%">
 			{if $reviewModifiedByRound[$round]}
-				{showdate value=$reviewModifiedByRound[$round] format=$dateFormatShort type=$calType}
+				{showdate value=$reviewModifiedByRound[$round] format=$dateFormatShort}
 			{else}
 				&mdash;
 			{/if}
@@ -68,7 +68,7 @@
 					{assign var="roundIndex" value=$reviewIndexesByRound[$round][$reviewId]}
 					{assign var=thisReviewer value=$start+$roundIndex|chr}
 					{translate key="user.role.reviewer"} {$thisReviewer|escape}
-					<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$viewableFile->getFileId():$viewableFile->getRevision()}" class="file">{$viewableFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$viewableFile->getDateModified() format=$dateFormatShort type=$calType}<br />
+					<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$viewableFile->getFileId():$viewableFile->getRevision()}" class="file">{$viewableFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$viewableFile->getDateModified() format=$dateFormatShort}<br />
 				{/foreach}
 			{foreachelse}
 				{translate key="common.none"}
@@ -82,7 +82,7 @@
 			</td>
 			<td class="value" width="80%">
 				{foreach from=$editorFiles item=editorFile key=key}
-					<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$editorFile->getFileId():$editorFile->getRevision()}" class="file">{$editorFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$editorFile->getDateModified() format=$dateFormatShort type=$calType}<br />
+					<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$editorFile->getFileId():$editorFile->getRevision()}" class="file">{$editorFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$editorFile->getDateModified() format=$dateFormatShort}<br />
 				{foreachelse}
 					{translate key="common.none"}
 				{/foreach}
@@ -94,7 +94,7 @@
 			</td>
 			<td class="value" width="80%">
 				{foreach from=$authorFiles item=authorFile key=key}
-					<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$authorFile->getFileId():$authorFile->getRevision()}" class="file">{$authorFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$authorFile->getDateModified() format=$dateFormatShort type=$calType}<br />
+					<a href="{url op="downloadFile" path=$submission->getArticleId()|to_array:$authorFile->getFileId():$authorFile->getRevision()}" class="file">{$authorFile->getFileName()|escape}</a>&nbsp;&nbsp;{showdate value=$authorFile->getDateModified() format=$dateFormatShort}<br />
 				{foreachelse}
 					{translate key="common.none"}
 				{/foreach}

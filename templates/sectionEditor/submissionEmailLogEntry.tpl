@@ -37,7 +37,7 @@
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="common.date"}</td>
-		<td class="value">{showdate value=$logEntry->getDateSent() format=$datetimeFormatLong type=$calType}</td>
+		<td class="value">{showdate value=$logEntry->getDateSent() format=$datetimeFormatLong}</td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{translate key="common.type"}</td>
