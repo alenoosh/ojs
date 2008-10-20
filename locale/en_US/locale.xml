@@ -2037,7 +2037,6 @@ Active is how many reviews are currently being considered or underway.]]></messa
 	<!--Opatan Inc. : Abstract Length -->
 	<message key="author.submit.form.abstractLength">The length of entered abstract is not in the valid range.</message>
 	<message key="author.submit.form.abstractLengthNote">between ({$abstractMinLength}-{$abstractMaxLength}) words</message>
-	<message key="author.submit.form.lengthMessage">The entered abstract is {$length} words.</message>
 	<message key="author.submit.suppTitleRequired">Please enter the title of supplementary file.</message>	
 	<!-- Article Submission Step 3 -->
 	<message key="author.submit.uploadInstructions"><![CDATA[

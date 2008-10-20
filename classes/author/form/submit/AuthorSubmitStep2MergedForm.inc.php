@@ -157,7 +157,6 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 	 * Assign form data to user-submitted data.
 	 */
 	function readInputData() {
-		$templateMgr =& TemplateManager::getManager();
 		$journal = &Request::getJournal();
 		$journalSettingsDao = &DAORegistry::getDAO('JournalSettingsDAO');
 			
@@ -216,23 +215,18 @@ class AuthorSubmitStep2MergedForm extends AuthorSubmitForm {
 					$abstractLength++;
 			}
 
-			$templateMgr->assign('lengthMessage', null);
-
 			// Opatan Inc. : Check Abstract Length
 			if ($abstractMinimumLength && $abstractMaximumLength) {
 				if (($abstractLength < $abstractMinimumLength) || ($abstractLength > $abstractMaximumLength)) {
 					$this->addCheck(new FormValidatorLocale($this, 'abstractLength', 'required', 'author.submit.form.abstractLength'));
-					$templateMgr->assign('lengthMessage', Locale::translate('author.submit.form.lengthMessage', array('length' => $abstractLength)));
 				}
 			} else if ($abstractMinimumLength) {
 				if ($abstractLength < $abstractMinimumLength) {
 					$this->addCheck(new FormValidatorLocale($this, 'abstractLength', 'required', 'author.submit.form.abstractLength'));
-					$templateMgr->assign('lengthMessage', Locale::translate('author.submit.form.lengthMessage', array('length' => $abstractLength)));				
 				}
 			} else if ($abstractMaximumLength) {
 				if ($abstractLength > $abstractMaximumLength) {
 					$this->addCheck(new FormValidatorLocale($this, 'abstractLength', 'required', 'author.submit.form.abstractLength'));
-					$templateMgr->assign('lengthMessage', Locale::translate('author.submit.form.lengthMessage', array('length' => $abstractLength)));
 				}
 			}
 
